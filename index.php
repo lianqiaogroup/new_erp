@@ -22,7 +22,7 @@ if(!isset($_GET['1'])&&!empty($server_name) && !empty($identity_tag))
     $cloak_by_zone = array(
 
       "2"=>array('x'=>'9faf5350-ebf4-479c-90df-acc35fb33d97', 'y'=>'tki8a'),//台湾
-      "3"=>array('x'=>'f9e472aa-3fdc-41fd-9a5f-0f2e80117d6b', 'y'=>'m1co9'),//香港
+      "3"=>array('x'=>'f9e472aa-3fdc-41fd-9a5f-0f2e80117d6b', 'y'=>'m1co9'),//香港    
       "7"=>array('x'=>'ba38e5ef-1d56-4a61-8a35-5d10c1f7ffc4', 'y'=>'k4fr6'),//新加坡
       "9"=>array('x'=>'1bd272db-3424-4f78-aeff-c26be5069d0a', 'y'=>'n2mh6'),//越南
       "11"=>array('x'=>'da005a5e-91b6-4fd7-828e-f1eebd1aba00', 'y'=>'1st93'),//泰国
