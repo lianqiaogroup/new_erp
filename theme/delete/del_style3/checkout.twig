@@ -1,0 +1,233 @@
+{% include '/public/theme/header.twig' %}
+<!--  -->
+<link href="{{ THEME }}/image/favicon.ico" type="image/x-icon" rel=icon>
+<link href="{{ THEME }}/css/cart.css" type="text/css" rel="stylesheet"/>
+<script src="/public/jquery-1.3.2.js" language="javascript" type="text/javascript"></script>
+<!--  -->
+
+<div class="g-bd">
+    <div class="m-hd">
+        <div class="m-topBar">
+            {% if logo %}
+            <a class="left" href="/{{ identity_tag}}"><img src="{{ logo }}" alt="{{ logo }}"></a>
+            {% endif %}
+            <div style="width: 100%;"><div class="title" style="color: #fff;">收貨信息</div></div>
+        </div>
+    </div>
+    <!--  -->
+    <div id="order">
+        <div class="warp">
+            <form id="form" name="form" action="order.php" method="post" onSubmit="return postcheck()">
+                <!--  -->
+                <input type="hidden" name="combo_id" value="">
+                <input type="hidden" name="num" id="num" value="">
+                <input type="hidden" name="token" value="{{ token }}">
+                <input type="hidden" name="act" id="act" value="getAttrPrice">
+                <!-- 勾选的属性 -->
+                <section class="selectedPrototype">
+                {% if combo %}
+                    {% for om in  combo %}
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                                {% for o in  ok.options %}
+                                    <input type="hidden" name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="">
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    {% for o in  options %}
+                        <input type="hidden" name="attr[{{ o.attr_group_id }}]" value="">
+                    {% endfor %}
+                {% endif %}
+                </section>
+                <!--套餐-->
+                <div class="m-goodItems">
+                    <ul class="m-list m-attrs">
+                        <li class="item">
+                            <div class="m-goodItem">
+                                <div class="imgWrap">
+                                    <img src="{{ thumb }}">
+                                </div>
+                                <!--选中的产品-->
+                                <div class="cnt">
+                                    <span style="color: black;font-size: 16px;">{{ title }} <br/> {{ currency_code }} <currentprice></currentprice></span>
+                                    <br>
+                                </div>
+                                <div class="u-format" style="display: none;">
+                                    <div class="con" style="color: #b4282d;font-size: 14px;">
+                                        <span>黑色</span>
+                                        <!-- <input type="hidden" name="chanpin1" value="黑色"> -->
+                                    </div>
+                                    <div class="con" style="color: #b4282d;font-size: 14px;">
+                                        <span>&nbsp;+&nbsp;</span>                <span>L</span>
+                                        <!-- <input type="hidden" name="chicun" value="L"> -->
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item" style="text-align: right; padding: 10px;">
+                            共 <span jsrender="count"></span> 件，合計：<span class="red">{{ currency_code }}<span jsrender="total" id="price"></span></span>
+                        </li>
+                    </ul>
+                </div>
+                <!--  -->
+                <div class="infoHeader">選擇付款方式</div>
+                <div class="buy-single-row paymethod">
+                    {% if payment_online ==1 %}
+                    <label>
+                        <div class="boxer">
+                            <input name="payment_type" value="1" type="radio">{{ lang.yijifu }}
+                        </div>
+                    </label>
+                    {% endif %}
+                    {% if payment_underline ==1 %}
+                    <label>
+                        <div class="boxer">
+                            <input name="payment_type" value="0" type="radio">{{ lang.cash_on_delivery }}
+                        </div>
+                    </label>
+                    {% endif %}
+                    {% if payment_paypal == 1 %}
+                    <label>
+                        <div class="boxer">
+                            <input name="payment_type" value="2" type="radio"> <img src="/public/image/p_paypal.jpg">
+                        </div>
+                    </label>
+                    {% endif %}
+                </div>
+                <div class="infoHeader">收件人資料</div>
+                <div class="address-input">
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="input-label">
+                                <div class="cell fixed">姓名</div>
+                            </div>
+                            <div class="cell">
+                                <input required="required" placeholder="請輸入姓名，如張三" type="text" name="name" class="inputText">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="input-label">
+                                <div class="cell fixed">手機</div>
+                            </div>
+                            <div class="cell">
+                                <input required="required" placeholder="請輸入手機號碼" type="text" name="mob" class="inputText">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="input-label">
+                                <div class="cell fixed">E-mail</div>
+                            </div>
+                            <div class="cell">
+                                <input placeholder="請輸入常用郵箱地址" type="email" name="email" class="inputText">
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="input-label">
+                                <div class="cell fixed">地址</div>
+                            </div>
+                            <div class="cell" id="province">
+                                <select name="province">
+                                    <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                                </select>
+                                {% if regions.region_son %}
+                                    <select name="city">
+                                        <option value="">{{ lang.province_choose }}</option>
+                                        {% for i in regions.region_son %}
+                                            <option value="{{ i.lang}}">{{ i.lang }}</option>
+                                        {% endfor %}
+                                    </select>
+                                {% endif %}
+                            </div>
+                        </label>
+                    </div>
+                   
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="input-label">
+                                <div class="cell fixed"></div>
+                            </div>
+                            <div class="cell">
+                                <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="input-label">
+                                <div class="cell fixed">{{ lang.postal }}</div>
+                            </div>
+                            <div class="cell">
+                                <input  type="text" name="postal"  class="inputText">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="input-label">
+                                <div class="cell fixed">備註</div>
+                            </div>
+                            <div class="cell" style="line-height: 18px;">
+                                <textarea placeholder="" name="guest" class="text_area" rows="1" style="padding-top:17px;"></textarea>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <!--  -->
+                <div style="padding: 15px; background: #fff;font-size: 14px;color: #666;text-align: left;margin-top: 10px;">
+                    {{ lang.warming|raw }}
+                </div>
+                <!--  -->
+                <footer class="m-orderFt">
+                    <div class="left"><a href="/{{ identity_tag}}">返回修改</a></div>
+                    <div class="right"><button class="btn w-button" type="submit" name="Submit" value="提交訂單">確定</button></div>
+                </footer>
+            </form>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+<!-- 客服 -->
+<div id="cmInfo">
+    <div style="position:relative">
+        <div id="cmInfoInside">
+            <div class="cmInfoText">
+                <a href="http://api.pop800.com/chat/{{ service_contact_id }}?l=ct" target="_blank" style="color:#fff;">客服</a></div>
+        </div>
+    </div>
+</div>
+<!-- to top -->
+<div id="div_toTop">Top</div>
+<!--  -->
+<div id="div_buyMask" style="display: none; position: absolute; opacity: 0.75; z-index: 1; width: 100%; height: 1024px; top: 0px; left: 0px; background: rgb(0, 0, 0);"></div>
+<div id="div_buyMask_info" style="display: none; position: fixed; width: 80%; left: 10%; top: 20%; z-index: 2; border-radius: 3px; background: rgb(255, 255, 255);">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+        <tbody>
+        <tr>
+            <td height="15"></td>
+        </tr>
+        <tr>
+            <td width="10"></td>
+            <td width="32" valign="middle"><img src="{{ THEME }}/images/facebox_loading.gif" style="vertical-align: middle"></td>
+            <td width="10"></td>
+            <td class="gray_word">請耐心等候....<br>
+                <span class="red_word">請勿按重新整理，造成重覆下單困擾</span><br><div align="right">謝謝您的支持</div></td>
+            <td width="10"></td>
+        </tr>
+        <tr>
+            <td height="15"></td>
+        </tr>
+    </tbody></table>
+</div>
+<!--  -->
+<script type="text/javascript" src="{{ THEME }}/js/checkout.js"></script>
+{% include '/public/theme/footer.twig' %}

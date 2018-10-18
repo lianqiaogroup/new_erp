@@ -1,0 +1,198 @@
+<div class="header">
+	<div class="title">{{ title }}</div>
+	<div class="base_price">
+        {% if currency_prefix == 1 %}<span>{{ currency_code }}</span><strong>{{ price }}</strong>{% endif %}
+        {% if currency_prefix == 0 %}<strong>{{ price }}</strong><span>{{ currency_code }}</span>{% endif %}
+    </div>
+</div>
+<div class="swiper-container">
+    <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+        {% if photos %}
+            {% for p in photos %}
+            <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+        {% endif %}
+    </div>
+    <div class="swiper-pagination swiper-pagination-custom">
+        {% if photos %}
+            {% for p in photos %}
+            <span class="whiteicon"></span>
+            {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+</div>
+<div class="tip_small">
+	<div class="tip_left">{{ lang.buy_numtext }}{{ sales }}{{ lang.piece }}<span>{{ lang.time_limit }}</span></div>
+	<div class="tip_right">{{ lang.time_over }}<span id="timer"><span id="h"></span>{{ lang.h }}<span id="m"></span>{{ lang.m }}<span id="s"></span>{{ lang.s }}</span></div>
+</div>
+
+{% if tips  %}
+<hr class="hr">
+<div class="tips_note">{{ tips }}</div>
+{% endif %}
+<div class="tip">
+	<div class="chip"><img src="{{ THEME }}/image/7day.png">{{ lang.returned_goods }}</div>
+    <div class="chip"><img src="{{ THEME }}/image/free_shop.png">{{ lang.free_yun }}</div>
+    <div class="chip"><img src="{{ THEME }}/image/haver_pay.png">{{ lang.cash_on_delivery }}</div>
+</div>
+<div class="nav">
+	<div class="subnav blue" rel="1">{{ lang.product_information }}</div>
+	<div class="subnav" rel="2">{{ lang.comment_new }}</div>
+</div>
+<div id="tab1" class="product_info tab action">
+	{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+</div>
+<div id="tab2" class="tab">
+	<div style="padding: 8px;background: white">
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="commentScroll" id="mq" style="height: 300px; overflow: hidden">
+                <ul class="picList" id="mq1">
+                    {% for a in comment %}
+                        <li star_li data-groud="{{ a.comment_id }}" rel="{{ a.star }}" style="margin-bottom: 8px;height: auto;">
+                            <div class="user_info">
+                                {% if a.is_anonymous==1 %}
+                                    <div class="user_name">{{ lang.anonymous }}</div>
+                                {% else %}
+                                    <div class="user_name">{{ a.name }}</div>
+                                {% endif %}
+                                <span class="stars" rel="{{ a.star }}" style="color: red;"></span>
+                            </div>
+                            <div style="border-top:1px dotted #d0d6d6;margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                            <div class="msKeimgBox">
+                                <ul>{% for b in a.thumb %}
+                                        <li>
+                                            <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="mskeTogBtn" style="display:none;"></div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <ul id="mq2"></ul>
+            </div>
+        </div>
+        <div class="mskeLayBg"></div>
+        <div class="mskelayBox">
+            <div class="mske_html">
+            </div>
+            <img class="mskeClaose" src="{{ THEME }}/images/close.png" width="27" height="27" />
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<div class="User_notes" style="margin-top: 10px">
+    <h2 class="notes">{{ lang.user_notes }}</h2>
+    <div class="note_text">{{ lang.user_fb }}</div>
+    <div class="note_title">{{ lang.user_note1 }}</div>
+    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+    <div class="note_title">{{ lang.user_note2 }}</div>
+    <div class="note_text">{{ lang.user_note2_1 }}</div>
+    <div class="note_title">{{ lang.user_note3 }}</div>
+    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+    <div class="note_title">{{ lang.user_note4 }}</div>
+    <div class="note_text">{{ lang.user_note4_1 }}</div>
+    <div class="note_title">{{ lang.user_note4_2 }}</div>
+    <div class="note_title">{{ lang.user_note4_3 }}</div>
+    <div class="note_text">{{ lang.user_note4_4 }}</div>
+</div>
+<div class="footer">
+	<div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}">
+		<img src="{{ THEME }}/image/kefu.png">{{ lang.service_online }}
+	</div>
+	<div class="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">
+		<img src="{{ THEME }}/image/search.png">{{ lang.order_inquiry }}
+	</div>
+	<button class="btn_success" data-cuckootag="buy_now">{{ lang.buy }}</button>
+</div>
+<section id="list" style="display:none;">
+	<div class="header">
+		<div class="title" style="text-align: center;">{{ lang.choose_package }}</div>
+	</div>
+	{% if combo %}
+		<div class="guild">
+		    {% for c in combo %}
+			<div comob_id="{{c.combo_id}}" c_price="{{ c.price }}" single="{{c.is_single_combo}}" class="combo_nav {% if loop.index == 1 %}check{% endif %}">
+				<img src="{{ c.thumb }}">
+				<span>{{ lang.package }}{% if loop.index == 1%}{{ lang.one }} : {% else %}{{ lang.two }} : {% endif %}{{ c.title }}</span>
+			</div>
+				{% if loop.index == 1 %}
+				<input type="hidden" name="price" value="{{ c.price }}">
+				<input type="hidden" name="combo_id" value="{{ c.combo_id }}">
+				{%if c.is_single_combo == 1%}<style type="text/css">.quantity{display:none}</style>{%endif%}
+				{% endif %}
+				{% if loop.index == 2%}<div class="esun">or</div>{% endif %}
+			{% endfor %}
+		</div>
+		{% for c in combo %}
+			{% if loop.index == 1 %}
+				<div id="tistcombo" comob_id="{{c.combo_id}}" single="{{c.is_single_combo}}">{{ lang.package }} : {% if currency_prefix == 1 %}<span>{{ currency_code }}<strong id="c_price">{{ c.price }}</strong></span>{% endif %}{% if currency_prefix == 0 %}<span><strong id="c_price">{{ c.price }}</strong>{{ currency_code }}</span>{% endif %}</div>
+				{%if c.is_single_combo == 1%}<style type="text/css">.quantity{display:none}</style>{%endif%}
+			{% endif %}
+		{% endfor %}
+	{% else %}
+        <input type="hidden" name="combo_id" value="0">
+		<div class="guild">
+			<div comob_id="0" single="0" class="combo_nav check">
+				<img src="{{ thumb }}">
+				<span>{{ title }}</span>
+			</div>
+		</div>
+		<input type="hidden" name="price" value="{{ price }}">
+		<div id="tistcombo">
+             {% if currency_prefix == 1 %}<span>{{ currency_code }}<strong id="c_price">{{ price }}</strong></span>{% endif %}
+             {% if currency_prefix == 0 %}<span><strong id="c_price">{{ price }}</strong>{{ currency_code }}</span>{% endif %}
+        </div>
+	{% endif %}
+	{% if combo %}
+	    {% for c in combo %}
+	    	<div datakey data-goods="{{ c.combo_id }}" style="display:{% if loop.index == 1 %}block{% else %}none{% endif %}">
+	    	{% for o in  c.goods %}
+			<div class="item">
+				<div class="goods_title">{{ o.title }}</div>
+				{% for a in o.options %}
+				<div class="products">
+					<div  class="left">{{ a.attr_group_title }}</div>
+					<ul class="right attrs">
+					{% for key,attr in a.attr %}
+						<li data-combo="{{ c.combo_id }}" data-attr="true" data-number="{{ o.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}">{{ attr.name|raw }}</li>
+					{% endfor %}
+					</ul>
+				</div>
+				{% endfor %}
+			</div>
+			{% endfor %}
+			</div>
+		{% endfor %}
+	{% else %}
+	<div datakey data-goods="0" style="display:block">
+		<div class="item">
+			{% for o in options %}
+			<div class="products">
+				<div class="left"><label>{{ o.attr_group_title }}</label></div>
+				<ul class="right attrs">
+				{% for key,attr in o.attr %}
+					<li data-combo="0" data-attr="true" data-number="{{ o.attr_group_id }}-{{ attr.product_attr_id }}">{{ attr.name|raw }}</li>
+				{% endfor %}
+				</ul>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+    <div class="quantity">
+        <h4>{{ lang.num }}</h4>
+        <div class="m-selnum dr">
+            <div onclick="minnumber()" class="less z-dis"></div>
+            <div class="textWrap">
+                <input type="text" class="text numbertext form-control" value="1" name="number" id="num" onblur="inputnumber();">
+            </div>
+            <div onclick="addnumber()" class="more"></div>
+        </div>
+    </div>
+	<div class="btn_add" data-cuckootag="confirm_arrtibute" data-event="postCheck">確定</div>
+</section>

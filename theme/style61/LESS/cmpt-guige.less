@@ -1,0 +1,155 @@
+@attrColor:#fedd60;
+.berore-dotted{
+	content:'';
+	width:6px;
+	height:6px;
+	display:inline-block;
+	border-radius:6px;
+	margin:0 4px;
+}
+section[data-loopindex]{
+	padding:0 4%;
+	.tc{
+		border-bottom:1px solid #e5e5e5;
+		&:last-child{
+			border:none;
+		}
+	}
+}
+#comb{
+	padding:4%;
+}
+.package{
+	font-size:0;
+	.tab{
+		font-size:14px;
+		padding:14px 4%;
+		background:#f2f2f2;
+		display:inline-block;
+		margin-right: 4%;
+		border-radius:4px;
+		position:relative;
+		text-align:center;
+		margin-bottom:10px;
+		&:last-child{
+			margin:0;
+		}
+	}
+	.tab-sel{
+		background:@attrColor;
+		box-shadow:none;
+	}
+}
+.title_ac{
+	margin:10px 0 0 0;
+	&:before{
+		.berore-dotted;
+		background:#000;
+	}
+	h5{
+		display:inline-block;
+	}
+}
+.count_atrr{
+	font-size:14px;
+	.tt{
+		display:inline-block;
+		margin:10px 0;
+		span{
+			color:#c90;
+			margin-left:8px;
+		}
+	}
+}
+	.con{
+		font-size:0;
+		img{
+			width:60px;
+			height:60px;
+			border-radius:50%;
+		}
+		.tab{
+			display:inline-block;
+			margin:0 6px 10px 0;
+			span{
+				font-size:14px;
+			}
+		}
+		.noimg.tab{
+			span{
+				background:#fff;
+				padding:4px 6px;
+				display:inline-block;
+				border-radius:28px;
+			}
+		}
+		.hasimg.tab{
+			position:relative;
+			span{
+				display:inline-block;
+				width:100px;
+				text-align:center;
+				padding:4px 0;
+			}
+		}
+		.tab-sel.hasimg{
+			i{
+				width:60px;
+				height:60px;
+				background:rgba(0, 0, 0, 0.4) url(../images/check.png) no-repeat center;
+				background-size:100%;
+				border-radius:50%;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			}
+		}
+		.noimg.tab-sel{
+			span{
+				background:@attrColor;
+			}
+		}
+	}
+.u-fornum{
+	padding:16px 4%;
+	.m-selnum{
+		span{
+			font-size:14px;
+			padding-right:4%;
+		}
+		div{
+			display:inline-block;
+			font-size:14px;
+			line-height:28px;
+		}
+		.less,.more{
+			border:1px solid #b8b8b3;
+			padding:0 16px;
+		}
+		.textWrap{
+			border-top:1px solid #b8b8b3;
+			border-bottom:1px solid #b8b8b3;
+			padding:0 16px;
+		}
+	}
+}
+#page-order{
+	background:#fff;
+	width:100%;
+	max-width:640px;
+	.buy_now{
+		padding:20px 4%;
+		text-align:center;
+		button{
+			background:@attrColor;
+			width:66%;
+			line-height:34px;
+			attrColor:#fff;
+			border-radius:34px;
+		} 
+	}
+}
+.tips{
+	padding: 0 4%;
+    font-size: 14px;
+}

@@ -1,0 +1,439 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/mui.min.css" rel="stylesheet">    
+<link href="{{ THEME }}/css/iconfont.css" rel="stylesheet">
+<link href="{{ THEME }}/css/base.css" rel="stylesheet">
+<link href="{{ THEME }}/css/component.css" rel="stylesheet">
+<link href="{{ THEME }}/css/detail.css" rel="stylesheet">
+<script src="/public/jquery-2.2.3.min.js"></script>
+<style>
+	#mq {background: #FFF; overflow:hidden; height: 300px; padding:0px 10px; }
+	#mq .mqc{display: block; }
+	#mq .mqc img{width:30%; margin-right:5px; vertical-align:auto; }
+	.edui-upload-video{width:100%;background: #333; }
+    #POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV{display: none !important;}
+    #inquiry{background:linear-gradient(#cc1212, #a80000);background:-webkit-linear-gradient(#cc1212, #a80000);background:-moz-linear-gradient(#cc1212, #a80000)}
+</style>
+<!--  -->
+<input type="hidden" name="product_id" value="{{ product_id }}">
+<form id="payForm" action="#" method="POST">
+    <div class="mui-content">
+   		
+		<div class="mui-slider">
+			<div class="mui-slider-group">
+                {% if photos %}
+                    {% for p in photos %}
+						<div class="mui-slider-item"><a href="#"><img src="{{ p.thumb }}" /></a></div>
+                    {% endfor %}
+                {% else %}
+					<div class="mui-slider-item"><a href="#"><img src="{{ thumb }}" /></a></div>
+                {% endif %}
+			</div>
+		</div>
+        <div class="detail-context">
+            <div class="dc-price">
+                <span class="yuan">{{ currency_code }}</span>
+                <span class="s-price">{{ price }}</span>
+                <span class="o-price">{{ currency_code }}{{ market_price }}</span>
+            </div>
+            <span class="flag" style="background:#000;">{{ lang.time_limit }}</span>
+            <span class="flag">{{ lang .free_yun }}</span>
+            <span class="flag">{{ lang.cash_on_delivery }}</span>
+            <div class="title">{{ title }}</div>
+        </div>
+        <div class="detail-7day">
+           <span class="detail-7day-icon">{{ lang.day_appreciate }}</span>
+           <span class="timeWrap" style="">
+       			{{ lang.time_over }}
+				<span id="timer">
+					<span id="h" class="colon">8</span>
+					<span>{{ lang.h }}</span>
+					<span id="m" class="colon">53</span>
+					<span>{{ lang.m }}</span>
+					<span id="s" class="colon">54</span>
+					<span>{{ lang.s }}</span>
+				</span>
+		   </span>
+        </div>
+        <div class="detail-number">
+            <span style="display:block;float:left">{{ lang.buy_numtext }} {{ sales }} 件</span>
+            <span style="width:120px; height:5px;border:1px solid #f00;display: block;float:left;margin:7px">
+              	<span style="width:117px; height:4px;background:#f00;display: block;"></span>
+            </span>
+            <span>98%</span>
+        </div>
+        <div class="detail-profile">
+        	{{ lang.The_explosion }}{{ title }}
+        </div>
+        <ul class="detail-bars">
+			<li><span href="#detial-context" class="scrollBar" scroll-y="0">{{ lang.product_desc }}</span></li>
+			<li><span href="#detial-params" class="scrollBar" scroll-y="50">{{ lang.product_attr }}</span></li>
+			<li class="pingjia"><span href="#detial-appraise" class="scrollBar" scroll-y="-60">{{ lang.comment }} ({{ (sales*0.777)|number_format(0,',','') }})</span></li>
+        </ul>
+        <div class="clear"></div>
+<!--         <div class="detail-block" id="detial-context" style="padding-top:10px">
+        	{% if photos %}
+                {% for p in photos %}
+                <p><img src="{{ p.thumb }}"></p> 
+                {% endfor %}
+            {% endif %}
+        </div> -->
+        <div class="detail-block _img_" id="detial-params">
+            {{ content|raw }} 
+        </div>
+        <div class="clear"></div>
+        <div class="detail-block" id="detial-appraise" style="position:relative;">
+            <h4>{{ lang.new_pinlun }}</h4>
+            <div id="mq" data-fn="commentScroll">
+                <div>
+                    {% for a in  comment %}
+                        <div class="appr-title mqc">
+                            <!-- <span style="color:red">097****896</span> -->
+                            {% if a.is_anonymous %}
+                                <span style="color:red; margin:0px 3px">{{ lang.anonymous }}</span>
+                            {% else %}
+                                <span style="color:red; margin:0px 3px">{{ a.name }}</span>
+                            {% endif %}
+                            <span>满意度：<font color="red">★★★★★</font></span><br/>
+                        </div>
+                        <div class="mqc">
+                            <p><span style="font-family:宋体">{{ a.content }}</span><span style="font-family:宋体"></span></p>
+                        </div>
+    					<div class="msKeimgBox">
+    						<ul>
+                                {% for b in a.thumb %}
+    								<li>
+    									<img src="{{ b.thumb }}" width="75" height="75" />
+    									<span class="hidden">
+                                    <img src="{{ b.thumb }}" width="100%" height="auto" />
+                                    </span>
+    								</li>
+                                {% endfor %}
+
+    						</ul>
+    						<div class="mskeTogBtn"></div>
+    					</div>
+                    {% endfor %}
+                </div>
+            </div>
+			<div class="mskeLayBg"></div>
+			<div class="mskelayBox">
+				<div class="mske_html">
+
+				</div>
+				<img class="mskeClaose" src="{{ THEME }}/images/close.png" width="27" height="27" />
+			</div>
+            <div class="go-appraise">
+               <a id="btnAppr">{{ lang.my_pinlun }}</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div style="padding:0px;">
+            <div style="width:100%; background:white;">
+               <img src="{{ THEME }}/images/footer.jpg" width="100%">
+            </div>
+            <div style="padding:20px; text-align:center; display:none">
+               <a href="http://www.51buzhanguo.com/protocol.jsp" style="color:#666">{{ lang.Privacy_protocol }}</a>&nbsp;&nbsp;
+               <a href="http://www.51buzhanguo.com/service.jsp" style="color:#666">{{ lang.Terms_service }}</a>
+            </div>
+        </div>
+    </div>
+
+	<div class="User_notes" style="margin-top: 10px">
+        <h2 class="notes">{{ lang.user_notes }}</h2>
+        <div class="note_text">{{ lang.user_fb }}</div>
+        <div class="note_title">{{ lang.user_note1 }}</div>
+        <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+        <div class="note_title">{{ lang.user_note2 }}</div>
+        <div class="note_text">{{ lang.user_note2_1 }}</div>
+        <div class="note_title">{{ lang.user_note3 }}</div>
+        <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+        <div class="note_title">{{ lang.user_note4 }}</div>
+        <div class="note_text">{{ lang.user_note4_1 }}</div>
+        <div class="note_title">{{ lang.user_note4_2 }}</div>
+        <div class="note_title">{{ lang.user_note4_3 }}</div>
+        <div class="note_text">{{ lang.user_note4_4 }}</div>
+    </div>
+
+    <nav class="mui-bar" style="box-shadow: 0px -2px 1px #dad8d8;">
+        <div class="mui-bar-item orange-shad" id="btnOnline" data-id="122">
+			<div class="mui-bar-con">
+				<img src="{{ THEME }}/images/bt02.png" style="width:20px;">
+				<span>{{ lang.kefu_online }}</span>
+			</div>
+        </div>
+        <div class="mui-bar-item orange-shad" id="inquiry" data-id="122">
+            <div class="mui-bar-con">
+                <img src="{{ THEME }}/images/search.png" style="width: 20px;">
+                <span>{{ lang.order_inquiry }}</span>
+            </div>
+        </div>
+        <div class="mui-bar-item red-shad" data-id="122" id="btnPay">
+			<div class="mui-bar-con">
+				<img src="{{ THEME }}/images/bt01.png" style="width:20px;">
+				<span>{{ lang.buy_now }}</span>
+			</div>
+        </div>
+        {{ yahoo_js|raw }}
+        {% if yahoo_js_trigger %}
+            <script type="text/javascript">
+                require(['jquery'], function($){
+                    $('[data-yahoo-js]').click(function(){
+                        try {
+                            {{ yahoo_js_trigger|raw }}
+                            console.log('click done');
+                            console.log(window.dotq);
+                        }
+                        catch(e){
+                            console.error('yahoo js code not working');
+                            console.log(yahooJs);
+                        }
+                    });
+                });
+            </script>
+        {% endif %}
+    </nav> 
+    <input type="hidden" name="gid" value="122" id="gid">
+    <input type="hidden" name="from" value=""> 
+</form> 
+
+<div style="display:none; position:fixed;z-index:199998; width:100%;text-align:center; height:100%;background: rgba(0, 0, 0, 0.58); padding:0px; bottom:0px; margin:0px;max-width: 640px; " id="imgbg">
+  <img style="width:80%; margin:0 auto; vertical-align:middle" id="bigimg">
+</div>
+<div style="display:none; position:fixed;z-index:99998; width:100%; height:100%; background:black; padding:0px; bottom:0px; margin:0px; opacity:0.7; max-width: 640px;" id="apprbg">
+</div>
+<div style="width: 100%;max-width:640px;clear: both;position: relative;">
+  <div style="display:none; position: fixed; z-index: 99999; width: 90%;left: 0;right: 0;margin: 0 auto; height: 500px; padding:0 5%; top: 16%; max-width: 640px;" id="apprDialog">
+    <form action="/index.php" method="post" id="apprForm">
+    	<div class="buyinfo_table">
+    		<div class="closeBtn"><img src="{{ THEME }}/images/close.png"></div>
+            <div class="buyinfo_hd">{{ lang.note_online }}</div>
+    		<hr class="seperator">
+    		<div class="buyinfo_table_box">
+    			<table>
+    				<tbody><tr>
+    					<td class="table_td"><span class="require">*</span>{{ lang.name }}:</td>
+    					<td class="table_cell"><input type="text" placeholder="{{ lang.name_placeholder }}" class="mui-input-clear input01" name="name" maxlength="10"></td>
+    				</tr>
+    				<tr>
+    					<td class="table_td"><span class="require">*</span>{{ lang.mobile }}:</td>
+    					<td class="table_cell"><input type="text" placeholder="{{ lang.mobile_placeholder }}" class="input01" name="phone" maxlength="20"></td>
+    				</tr><tr>
+    					<td class="table_td">滿意度:</td>
+    					<td class="table_cell">
+    						<div class="star" id="stars">
+    							<span class="star-item" data-id="1"> ★ </span>
+    							<span class="star-item" data-id="2"> ★ </span>
+    							<span class="star-item" data-id="3"> ★ </span>
+    							<span class="star-item" data-id="4"> ★ </span>
+    							<span class="star-item" data-id="5"> ★ </span>
+    						</div>
+    						<input type="hidden" name="level" value="5">
+    					</td>
+    				</tr>
+    				<tr>
+    					<td class="table_td">{{ lang.note }}:</td>
+    					<td class="table_cell">
+    						<textarea placeholder="{{ lang.note_placeholder }}" name="content" class="textarea_style"></textarea>
+    					</td>
+    				</tr>
+                    <tr>
+                        <td class="table_td" style="padding-top:8px;">{{ lang.upimage }}:</td>
+                        <td class="table_cell" style="padding-top:10px;">
+                            <input id="file" type="file" name="file" class="upimage">
+                            <div class="file_imgs"></div>
+                        </td>
+                    </tr>
+    				<tr>
+    					<td colspan="2" class="tc">
+    						<input id="btnAppraise" type="button" name="Submit" class="input_btn01" value="{{ lang.post_pinlun }}" style="color:white">
+    					</td>
+    				</tr>
+    			</tbody></table>
+            </div>	
+        </div>
+    </form>
+  </div>
+</div>
+
+<script language="javascript" type="text/javascript" src="{{ THEME }}/js/public.js"></script>
+<script src="{{ THEME }}/js/mui.min.js" type="text/javascript"></script>
+<script src="{{ THEME }}/js/base.js" id="baseScript" ></script>
+<script src="{{ THEME }}/js/mui.lazyload.js"></script>
+<!-- <script src="{{ THEME }}/js/shop.js"></script>  -->
+<link href="{{ THEME }}/css/JS5.css" rel="stylesheet" type="text/css">
+
+ <script>
+    var interval = 1000;
+    function ShowCountDown(year,month,day,divname){
+		var cc = document.getElementById(divname);
+        var now = new Date();
+		year = now.getYear();
+		month = now.getMonth();
+		day = now.getDay();
+        var endDate = new Date(year, month, day, now.getHours()+9);
+        var leftTime=endDate.getTime()-now.getTime();
+        var leftsecond = parseInt(leftTime/1000);
+        var day1=Math.floor(leftsecond/(60*60*24));
+        var hour=Math.floor((leftsecond-day1*24*60*60)/3600);
+        var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60);
+        var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60);
+        
+        cc.innerHTML ='<span id="h" class="colon">'+hour+"</span>"+'<span>'+"时"+'</span><span id="m" class="colon">'+minute+'</span><span>'+"分"+'<span id="s" class="colon">'+second+'</span><span>'+"秒</span>";       
+    }
+	ShowCountDown(2018,4,20,'timer');
+    window.setInterval(function(){ShowCountDown(2018,4,20,'timer');}, interval);
+</script>
+<script type="text/javascript" charset="utf-8">
+    $2(function (){	 
+		//点击购买
+		$2("#btnPay").click(function(){		
+            var url = "/checkout.php?product_id=";
+            var productId = $('input[name="product_id"]').val(); 
+            url += productId;
+            window.location.href = url;
+		});
+		 
+		$2("#btnOnline").bind(_ONCLICK, function(){
+			P8.startGroupChat({{ service_contact_id }},1);
+		});
+		
+		$2("#btnAppr").bind(_ONCLICK, function(){ 
+			$2("#apprbg").show();
+			$2("#apprDialog").show();
+		});
+		
+		$2(".closeBtn").bind(_ONCLICK, function(){
+			$2("#apprbg").hide();
+			$2("#apprDialog").hide();
+		});
+		
+		$2(".star-item").bind(_ONCLICK, function(){
+			var level = $2(this).attr("data-id");
+			$2("input[name='level']").val(level);
+			$2(this).text("★");
+			$2(this).nextAll().each(function(index, element) {
+                $2(this).text("☆");
+            });
+			
+			$2(this).prevAll().each(function(index, element) {
+                $2(this).text("★");
+            });
+		});
+		//
+        var inputElement = document.getElementById("file");  
+        inputElement.addEventListener("change", handleFiles, false);
+        
+        function handleFiles(){
+            var fileList = this.files;
+            
+            for( var i = 0 ; i < fileList.length ; i++ ){
+                //console.log(fileList[i]);
+                $('.file_imgs').append("<div>"+fileList[i].name+"</div>");
+            }
+
+        }
+		$2("#btnAppraise").bind(_ONCLICK, function(){
+			if($2("input[name='name']").val()==''){
+				$2.toast('請填寫您的姓名');
+				return false;
+			}
+			if($2("input[name='phone']").val()==''){
+				$2.toast('請填寫您的手機');
+				return false;
+			}
+			
+			var twphone = /^([-_－—\s\(]?)([\(]?)((((0?)|((00)?))(((\s){0,2})|([-_－—\s]?)))|(([\)]?)[+]?))(886)?([\)]?)([-_－—\s]?)([\(]?)[0]?[1-9]{1}([-_－—\s\)]?)[1-9]{2}[-_－—]?[0-9]{3}[-_－—]?[0-9]{3}$/;
+			if(!twphone.test($2("input[name='phone']").val())){
+				$2.toast("手機號碼無效");
+				return;
+			}
+			
+			$2("#apprbg").hide();
+			$2("#apprDialog").hide(500); 
+		});
+		
+		$2(".mqc img").bind(_ONCLICK, function(){
+			$2("#bigimg").attr("src", $2(this).attr("src"));
+			$2("#imgbg").show();
+		});
+		
+		$2("#imgbg").bind(_ONCLICK, function(){
+			$2("#imgbg").hide();
+		});
+		
+		$2(".scrollBar").bind(_ONCLICK, function(){
+			var y = $2(this).attr("scroll-y");
+			$2('html, body').animate({
+				scrollTop: $2($2(this).attr("href")).offset().top - y
+			}, 1000);
+        });
+		
+		var nav = $2(".detail-bars"); //得到导航对象
+		var win = $2(window); //得到窗口对象
+		var sc = $2(document);//得到document文档对象。
+		
+		win.scroll(function(){
+		    if(sc.scrollTop()>=$2(".detail-profile").offset().top + 45){
+			    nav.addClass("fixed"); 
+		    }else{
+		        nav.removeClass("fixed");
+		    }
+		});
+
+	    var boxer = $('[data-fn=commentScroll]');
+        var list = $(boxer).children().eq(0);
+        var clone = list.clone();
+        var clone2 = list.clone();
+        $(boxer).append(clone).append(clone2);
+        var speed = 35;
+        function Marquee(){
+            if( list.height() < boxer.height() ){
+                if( boxer.scrollTop() >= list.height() ){
+                    boxer.scrollTop(0);
+                }else{
+                    boxer.scrollTop(boxer.scrollTop()+1);
+                }
+            }else{
+                if( boxer.scrollTop() - list.height() >=4 ){
+                     boxer.scrollTop(0); 
+                }else{
+                     boxer.scrollTop(boxer.scrollTop()+1);
+                }
+            }
+        }
+        setInterval(Marquee,speed);
+
+		jQuery(".edui-upload-video").each(function(index, element) {
+			if(jQuery("#videoPoster").length>0){
+            	jQuery(this).attr("poster", jQuery("#videoPoster").attr("href"));
+				jQuery(this).height(jQuery(this).width()/640*360);
+				//alert(jQuery("#videoPoster").height());
+				//jQuery(this).height(jQuery("#videoPoster").height());
+				jQuery("#videoPoster").remove();
+			}
+        });
+
+        jQuery(function(){
+            if( jQuery(".edui-upload-video").length > 0 ){
+                //jQuery(".edui-upload-video").attr("poster", "/public/image/videoPlay.jpg");
+                jQuery(".edui-upload-video").click(function(){
+                    jQuery(this).get(0).play();
+                });
+            }
+            $('#inquiry').click(function(){
+                var url = '/order_quality.php';
+                window.location.href = url;
+            })
+        });
+		
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+		    interval:3000//自动轮播周期，若为0则不自动播放，默认为0；
+		});
+    });
+
+</script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include 'public/theme/footer.twig' %}

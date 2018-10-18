@@ -1,0 +1,6 @@
+<footer>
+    <div class="clear">
+        <div class="private">{% for a in article %}{% if loop.index == 1 %}<a href="/article/{{ a.article_id }}">{{ a.title }}</a> | {% elseif loop.index == 2 %}<a href="/article/{{ a.article_id }}">{{ a.title }}</a>{% endif %}{% endfor %}</div>
+        <div class="copyright">© 2017 <span></span>. All Rights Reserved.</div>
+    </div>
+</footer>

@@ -1,0 +1,13 @@
+.product_info {
+  background: #fff;
+  margin: 2% 2.5%;
+}
+.product_info img {
+  width: 100%;
+}
+.product_info video {
+  width: 100%;
+  height: auto;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlMzJfMi9sZXNzL2RvbV9wcm9pbmZvLmxlc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDQyxnQkFBQTtFQUNBLGVBQUE7O0FBRkQsYUFHQztFQUNDLFdBQUE7O0FBSkYsYUFNQztFQUNDLFdBQUE7RUFDQSxZQUFBIiwic291cmNlc0NvbnRlbnQiOlsiLnByb2R1Y3RfaW5mb3tcblx0YmFja2dyb3VuZDojZmZmO1xuXHRtYXJnaW46MiUgMi41JTtcblx0aW1ne1xuXHRcdHdpZHRoOjEwMCU7XG5cdH1cblx0dmlkZW97XG5cdFx0d2lkdGg6MTAwJTtcblx0XHRoZWlnaHQ6YXV0bztcblx0fVxufSJdLCJmaWxlIjoic3R5bGUzMl8yL2xlc3MvZG9tX3Byb2luZm8uY3NzIn0= */

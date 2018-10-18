@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <title>{{ lang.order_fail_empty }}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html">
+</head>
+<body>
+<div style="font-size:1.2em;text-align:center;color:red;">
+     {{ lang.title }} <br/>
+    <span id="down_time">15</span> {{ lang.back_home_time}};
+</div>
+<script type='text/javascript'>
+        var down_time=parseInt(document.getElementById("down_time").innerText) || 5;
+         setInterval(function(){
+                 if (down_time<=0){window.location.href="/{{ identity_tag}}";
+             }
+            else
+                {
+                     down_time--;document.getElementById("down_time").innerText=down_time;
+                }},1000)
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+{% include 'public/theme/header.twig' %}
+<!-- resource -->
+<link type="image/x-icon" rel="icon" href="{{ THEME }}/image/favicon.ico" >
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/styles.css" />
+<!--  -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!-- END resource -->
+<style type="text/css">#POP800_PANEL_DIV{display: none;}</style>
+<!--  -->
+<header class="flexbox">
+    <a class="goback" href="/{{ identity_tag }}">
+        <img src="{{ THEME }}/image/detail-back.png">
+    </a>
+    <h1 class="flex ">確認訂單</h1>
+</header>
+    {% if combo %}
+        {% for c in combo %}
+        <div id="combo_{{ c.combo_id }}" style="display: none;">
+            <div class="item" style="margin-top: 10px;">{{ c.title }}</div>
+            {% for o in  c.goods %}
+            <div class="item">
+                <div class="guild title">
+                    <div class="screenshot"><img class="forAttrImg" src="{{ o.thumb }}"></div>
+                    <div class="right" style="margin-left:10px;"><span>{{ o.title }}</span><br><span style="color: #e5084d;font-size: 18px;line-height: 35px;">{{ currency_code }}{{ o.price }}</span><br>
+                    {% for a in o.options %}
+                        <span class="keyword">{{ a.attr_group_title }}: </span>
+                        {% for key,attr in a.attr %}
+                            <span optionsKey data-img="{{ attr.thumb }}" data-id="{{ o.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                        {% endfor %}
+                    {% endfor %}
+                    <span class="num">X{{ o.num|raw }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="item" style="margin-top: 10px;">
+            <div class="guild title">
+                <div class="screenshot"><img class="forAttrImg" src="{{ thumb }}"></div>
+                <div class="right" style="margin-left:10px;"><span>{{ title }}</span><br><span style="color: #e5084d;font-size: 18px;line-height: 35px;">{{ currency_code }}{{ price }}</span><br>
+                {% for o in options %}
+                    <span class="keyword">{{ o.attr_group_title }}: </span>
+                    {% for key,attr in o.attr %}
+                        <span optionsKey data-img="{{ attr.thumb }}" data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                    {% endfor %}
+                {% endfor %}
+                <span class="num">X1</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+<form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+<input type="hidden" name="combo_id" value="">
+<input type="hidden" name="token" value="{{ token }}">
+<input type="hidden" name="num" value="">
+<input type="hidden" name="price" value="">
+<input type="hidden" id="act" name="act" value="getAttrPrice">
+<input type="hidden" name="product_id" value="{{ product_id }}">
+<div class="content-info">
+    <h3>添加地址</h3>
+    <div class="info-irem">
+        <label class="label">{{ lang.name }} :&nbsp;</label>
+        <div class="right"><input required="required" type="text" name="name"></div>
+    </div>
+    <div class="info-irem">
+        <label class="label">{{ lang.mobile }} :&nbsp;</label>
+        <div class="right"><input required="required" type="text" name="mob"></div>
+    </div>
+    <div class="info-irem">
+        <label class="label">{{ lang.address_ }} :&nbsp;</label>
+        <div class="right" style="line-height: 35px;">
+            <select name="province">
+                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+            </select>
+            {% if regions.region_son %}
+                <select name="city">
+                    <option value="">{{ lang.province_choose }}</option>
+                    {% for i in regions.region_son %}
+                        <option value="{{ i.lang}}">{{ i.lang }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+    </div>
+    <div class="info-irem">
+        <label class="label">&nbsp;</label>
+        <div class="right"><input required="required" type="text" name="address" class="width"></div>
+    </div>
+    <div class="info-irem">
+        <label class="label">{{ lang.email }} :&nbsp;</label>
+        <div class="right"><input type="email" name="email" class="width"></div>
+    </div>
+    <div class="info-irem">
+        <label class="label">{{ lang.postal }} :&nbsp;</label>
+        <div class="right"><input type="text" name="postal" class="width"></div>
+    </div>
+    <div class="info-irem">
+        <label class="label">{{ lang.note }} :&nbsp;</label>
+        <div class="right"><textarea type="text" rows="2" name="guest" class="width"></textarea></div>
+    </div>
+    <div class="info-irem">
+        <label class="label">付款 :&nbsp;</label>
+        <div class="right paytype">
+        {% if payment_online ==1 and payment_underline ==1 %}
+            <label><input name="payment_type" value="1" type="radio" checked>   {{ lang.yijifu }}</label>
+            <label><input name="payment_type" value="0" type="radio"><img width="16px" height="16px" src="{{ THEME }}/image/haver_pay.png">&nbsp;{{ lang.cash_on_delivery }}</label>
+        {% elseif payment_online ==1 %}
+            <input name="payment_type" value="1" checked type="radio">   {{ lang.yijifu }}
+        {% elseif payment_underline ==1 %}
+            <input name="payment_type" value="0" checked type="radio"><img width="16px" height="16px" src="{{ THEME }}/image/haver_pay.png">&nbsp;{{ lang.cash_on_delivery }}
+        {% endif %}
+        </div>
+        <div style="float: right;" class="textnumber"></div>
+    </div>
+</div>
+<footer>
+    <div><span>{{ lang.total }} : </span><strong class="strongtext" >{{ currency_code }}</strong><strong id="price" class="strongtext"></strong></div>
+    <button class="btn" type="submit" name="Submit" value="{{ lang.submit_order }}">{{ lang.submit_order }}</button>
+</footer>
+</form>
+<br>
+<br>
+<!-- js resource -->
+<script src="{{ THEME }}/js/jquery.js"></script>
+<script src="{{ THEME }}/js/checkout.js"></script>
+<!--  -->
+{% include 'public/theme/footer.twig' %}

@@ -1,0 +1,133 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<link rel="stylesheet" href="{{ THEME }}/css/styles.css">
+<style type="text/css">
+	#POP800_PANEL_DIV{display: none;}
+</style>
+<div class="title">{{ title }}</div>
+<div class="swiper-container">
+    <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+        {% if photos %}
+            {% for p in photos %}
+            <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+        {% endif %}
+    </div>
+    <div class="swiper-pagination swiper-pagination-custom">
+        {% if photos %}
+            {% for p in photos %}
+            <span class="whiteicon"></span>
+            {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+</div>
+<div class="color_lump">
+	<div>
+		{{ sales }}lượt mua，còn<span data_sale="{{ sales }}" data_stock="{{ stock }}" id="surplus"></span>cái
+	</div>
+	<div style="font-size: 12px;">
+		<span>Thời gian kết thúc khuyến mãi</span>
+		<time id="timer">
+			<span id="h"></span>H
+			<span id="m"></span>phút
+			<span id="s"></span>giây
+		</time>
+	</div>
+</div>
+<div style="padding: 10px 15px;line-height: 35px;font-weight: 600;">
+	<span class="price">{{ currency_code }}<strong id="price">{{ price }}</strong></span><span id="market_price">{{ currency_code }}{{ market_price }}</span>
+	<span style="font-size: 12px;">({{ ((price/market_price)*100)|number_format(0) }}% off)</span>
+</div>
+{% if combo %}<div class="combotitle">{{ lang.select_set }}</div>{% endif %}
+<div class="nav">
+    {% if combo %}
+        {% for c in combo %}
+        <div class="subnav {% if loop.index == 1 %}basecolor{% endif %}" combo_id="{{ c.combo_id }}" c_price="{{ c.price }}" single_c="{{c.is_single_combo}}">{{ c.title|raw }}</div>
+        {% if loop.index == 1 %}
+        <input type="hidden" name="combo_id" value="{{ c.combo_id }}">
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="subnav basecolor" combo_id="0" c_price="{{ price }}" single_c="0">{{ title }}</div>
+    <input type="hidden" name="combo_id" value="0">
+    {% endif %}
+    <input type="hidden" name="price" value="{{ price }}">
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</div>
+
+<div class="footer flexbox">
+	<div class="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);"><img src="{{ THEME }}/image/kefu.png">{{ lang.contact_us }}</div>
+	<button class="btn_success flex">{{ lang.buy_now }}</button>
+</div>
+<section id="list">
+{% if combo %}
+    {% for c in combo %}
+    	<div datakey comdid="{{ c.combo_id }}" style="{% if loop.index==1 %}display: block;{% else %}display: none;{% endif %}">
+    	{% for o in  c.goods %}
+		<div class="item">
+			{% for a in o.options %}
+			<div class="products">
+				<div class="attr_title"><span class="spot">●</span><label>{{ a.attr_group_title }}</label></div>
+				<ul class="attrs">
+				{% for key,attr in a.attr %}
+					<li data-combo="{{ c.combo_id }}" data-attr="true" data-number="{{ o.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}" class="{% if loop.index==1 %}action{% endif %}" {% if attr.thumb %}attr_img{% endif %}>
+					{% if attr.thumb %}
+						<img class="attr_img" src="{{ attr.thumb }}">
+					{% endif %}
+					{{ attr.name|raw }}
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+			{% endfor %}
+		</div>
+		{% endfor %}
+		</div>
+	{% endfor %}
+{% else %}
+	<div class="item">
+		{% for o in options %}
+		<div class="products">
+			<div class="attr_title"><span class="spot">●</span><label>{{ o.attr_group_title }}</label></div>
+			<ul class="attrs">
+			{% for key,attr in o.attr %}
+				<li data-combo="0" data-attr="true" data-number="{{ o.attr_group_id }}-{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}" class="{% if loop.index==1 %}action{% endif %}" {% if attr.thumb %}attr_img{% endif %}>
+				{% if attr.thumb %}
+					<img class="attr_img" src="{{ attr.thumb }}">
+				{% endif %}
+				{{ attr.name|raw }}
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
+	</div>
+{% endif %}
+    <div class="quantity">
+        <h4>{{ lang.num }} : </h4>
+        <div class="m-selnum dr">
+            <div onclick="minnumber()" class="less z-dis"></div>
+            <div class="textWrap">
+                <input type="text" class="text numbertext form-control" value="1" name="number" id="num" onblur="inputnumber();">
+            </div>
+            <div onclick="addnumber()" class="more"></div>
+        </div>
+    </div>
+    <div>
+    	<span class="total">{{ lang.total }} : <strong>{{ currency_code }}</strong><strong id="total">{{ price }}</strong></span>
+    </div>
+</section>
+<div class="content">
+	{{ content|raw }}
+	<br>
+    <br>
+</div>
+<br>
+<br>
+<br>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}

@@ -1,0 +1,140 @@
+<!-- resource -->
+<link href="{{ THEME }}/style/cart.min.css" type="text/css" rel="stylesheet"/>
+<!--  -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!--  -->
+<div class="g-bd">
+    <div id="order">
+        <div class="warp">
+                <input type="hidden" name="token" value="{{ token }}">  
+
+                    <div class="address-title" style="z-index: 2;">
+                        <div><a href="#order">
+                            <span style='font-size:16px;color:#222'>{{ lang.addr }}</span>
+                            <span class="kefu">{{ lang.customer }}</span></a>
+                        </div>
+                        <div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}">{{ lang.service_online }}</div>
+                    </div>             
+                <div class="address-input">
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input required="required" placeholder="{{ lang.name_placeholder }}" type="text" name="name" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input required="required" placeholder="{{ lang.phone }}" type="number" name="mob" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input placeholder="{{ lang.email_address }}" error="{{ lang.test_email }}" type="email" name="email" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell" id="province">
+                            <select name="province">
+                                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                            </select>
+                        </div>
+                        {% if regions.region_son and regions.code != "TW" %}
+                            <div class="cell" id="city">
+                            <!-- <select name="city">
+                                <option value="{{ regions.region_id }}" selected>{{ lang.select_city }}</option>
+                            </select> -->
+                                <select name="city" required>
+                                    <option value="">{{ lang.province_choose }}</option>
+                                    {% for i in regions.region_son %}
+                                        <option value="{{ i.lang}}">{{ i.lang }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                        <div style="clear:both;"></div>
+                    </div>
+                    {% if regions.code == "TW" %}
+                    <div class="buy-single-row label-input">
+                        <div class="cell select" style="margin-right:2%;">
+                            <select name="city" required="required">
+                                <option value="">{{lang.city}}</option>
+                            </select>
+                        </div>
+                        <div class="cell select">
+                            <select name="district" required="required">
+                                <option value="">{{lang.district}}</option>
+                            </select>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                    {% endif %}
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input required="required" type="text" name="address" placeholder="{{ lang.full_address }}" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="cell">
+                                <input type="text" name="postal" class="inputText" placeholder="{{ lang.postal_long }}" error="{{ lang.test_postal }}">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="cell"  style="height:41px;padding-top:4px;">
+                                <textarea placeholder="{{ lang.remark }}" name="guest" class="text_area" rows="1"></textarea>
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell" style="border:none;">
+                            {% if payment_underline ==1 %}
+                                <label rel="0"><input name="payment_type" value="0" id="0" type="radio">{{ lang.cash_on_delivery }}</label>
+                            {% endif %}
+                            {% if payment_online ==1 %}
+                                <label rel="1"><input name="payment_type" value="1" id="1" type="radio"> {{ lang.yijifu }}</label>
+                            {% endif %}
+                            {% if payment_paypal == 1 %}
+                                <label rel="2"><input name="payment_type" value="2" id="2" type="radio"> paypal</label>
+                            {% endif %}
+                        </div>
+                        {% if payment_ocean %}
+                        <div class="cell" style="border:none;">
+                            <label rel="4"><input name="payment_type" value="4" id="4" type="radio"> <img src="/lib/ocean/image/card_1.gif"><img src="/lib/ocean/image/card_2.gif"><img src="/lib/ocean/image/card_3.gif"></label>
+                            {{ ocean|raw }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="fixed">
+                    <div class="left">{{ lang.total_price }}:
+                        <span class="value">
+                            <span id="price">{{ price }}</span>
+                            <input type="hidden" name="zfbprice">
+                            <input type="hidden" name="price" value="" readonly=""><span id="zfbyh"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0)" onclick="checkattrs()" style="color:#fff">{{ lang.buy_now }}</a>
+                    <a href="#order" data-cuckootag="confirm_order" style="color:#fff;display:none">{{ lang.buy_now }}</a>
+                    <button class="btn w-button" type="submit" name="Submit"></button>
+                    <div class="top right"></div>
+                </div>
+                <div class="User_notes" style="margin-top: 10px">
+                    <h2 class="notes">{{ lang.user_notes }}</h2>
+                    <div class="note_text">{{ lang.user_fb }}</div>
+                    <div class="note_title">{{ lang.user_note1 }}</div>
+                    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+                    <div class="note_title">{{ lang.user_note2 }}</div>
+                    <div class="note_text">{{ lang.user_note2_1 }}</div>
+                    <div class="note_title">{{ lang.user_note3 }}</div>
+                    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+                    <div class="note_title">{{ lang.user_note4 }}</div>
+                    <div class="note_text">{{ lang.user_note4_1 }}</div>
+                    <div class="note_title">{{ lang.user_note4_2 }}</div>
+                    <div class="note_title">{{ lang.user_note4_3 }}</div>
+                    <div class="note_text">{{ lang.user_note4_4 }}</div>
+                </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+<!--  -->

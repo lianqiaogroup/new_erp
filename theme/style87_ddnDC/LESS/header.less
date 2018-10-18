@@ -1,0 +1,42 @@
+header{
+    position: absolute;
+    width: 100%;
+    z-index: 12;
+    left: 0;
+    top:0;
+	>div{
+		max-width:1248px;
+		padding:0 16px;
+		margin:0 auto;
+	}
+	img{
+		height:20px;
+		width:auto;
+		margin-top:18px;
+	}
+	.right{
+		height:100%;
+	}
+}
+.logo{
+	float:left;
+	height:56px;
+	margin-left:16px;
+}
+@media screen and (min-width:1000px) {
+	header{
+		height:64px;	
+		background:#222;
+		color:#fff;
+		.right{
+			line-height:64px;
+		}
+	}
+}
+@media screen and (min-width:1000px) and (max-width:1280px) {	
+	header{
+		>div{
+			padding:0 80px;
+		}
+	}
+}

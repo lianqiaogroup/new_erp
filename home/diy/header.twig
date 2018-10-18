@@ -1,0 +1,38 @@
+{% if css == '' %}
+{% set css = a %}
+{% endif %}
+
+{% if css == 'a' %}
+<header class="class-{{ css }}">
+	<span class="button left">
+		<i class="material-icons menu">toc</i>
+	</span>
+	<!-- <span class="button right"> <i class="material-icons menu">toc</i> </span> -->
+    <h1>
+    	<a href="/">
+    	{% if info.logo %}
+    		<img src="{{ info.logo }}">
+    	{% else %}
+    		{{ title }}
+    	{% endif %}
+    	</a>
+	</h1>
+    <span class="glyphicon searchs" style="right: 16px;display: none;">
+    	<a href="javascript:void(0)"><i class="material-icons fexlsearch">search</i></a>
+	</span>
+	<!--  -->
+	<div class="slidedown">
+		<ul>
+			<li><a href="#">asdasd</a></li>
+			<li><a href="#">asdasd</a></li>
+			<li><a href="#">asdasd</a></li>
+			<li><a href="#">asdasd</a></li>
+			<li><a href="#">asdasd</a></li>
+			<li><a href="#">asdasd</a></li>
+		</ul>
+	</div>
+</header>
+
+
+{% endif %}
+

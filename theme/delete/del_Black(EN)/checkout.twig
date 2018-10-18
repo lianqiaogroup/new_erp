@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
+    <meta name="keywords" content="{{ seo_title }}" />
+    <meta name="description" content="{{ seo_description }}" />
+    <title>{{ title }}</title>
+    <script src="/theme/wnczxzd.com/js/jquery.js" language="javascript" type="text/javascript"></script>
+    <LINK href="/theme/wnczxzd.com/image/favicon.ico" type="image/x-icon" rel=icon>
+    <link href="/theme/wnczxzd.com/css/style.css" type="text/css" rel="stylesheet"/>
+    <link href="/public/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div id="order">
+    <div class="warp">
+        <form id="form" name="form" action="/order.php" method="post" onSubmit="return postcheck()">
+            <div class="nav-header">
+                <div class="header-left"><a href="/{{ identity_tag}}"><span class="glyphicon glyphicon-menu-left"></span></a> </div>
+                <h2>{{ lang.product_information }}</h2>
+            </div>
+            
+            <!--套餐-->
+           
+                <div class="bdbox" id="combo">
+                    <label class="bdxx"><em>*</em> 产品 </label>
+                    <div class="input-group">
+                         {% if combo %}
+                             {% for c in combo %}
+                                  <input type="radio" name="combo_id" value="{{ c.combo_id }}" class="combo"> {{ c.title|raw }}
+                             {% endfor %}
+                             {% else %}
+                                 <input type="radio" name="combo_id" value="0"> {{ title|raw }}
+                         {% endif %}
+                       
+                    </div>
+                </div>
+            
+            <!--套餐-->
+             <!--属性开始-->
+            <div id="product_attr">
+                {% for o in  options %}
+                    <div class="bdbox">
+                        <label class="bdxx"><em>*</em>{{ o.attr_group_title|raw }}</label>
+                        <div class="input-group">
+                            {% for key,attr in o.attr %}
+                                <input type="radio" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr"> {{ attr.name|raw }} {% if attr.thumb %} <img src="{{ attr.thumb }}" width="80" height="80">{% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <input type="hidden" name="act" value="getAttrPrice">
+            </div>
+              <!--属性结束-->
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>{{ lang.num }}</label>
+                <div class="input-group " style="width: 110px;margin: 5px 0px;">
+                <span class="input-group-btn" >
+                <button  class="btn btn-default inc-btn" type="button" onClick="minnumber()">-</button>
+                </span>
+                    <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onBlur="inputnumber();" style="text-align: center">
+                    <span class="input-group-btn">
+                <button class="btn btn-default inc-btn" type="button" onClick="addnumber()">+</button>
+                 </span>
+                </div>
+            
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>{{ lang.name }}</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="name" class="inputText"/>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>{{ lang.mobile }}</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="mob" class="inputText"/>
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx" for="email"><em>*</em>E-mail</label>
+                <div class="textbox"><input required="required" name="email" placeholder="{{ lang.email_use }}" maxlength="30" class="inputText" type="email">  </div>
+            </div>
+        
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>{{ lang.address_full }}</label>
+                <div class="textbox" id="province">
+                      <select name="province">
+                          <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                      </select>
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx"></label>
+                <div class="textbox">
+                <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"> {{ lang.postal }}</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="postal"  class="inputText">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>{{ lang.money }}</label>
+                <div class="text3box">
+                   {% if currency_prefix ==1 %} {{ currency_code }} {% endif %} <input name="price" readonly style="width:80px;" value="{{ discount_price  }}"/> {% if currency_prefix ==0 %} {{ currency_code }} {% endif %}  <span id="zfbyh"></span>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>{{ lang.cash_style }}</label>
+                <div class="dxbox">
+                      {% if payment_online ==1 and payment_underline ==1 %}
+                            <input name="payment_type" value="1" type="radio" checked>   {{ lang.yijifu }}
+                            <input name="payment_type" value="0" type="radio">   {{ lang.cash_on_delivery }}
+                          
+                          {% elseif payment_online ==1 %}
+                              <input name="payment_type" value="1" checked type="radio">   {{ lang.yijifu }}
+                          {% elseif payment_underline ==1 %}
+                              <input name="payment_type" value="0" checked type="radio">  {{ lang.cash_on_delivery }}
+                      {% endif %}
+                    
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx"></label>
+                <div class="textbox">
+                    <font color='red'>{{ lang.warming|raw }}</font>
+                </div>
+            </div>
+            
+    
+            <div class="bdbox">
+                <label class="bdxx">{{ lang.note }}</label>
+                <div class="text2box">
+                    <textarea name="guest" placeholder="{{ lang.order_remark }}"></textarea>
+                </div>
+            </div>
+            
+            
+            <div class="subbox">
+                <input type="submit" name="Submit" class="btn-style" value="{{ lang.submit_order }}">
+            </div>
+            <input type="hidden" name="token" value="{{ token }}">
+        </form>
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    $(document).ready(function()
+    {
+        //默认第一个属性选中
+         $('#product_attr .bdbox').each(function(){
+             $(this).find('input[type=radio]').eq(0).attr("checked", true);
+         }) ;
+        
+        
+        $("#combo").find('input[type=radio]').eq(0).attr("checked", true);
+        refresh_price();
+    }) ;
+
+    $('.combo').click(function () {
+        refresh_price();
+    }) ;
+    
+    function addnumber(){
+        $('#num').val(parseInt($('#num').val())+1);
+        refresh_price() ;
+    }
+    function minnumber(){
+        if($('#num').val()>1){
+            $('#num').val(parseInt($('#num').val())-1);
+            refresh_price() ;
+        }
+    }
+    
+//    $("select[name='province']").change(function(){
+//        var id = $(this).val();
+//        $('#city').html('');
+//        if(id !=='')
+//        {
+//            $.ajax({
+//                url: 'region.php?',
+//                type: 'post',
+//                data: {region_id:id},
+//                dataType: 'json',
+//                success: function(json) {
+//                    var html ='<select name="state">' ;
+//                    for(var i in json)
+//                    {
+//                        if(i==0)
+//                        {
+//                            html+= '<option value="'+json[i].region_id+'" selected> '+ json[i].region_name+'</option>';
+//                        }
+//                        else{
+//                            html+= '<option value="'+json[i].region_id+' "> '+ json[i].region_name+'</option>';
+//                        }
+//
+//                    }
+//                     html +='</select> ';
+//
+//                    $('#city').html(html)
+//                },
+//                error: function(xhr, ajaxOptions, thrownError) {
+//                }
+//            });
+//        }
+//
+//
+//    }) ;
+    function refresh_price() {
+        $.ajax({
+            url: '/checkout.php?',
+            type: 'post',
+            data: $('#combo input[type=\'radio\']:checked,#product_attr input[type=\'hidden\'],input[name=\'num\']'),
+            dataType: 'json',
+            success: function(json) {
+               if(json.ret)
+               {
+                  $("input[name='price']").val(json.total);
+               }
+               else{
+                   alert(json.msg)
+               }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }
+    
+    function  postcheck() {
+         //FIXME: js验证数据 balabala
+         return true;
+    }
+</script>
+{% include 'wnczxzd.com/footer.twig' %}
+</body>
+</html>

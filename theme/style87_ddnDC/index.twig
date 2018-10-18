@@ -1,0 +1,25 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet" type="text/css">
+<!-- end header resource -->
+<div class="panel-large" data-error='{{ lang.Th_titleattr }}'>
+    <input id="region_code" value="{{ regions.code }}" type="hidden">
+	{% include 'pc_index.twig' %}
+</div>
+<div class="panel-small" style="">
+    <input id="region_code" value="{{ regions.code }}" type="hidden">
+	<div class="page-index" data-error='{{ lang.Th_titleattr }}'>
+		{% include 'mob_index.twig' %}
+	</div>	
+	<div class="comment" style="display:none;">
+		{% include 'comment.twig' %}
+	</div>
+</div>
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+{% include 'footer.twig' %}
+

@@ -1,0 +1,439 @@
+.ui-panel {
+	width: 100%
+}
+body {
+	max-width: 540px;
+	margin: auto !important;
+	-webkit-font-smoothing: antialiased;
+    font-family: sans-serif;
+}
+
+/* ---------------------------------------
+	header
+--------------------------------------- */ 
+header.bar {
+	height: 2.2rem;
+	background: #f2f2f2;
+}
+header.bar .icon {
+	color: #222222;
+	font-size: 26px;
+	font-weight: 600;
+}
+header.bar .title {
+	line-height: 2.2rem;
+	color: #fff;
+	background-color: #f2f2f2;
+	height: 100%;
+}
+.logo{
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* ---------------------------------------
+	sidebar
+--------------------------------------- */ 
+.nav{
+	position: absolute;
+	top: 2.2rem;
+	width: 100%;
+}
+.type-nav{
+	width: 100%;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	padding-right: 0.5rem;
+    padding-left: 0.5rem;
+	overflow: hidden;
+	background:#FE3B92;
+	color: #fff;
+	font-size: 13px;
+}
+.type-nav li{
+	display: inline-block;
+	/*/ width: 70px;*/
+	margin-right: 13px;
+	text-align: center;
+}
+.type-nav .action a{
+	color: #911F52;
+}
+.type-nav li a{
+	color: #fff;
+
+}
+.titlesback{
+	height: 36px;
+	line-height: 36px;
+	color: #FE3B92;
+	font-size: 14px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+}
+.tipimg{
+	width: 100%;
+	height: auto;
+}
+.indextitle{
+	background-image: url('../image/headbak.jpg');
+}
+.catetitle{
+	background-image: url('../image/catebak.jpg');
+}
+.panel.panel-left.panel-reveal {
+	background-color: #fff;
+}
+.ui-slider{padding-top: 40.25%;}
+.slidebar ul li {
+	width: 100%;
+	height: 45px;
+	display: table;
+	vertical-align: middle;
+	border-bottom: 1px solid #f3f3f3;
+}
+.slidebar ul li a {
+	display: table-cell;
+	width: 100%;
+	vertical-align: middle;
+	padding: 8px 10px;
+	color: #222;
+	font-size: 14px;
+	padding-left: 30px;
+}
+.barlogo{
+	background: #FE9DC8;
+}
+.barlogo img{
+	display: table-cell;
+	margin-top: 10px;
+	margin-left: 1rem;
+	width:10rem;
+}
+.barlogo .logotext{
+	color: #fff;
+	font-size: 12px;
+	line-height: 30px;
+	text-indent: 30px;
+}
+body.with-panel-left-reveal .page.page-current:before {
+	display: block;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	position: absolute;
+	content: " ";
+	opacity: .5 !important;
+	z-index: 201;
+	background: #000 !important;
+}
+.red {
+	color: red
+}
+a:link {
+	color: #222
+}
+.text-center {
+	text-align: center
+}
+.product-grid {
+	position: relative;
+	padding: 4px;
+	color: #999;
+	font-size: 14px;
+	overflow: hidden;
+	box-sizing: border-box;
+	width: 100%;
+}
+.product-classify{
+	padding-top: 0;
+	border:1px solid #EAEAEA;
+	padding: 11px;
+}
+.product-classify .product-thumb {
+	background:url("../image/6.gif");
+	background-repeat: no-repeat;
+	background-size: 50% auto;
+	background-position: center;
+	width: 100%;
+	height: 138px;
+	margin: auto;
+}
+.product-classify .product-thumb img{
+	display: block;
+	width: 138px;
+	margin: auto;
+	position: relative;
+}
+.product-classify .product-title {
+	color: #222;
+	font-size: 14px;
+	line-height: 30px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.product-classify .listprice del{
+	font-size: 12px;
+	color: #aaa;
+	margin-left: 5px;
+}
+.product-classify .ui-tag-s-hot:before{
+	content: " ";
+    display: inline-block;
+    background: #FE3B92;
+    width: 58px;
+    height: 20px;
+    border-radius: 20px;
+    position: absolute;
+    top: -6px;
+    left: -8px;
+}
+.ui-grid-halve > li{
+	padding-bottom: 5px;
+}
+.product-classify .ui-tag-s-hot:after{
+	content: "จำกัดเวลา";
+	width: auto;
+	font-size: 12px;
+	top: -6px;
+	left: -4px;
+}
+.product-grid .product-thumb {
+	background:url("../image/6.gif");
+	background-repeat: no-repeat;
+	background-size: 50% auto;
+	background-position: center;
+	width: 135px;
+	height: 135px;
+}
+.product-grid .product-thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.product-grid .product-title {
+	color: #222;
+	font-size: 14px;
+	height: 3em;
+	overflow: hidden;
+}
+.cuttext,.cutoff{
+	font-size: 12px;
+	color: #FE3B92;
+	margin-left: .3rem;
+}
+.product-price{
+	margin-top: 10px;
+}
+.time{
+	background: #5CC4DF;
+	display: inline-block;
+	color: #fff;
+	font-size: 13px;
+	padding: .1rem .5rem;
+	position: absolute;
+	bottom: 4px;
+}
+#time{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url('../image/Timer.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	vertical-align: text-bottom;
+}
+.salesp{
+	position: absolute;
+	right: 0;
+	bottom: 4px;
+}
+.product-grid .market_price {
+	text-decoration: line-through;
+}
+
+.product-grid.style2 {
+	padding: 0;
+	padding-bottom: 12px;
+	margin-bottom: 12px;
+	border-bottom: 1px solid #f1f1f1
+}
+
+.product-grid.style2>img {
+	float: left;
+	width: 1.2rem
+}
+
+.product-grid.style2>div {
+	padding-left: 1.3rem
+}
+
+.ui-offcanvas {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 300px;
+	right: 0;
+	z-index: 1;
+	overflow-y: hidden;
+	background-color: rgba(0,0,0,.3)
+}
+
+.ui-offcanvas h1 {
+	color: #fff;
+	margin-bottom: 30px;
+	padding-left: 10px;
+	padding-top: 20px;
+}
+
+.ui-offcanvas>.boxer {
+	width: 300px;
+	height: 100%;
+	position: relative;
+	background: #222;
+}
+
+.ui-offcanvas .ui-list {
+	background-color: #222;
+}
+
+.ui-offcanvas .ui-list li {
+	background-color: #222;
+	line-height: 45px;
+	margin-left: 0;
+	width: 100%;
+	height: auto;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.ui-offcanvas .ui-list li a {
+	display: block;
+	width: 100%;
+	height: 45px;
+	color: #fff;
+	box-sizing: border-box;
+	padding-left: 10px;
+}
+.ui-offcanvas .ui-list > li > a {
+	border-bottom: 1px solid #444;
+} 
+
+.ui-offcanvas .ui-list .menu-item-child {
+	display: block;
+	background-color: #282828;
+}
+
+.ui-offcanvas .ui-list .menu-item-child a {
+	padding-left: 25px;
+	font-weight: normal;
+	color: #ddd;
+}
+
+.ui-offcanvas .ui-list li a:active {
+	background-color: #333
+}
+
+#main {
+	transition: transform .4s
+}
+
+body.offcanvas-in {
+	width: 100%;
+	height: 100%;
+	overflow: hidden
+}
+
+body.offcanvas-in #main {
+	position: absolute;
+	transform: translateX(300px)
+}
+
+body.offcanvas-in .ui-offcanvas {
+	display: block
+}
+
+#main {
+	position: relative;
+	z-index: 2;
+	background-color: #f9f9f9
+}
+
+.ui-footer,.ui-header {
+	position: relative;
+	z-index: 1
+}
+
+.ui-header .ui-icon-scan {
+	position: absolute;
+	left: 0;
+}
+
+.ui-header~.ui-container {
+	border: none
+}
+
+
+/*-------------------------------------
+	footer
+-------------------------------------*/
+
+footer.ui-footer { background-color: #000; height: auto; font-size: 13px;color: #ccc;font-weight: 600;}
+.absobot{position: absolute;bottom: 0;}
+footer.ui-footer ul {text-align: left; padding: 10px 11px; }
+footer.ui-footer ul li {line-height: 2em;text-indent: 30px;}
+footer.ui-footer ul li:first-child{font-size: 16px;}
+footer.ui-footer ul a {color: #999; }
+footer .ui-footerul a:hover, footer ul a:active {text-decoration: underline; }
+
+
+/*-------------------------------------
+	column panel
+-------------------------------------*/
+
+.common-hd {height: 63px; line-height: 63px; width: 100%; font-size: 20px }
+.common-hd>span.ui-arrowlink:before {right: -20px }
+.page-index .ui-slider {padding-top: 50% }
+.page-index .ui-panel {background-color: #fff; margin-bottom: 0px }
+
+
+/*-------------------------------------
+	page main product
+-------------------------------------*/
+
+.page-index .products { padding: 10px 0;}
+.page-index .products .ui-grid-trisect {padding: 0px; margin-bottom: 5px; padding: 0 11px 11px 11px;border-bottom: 1px solid #ddd;}
+.page-index .classify {padding-top: 5px;padding-left: 7px;padding-right: 2px;}
+.page-index .classify .ui-grid-trisect {padding: 0px; margin-bottom: 5px; }
+.flexdiv {
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: -moz-flex;
+  justify-content: space-between;
+}
+.flexdiv .flexitem {
+  flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  -moz-flex: 1;
+  text-align: left;
+  margin-left: .5rem;
+}
+/*-------------------------------------
+	pageTop
+-------------------------------------*/
+
+.pageTop { position:fixed; bottom:35px; right:15px; z-index:80; width:45px; height:45px; border-radius:22.5px; background-color:rgba(54, 54, 54, 0.4); }
+.pageTopLink { display:block; width:45px; height:45px; text-align:center; }
+.pageTopLink i { color:#fff; text-shadow:none; }
+strong{color: #222;font-size: 14px;}
+.marprice{font-size: 12px;color: #aaa;margin-left: 3px;}
+.page, .page-group{height: auto}

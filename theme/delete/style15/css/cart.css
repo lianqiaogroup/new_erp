@@ -1,0 +1,155 @@
+body {
+	background-color: #fff;
+	max-width: 640px;
+	margin: 0 auto;
+}
+.ui-header {
+	position: relative;
+	background-color: #fff;
+	color: #222;
+}
+.ui-header i {
+	color: #222;
+}
+
+.ui-header ~ .ui-container {
+	border-top: 0px;
+}
+
+
+.enjoythis {
+	padding: 10px 0;
+	line-height: 1.7em;
+}
+.enjoythis p {
+	padding-left: 15px;
+}
+.enjoythis li {
+	font-size: 12px;
+	position: relative;
+	text-align: center;
+	float: left;
+	width: 33.3%;
+	line-height: 35px;
+	color: white;
+	box-sizing: border-box;
+
+}
+.enjoythis li:nth-child(2){
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+	height: 20px;
+	margin-top: 8px;
+	line-height: 20px;
+}
+
+.ui-form input {
+	border: solid 1px #ececec;
+	height: 33px;
+	border-radius: 5px;
+}
+
+.ui-form textarea {
+	border: solid 1px #ddd;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.ui-form input, .ui-form select, .ui-form textarea {
+	padding-left: 7px;
+}
+
+.ui-form > form > .ui-row {
+	height: 35px;
+	margin-bottom: 10px;
+}
+
+.ui-form > form > .ui-row > .ui-col {
+	height: 35px;
+	line-height: 35px;
+}
+
+.ui-form > form > .ui-row.fortextarea {
+	height: 70px;
+}
+
+.ui-form .ui-select {
+	margin-left: 0px;
+	border: solid 1px #ddd;
+	height: 35px;
+	margin-right: 0px;
+	line-height: 35px;
+}
+
+
+
+/* button */
+.ui-btn-lg.black {
+	height: 34px;
+	font-size: 14px;
+	line-height: 34px;
+	width: 50%;
+	float: right;
+	color: #fff;
+	border-radius: 50px !important;
+	background: #1F4BA4;
+
+}
+.ui-btn-lg.black:before {
+	display: none;
+}
+.ui-btn-lg.black:active {
+	color: #fff !important;
+	background: #333 !important;
+}
+/* button */
+
+
+.red {
+	color: #3E6ECE;
+}
+.num_this{
+	margin-top: -5px;
+}
+.list-se{
+	border-radius: 5px;
+	height: 100%;
+	float: right;
+	width: 45px;
+	overflow: hidden;
+	border: 1px solid #ececec;
+}
+.list-se p{width: auto;margin: 0 auto;text-align: center}
+.less, .textWrap input, .more{width: 45px;border: none;text-align: center;padding: 0;}
+
+.product-info {
+	width: 100%;
+	margin-bottom: 8px !important;
+	line-height: 1.5em;
+}
+
+.product-info .ui-form-item {
+	height: auto;
+	line-height: 1em;
+}
+
+.product-info .img {
+	float: left;
+}
+.banner_top_one{
+	width: 100%;
+	height: 64px;
+	background: url("../images/xiadan.png")no-repeat center;
+}
+.con{float: left;}
+@media screen and (min-width: 320px) and (max-width: 374px){
+	.less p, .more p{line-height: 1.5 !important;}
+	.less svg, .more svg{margin-top: 0 !important;}
+	#num{padding-bottom: 9px;}
+}
+@media screen and (min-width: 375px) and (max-width: 413px){
+	#num{height: auto}
+}
+.ui-icon-return{
+	left:6px !important;
+}

@@ -1,0 +1,176 @@
+{% if theme == 'style92' %}
+	<div class="flexbox ">
+		<div class="flex tab_two"><input type="text" required="required" name="name" placeholder="{{ lang.name }}"></div>
+		<div class="flex tab_two">
+			<input type="number" required="required" name="mob" id="thaphone" error="{{ lang.mob_error }}" placeholder="{{ lang.phone }}">
+		</div>
+	</div>
+	<div class="table-row">
+		<input type="text" name="guest" placeholder="{{ lang.note }}">
+	</div>
+	<div class="flexbox">
+		{% if payment_underline == 1 %}
+			<div class="flex tab_two tab_sele" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+		{% endif %}
+		{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+			<div class="flex tab_two">
+				<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+			</div>
+	    {% endif %}
+	</div>
+	<input name="payment_type" value="0" type="hidden">
+	<input type="hidden" required="required" name="address" value="**地址暂无">
+{% elseif theme == 'style92_1' %}
+	<div class="flexbox ">
+		<div class="flex tab_two"><input type="text" required="required" name="name" placeholder="{{ lang.name }}"></div>
+		<div class="flex tab_two">
+			<input type="number" required="required" name="mob" id="thaphone" error="{{ lang.mob_error }}" placeholder="{{ lang.phone }}">
+		</div>
+	</div>
+	<div class="table-row">
+         {% if regions.code == "TW" %}
+        <input type="text" name="addressfalse" value="" placeholder="收貨地址（可不填）">
+         {% else %}
+        <input type="text" name="addressfalse" value="" placeholder="{{ lang.addr }}">
+        {% endif %}
+	</div>
+	<div class="table-row">
+		<input type="text" name="guest" placeholder="{{ lang.note }}">
+	</div>
+	<div class="flexbox">
+		{% if payment_underline == 1 %}
+			<div class="flex tab_two tab_sele" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+		{% endif %}
+		{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+			<div class="flex tab_two">
+				<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+			</div>
+	    {% endif %}
+	</div>
+	<input name="payment_type" value="0" type="hidden">
+	<script type="text/javascript">
+		$('input[name="addressfalse"]').change(function(){
+			var text = $(this).val();
+			var addtext = '**';
+			if($.trim(text) != ''){
+				addtext += text;
+			}else{
+				addtext += '地址暂无';
+			}
+			$('input[name="address"]').val(addtext);
+		})
+	</script>
+	<input type="hidden" required="required" name="address" value="**地址暂无">
+{% else %}
+<div class="flexbox">
+	<div class="flex regions">{{ regions.region_name }}</div>
+	{% if regions.region_son and regions.code != "TW" %}
+		<div class="flex marleft">
+        	<select name="city" class="regions-city" error="{{ lang.province_choose }}">
+            	<option value="">{{ lang.province_choose }}</option>
+                {% for i in regions.region_son %}
+                    <option value="{{ i.lang}}">{{ i.lang }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
+</div>
+{% if regions.code == "TW" %}
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="city" required="required">
+			<option value="">{{lang.city}}</option>
+		</select>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="district" required="required">
+			<option value="">{{lang.district}}</option>
+		</select>
+	</div>
+</div>
+{% endif %}
+<div class="table-row">
+	{% if theme == 'style73' or theme == 'style27_2' or theme == 'style39'%}
+        <input type="text" name="address" placeholder="{{ lang.addr }}">
+    {% else %}
+        <input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+    {% endif %}
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="name" maxlength="100" placeholder="{{ lang.name }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="number" name="postal" placeholder="{{ lang.postal }}" error="{{ lang.test_postal }}" maxlength="20">
+	</div>
+</div> 
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}" maxlength="100">
+	</div>
+	<div class="flex tab_two">
+		<input type="email" name="email" placeholder="{{ lang.email }}" error="{{ lang.test_email }}" maxlength="40">
+	</div>
+</div>
+<div class="table-row">
+	<input type="text" name="guest" placeholder="{{ lang.note }}">
+</div>
+{% if payment_underline == 1 %}
+	<div class="flexbox">
+		<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+	</div>
+{% endif %}
+{% if payment_ocean %}
+	<div class="flexbox">
+		<div class="flex tab_two tab_sele" rel="4"><i class="icon"></i>
+			<img src="/lib/ocean/image/card_1.gif" style="width: auto;">
+			<img src="/lib/ocean/image/card_2.gif" style="width: auto;">
+			<img src="/lib/ocean/image/card_3.gif" style="width: auto;">
+		</div>
+    </div>
+	<div class="table-row pay-type" style="display: none;">
+		{{ ocean|raw }}
+	</div>
+{% endif %}
+<input name="payment_type" value="0" type="hidden">
+{% endif %}
+<script>
+    var payInfo = true;
+    $('input[name="name"]').on("keydown", function () {
+        if (payInfo) {
+            fbq('track', 'AddPaymentInfo');
+            payInfo=false;
+        };
+    });
+    loadstate();
+    $('[name="city"]').change(function(event) {
+	    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+	    loadCity(id);
+	});
+	function loadstate(){
+	    var region_id = '{{regions.region_id}}',regionCode = '{{regions.code}}';
+	    if(regionCode == 'TW'){
+	    $.post('/region.php', { 'region_id': region_id }, function(data) {
+	        var data = JSON.parse(data);
+	            data.map(function(item, index){
+	                $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+	            });
+	        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+	    });
+		}
+	}
+	function loadCity(id, callback){
+	    $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+	    	var districtFirst = $('[name="district"]').children().first();
+	        $('[name="district"]').children().remove();
+	        $('[name="district"]').append(districtFirst);
+	        $('[name="district"]').val('');
+	        var data = JSON.parse(data);
+	        data.map(function(item, index){
+	            $('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+	        });
+	    });
+	}
+</script>

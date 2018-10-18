@@ -1,0 +1,32 @@
+.detail {
+  padding: 0 13px;
+}
+.detail .sales {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.detail .sales .progress {
+  height: 14px;
+  background: #eee;
+  border-radius: 7px;
+  flex: 1;
+  margin-right: 14px;
+  max-width: 240px;
+}
+.detail .sales .progress span {
+  display: inline-block;
+  background: -webkit-linear-gradient(left, #fc7693, #ff3061);
+  background: linear-gradient(to right, #fc7693, #ff3061);
+  width: 60%;
+  height: 14px;
+  border-radius: 7px;
+}
+.detail .sales .stock {
+  font-size: 12px;
+  color: #A2A2A2;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlNjQvbGVzcy9kb21fc2FsZXMubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLGVBQUE7O0FBREQsT0FFQztFQUNDLHFCQUFBO0VBQ0EsYUFBQTtFQUNBLDhCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTs7QUFQRixPQUVDLE9BTUM7RUFDQyxZQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtFQUNHLE9BQUE7RUFDQSxrQkFBQTtFQUNBLGdCQUFBOztBQWROLE9BRUMsT0FNQyxVQU9DO0VBQ0MscUJBQUE7RUFDQSxZQUFXLCtDQUFYO0VBQ0EsWUFBVywyQ0FBWDtFQUNBLFVBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7O0FBckJKLE9BRUMsT0FzQkM7RUFDQyxlQUFBO0VBQ0EsY0FBQSIsInNvdXJjZXNDb250ZW50IjpbIi5kZXRhaWx7XHJcblx0cGFkZGluZzowIDEzcHg7XHJcblx0LnNhbGVze1xyXG5cdFx0ZGlzcGxheTotd2Via2l0LWZsZXg7XHJcblx0XHRkaXNwbGF5OmZsZXg7XHJcblx0XHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcblx0XHRhbGlnbi1pdGVtczpjZW50ZXI7XHJcblx0XHRtYXJnaW4tYm90dG9tOiAyNXB4O1xyXG5cdFx0LnByb2dyZXNze1xyXG5cdFx0XHRoZWlnaHQ6MTRweDtcclxuXHRcdFx0YmFja2dyb3VuZDojZWVlO1xyXG5cdFx0XHRib3JkZXItcmFkaXVzOjdweDtcclxuXHRcdCAgICBmbGV4OiAxO1xyXG5cdFx0ICAgIG1hcmdpbi1yaWdodDogMTRweDtcclxuXHRcdCAgICBtYXgtd2lkdGg6IDI0MHB4O1xyXG5cdFx0XHRzcGFue1xyXG5cdFx0XHRcdGRpc3BsYXk6aW5saW5lLWJsb2NrO1xyXG5cdFx0XHRcdGJhY2tncm91bmQ6LXdlYmtpdC1saW5lYXItZ3JhZGllbnQobGVmdCwjZmM3NjkzLCNmZjMwNjEpO1xyXG5cdFx0XHRcdGJhY2tncm91bmQ6bGluZWFyLWdyYWRpZW50KHRvIHJpZ2h0LCNmYzc2OTMsI2ZmMzA2MSk7XHJcblx0XHRcdFx0d2lkdGg6NjAlO1xyXG5cdFx0XHRcdGhlaWdodDoxNHB4O1xyXG5cdFx0XHRcdGJvcmRlci1yYWRpdXM6N3B4O1xyXG5cdFx0XHR9XHJcblx0XHR9XHJcblx0XHQuc3RvY2t7XHJcblx0XHRcdGZvbnQtc2l6ZToxMnB4O1xyXG5cdFx0XHRjb2xvcjojQTJBMkEyO1xyXG5cdFx0fVxyXG5cdH1cclxufSJdLCJmaWxlIjoic3R5bGU2NC9sZXNzL2RvbV9zYWxlcy5jc3MifQ== */

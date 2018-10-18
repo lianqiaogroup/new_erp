@@ -1,0 +1,102 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/styles.css" rel="stylesheet">
+<link href="{{ THEME }}/css/singleActive.css" rel="stylesheet">
+<!--  -->
+<div class="mod_bar" id="header_normal">
+    <!--这里是标题-->
+    <div class="mod_bar_tit">{{ title }}</div>
+    
+</div>
+<div class="mod_slider" id="loopImgDiv">
+    <div class="inner">
+        <div class="pic_list" id="loopImgUl">
+            <!--这里是后台上传的缩略图-->
+            <img src="{{ thumb }}" style="width:100%;">
+        </div>
+    </div>
+</div>
+<div class="inforContent">
+    <div class="i-p-top">
+        <span class="acticePrice">
+            <span></span>
+            {{ currency_code }}{{ price }}
+        </span>
+        <span class="oldPrice">
+            原價：
+            <span>{{ currency_code }}{{ market_price }}</span>
+        </span>
+        <span class="flag">特價</span>
+        <span class="flag">促銷</span>
+    </div>
+    <div class="i-p-m buyinfo_post">
+        <span class="flag1">限時搶購</span>
+        <span class="timeWrap">距結束
+        <span id="timer">
+               <span  id="h">10</span>
+                <span class="colon">時</span>
+                <span id="m">00</span>
+                <span class="colon">分</span>
+                <span id="s">00</span>
+                <span class="colon">秒</span>
+          </span>
+        </span>
+    </div>
+    <div id="here"></div>
+    <div class="i-p-b">
+        <span class="soldPart">已搶購<span id="soldNum">{{ sales }}</span>件</span>
+        <span class="percentBar" data-value='{{ sales }}'>
+          <span id="progress"></span>
+        </span>
+        <span id="percentNum"></span>
+    </div>
+    <div class="btn">
+        <a href="javascript:;" data-cuckootag="buy_now" data-event="gotoCheckout" class="conbtn">立即搶購</a>
+    </div>
+</div>
+
+<div class="bTop">
+    <span class="bTitle bTitle1">圖文詳情</span>
+    <div class="line"></div>
+</div>
+<div class="detail_info_wrap">
+    <div class="detail_list" id="detailCont">
+        <div class="detail_item p_desc" id="detail_tab1" style="padding:4px 4px;">
+            <div id="commDesc" class="detail_pc">
+                <!-- 后台商品介绍 开始-->
+                <div class="detail_con">
+                    {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+                </div>
+            </div>
+        </div>
+        <div class="User_notes" style="margin-top: 10px">
+            <h2 class="notes">{{ lang.user_notes }}</h2>
+            <div class="note_text">{{ lang.user_fb }}</div>
+            <div class="note_title">{{ lang.user_note1 }}</div>
+            <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+            <div class="note_title">{{ lang.user_note2 }}</div>
+            <div class="note_text">{{ lang.user_note2_1 }}</div>
+            <div class="note_title">{{ lang.user_note3 }}</div>
+            <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+            <div class="note_title">{{ lang.user_note4 }}</div>
+            <div class="note_text">{{ lang.user_note4_1 }}</div>
+            <div class="note_title">{{ lang.user_note4_2 }}</div>
+            <div class="note_title">{{ lang.user_note4_3 }}</div>
+            <div class="note_text">{{ lang.user_note4_4 }}</div>
+        </div>
+        <div class="fixednav">
+            <ul class="nav-list">
+                <li>
+                    <a href="javascript:;" data-cuckootag="buy_now" data-event="gotoCheckout" class="conbtn">
+                        <span>{{ lang.buy_now }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script src="{{ THEME }}/js/index.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+{% include '/public/theme/footer.twig' %}

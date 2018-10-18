@@ -1,0 +1,120 @@
+	<div class="flexbox">
+	<div class="flex regions">{{ regions.region_name }}</div>
+</div>
+
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="city" required="required">
+			<option value="">ខេត្(Province)</option>
+		</select>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input name="district" placeholder="ទីក្រុង(City)" required="required" readonly class="read_grey"></input>
+	</div>
+</div>
+
+<!-- <div class="flexbox">
+	<div class="flex tab_two">
+		<select name="city" required="required">
+			<option value="ក្រុងភ្នំពេញ(Phnom penh)">ក្រុងភ្នំពេញ(Phnom penh)</option>
+			<option value="ក្រុងព្រះសីហនុ(Sihanouk ville)">ក្រុងព្រះសីហនុ(Sihanouk ville)</option>
+			<option value="ក្រុងបោយប៉ែត(Poipet)">ក្រុងបោយប៉ែត(Poipet)</option>
+			<option value="ខេត្តបាត់ដំបង(Battambang)">ខេត្តបាត់ដំបង(Battambang)</option>
+			<option value="ខេត្តសៀមរាប(Siemreap)">ខេត្តសៀមរាប(Siemreap)</option>
+		</select>
+	</div>
+</div> -->
+
+<div class="table-row">
+    {% if theme == 'style39'%}
+    <input type="text" name="address" placeholder="{{ lang.addr }}">
+    {% else %}
+    <input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+    {% endif %}
+</div>
+<div class="flexbox">
+	<div class="flex tab_two"><input type="text" required="required" name="name" placeholder="{{ lang.name }}"></div>
+	<div class="flex tab_two">
+		<input type="tel" name="postal" placeholder="{{ lang.postal }}" maxlength="5" class="read_grey" readonly>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="email" name="email" placeholder="{{ lang.email }}">
+	</div>
+</div>
+<div class="table-row">
+	<input type="text" name="guest" placeholder="{{ lang.note }}">
+</div>
+<div class="flexbox">
+{% if payment_underline == 1 %}
+	<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+{% endif %}
+{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+	<div class="flex tab_two">
+		<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+	</div>
+{% endif %}
+	<input name="payment_type" value="0" type="hidden">
+</div>
+<div class="table-row pay-type" style="display: none;">
+	<select id="pay-online">
+		{% if payment_online == 1 %}
+		<option value="1">{{ lang.yijifu }}</option>
+		{% endif %}
+		{% if payment_paypal == 1 %}
+		<option value="2">paypal</option>
+		{% endif %}
+		{% if payment_asiabill == 1 %}
+		<option value="3">Asiabill</option>
+		{% endif %}
+	</select>
+</div>
+<style>
+	select[name="district"], select[name="city"] {
+	    height: 44px;
+	    width: 100%;
+	    font-size: 14px;
+	    color: #666;
+	    border: 1px solid #eee;
+	    border-radius: 4px;
+	    text-indent: 16px;
+	    line-height:44px;
+	}
+	.read_grey{
+		background-color: #f6f6f6;
+	}
+</style>
+
+<script type="text/javascript">
+	$('[name="city"]').change(function(event) {
+		var id = $(this).children().filter(':selected').attr('data-id');
+		loadCity(id);
+	});
+	function loadstate(){
+		$.post('/region.php', { 'region_id': '{{ regions.region_id }}' }, function(data) {
+			var data = JSON.parse(data);
+			data.map(function(item, index){
+				$('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+			});
+		});
+	}
+	function loadCity(id, callback){
+		if(id){
+			$.post('/region.php', { 'yn_region_id': id }, function(data) {
+				var data = JSON.parse(data);
+				$('[name="district"]').val(data[0].name);
+				$('[name="postal"]').val(data[0].post_code)
+			});
+		}else{
+			$('[name="district"]').val("");
+			$('[name="postal"]').val("")
+		}
+	}
+	loadstate();
+</script>

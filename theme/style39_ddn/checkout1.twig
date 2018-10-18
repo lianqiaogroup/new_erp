@@ -1,0 +1,259 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/images/favicon.ico" type="image/x-icon" rel=icon>
+<link href="{{ THEME }}/css/cart.css" type="text/css" rel="stylesheet"/>
+<!--  -->
+<input id="region_code" type="hidden" value="{{ regions.code }}">
+<input id="identity_tag" type="hidden" value="{{ identity_tag }}">
+<!--  -->
+<div class="g-bd">
+    <div class="m-hd">
+        <div class="m-topBar">
+            <a class="goback" href="/{{ identity_tag}}"></a>
+            <div style="width: 100%;"><div class="title">{{ lang.order_comfirmation }}</div></div>
+        </div>
+    </div>
+    <!--  -->
+    <div id="order">
+        <div class="warp">
+            <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+                <!--  -->
+                <input type="hidden" name="combo_id" value="">
+                <input type="hidden" name="token" value="{{ token }}">
+                <input type="hidden" id="act" name="act" value="getAttrPrice">
+                <input type="hidden" name="vercode" value="">
+                <input type="hidden" name="orderId" value="">
+                <input type="hidden" name="product_id" value="{{ product_id }}">
+                <!-- 勾选的属性 -->
+                <section class="selectedPrototype">
+                {% if combo %}
+                    {% for om in  combo %}
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                                {% for o in  ok.options %}
+                                    <input type="hidden" name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="">
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    {% for o in  options %}
+                        <input type="hidden" name="attr[{{ o.attr_group_id }}]" value="">
+                    {% endfor %}
+                {% endif %}
+                </section>
+                <!--  -->
+                <div class="m-goodItems">
+                <ul class="m-list m-attrs">
+                    <li class="item">
+                        <div class="m-goodItem">
+                            <div class="imgWrap">
+                                <img src="{{ thumb }}">
+                            </div>
+                            <!--选中的产品-->
+                            <div class="cnt" style="line-height:20px;">
+                                <span style="color: black;font-size: 16px; line-height:20px;">{{ title }} <br/></span>
+                                {% if combo %}
+                                    <!--  -->
+                                {% else %}
+                                    {% for o in options %}
+                                        <span style="font-size:12px;" optionsGroup data-id="{{ o.attr_group_id }}">
+                                        {% for key,attr in o.attr %}
+                                            <span style="display:none; font-size:14px" class="red" data-id="{{ key }}">{{ attr.name|raw }}</span>
+                                        {% endfor %}
+                                        </span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item" style="margin: 10px 0px; padding-bottom:5px;">
+                        <div class="u-format">
+                            <div class="tt">{{ lang.num }}</div>
+                            <div class="con">
+                                <div class="m-selnum dr">
+                                    <div class="less z-dis" onclick="minnumber()"></div>
+                                    <div class="textWrap">
+                                        <input id="mun" onblur="inputnumber();" name="num" type="text" value="">
+                                    </div>
+                                    <div class="more" onclick="addnumber()"></div>
+                                </div>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 套餐包含产品 -->
+            {% if combo %}
+                <div class="m-goodItems" style="margin-bottom: 10px;">
+                    <ul id="selectedProducts">
+                        {% for om in  combo %}
+                            {% for ok in  om.goods %}
+                                <li data-comboId="{{ om.combo_id }}" style="display:none;">
+                                    <img src="{{ ok.thumb }}" class="forAttrImg">
+                                    <div class="product-info">
+                                        <div>{{ ok.title }}</div>
+                                        <div class="product-prototype">
+                                            {% for o in  ok.options %}
+                                                {% for key,attr in o.attr %}
+                                                <span attrImg="{{ attr.thumb }}" optionsKey data-optionsGroup="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            <!-- <span class="price">{{ currency_code }}{{ ok.price }}</span> -->
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <!-- 套餐包含产品 -->
+
+            <div class="u-icon u-address-bg"></div>
+                <div class="address-input">
+                    <div class="buy-single-row label-input">
+                            <div class="input-label">
+                                <div class="cell fixed">{{ lang.name }}</div>
+                            </div>
+                            <div class="cell">
+                                <input required="required" placeholder="{{ lang.name_placeholder }}" type="text" name="name" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="input-label">
+                                <div class="cell fixed">{{ lang.mobile }}</div>
+                            </div>
+                            <div class="cell">
+                                <input required="required" placeholder="{{ lang.mobile_placeholder }}" type="tel" name="mob" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="input-label">
+                                <div class="cell fixed">{{ lang.email }} </div>
+                            </div>
+                            <div class="cell">
+                                <input placeholder="{{ lang.email_placeholder }}" type="email" name="email" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell" id="province">
+                            <select class="sel_area" name="province" style="padding: 3px;margin-right: 10px;">
+                                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell">
+                            <select name="state" placeholder="Propinsi" required="required">
+                                <option value="">Propinsi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell">
+                            <select name="city" placeholder="kota" required="required">
+                                <option value="">kota</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell">
+                            <select name="district" placeholder="Dearah" required="required">
+                                <option value="">Dearah</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="input-label">
+                            <div class="cell fixed">{{ lang.address_full }}</div>
+                        </div>
+                        <div class="cell">
+                            <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                        </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="input-label">
+                                <div class="cell fixed">{{ lang.postal }}</div>
+                            </div>
+                            <div class="cell">
+                                <input  required="required" type="text" name="postal"  class="inputText" pattern="[0-9]{5}" maxlength="5">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="input-label">
+                            <div class="cell fixed">{{ lang.cash_style }}</div>
+                            </div>
+                            <div class="cell">
+                                {% if payment_online ==1 %}
+                                    <label><input name="payment_type" value="1" type="radio"> {{ lang.yijifu }}</label>
+                                {% endif %}
+                                {% if payment_paypal == 1 %}
+                                    <label><input name="payment_type" value="2" type="radio"> <img src="/public/image/p_paypal.jpg"></label>
+                                {% endif %}
+                                {% if payment_underline ==1 %}
+                                    <label><input name="payment_type" value="0" type="radio">   {{ lang.cash_on_delivery }}</label>
+                                {% endif %}
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="input-label">
+                                <div class="cell fixed">{{ lang.note }}</div>
+                            </div>
+                            <div class="cell" style="line-height: 18px;">
+                                <textarea placeholder="{{lang.note_placeholder}}" name="guest" class="text_area" rows="1" style="padding-top:17px;"></textarea>
+                            </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div style="padding: 15px; background: #fff;font-size: 14px;color: #666;text-align: left;margin-top: 10px; margin-bottom:60px;word-break:break-word">
+                    {{ lang.warming|raw }}
+                </div>
+                <!--  -->
+                <footer class="m-orderFt">
+                    <div class="actualPrice">
+                        <label class="label">{{ lang.total }}:&nbsp;</label>
+                        <span class="value">
+                            <span id="price"></span>
+                            <input type="hidden" name="zfbprice" value="20889">
+                            <input type="hidden" name="price" value="" readonly="" class="value" style="width:80px;border: none;text-align: center;">{{ lang.yuan }}<span id="zfbyh"></span>
+                        </span>
+                    </div>
+                    <a class="btn w-button" href="#form" data-cuckootag="confirm_order">{{ lang.buy_now }}</a>
+                    <button type="submit" name="Submit" style="display:none;"></button>
+                </footer>
+            </form>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+<!--  -->
+<script type="text/javascript" src="{{ THEME }}/js/checkout.js"></script>
+<script type="text/javascript">
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+    window.SMSlang = {
+        'Rp':{
+            'title':"{{lang.title}}",
+            'sendto':"{{lang.sendto}}",
+            'take':"{{lang.take}}",
+            'if_no':"{{lang.if_no}}",
+            'click':"{{lang.click}}",
+            'resend':"{{lang.resend}}",
+            'wait':"{{lang.wait}}",
+            'wait_before':"{{lang.wait_before}}"
+        }
+    }
+</script>
+{% include '/public/theme/footer.twig' %}

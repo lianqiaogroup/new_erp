@@ -1,0 +1,611 @@
+@charset "utf-8";
+/*@import url( animation.css );*/
+* {
+	margin: 0px;
+}
+html {
+	margin: 0px; padding: 0px; height: 100%;
+}
+body {
+	margin: 0px; padding: 0px; height: 100%;
+}
+#page {
+	margin: 0px; padding: 0px; height: 100%;
+}
+body {
+	background: rgb(133, 109, 53); margin: 0px; padding: 0px; font-family: Helvetica,Arial,san-serif; font-size: 16px;
+}
+a {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+ul {
+	list-style: none;
+}
+ol {
+	list-style: none;
+}
+li {
+	list-style: none;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.clearfix::after {
+	height: 0px; overflow: hidden; clear: both; display: block; visibility: hidden; content: ".";
+}
+.clearfix {
+	display: inline-block;
+}
+.clr {
+	clear: both;
+}
+.hidden {
+	display: none !important;
+}
+* {
+	box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+*::after {
+	box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+*::before {
+	box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+html {
+	-webkit-text-size-adjust: none;
+}
+body {
+	-webkit-text-size-adjust: none;
+}
+header {
+	-webkit-text-size-adjust: none;
+}
+nav {
+	-webkit-text-size-adjust: none;
+}
+footer {
+	-webkit-text-size-adjust: none;
+}
+article {
+	-webkit-text-size-adjust: none;
+}
+section {
+	-webkit-text-size-adjust: none;
+}
+form {
+	-webkit-text-size-adjust: none;
+}
+fieldset {
+	-webkit-text-size-adjust: none;
+}
+p {
+	-webkit-text-size-adjust: none;
+}
+div {
+	-webkit-text-size-adjust: none;
+}
+ul {
+	-webkit-text-size-adjust: none;
+}
+ol {
+	-webkit-text-size-adjust: none;
+}
+li {
+	-webkit-text-size-adjust: none;
+}
+h1 {
+	-webkit-text-size-adjust: none;
+}
+h2 {
+	-webkit-text-size-adjust: none;
+}
+h3 {
+	-webkit-text-size-adjust: none;
+}
+h4 {
+	-webkit-text-size-adjust: none;
+}
+h5 {
+	-webkit-text-size-adjust: none;
+}
+h6 {
+	-webkit-text-size-adjust: none;
+}
+section {
+	text-shadow: 0 1px 0 #fff;
+}
+article {
+	text-shadow: 0 1px 0 #fff;
+}
+#container {
+	text-shadow: 0 1px 0 #fff;
+}
+#content {
+	text-shadow: 0 1px 0 #fff;
+}
+#page {
+	background: rgb(249, 249, 249); margin: 0px auto; padding: 0px 0px 50px; width: 100%; height: auto; position: relative; min-height: 100%; max-width: 550px;
+}
+header {
+	background: rgb(0, 0, 0); margin: 0px auto; padding: 0px; width: 100%; height: 40px; text-align: center; color: rgb(255, 255, 255); line-height: 40px; overflow: hidden; border-top-color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; white-space: nowrap; position: relative;
+}
+header img {
+	margin: 0px; padding: 0px; height: 40px;
+}
+header h1 {
+	margin: 0px auto; width: 70%; font-size: 1.2em; z-index: 1;
+}
+header h2 {
+	background: rgb(0, 0, 0); width: 15%; font-size: 0.8em; display: inline; z-index: 100;
+}
+header h3 {
+	background: rgb(0, 0, 0); width: 15%; font-size: 0.8em; display: inline; z-index: 100;
+}
+header h2 {
+	left: 0px; top: 0px; position: absolute;
+}
+header h3 {
+	top: 0px; right: 0px; position: absolute;
+}
+header h2 a {
+	padding: 5px 6px; border-radius: 4px; border: 1px solid rgb(102, 102, 102); color: rgb(221, 221, 221);
+}
+header h3 a {
+	padding: 5px 6px; border-radius: 4px; border: 1px solid rgb(102, 102, 102); color: rgb(221, 221, 221);
+}
+header a.icon {
+	padding: 0px; border: 0px currentColor; height: 40px; color: rgb(51, 51, 51); line-height: 40px; text-indent: 100em; overflow: hidden; display: block; filter: alpha(opacity=70); opacity: 0.7; -moz-opacity: .7;
+}
+header a.back {
+	background: url("arrow-70-back.png") no-repeat 50% 50% / 12px 20px;
+}
+header a.fresh {
+	background: url("fresh.png") no-repeat 50% 50% / 32px 32px;
+}
+header a.home {
+	background: url("../images/home.png") no-repeat 50% 50% / 36px 36px;
+}
+header a.tel {
+	background: url("call.png") no-repeat 50% 50% / 36px 36px;
+}
+section.topfixed {
+	background: rgba(68, 54, 28, 0.9); margin: 0px auto; padding: 0px; width: 100%; height: auto; text-align: left; color: rgb(255, 255, 255); line-height: 25px; overflow: hidden; position: fixed; z-index: 999; box-shadow: 0px 3px 3px rgba(30,30,30,0.6); text-shadow: none;
+}
+section.topfixed p {
+	margin: 0px; padding: 5px;
+}
+.lv {
+	background: rgb(0, 0, 0); margin: 0px; padding: 0px; width: 100%; height: 40px; text-align: center;
+}
+.banner {
+	margin: 0px; padding: 0px; width: 100%; height: auto; text-align: center; -webkit-animation: fadeIn .6s .2s ease both; -moz-animation: fadeIn .6s .2s ease both;
+}
+.banner img {
+	margin: 0px auto; padding: 0px; border: 0px currentColor; width: 100%; float: left; max-width: 100%;
+}
+.banner p {
+	background: rgb(221, 0, 0); width: 100%; height: 60px; color: rgb(255, 255, 255); line-height: 60px; font-size: 26px; font-weight: bold; text-shadow: 1px 1px 0 #000;
+}
+nav {
+	margin: 0px auto; padding: 0px; left: 0px; width: 100%; bottom: 0px; position: fixed; -webkit-animation: fadeInUpBig 1s 0.2s ease both; -moz-animation: fadeInUpBig 1s 0.2s ease both;
+}
+nav ul {
+	background: rgb(238, 51, 0); margin: 0px auto; padding: 0px; width: 100%; height: 45px; overflow: hidden;
+}
+nav ul li {
+	width: 33.3%; text-align: center; float: left;
+}
+nav ul li a {
+	width: 100%; color: rgb(255, 255, 255); line-height: 45px; font-size: 0.8em; display: block;
+}
+nav ul li a strong {
+	left: 0px; top: 10px; font-weight: normal; display: block; position: relative;
+}
+nav ul.Transverse {
+	position: relative;
+}
+nav ul.Transverse li a {
+	border-right-color: rgb(255, 102, 102); border-right-width: 1px; border-right-style: dotted;
+}
+nav ul.Transverse li:last-child a {
+	border-right-color: currentColor; border-right-width: 0px; border-right-style: none;
+}
+nav ul.Transverse li a strong {
+	line-height: 45px; padding-left: 32px; font-size: 14px; font-weight: normal; display: inline; position: inherit;
+}
+nav ul.Transverse li:nth-child(1) a strong {
+	background: url("../images/home.png") no-repeat left / 28px 28px;
+}
+nav ul.Transverse li:nth-child(2) a strong {
+	background: url("call.png") no-repeat left / 28px 28px;
+}
+nav ul.Transverse li:nth-child(3) a strong {
+	background: url("sms.png") no-repeat left / 28px 28px;
+}
+nav ul.Transverse li:nth-child(1) a.home strong {
+	background: url("../images/home.png") no-repeat left / 28px 28px;
+}
+nav ul.Transverse li span {
+	color: rgb(51, 51, 51);
+}
+section ul {
+	margin: 0px auto; padding: 0px; height: auto; overflow: hidden;
+}
+section ul li {
+	margin: 0px; padding: 0px; width: 50%; float: left;
+}
+section ul li a {
+	margin: 0px; width: 100%; height: 60px; text-align: center; display: block;
+}
+section ul li a img {
+	margin: 5px auto; width: 60px; height: 50px; vertical-align: middle;
+}
+section ul li:nth-child(1) a {
+	background: rgb(255, 0, 0); float: right; -webkit-animation: fadeInLeftTopBig 1s .2s ease both; -moz-animation: fadeInLeftTopBig 1s .2s ease both;
+}
+section ul li:nth-child(2) a {
+	background: rgb(255, 255, 0); float: left; -webkit-animation: fadeInRightTopBig 1s .2s ease both; -moz-animation: fadeInRightTopBig 1s .2s ease both;
+}
+section ul li:nth-child(3) a {
+	background: rgb(0, 0, 255); float: right; -webkit-animation: fadeInLeftBottomBig 1s .2s ease both; -moz-animation: fadeInLeftBottomBig 1s .2s ease both;
+}
+section ul li:nth-child(4) a {
+	background: rgb(0, 255, 0); float: left; -webkit-animation: fadeInRightBottomBig 1s .2s ease both; -moz-animation: fadeInRightBottomBig 1s .2s ease both;
+}
+section.buy {
+	background: rgb(68, 54, 28); padding: 5px 0px 15px; width: 100%; height: auto; text-align: center; overflow: hidden; position: relative; text-shadow: none; -webkit-animation: bounceInkeep .3s .2s linear both; -moz-animation: bounceInkeep .3s .2s linear both; -o-animation: bounceInkeep .3s .2s linear both;
+}
+.row1 {
+	margin: 0px auto; padding: 0px; width: 96%; height: auto; clear: both;
+}
+.row2 {
+	margin: 0px auto; padding: 0px; width: 96%; height: auto; clear: both;
+}
+.row2 {
+	padding: 10px 0px; height: 50px; line-height: 30px; overflow: hidden; border-top-color: rgb(82, 69, 36); border-top-width: 1px; border-top-style: dotted;
+}
+.row1 strong {
+	width: 35%; color: rgb(255, 255, 0); line-height: 60px; font-size: 48px; float: left; display: block; text-shadow: 1px 1px 0px #000;
+}
+.row1 ol {
+	margin: 0px; padding: 0px; width: 65%; height: inherit; overflow: hidden;
+}
+.row1 ol li {
+	width: 33%; color: rgb(136, 101, 54); line-height: 30px; float: left;
+}
+.row1 ol li p {
+	color: rgb(154, 155, 116);
+}
+.row2 strong {
+	width: 35%; height: 30px; color: rgb(154, 124, 72); line-height: 30px; font-size: 20px; float: left; display: block;
+}
+.row2 .djs {
+	margin: 0px; padding: 0px; width: 65%; height: 30px; color: rgb(221, 221, 153); line-height: 30px; overflow: hidden;
+}
+.row2 .djs input {
+	text-align: right; color: rgb(208, 116, 10); font-size: 26px;
+}
+section.buy a.button {
+	margin: 0px auto; border-radius: 4px; border: 1px solid rgb(238, 59, 26); width: 96%; height: 46px; color: rgb(255, 255, 255); line-height: 42px; font-size: 26px; display: block; text-shadow: 0 1px 0 #000;
+}
+section.buy button {
+	margin: 0px auto; border-radius: 4px; border: 1px solid rgb(238, 59, 26); width: 96%; height: 46px; color: rgb(255, 255, 255); line-height: 42px; font-size: 26px; display: block; text-shadow: 0 1px 0 #000;
+}
+section.buy a.btn {
+	margin: 5px auto; padding: 10px 0px; border-radius: 6px; width: 96%; text-align: center; color: rgb(255, 255, 255); display: block; background-color: rgb(255, 86, 0); text-shadow: 1px 1px 1px #333;
+}
+section.Glist {
+	background: rgb(240, 240, 240);
+}
+section.Glist ul {
+	margin: 0px auto; padding: 20px 10px; width: 100%; height: auto; overflow: hidden; border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(221, 221, 221); border-top-width: 1px; border-bottom-width: 1px; border-top-style: solid; border-bottom-style: solid; text-shadow: none;
+}
+section.Glist ul li img {
+	border: 0px currentColor;
+}
+section.Glist ul li:nth-child(1) {
+	padding: 0px; width: 100%; color: rgb(79, 79, 79); line-height: 30px; font-size: 16px; font-weight: bold;
+}
+section.Glist ul li:nth-child(2) {
+	width: 35%; float: left;
+}
+section.Glist ul li:nth-child(2) img {
+	padding: 0px 5px; width: 100%; height: 220px;
+}
+section.Glist ul li:nth-child(3) {
+	padding: 0px; width: 65%; float: left;
+}
+section.Glist ul li:nth-child(3) dl {
+	padding: 18px 0px; width: 100%; height: auto; overflow: hidden;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(1) dt {
+	width: 40%; color: rgb(255, 51, 0); font-size: 32px; float: left;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(1) dd {
+	width: 60%; text-align: right; color: rgb(51, 51, 51); font-size: 12px; float: left;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(1) dd p {
+	color: rgb(102, 0, 0); font-weight: bold;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) {
+	border-top-color: rgb(221, 221, 221); border-bottom-color: rgb(221, 221, 221); border-top-width: 1px; border-bottom-width: 1px; border-top-style: dotted; border-bottom-style: dotted;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dt {
+	width: 100%; color: rgb(51, 0, 0); line-height: 20px; font-size: 16px;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dd {
+	width: 100%; color: rgb(51, 51, 51); font-size: 16px;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dt b {
+	width: 33.3%; text-align: center; color: rgb(102, 0, 0); float: left; display: block;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dd span {
+	width: 33.3%; text-align: center; color: rgb(102, 0, 0); float: left; display: block;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dt b {
+	color: rgb(102, 102, 102);
+}
+section.Glist ul li:nth-child(4) {
+	padding: 0px; width: 65%; float: left;
+}
+section.Glist ul li:nth-child(4) strong {
+	background: rgb(255, 51, 0); margin: 12px 0px 0px; border-radius: 6px; width: 100%; height: 40px; text-align: center; color: rgb(255, 255, 255); line-height: 40px; display: block;
+}
+section.Glist ul:first-child {
+	border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+section.Glist ul:last-child {
+	border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.row1 ol li {
+	width: 33%; color: rgb(136, 101, 54); line-height: 30px; font-size: 12px; float: left;
+}
+.row1 ol li p {
+	color: rgb(154, 155, 116); font-size: 16px;
+}
+section.Glist ul li:nth-child(2) {
+	width: 45%;
+}
+section.Glist ul li:nth-child(3) {
+	width: 55%;
+}
+section.Glist ul li:nth-child(2) img {
+	padding: 10px 5px; width: 100%; height: 135px;
+}
+section.Glist ul li:nth-child(3) dl {
+	padding: 15px 0px;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(1) dt {
+	width: 38%; color: rgb(255, 51, 0); font-size: 16px; float: left;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(1) dd {
+	width: 62%; text-align: right; color: rgb(51, 51, 51); font-size: 10px; float: left;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) {
+	border-top-color: rgb(221, 221, 221); border-bottom-color: rgb(221, 221, 221); border-top-width: 1px; border-bottom-width: 1px; border-top-style: dotted; border-bottom-style: dotted;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dt {
+	width: 100%; color: rgb(51, 0, 0); line-height: 20px; font-size: 12px;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dd {
+	width: 100%; color: rgb(51, 51, 51); font-size: 12px;
+}
+section.Glist ul li:nth-child(4) {
+	padding: 0px; width: 100%; float: left;
+}
+section.Glist ul li:nth-child(4) strong {
+	background: rgb(255, 51, 0); margin: 0px auto; border-radius: 6px; width: 100%; height: 40px; text-align: center; color: rgb(255, 255, 255); line-height: 40px; display: block;
+}
+section.Glist ul li:nth-child(2) img {
+	padding: 10px 5px; width: 100%; height: 115px;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(1) dt {
+	width: 30%; color: rgb(255, 51, 0); line-height: 20px; font-size: 16px; float: left;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(1) dd {
+	width: 70%; text-align: right; color: rgb(51, 51, 51); font-size: 10px; float: left;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) {
+	border-top-color: rgb(221, 221, 221); border-bottom-color: rgb(221, 221, 221); border-top-width: 1px; border-bottom-width: 1px; border-top-style: dotted; border-bottom-style: dotted;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dt {
+	width: 100%; color: rgb(51, 0, 0); line-height: 16px; font-size: 12px;
+}
+section.Glist ul li:nth-child(3) dl:nth-child(2) dd {
+	width: 100%; color: rgb(51, 51, 51); font-size: 12px;
+}
+section.Glist ul li:nth-child(4) {
+	padding: 0px; width: 100%; float: left;
+}
+section.Glist ul li:nth-child(4) strong {
+	background: rgb(255, 51, 0); margin: 0px auto; border-radius: 6px; width: 100%; height: 40px; text-align: center; color: rgb(255, 255, 255); line-height: 40px; display: block;
+}
+article.showcontent {
+	margin: 0px; padding: 0px; width: 100%; height: auto; overflow: hidden;
+}
+article.showcontent h2 {
+	background: rgb(238, 233, 230); margin: 0px; padding: 0px 10px; width: 100%; text-align: left; color: rgb(108, 89, 77); line-height: 30px; clear: both; font-size: 18px;
+}
+.banner h2 {
+	background: rgb(238, 233, 230); margin: 0px; padding: 0px 10px; width: 100%; text-align: left; color: rgb(108, 89, 77); line-height: 30px; clear: both; font-size: 18px;
+}
+article h2 {
+	background: rgb(238, 233, 230); margin: 0px; padding: 0px 10px; width: 100%; text-align: left; color: rgb(108, 89, 77); line-height: 30px; clear: both; font-size: 18px;
+}
+article.showcontent h2::before {
+	color: rgb(148, 129, 87); content: "▼";
+}
+.banner h2::before {
+	color: rgb(148, 129, 87); content: "▼";
+}
+article h2::before {
+	color: rgb(148, 129, 87); content: "▼";
+}
+article.showcontent img {
+	margin: 0px; padding: 0px; border: currentColor; width: 100%; text-align: center; float: left; max-width: 100%;
+}
+.time-count {
+	margin: 0px; text-align: center; font-size: 14px;
+}
+.time-count span {
+	padding: 0px 0px 0px 5px; color: rgb(208, 116, 10); font-size: 26px; font-weight: bold;
+}
+article.des {
+	margin: 0px auto; padding: 10px 0px; width: 94%; text-align: left; color: rgb(133, 109, 53); border-top-color: rgb(82, 69, 36); border-top-width: 1px; border-top-style: dotted; text-shadow: 1px 1px 1px #33250C;
+}
+article.showcontent .btn {
+	padding: 10px;
+}
+article.showcontent .btn a[href^='tel:'] {
+	background-image: url("call.png");
+}
+article.showcontent .btn a[href^='sms:'] {
+	background-image: url("sms.png");
+}
+article.showcontent .btn a[href^='tencent:'] {
+	background-image: url("qq.png");
+}
+article.showcontent .btn a[href^='sms:'] {
+	background-position: 10% 50%; margin: 5px 0px; border-radius: 6px; width: 100%; text-align: center; color: rgb(255, 255, 255); display: block; background-repeat: no-repeat; background-size: 32px 32px; background-color: rgb(255, 86, 0); text-shadow: 1px 1px 1px #333;
+}
+article.showcontent .btn a[href^='mailto:'] {
+	background-position: 10% 50%; margin: 5px 0px; border-radius: 6px; width: 100%; text-align: center; color: rgb(255, 255, 255); display: block; background-repeat: no-repeat; background-size: 32px 32px; background-color: rgb(255, 86, 0); text-shadow: 1px 1px 1px #333;
+}
+article.showcontent .btn a[href^='tel:'] {
+	background-position: 10% 50%; margin: 5px 0px; border-radius: 6px; width: 100%; text-align: center; color: rgb(255, 255, 255); display: block; background-repeat: no-repeat; background-size: 32px 32px; background-color: rgb(255, 86, 0); text-shadow: 1px 1px 1px #333;
+}
+article.showcontent .btn a[href^='tencent:'] {
+	background-position: 10% 50%; margin: 5px 0px; border-radius: 6px; width: 100%; text-align: center; color: rgb(255, 255, 255); display: block; background-repeat: no-repeat; background-size: 32px 32px; background-color: rgb(255, 86, 0); text-shadow: 1px 1px 1px #333;
+}
+article.showcontent .btn a[href^='tencent:'] {
+	background-size: 24px 24px;
+}
+footer {
+	margin: 0px auto; padding: 0px; width: 100%; clear: both; border-top-color: rgb(221, 221, 221); border-top-width: 1px; border-top-style: solid;
+}
+footer p {
+	text-align: center; padding-top: 5px; font-size: 0.8em; border-top-color: rgb(255, 255, 255); border-top-width: 1px; border-top-style: solid;
+}
+footer p img {
+	margin: 0px auto; max-width: 98%;
+}
+.row1 strong {
+	width: 35%; color: rgb(255, 255, 0); font-size: 36px; float: left; display: block; text-shadow: 1px 1px 0px #000;
+}
+.row2 strong {
+	width: 35%; color: rgb(154, 124, 72); font-size: 12px; float: left; display: block;
+}
+.row2 .djs {
+	margin: 0px; padding: 0px; width: 65%; height: inherit; color: rgb(221, 221, 153); overflow: hidden;
+}
+.row2 .djs input {
+	text-align: right; color: rgb(208, 116, 10); font-size: 12px;
+}
+.time-count {
+	margin: 0px; text-align: center; font-size: 12px;
+}
+.time-count span {
+	padding: 0px 5px; color: rgb(208, 116, 10); font-size: 14px; font-weight: bold;
+}
+article {
+	margin: 0px auto; padding: 0px; width: 100%; line-height: 24px; font-size: 1em; position: relative; -webkit-animation: bounceInkeep .3s .2s linear both; -moz-animation: bounceInkeep .3s .2s linear both;
+}
+nav a.thisclass {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#home {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#about {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#shop {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#case {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#call {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#navi {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#sms {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#contact {
+	background-color: rgb(51, 51, 51);
+}
+.thisclass#write {
+	background-color: rgb(51, 51, 51);
+}
+.btn {
+	padding: 5px 0px; width: 100%; height: auto; overflow: hidden; clear: both;
+}
+article ~ div.btn {
+	padding-top: 0px;
+}
+.fieldcontain {
+	margin: 0px auto; padding: 5px 0px; width: 94%; line-height: 24px;
+}
+.fieldcontain label {
+	display: block;
+}
+.fieldcontain input {
+	margin: 0px; padding: 2px 1%; border: 1px solid rgb(221, 221, 221); width: 98%; font-size: 1em; box-shadow: none;
+}
+.fieldcontain textarea {
+	margin: 0px; padding: 2px 1%; border: 1px solid rgb(221, 221, 221); width: 98%; font-size: 1em; box-shadow: none;
+}
+.fieldcontain input {
+	height: 26px; line-height: 26px;
+}
+.fieldcontain button {
+	margin: 0px; padding: 5px 0px; width: 100%; line-height: 26px; font-size: 1em;
+}
+.fieldcontain input[name='demotitle'] {
+	color: rgb(153, 153, 153);
+}
+#bdform {
+	height: auto; overflow: hidden; wdith: 96%;
+}
+#bdform input {
+	background: rgb(255, 255, 255); margin: 5px auto; padding: 5px; outline: 0px; border-radius: 4px; border: 1px solid rgba(200, 200, 200, 1); width: 100%; height: 40px; font-size: 1em; box-shadow: inset 1px 1px 2px #eee, inset -1px -1px 2px #eee; resize: none; -webkit-appearance: none;
+}
+#bdform textarea {
+	background: rgb(255, 255, 255); margin: 5px auto; padding: 5px; outline: 0px; border-radius: 4px; border: 1px solid rgba(200, 200, 200, 1); width: 100%; height: 40px; font-size: 1em; box-shadow: inset 1px 1px 2px #eee, inset -1px -1px 2px #eee; resize: none; -webkit-appearance: none;
+}
+#bdform button {
+	margin: 5px auto; padding: 10px 0px; border-radius: 6px; border: currentColor; width: 96%; text-align: center; color: rgb(255, 255, 255); display: block; background-color: rgb(255, 86, 0); text-shadow: 1px 1px 1px #333;
+}
+#bdform input[name='bdprovince'] {
+	width: 45%; display: inline;
+}
+#bdform input[name='bdcity'] {
+	width: 45%; display: inline;
+}
+#bdform select[id='bdprovince'] {
+	width: 48%; display: inline;
+}
+#bdform select[id='bdcity'] {
+	width: 48%; display: inline;
+}
+#bdform select {
+	padding: 2px 1%; border-radius: 4px; border: 1px solid rgb(153, 153, 153); width: 98%; height: 40px; color: rgb(0, 0, 0); line-height: 40px; font-size: 14px; font-weight: bold; text-shadow: 0 0px 0px rgba(0, 0, 0, .8);
+}
+#logo {
+	background: rgb(0, 0, 0); padding: 6px 0.4em; text-align: left;
+}
+.header {
+	margin: 0px; padding: 0px; border: currentColor;
+}
+.copy {
+	text-align: center; font-size: 12px;
+}

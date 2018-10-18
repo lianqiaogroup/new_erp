@@ -1,0 +1,183 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		{% if photos %}
+			{% for p in photos %}
+				<div class="swiper-slide">
+					<img src="{{ p.thumb }}">
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="swiper-slide">
+				<img src="{{ thumb }}">
+			</div>
+		{% endif %}
+	</div>
+	<div class="swiper-pagination"></div>
+</div>
+<div class="title">
+	<h1>{{ title }}</h1>
+	<span class="heart"><span class="praise">{{ (sales*0.2)|number_format(0,'','') }}</span></span>
+</div>
+<div class="price">
+	<div>
+		<div>
+			{% if currency_prefix == 1 %}
+				{{ currency_code }}{{ price|number_format(0,'.',',') }}
+			{% endif %}
+			{% if currency_prefix == 0 %}
+				{{ price|number_format(0,'.',',') }}{{ currency_code }}
+			{% endif %}
+		</div>
+		<del>
+			{% if currency_prefix == 1 %}
+				{{ currency_code }}{{ market_price|number_format(0,'.',',') }}
+			{% endif %}
+			{% if currency_prefix == 0 %}
+				{{ market_price|number_format(0,'.',',') }}{{ currency_code }}
+			{% endif %}
+		</del>
+	</div>
+	<div>{{ lang.instock }}</div>
+</div>
+<div class="service">
+	<ul>
+		<li>{{ lang.save }} {% if currency_prefix == 1 %}{{ currency_code }}{{ market_price-price }}{% endif %}{% if currency_prefix == 0 %}{{ market_price-price }}{{ currency_code }}{% endif %}</li>
+		<li>{{ lang.fahuo }}</li>
+		<li>{{ lang.free }}</li>
+		<li>{{ lang.nationwide }}</li>
+		<li>{{ lang.cash_on_delivery }}</li>
+		<li>{{ lang.satisfy }}</li>
+	</ul>
+	<div class="safe">
+		<div>WEPROMISE</div>
+		<div class="item">
+			<span>{{ lang.returned_goods }}</span>
+			<span>{{ lang.cash_on_delivery }}</span>
+			<span>{{ lang.safe }}</span>
+		</div>
+	</div>
+</div>
+<div class="product_info">
+	<div class="detail_tt">
+		<ul>
+			<li class="active"><a href="#m-img">{{ lang.information }}</a></li>
+			<li><a href="#pinlun_content">{{ lang.comment }}</a></li>
+			<li><a href="#add_comment">{{ lang.message }}</a></li>
+		</ul>
+	</div>
+	<div class="m-img" id="m-img">
+		{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+	</div>
+
+	<div class="comment">
+		<div class="unit_tt">{{ lang.comment_lang }}</div>
+		<div class="star-wrap">
+    		<div class="left">
+	    		<div class="score">
+	    			<span> 4.9 </span>
+	    			<div>{{ lang.degree }}</div>
+	    		</div>
+    		</div>
+    		<div class="right">
+    			<div>
+    				<span>5</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>4</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>3</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>2</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>1</span><span class="bar"><span></span></span>
+    			</div>
+    		</div>
+    	</div>
+		{% if comment %}
+		<div class="pinlun_content" id="pinlun_content">	
+		    {% for a in  comment %}
+		        <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7">
+		            <div>
+		            	<div>
+		            		<span id="wi">{{ a.name }}</span>
+		                    {% if a.is_anonymous %}
+		                        <span id="nm" class="nm">{{ lang.anonymous }}</span>
+		                    {% endif %}
+		            	</div>
+		            	<div class="stars">
+		            		<span></span>
+		            		<span></span>
+		            		<span></span>
+		            		<span></span>
+		            		{% if a.star == 5 %}<span></span>{% endif %}
+		            	</div>
+		            </div>
+		            <P style="color: #666;">{{ a.content }}</P>
+
+		            <div class="msKeimgBox">
+		                <ul>
+		                    <li>
+		                        {% for b in a.thumb %}
+		                            <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+		                        {% endfor %}                                        
+		                    </li>
+		                </ul>
+		            </div>
+		        </div>
+		    {% endfor %}
+		</div>
+		{% endif %}
+
+	</div>
+	<form id="add_comment" name="form" action="#" method="post">
+		<div class="unit_tt">{{ lang.message }}</div>
+		<div class="wrap">
+			<div class="item">
+				<input type="text" name="name" class="right" required="required" placeholder="{{ lang.name }}">
+			</div>
+			<div class="item">
+				<input type="text" name="phone" class="right" required="required" placeholder="{{ lang.phone }}">
+			</div>
+			<div class="item">
+				<span class="right">
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+				</span>
+			</div>
+			<div class="item">
+				<textarea name="message" class="right" required="required" placeholder="{{ lang.content }}"></textarea>
+			</div>
+			<div class="item">
+				<input type="file" name="file" class="right">
+			</div>
+			<div class="submit">
+				<input type="submit" name="submit" value="{{ lang.submit }}">
+			</div>
+		</div>
+	</form>
+</div>
+<div class="shade">
+	{% include 'cmpt-guige.twig' %}
+</div>
+<footer>
+	<div class="top"></div>
+	<div class="buy_now">
+		<button id="add">{{ lang.buy_now }}</button>
+	</div>
+</footer>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

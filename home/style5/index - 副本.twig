@@ -1,0 +1,103 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+   
+<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.css">
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
+<!--如果你用到了拓展包中的组件，还需要引用下面两个-->
+<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.js' charset='utf-8'></script>
+
+
+<div class="page-group">
+        <!-- 单个page ,第一个.page默认被展示-->
+        <div class="page">
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+                <a class="icon icon-menu pull-left open-panel"></a>
+                <h1 class="title logo" style="background-image:url({{ THEME }}/image/logo.png)"></h1>
+            </header>
+
+            <!-- 这里是页面内容区 -->
+            <nav class="nav">
+                <div class="type-nav">
+                    <ul style="width:300%">
+                        <li>新品</li>
+                        <li>单肩</li>
+                        <li>鞋子</li>
+                        <li>新品</li>
+                        <li>单肩</li>
+                        <li>鞋子</li>
+                        <li>新品</li>
+                        <li>单肩</li>
+                        <li>鞋子</li>
+                        <li>新品</li>
+                        <li>单肩</li>
+                        <li>鞋子</li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="content" style="top:3.5rem;">
+                {{ index_focus|raw }}
+                <div class="page-index">
+                </div>
+                {{ footer|raw }}<!--底部文章-->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- popup, panel 等放在这里 -->
+    <div class="panel-overlay"></div>
+    <!-- Left Panel with Reveal effect -->
+    <div class="panel panel-left panel-reveal">
+        <div class="slidebar">
+            <ul>
+                <li><a href="/">ที่หน้าแรก</a></li>
+                <li><a href="#">CASDA</a></li>
+                <li><a href="#">CASDA</a></li>
+                <li><a href="#">CASDA</a></li>
+                <li><a href="#">CASDA</a></li>
+                <li><a href="#">CASDA</a></li>
+                <li><a href="#">CASDA</a></li>
+            </ul>
+        </div>
+        <!--div class="content-block"-->
+            <!--Click on link with "close-panel" class will close panel -->
+            <!--p><a href="#" class="close-panel">关闭</a></p>
+        </div-->
+    </div>
+    <!--  -->
+    <div id="goods-demo" style="display:none;">
+        <li class="ui-grid-trisect">
+            <a href="{type}">
+                <div class="product-grid flexdiv">
+                    <div class="product-thumb">
+                        <img src="{thumb}">
+                    </div>
+                    <div class="flexitem">
+                        <div class="product-title">{title}</div>
+                        <div class="product-price"><strong>{price}</strong><del class="marprice"> {market_price}</del><span class="cuttext">ประหยัดทันท</span><span class="cutoff">{cutoff}</span></div>
+                            <div class="time" data="">
+                                <span><i id="time"></i></span>
+                                <span class="h"></span>:
+                                <span class="m"></span>:
+                                <span class="s"></span>
+                            </div>
+                            <div class="salesp">มีลูกค้าสั่ง {sales_num}</div>
+                        
+                    </div>
+                </div>
+            </a>
+        </li>
+    </div>
+
+    <!-- 默认必须要执行$.init(),实际业务里一般不会在HTML文档里执行，通常是在业务页面代码的最后执行 -->
+    <script>$.init()</script>
+    <script src="{{ THEME }}/script/index.js"></script>
+
+{% endblock %}
+{% block footer_js %}
+    
+{% endblock %}
+

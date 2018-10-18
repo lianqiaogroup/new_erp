@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html dir="ltr">
+    <head>
+        <script type="text/javascript" src="{{ theme }}/js/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript" src="{{ theme }}/js/moment-with-locales-2.18.1.min.js"></script>
+        <script type="text/javascript" src="{{ theme }}/js/dr-dtime.js"></script>
+        <link type="text/css" href="{{ theme }}/css/order_me.css" rel="stylesheet" media="all">
+        <style>
+            .ac_footer {
+                position: relative;
+                top: 10px;
+                height: 0;
+                text-align: center;
+                margin-bottom: 70px;
+                color: #A12000;
+            }
+            .ac_footer a {
+                color: #A12000;
+            }
+            img[height="1"],
+            img[width="1"] {
+                display: none !important;
+            }
+            .facebook {
+                width: 100%;
+                margin-top: 20px;
+                height:24px;
+            }
+            .facebook iframe {
+                width: 100%;
+                height: 20px;
+                border: none;
+            }
+            #sub-frame-error {
+                display: none;
+            }
+        </style>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>
+            {{blog.site_title}}
+        </title>
+        <link href="{{ theme }}/css/2bb0b47c5621427196d30eec54d7cd40.css" rel="stylesheet"/>
+        <link href="{{ theme }}/css/main.css" rel="stylesheet"/>
+        <link href="{{ theme }}/css/media.css" rel="stylesheet"/>
+        {# <script src="{{ theme }}/js/main.js" type="text/javascript"></script> #}
+        <style>
+            .wrapper header .logoWrap .logo {
+                display: block;
+                box-sizing: content-box;
+                width: 100px;
+                height: 100px;
+                background: url("{{blog.author_thumb}}") no-repeat center center;
+                background-size: cover;
+                border: 4px solid #f2f2f2;
+                border-radius: 50%;
+                margin: 0 auto;
+                box-shadow: 0 0 0 1px #cccccc;
+            }
+            .title {
+                height: 340px;
+                padding: 30px 0;
+                background-image: url("{{blog.site_master_graph}}");
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+                width: auto;
+            }
+            body {
+                font-family: "Roboto", sans-serif;
+                font-size: 16px;
+                line-height: 1.2;
+                padding: 0;
+                margin: 0;
+                background: url("./images/body_bg.jpg") no-repeat right top, url("//dadbab.info/content/Hammer_HK_preland_emmablog/img/body_bg_gradient.jpg") repeat;
+                background: url("{{blog.site_bottom_img}}") no-repeat right top, url("//dadbab.info/content/Hammer_HK_preland_emmablog/img/body_bg_gradient.jpg") repeat;
+                background-attachment: fixed;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper clearfix">
+            <header>
+                <div class="logoWrap">
+                    <div class="logo"></div>
+                    <div class="logo_wrap">
+                        <span>
+                            {{blog.site_title}}
+                        </span><br/>
+                        <span>
+                            {{blog.site_subtitle}}
+                        </span>
+                    </div>
+                </div>
+            </header>
+            <div class="title">
+                <!-- <h1> 分享我的親身經歷： <br/> 如何讓性愛 <br/> 持續 <span> 數小時 </span> </h1> -->
+                <p style="color:#fff;">
+                    Published on
+                    <script>
+                        dtime_nums(-7, true)
+                    </script>
+                    | Author:
+                    <span>
+                        {{blog.site_author}}
+                    </span>
+                </p>
+            </div>
+
+            <main>
+                <div class="facebook">
+                    {% if blog.fb_status == 1 %}<iframe src=""></iframe> {% endif %}
+                </div>
+                {{blog.site_content|raw}}
+                {% if blog.is_buy_show == 1 %}
+                <a class="btn1" href="{{blog.comment_link}} ">
+                    {{blog.product_name}}
+                </a>
+                {% endif %}
+            </main>
+            <section class="commentary">
+                <div class="headComment">
+                    {{lang.comments}}
+                    <span>
+                        ({{blog.comment_count}})
+                    </span>
+                    :
+                </div>
+                {% for p in comment %}
+                    <div class="comment">
+                        <img alt="" class="logoCom" src="{{p.img}}"/>
+                        <div class="fillComment">
+                            <span class="nameCom">
+                                {{p.comment_name}}
+                            </span>
+                            <p>{{p.comment_content |raw}}</p>
+                            <span class="like">{{p.comment_praise}}</span>
+                            <p>
+                                <script>
+                                    dtime_nums(-1, true)
+                                </script>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+                 {% if blog.is_buy_show == 1 %}
+                <a class="btn1" href="{{blog.comment_link}} ">
+                    {{blog.product_name}}
+                </a>
+                {% endif %}
+            </section>
+            <div class="border">
+                <aside>
+                    <div class="bloggersOnline">
+                        <h3>
+                            {{lang.online_blogger}}
+                        </h3>
+                        {% for value in blogFriendPhotos %}
+                            <div class="boxLogo" style="background-image:url('{{value}}');background-size:cover;background-repeat:no-repeat;"></div>
+                        {% endfor %}
+                    </div>
+                    <div id="scrollFixed">
+                        <div class="slide">
+                            <div class="posts">
+                                <img alt="" src="{{blog.product_img}}"/>
+                                {% if blog.is_buy_show == 1 %}
+                                <a class="btn1 asidebtn" href="{{blog.comment_link}} ">
+                                    {{blog.product_name}}
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            <footer>
+                <!-- <div class="copyright"> {{blog.site_bottom_txt}} <span class="ryear"></span> © </div> -->
+                <div class="copyright">
+                    {{blog.site_bottom_txt}}
+                </div>
+            </footer>
+        </div>
+        <script>
+            var path = window.location.href;
+            if('{{blog.fb_status}}' == 1){
+                var ifrasrc = 'https://www.facebook.com/plugins/like.php?href=' + path + '&width=450&layout=standard&action=like&size=small&show_faces=false&share=true&height=35&appId" width="450" height="35" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"';
+                $(".facebook iframe").attr('src', ifrasrc);
+            };
+        </script>
+    </body>
+</html>

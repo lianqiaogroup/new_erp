@@ -1,0 +1,289 @@
+{% include '/public/theme/header.twig' %}
+<link href="{{ THEME }}/style/index.css" type="text/css" rel="stylesheet" />
+<!--/page-->
+<section id="page-index" class="container {{modulesParam.color.options.selected}}">
+    <header>
+        <h1>{{ title }}</h1>
+        {% if has_home %}
+            <a href="/" class="home"></a>
+        {% endif %}
+    </header>
+    <!--轮番图-->
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom">
+            {% if photos %}
+                {% for p in photos %}
+                <span class="whiteicon"></span>
+                {% endfor %}
+            {% else %}
+                <span class="whiteicon"></span>
+            {% endif %}
+        </div>
+    </div>
+    <!-- service -->
+    {% if modulesParam.service.options.list %}
+    {% set serviceList = modulesParam.service.options.list|split(',') %}
+    <ul class="m-servicePolicy">
+        {% for item in serviceList %}
+        <li class="item">
+            <i class="u-icon u-icon-servicePolicyRed"></i><span>{{item}}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="dt-section">
+        <div class="m-detailBaseInfo">
+            <div class="info">
+                <div class="line2" style="text-align: right;height: 45px;">
+                    <em class="retailPrice">{% if currency_prefix == 1 %}{{ currency_code }}{{price}}{% else %}{{price}}{{ currency_code }}{% endif %}</em>
+                    <del class="del_price">{% if currency_prefix == 1 %}{{ currency_code }}{{market_price}}{% else %}{{market_price}}{{ currency_code }}{% endif %}</del>
+                    <span style="width: 40px;" class="discount">
+                        <label style="width: 40px;">折扣</label>
+                        <label style="width: 40px;font-size: 14px;">
+                        {{ ((price/market_price)*10)|number_format(0) }}
+                        </label>
+                    </span>
+                </div>
+                <div class="tagList">
+                    <ul class="wrap">
+                        <li class="item"><span>特價</span></li>
+                        <li class="item"><span>促銷</span></li>
+                    </ul>
+                </div>
+                <div class="hostsales" style="text-align: left;">
+                    <span class="soldPart">已搶購<span id="soldNum">{{ sales }}</span>件</span>
+                     <span class="percentBar" data-value='{{ sales }}'>
+                      <span id="progress"></span>
+                     </span>
+                    <span id="percentNum"></span>
+                </div>
+                {% if modulesParam.countdown.options.open =='1' %}
+                <div class="module_countdown" style="text-align: left;">
+                    <span class="flag1">{{ modulesParam.countdown.options.label }}</span>
+                    <span class="timeWrap">距結束
+                        <span
+                            id="timer"
+                            data-fn="module_countdown_core"
+                            data-value="{{ modulesParam.countdown.options.end_timer }}"
+                            data-step="{{ modulesParam.countdown.options.time_step }}">
+                            <span id="h">-</span>
+                            <span class="colon">時</span>
+                            <span id="m">-</span>
+                            <span class="colon">分</span>
+                            <span id="s">-</span>
+                            <span class="colon">秒</span>
+                        </span>
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="specSelect">
+                <div class="m-listItem" id="val-sel" data-cuckootag="buy_now">
+                    <div class="f-vc">
+                        <div class="inner"><span class="it" style="font-weight:normal;">請選擇規格數量</span></div>
+                    </div>
+                    <i class="icon u-icon u-address-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="common_title"><span class="bTitle">圖文詳情</span></div>
+    <!--  -->
+    <div class="product-info">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+
+    {% if modulesParam.comment.options.open == '1' %}
+        {% if comment  %}
+        <div class="common_title"><span class="bTitle">用戶評價</span></div>
+        <div class="module_comment" style="padding: 8px;background: white">
+            <div class="picMarquee-top">
+                <div class="bd" data-fn="commentScroll" style="height: 300px; overflow: hidden">
+                    <ul class="picList">
+                        {% for a in comment %}
+                            {% if loop.index <= 100 %}
+                            <li data-groud="{{ a.comment_id }}" style="margin-bottom: 8px;height: auto;">
+                                {% if a.is_anonymous==1 %}
+                                    <span>匿名用戶</span>
+                                {% else %}
+                                    <span>{{ a.name }}</span>
+                                {% endif %}
+                                &nbsp;
+                                <span>滿意度：<span>{{ a.star }}</span></span>
+                                <div style="border-top:1px dotted #d0d6d6;margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                                <div class="msKeimgBox">
+                                    <ul>
+                                        {% for b in a.thumb %}
+                                            <li>
+                                                <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div class="buyinfo_hd">{{ lang.note_online }}</div>
+
+            <form id="big-i" name="form" action="#" method="post">
+                <div class="buyinfo_table">
+                    <div class="closeBtn" style=""></div>
+                     <div class="zaix">在線留言</div>
+                    <div class="buyinfo_table_box">
+                        <table>
+                            <tr>
+                                <td class="table_td"><span class="require"></span>姓名:</td>
+                                <td class="table_cell"><input type="text" required="required" placeholder="請輸入姓名，如張三" class="mui-input-clear input01" name="name" maxlength="10"></td>
+                            </tr>
+                            <tr>
+                                <td class="table_td"><span class="require"></span>手機:</td>
+                                <td class="table_cell"><input type="text" required="required" placeholder="請輸入手機號碼" class="input01" name="phone" maxlength="20"></td>
+                            </tr>
+                            <tr>
+                                <td class="table_td">滿意度:</td>
+                                <td class="table_cell">
+                                    <script type="text/javascript">
+                                        function rate(obj,oEvent){
+                                            var imgSrc = '{{ THEME }}/images/star2.png';
+                                            var imgSrc_2 = '{{ THEME }}/images/star.png';
+                                            if(obj.rateFlag) return;
+                                            var e = oEvent || window.event;
+                                            var target = e.target || e.srcElement;
+                                            var imgArray = obj.getElementsByTagName("img");
+                                            for(var i=0;i<imgArray.length;i++){
+                                                imgArray[i]._num = i;
+                                                imgArray[i].onclick=function(){
+                                                    if(obj.rateFlag) return;
+                                                    //alert(this._num+1);
+                                                    var inputid=this.parentNode.previousSibling
+                                                    inputid.value=this._num+1;
+                                                }
+                                            }
+                                            if(target.tagName=="IMG"){
+                                                for(var j=0;j<imgArray.length;j++){
+                                                    if(j<=target._num){
+                                                        imgArray[j].src=imgSrc_2;
+                                                    } else {
+                                                        imgArray[j].src=imgSrc;
+                                                    }
+                                                    target.parentNode.onmouseout=function(){
+                                                        var imgnum=parseInt(target.parentNode.previousSibling.value);
+                                                        for(n=0;n<imgArray.length;n++){
+                                                            imgArray[n].src=imgSrc;
+                                                        }
+                                                        for(n=0;n<imgnum;n++){
+                                                            imgArray[n].src=imgSrc_2;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                    </script>
+                                    <input type="hidden" name="star" value="0"><p onmouseover="rate(this,event)" id="img_1">
+                                        <img src="{{ THEME }}/images/star.png" title="很烂"><img src="{{ THEME }}/images/star.png" title="一般"><img src="{{ THEME }}/images/star.png" title="还好"><img src="{{ THEME }}/images/star.png" title="较好"><img src="{{ THEME }}/images/star.png" title="很好">
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table_td">留言:</td>
+                                <td class="table_cell">
+                                    <textarea placeholder="請輸入您的留言內容" name="content"  class="textarea_style"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                            <td class="table_td" style="padding-top:8px;">{{ lang.upimage }}:</td>
+                                <td class="table_cell" style="padding-top:10px;">
+                                    <input id="file" type="file" name="file" class="upimage">
+                                    <div class="file_imgs"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="tj">
+                                    <input id="btnAppraise" type="submit" name="Submit" class="input_btn01" value="提交評價" style="color:white">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    {% endif %}
+
+
+    <div class="User_notes" style="margin-top: 10px">
+        <h2 class="notes">{{ lang.user_notes }}</h2>
+        <div class="note_text">{{ lang.user_fb }}</div>
+        <div class="note_title">{{ lang.user_note1 }}</div>
+        <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+        <div class="note_title">{{ lang.user_note2 }}</div>
+        <div class="note_text">{{ lang.user_note2_1 }}</div>
+        <div class="note_title">{{ lang.user_note3 }}</div>
+        <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+        <div class="note_title">{{ lang.user_note4 }}</div>
+        <div class="note_text">{{ lang.user_note4_1 }}</div>
+        <div class="note_title">{{ lang.user_note4_2 }}</div>
+        <div class="note_title">{{ lang.user_note4_3 }}</div>
+        <div class="note_text">{{ lang.user_note4_4 }}</div>
+    </div>
+    <!--  -->
+    <footer class="footer">
+        <a
+            href="javascript:;"
+            class="left"
+            data-cuckootag="service"
+            data-value="{{ service_contact_id }}">
+        </a>
+        <div class="right">
+            <div class="m-table">
+                <div class="tr">
+                    <div class="td" id="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">
+                        <img src="{{ THEME }}/images/search.png">{{ lang.order_inquiry }}
+                    </div>
+                    <div class="td"><a data-cuckootag="buy_now" href="javascript:void(0);" id="val-selbtn" class="w-button w-button-block btn-addToCart" data-yahoo-js>{{ lang.buy_now }}</a></div>
+                </div>
+                {% if yahoo_js_trigger %}
+                    <script type="text/javascript">
+                        require(['jquery'], function($){
+                            $('[data-yahoo-js]').click(function(){
+                                try {
+                                    {{ yahoo_js_trigger|raw }}
+                                    console.log('click done');
+                                    console.log(window.dotq);
+                                }
+                                catch(e){
+                                    console.error('yahoo js code not working');
+                                    console.log(yahooJs);
+                                }
+                            });
+                        });
+                    </script>
+                {% endif %}
+            </div>
+        </div>
+    </footer>
+    <!--  -->
+</section>
+<section id="page-order" class="container {{modulesParam.color.options.selected}}" data-error='{{ lang.Th_titleattr }}'>
+    {% include 'cmpt-guige.twig' %}
+</section>
+<i class="m-goToTop" style="display: inline;"></i>
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

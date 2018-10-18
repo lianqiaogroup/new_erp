@@ -1,0 +1,65 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+{% include '/public/theme/google_remarketing_index.twig' %}
+    <!--菜单-->
+    <div class="ui-offcanvas">
+        <div class="boxer">
+            <!-- <h1>{{ lang.offcanvas_title }}</h1> -->
+            <ul class="ui-list menu">
+                <li><a href="/" class="ui-arrowlink">{{lang.home_page}}</a></li>
+                {% for c in category_title %}
+                <li><a href="./?category_id={{ c.id }}" class="ui-arrowlink">{{ c.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="ui-layer"></div>
+       <!--用ajax获取，URL地址 /ajaxGoods/{id} 这个id为后台配置的各个模块id 不传id默认为配置后台首页-->
+    <section id="main">
+        <header class="ui-header ui-header-stable ui-border-b">
+            <i class="ui-icon-scan1"><img src="{{ THEME }}/image/maue.png" height="20px" style="margin-top: 12px;position: absolute" alt=""></i>
+            {% if info.logo %}
+                <img src="{{ info.logo }}">
+            {% else %}
+                <h1>{{ info.title }}</h1>
+            {% endif %}
+        </header>
+        </header>
+        <section class="ui-container page-index">
+            {{ index_focus|raw }}<!--焦点图-->
+            <div class="ui-panel text-center" data-mid="{mid}"><div class="ui-row products"></div> </div>
+            <div class="preload" data-error='{{ lang.no_more }}' style="text-align:center;font-size:12px;color:#666;line-height:2.4;">{{ lang.load }}...</div>
+        </section>
+         {{ footer|raw }}<!--底部文章-->
+    </section>
+    <div id="goods-demo" style="display:none;">
+        <div class="goodsmain">
+            <div class="saletips">{{ lang.Sale }}</div>
+            <div class="product-grid flex">
+                <div class="product-thumb">
+                    <img src="{thumb}">
+                </div>
+                <div class="item proright">
+                    <div class="time" data="">
+                        <span>{{ lang.times }} : </span>
+                        <span class="h"></span>:
+                        <span class="m"></span>:
+                        <span class="s"></span>
+                    </div>
+                    <div class="product-title">{title}</div>
+                    <div>
+                    <span class="product-price red">{price}</span>
+                    <del class="market_price">{market_price}</del>
+                    </div>
+                </div>
+            </div>
+            <a class="buynow" href="{type}">{{ lang.go }}</a>
+        </div>
+    </div>
+{% endblock %}
+{% block footer_js %}
+    <script src="{{ THEME }}/script/swiper-3.4.0.jquery.min.js"></script>
+    <script src="{{ THEME }}/script/index.js"></script>
+{% endblock %}
+

@@ -1,0 +1,123 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+{% if category %}
+    <div class="ui-offcanvas">
+        <div class="boxer">
+            <!-- <h1>{{ lang.offcanvas_title }}</h1> -->
+            <ul class="ui-list menu">
+                <li><a href="/" class="ui-arrowlink">{{lang.home_page}}</a></li>
+                {% for c in category %}
+                <li><a href="./?category_id={{ c.id }}" class="ui-arrowlink">{{ c.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}
+<section id="page-index">
+	{% if has_home %}
+	<header class="ui-header ui-header-stable ui-border-b">
+	    <i class="ui-icon-scan1"><img src="{{ THEME }}/images/maue.png" height="20px" style="margin-top: 12px;position: absolute;width:auto" alt=""></i>
+	    {% if logo %}
+	        <img src="{{ logo }}">
+	    {% endif %}
+	</header>
+	{% endif %}
+	<div class="img_wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="discount">-{{ ((market_price-price)/market_price*100)|number_format(0) }}%</div>
+	</div>
+	<div class="detail">
+		<div class="title"><h1>{{ title }}</h1></div>
+		<div class="price">
+			{% if regions.region_id == 29 %}
+				<del>
+					{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price|number_format(0,'',',') }}{% endif %}
+					{% if currency_prefix == 0 %}{{ market_price|number_format(0,'',',') }}{{ currency_code }}{% endif %}
+				</del>
+				<div>
+					<span>
+						{% if currency_prefix == 1 %}{{ currency_code }}<span>{{ price|number_format(0,'',',') }}</span>{% endif %}
+						{% if currency_prefix == 0 %}<span>{{ price|number_format(0,'',',') }}</span>{{ currency_code }}{% endif %}
+					</span>
+					<span class="discount">
+						{{ lang.discount }} {{ ((market_price-price)/market_price*100)|number_format(0) }}% {{ lang.discount_after }}
+					</span>
+				</div>
+			{% else %}
+				<del>
+					{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+					{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+				</del>
+				<div>
+					<span>
+						{% if currency_prefix == 1 %}{{ currency_code }}<span>{{ price }}</span>{% endif %}
+						{% if currency_prefix == 0 %}<span>{{ price }}</span>{{ currency_code }}{% endif %}
+					</span>
+					<span class="discount">
+						{{ lang.discount }} {{ ((market_price-price)/market_price*100)|number_format(0) }}% {{ lang.discount_after }}
+					</span>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+    <div id="val-sel" class="arrow_con">
+        <div class="arrow_d" data-cuckootag="buy_now" data-event="showAttr">{{ lang.choose_attr }}</div>
+    </div>
+	<div class="product_info">
+		<div class="tt">
+			<div class="title">{{ lang.detail }}</div>
+			<div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"></div>
+		</div>
+		<div class="m-img" id="m-img">
+			{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+		</div>
+	</div>
+	<div class="bottom_fix">
+		<div class="buy_now {{ article|length }}">
+			<button data-cuckootag="buy_now" data-event="showAttr">{{ lang.buy_now }}</button>
+		</div>
+	</div>
+</section>
+<section id="page-order" data-error="{{ lang.Th_titleattr }}">
+	<div class="tt">
+		<div class="back"></div>
+		{{ lang.pro_attr }}
+	</div>
+	{% include 'cmpt-guige.twig' %}
+</section>
+{% if article %}
+<footer class="ui-footer ui-footer-stable ui-border-t text-center">
+    <ul class="ui-row">
+        {% for a in article %}
+        <li>
+            <a href="/article/{{ a.article_id }}">{{ a.title }}</a>
+        </li>
+        {% endfor %}
+
+    </ul>
+</footer>
+{% endif %}
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

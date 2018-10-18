@@ -1,0 +1,153 @@
+#app {
+  padding: 10px;
+}
+#app .order-info {
+  padding: 16px;
+  background-color: #f6f6f6;
+}
+#app .showCombo {
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 8px;
+  background: #eee;
+  border-radius: 4px;
+  padding: 5px;
+  color: #666;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+#app .showCombo > span {
+  display: inline-block;
+  position: relative;
+}
+#app .showCombo > span:after {
+  content: " ";
+  transform: rotate(-90deg);
+  margin-left: 4px;
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  margin-top: 2px;
+  right: -14px;
+  top: 0px;
+  background: url('/public/image/checkout-icons.png');
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+#app .showCombo.action span:after {
+  transform: rotate(90deg);
+}
+#app .bill-info {
+  padding-bottom: 43px;
+  padding-top: 0;
+  margin-top: 20px;
+}
+#app .bill-info li {
+  line-height: 1;
+  padding-bottom: 7px;
+}
+#app .bill-info li span {
+  display: inline-block;
+  font-size: 12px;
+}
+#app .bill-info li span:first-child {
+  color: #aaa;
+  width: 100px;
+}
+#app .bill-info li span:last-child {
+  color: #666;
+  float: right;
+}
+#app .bill-info li span.red {
+  color: #ff5a5f;
+}
+#app section.footer .timetips {
+  padding: 10px 0;
+  font-size: 12px;
+  color: #aaa;
+  border-top: 1px solid #EEE;
+  width: auto;
+  margin: 0 auto;
+  display: flex;
+}
+#app section.footer .timetips:after {
+  content: " ";
+  display: inline-block;
+  clear: both;
+}
+#app section.footer .timetips li {
+  flex: 1;
+  text-align: center;
+  line-height: 1;
+  overflow: hidden;
+}
+#app section.footer .timetips li i.checkout-icons {
+  width: 17px;
+  vertical-align: middle;
+  height: 17px;
+  display: inline-block;
+}
+#app .buy_button {
+  border: none;
+  display: block;
+  width: 100%;
+  background-color: #ff5a5f;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 4px;
+  line-height: 44px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+#app .buy_button.submiting {
+  background-color: #ddd;
+}
+#app .ajaxLoading {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+#app .ajaxLoading:after {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+  content: " ";
+  background: url("/public/image/loading.png") no-repeat center;
+  animation: lrotate 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+@keyframes lrotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+#app select[name="state"],
+#app select[name="city"],
+#app select[name="postal"],
+#app .cardidtext {
+  height: 44px;
+  width: 100%;
+  font-size: 14px;
+  color: #666;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  text-indent: 16px;
+}

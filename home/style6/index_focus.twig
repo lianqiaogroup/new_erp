@@ -1,0 +1,21 @@
+{% if index_focus %}
+<div id="carousel-example-generic" class="carousel slide" style="position: relative;padding-bottom: 20px;">
+  <!-- Wrapper for slides -->
+    <div class="swiper-container" id="imgScroller">
+        <div class="swiper-wrapper" style="height: 300px;">
+            {% for c in index_focus %}
+            <div class="swiper-slide">
+              <a href="/{{ c.type }}">
+                <img src="{{ c.thumb }}">
+              </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="swiper-pagination swiper-pagination-custom" id="imgNum">
+        {% for c in index_focus %}
+        <span class="carousel-indicators"></span>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

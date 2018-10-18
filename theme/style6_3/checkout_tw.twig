@@ -1,0 +1,161 @@
+<div class="address-input">
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{ lang.name }}</div>
+        </div>
+        <div class="cell">
+            <input required="required" type="text" name="name" class="inputText">
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{ lang.mobile }}</div>
+        </div>
+        <div class="cell">
+            <input required="required" placeholder="{{ lang.mobile_placeholder}}" type="text" name="mob" class="inputText">
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.email }}</div>
+        </div>
+        <div class="cell">
+            <input placeholder="{{ lang.email_placeholder }}" error="{{ lang.test_email }}" type="email" name="email" class="inputText">
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{ lang.address_full }}</div>
+        </div>
+        <div class="cell" id="province">
+            <select name="province" class="form-control">
+                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+            </select>
+            {% if regions.region_son and regions.code != 'TW'%}
+            <select name="city" class="form-control">
+                <option value="">{{ lang.province_choose }}</option>
+                {% for i in regions.region_son %}
+                    <option value="{{ i.lang }}"> {{ i.lang }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+        </div>
+    </div>
+    {% if regions.code == "TW" %}
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{lang.city}}</div>
+        </div>
+        <div class="cell">
+            <select name="city" required="required">
+                <option value="">{{lang.city}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{lang.district}}</div>
+        </div>
+        <div class="cell">
+            <select name="district" required="required">
+                <option value="">{{lang.district}}</option>
+            </select>
+        </div>
+    </div>
+    {% endif %}
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+                <div class="cell fixed"></div>
+            </div>
+            <div class="cell">
+                {% if regions.region_name == '澳门' %}
+                    <input required="required" type="text" name="address" placeholder="{{ lang.address_warming_macro }}" class="inputText">
+                {% else %}
+                    <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                {% endif %}
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.postal }}</div>
+        </div>
+        <div class="cell">
+            {% if regions.region_id == 7 %}
+            <input required="required" type="text" name="postal" class="inputText">
+            {% else %}
+            <input type="text" name="postal" class="inputText" error="{{ lang.test_postal }}">
+            {% endif %}
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+        <div class="cell fixed"><span class="req_red">*</span>{{ lang.paymethod }}</div>
+        </div>
+        <div class="cell">
+            {% if payment_online ==1 %}
+                <label>  <input name="payment_type" value="1"  type="radio">  <img src="/public/image/card_2.gif"/><img src="/public/image/card_3.gif"/><img src="/public/image/card_1.gif"/> </label>
+            {% endif %}
+            {% if payment_paypal == 1 %}
+                <label> <input name="payment_type" value="2"  type="radio"> &nbsp;&nbsp; <img src="/public/image/p_paypal.jpg">  </label>
+            {% endif %}
+            {% if payment_asiabill ==1 %}
+                <label> <input name="payment_type" value="3"  type="radio"> &nbsp;&nbsp;<img src="/public/image/card_2.gif"/><img src="/public/image/card_3.gif"/><img src="/public/image/card_1.gif"/>  </label>
+            {% endif %}
+            {% if payment_underline ==1 %}
+                <label> <input name="payment_type" value="0"  type="radio"> &nbsp;&nbsp; {{ lang.cash_on_delivery }} </label>
+            {% endif %}
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.note }}</div>
+        </div>
+        <div class="cell" style="line-height: 18px;">
+            <textarea placeholder="{{ lang.order_remark }}" name="guest" class="text_area" rows="1" style="padding-top:17px;"></textarea>
+        </div>
+    </div>
+</div>
+<div style="padding: 10px; background-color: #fff; text-align: right;">
+    <div class="line">
+        <span>{{ lang.check_all }}</span>
+        <span data-render="count">1</span>
+        <span>{{ lang.check_produck }}</span>
+        <span></span>
+        <span>{{ lang.check_total }}:</span>
+        <span class="price">
+            <span class="red">{{ currency_code }}</span>
+            <span class="red" id="price">{{ price }}</span>
+        </span>     
+    </div>
+</div>
+<script>
+    loadstate();
+    $('[name="city"]').change(function(event) {
+        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        loadCity(id);
+    });
+    function loadstate(){
+        var region_id = '{{regions.region_id}}',regionCode = '{{regions.code}}';
+        if(regionCode == 'TW'){
+        $.post('/region.php', { 'region_id': region_id }, function(data) {
+            var data = JSON.parse(data);
+                data.map(function(item, index){
+                    $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+                });
+            var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        });
+        }
+    }
+    function loadCity(id, callback){
+        $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+            var districtFirst = $('[name="district"]').children().first();
+            $('[name="district"]').children().remove();
+            $('[name="district"]').append(districtFirst);
+            $('[name="district"]').val('');
+            var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        });
+    }
+</script>

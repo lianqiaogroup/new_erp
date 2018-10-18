@@ -1,0 +1,121 @@
+<section id='page-comment'>
+    <div style="padding: 8px;background: white">
+        <div class="comment-top">
+            <div class="back">{{ lang.back }}</div>
+            <div class="buyinfo_hd">+{{ lang.add_comment }}</div>
+        </div>
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="">
+                <ul class="picList">
+                    {% for a in comment|reverse %}
+                        {% if loop.index <= 100 %}
+                        <li data-groud="{{ a.comment_id }}" class='item'>
+                            {% if a.is_anonymous==1 %}
+                                <div class="name">{{ lang.anonymous }}</div>
+                            {% else %}
+                                <div class="name">{{ a.name }}</div>
+                            {% endif %}
+                            <span class="stars" style="width:{% if a.star == 5 %}2.52rem{% else %}2.02rem{% endif %}"></span>
+                            <div class="comment_time">{{ a.add_time }}</div>
+                            <div style="margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                            <div class="msKeimgBox">
+                                <ul>
+                                    {% for b in a.thumb %}
+                                        <li>
+                                            <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</section>
+<form id="big-i" name="form" action="#" method="post">
+    <div class="buyinfo_table">
+        <div class="closeBtn" style=""></div>
+         <div class="zaix">{{ lang.note_online }}</div>
+        <div class="buyinfo_table_box">
+            <table>
+                <tr>
+                    <td class="table_td"><span class="require"></span>{{ lang.name }}:</td>
+                    <td class="table_cell"><input type="text" required="required" placeholder="{{ lang.name_placeholder }}" class="mui-input-clear input01" name="name" maxlength="10"></td>
+                </tr>
+                <tr>
+                    <td class="table_td"><span class="require"></span>{{ lang.mobile }}:</td>
+                    <td class="table_cell"><input type="text" required="required" placeholder="{{ lang.mobile_placeholder }}" class="input01" name="phone" maxlength="20"></td>
+                </tr>
+                <tr>
+                    <td class="table_td">{{ lang.satisfy }}:</td>
+                    <td class="table_cell">
+                        <script type="text/javascript">
+                            function rate(obj,oEvent){
+                                var imgSrc = '{{ THEME }}/images/star2.png';
+                                var imgSrc_2 = '{{ THEME }}/images/star.png';
+                                if(obj.rateFlag) return;
+                                var e = oEvent || window.event;
+                                var target = e.target || e.srcElement;
+                                var imgArray = obj.getElementsByTagName("img");
+                                for(var i=0;i<imgArray.length;i++){
+                                    imgArray[i]._num = i;
+                                    imgArray[i].onclick=function(){
+                                        if(obj.rateFlag) return;
+                                        //alert(this._num+1);
+                                        var inputid=this.parentNode.previousSibling
+                                        inputid.value=this._num+1;
+                                    }
+                                }
+                                if(target.tagName=="IMG"){
+                                    for(var j=0;j<imgArray.length;j++){
+                                        if(j<=target._num){
+                                            imgArray[j].src=imgSrc_2;
+                                        } else {
+                                            imgArray[j].src=imgSrc;
+                                        }
+                                        target.parentNode.onmouseout=function(){
+                                            var imgnum=parseInt(target.parentNode.previousSibling.value);
+                                            for(n=0;n<imgArray.length;n++){
+                                                imgArray[n].src=imgSrc;
+                                            }
+                                            for(n=0;n<imgnum;n++){
+                                                imgArray[n].src=imgSrc_2;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    return false;
+                                }
+                            }
+                        </script>
+                        <input type="hidden" name="star" value="0"><p onmouseover="rate(this,event)" id="img_1">
+                            <img src="{{ THEME }}/images/star.png" title="很烂"><img src="{{ THEME }}/images/star.png" title="一般"><img src="{{ THEME }}/images/star.png" title="还好"><img src="{{ THEME }}/images/star.png" title="较好"><img src="{{ THEME }}/images/star.png" title="很好">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td">{{ lang.note }}:</td>
+                    <td class="table_cell">
+                        <textarea placeholder="{{ lang.note_placeholder }}" name="content"  class="textarea_style"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                <td class="table_td" style="padding-top:8px;">{{ lang.upimage }}:</td>
+                    <td class="table_cell" style="padding-top:10px;">
+                        <input id="file" type="file" name="file" class="upimage">
+                        <div class="file_imgs"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="tj">
+                        <input id="btnAppraise" type="submit" name="Submit" class="input_btn01" value="提交評價" style="color:white">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>

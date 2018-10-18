@@ -1,0 +1,204 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet">
+<!-- end header resource -->
+<section id="page-index">
+    <input id="region_code" value="{{ regions.code }}" type="hidden">
+{% if has_home %}
+<header>
+    <a href="/" class="goback"><img src="{{ THEME }}/images/detail-back.png" alt="">{{ lang.go_home }}</a>
+</header>
+{% endif %}
+<div class="swiper-container gallery-top">
+    <div class="swiper-wrapper">
+        {% if photos %}
+			{% for p in photos %}
+                 <div class="swiper-slide">
+                    <img src="{{ p.thumb }}">
+                 </div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide">
+                <img src="{{ thumb }}">
+            </div>
+        {% endif %}
+    </div>
+</div>
+<div class="swiper-container gallery-thumbs">
+    <div class="swiper-wrapper" style="">
+    {% if photos %}
+        {% for p in photos %}
+            <div class="swiper-slide" style="background-image:url({{ p.thumb }})">
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="swiper-slide" style="background-image:url({{ thumb }})">
+        </div>
+    {% endif %}
+    </div>
+</div>
+<div class="off">
+    {%if market_price != 0 and price != 0%}{{ ((market_price-price)/market_price*100)|number_format(0) }}% OFF{%endif%}
+</div>
+
+<div class="traits">
+    <del>
+        {{ new_price_format.symbol_left }}
+        {{ new_price_format.market_price_format }}
+        {{ new_price_format.symbol_right }}
+    </del>
+    <h3 class="sale_price">
+        {{ new_price_format.symbol_left }}
+        {{ new_price_format.price_format }}
+        {{ new_price_format.symbol_right }}
+    </h3>
+    <div class="sales">{{ lang.comment }}<span>{{ sales }}</span></div>
+    <div class="last_num"><i class="icon left"></i>{{ lang.last }}{{ stock }}{{ lang.lastL }}</div>
+</div>
+<div class="tags">
+    <div class="title">{{ title }}</div>
+    <div class="tips"><i class="icon free"></i>{{ lang.free_yun }}</div>
+    <div class="tips"><i class="icon cash"></i>{{ lang.cash_on_delivery }}</div>
+</div>
+{% if comment %}
+<div class="comment" id="comment">
+    <div class="navcom">
+        <!--div class="closeBtn"></div-->
+        <a href="javascript:void(0)" id="list" class="allcom">{{ lang.seeall }}</a>
+    </div>
+    <div class="picMarquee-top">
+        <div class="commentmain" data-fn="commentScroll" id="mq">
+            <div class="picList" id="mq1">
+                {% for a in comment %}
+                    <div class="item">
+                    <li data-groud="{{ a.comment_id }}" rel="{{ a.star }}" class="user-item">
+                        <div class="user_info">
+                            {% if a.is_anonymous==1 %}
+                                <div class="user_name">{{ lang.anonymous }}</div>
+                            {% else %}
+                                <div class="user_name">{{ a.name }}</div>
+                            {% endif %}
+                            <span class="stars iconStar">
+                                <span class="rate{{a.star}}"></span>
+                            </span>
+                        </div>
+                        <div class="user-text">{{ a.content }}</div>
+                        <div class="msKeimgBox">
+                            <ul>
+                                {% for b in a.thumb %}
+                                {% if loop.index == 1%}
+                                    <li dataimg="{{ b.thumb }}">
+                                        <img src="{{ b.thumb }}"/>
+                                    </li>
+                                {% else %}
+                                    <li style="display: none;" dataimg="{{ b.thumb }}"></li>
+                                {% endif%}
+                                {% endfor %}
+                            </ul>
+                            <div class="mskeTogBtn" style="display:none;"></div>
+                        </div>
+                    </li>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layer_co"></div>
+<div class="com_box">
+    <div class="big_com">
+        <div class="close-btn">×</div>
+        <div class="layer-main">
+            <div class="swiper-container" id="com-swiper">
+                <div class="swiper-wrapper"></div>
+                <div class="swiper-button-prev swiper-button-black"></div>
+                <div class="swiper-button-next swiper-button-black"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!--div class="comscore">
+    <div class="title">{{ lang.Th_score }}</div>
+    <div class="flexbox">
+        <div class="item">
+            <i class="star"></i>
+            <i class="star"></i>
+            <i class="star"></i>
+            <i class="star"></i>
+            <i class="star"></i>
+            <div class="score">
+                <h3>{{ lang.Rating }} 4.9</h3>
+                {% if comment %}
+                <button class="viewall">{{ lang.seeall }}</button>
+                {% endif %}
+            </div>
+        </div>
+        <div class="item">
+            <label class="right"><span>{{ lang.star2 }}5 {{ lang.star }}</span><span class="bar"><i class="slen" style="width:100px;"></i></span></label>
+            <label class="right"><span>{{ lang.star2 }}4 {{ lang.star }}</span><span class="bar"><i class="slen" style="width:10px;"></i></span></label>
+            <label class="right"><span>{{ lang.star2 }}3 {{ lang.star }}</span><span class="bar"><i class="slen" style=""></i></span></label>
+            <label class="right"><span>{{ lang.star2 }}2 {{ lang.star }}</span><span class="bar"><i class="slen" style=""></i></span></label>
+            <label class="right"><span>{{ lang.star2 }}1 {{ lang.star }}</span><span class="bar"><i class="slen" style=""></i></span></label>
+        </div>
+    </div>
+</div-->
+<div class="product_detail">
+    {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+</div>
+{% if regions.code == 'Rp' %}
+<div style="padding:0 16px;font-size:14px;line-height:20px;">
+    <div>{{lang.return_goods_top}}</div>
+    <div>{{lang.return_goods_1}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_2}}</div>
+    <div>{{lang.return_goods_3}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_4}}</div>
+    <div>{{lang.return_goods_5}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_6}}</div>
+    <div>{{lang.return_goods_7}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_8}}</div>
+    <div>{{lang.return_goods_9}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_10}}</div>
+</div>
+{% endif %}
+<form name="form" method="post" id="form" action="order.php" onSubmit="return prepost()">
+    <div id="attrs" data-error="{{ lang.Th_titleattr }}">
+        {% include 'attr.twig' %}
+    </div>
+    {% include 'checkout.twig' %}
+</form>
+<footer>
+    <a id="buy_now" href="#paramselect">{{ lang.buy_now }}</a>
+</footer>
+</section>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script>
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+    window.SMSlang = {
+        'Rp':{
+            'title':"{{lang.title}}",
+            'sendto':"{{lang.sendto}}",
+            'take':"{{lang.take}}",
+            'if_no':"{{lang.if_no}}",
+            'click':"{{lang.click}}",
+            'resend':"{{lang.resend}}",
+            'wait':"{{lang.wait}}",
+            'wait_before':"{{lang.wait_before}}"
+        }
+    }
+
+</script>
+{% include 'public/theme/footer.twig' %}
+

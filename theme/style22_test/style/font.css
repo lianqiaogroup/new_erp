@@ -1,0 +1,10 @@
+@font-face {
+  font-family: KunKhmer;
+  src: url(../font/KunKhmer.eot);
+  src: url(../font/KunKhmer.eot?#iefix) format('embedded-opentype'), url(../font/KunKhmer.ttf) format('truetype'), url(../font/KunKhmer.woff) format('woff'), url(../font/KunKhmer.svg#KunKhmer) format('svg');
+}
+body {
+  font-family: 'Khmer OS', 'KunKhmer', 'Arial';
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlMjIvbGVzcy9mb250Lmxlc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDQyxxQkFBQTtFQUNBLDhCQUFBO0VBQ0Esc0NBQXFDLE9BQU8sZ0RBQ2xCLE9BQU8sd0NBQ04sT0FBTyw0Q0FDQyxPQUFPLE1BSDFDOztBQUtEO0VBQ0MsYUFBWSxZQUFXLFlBQVcsT0FBbEMiLCJzb3VyY2VzQ29udGVudCI6WyJAZm9udC1mYWNle1xuXHRmb250LWZhbWlseTpLdW5LaG1lcjtcblx0c3JjOnVybCguLi9mb250L0t1bktobWVyLmVvdCk7XG5cdHNyYzp1cmwoLi4vZm9udC9LdW5LaG1lci5lb3Q/I2llZml4KSBmb3JtYXQoJ2VtYmVkZGVkLW9wZW50eXBlJyksXG5cdHVybCguLi9mb250L0t1bktobWVyLnR0ZikgZm9ybWF0KCd0cnVldHlwZScpLFxuXHR1cmwoLi4vZm9udC9LdW5LaG1lci53b2ZmKSBmb3JtYXQoJ3dvZmYnKSxcblx0dXJsKC4uL2ZvbnQvS3VuS2htZXIuc3ZnI0t1bktobWVyKSBmb3JtYXQoJ3N2ZycpO1xufVxuYm9keXtcblx0Zm9udC1mYW1pbHk6J0tobWVyIE9TJywnS3VuS2htZXInLCdBcmlhbCc7XG59Il0sImZpbGUiOiJzdHlsZTIyL2xlc3MvZm9udC5jc3MifQ== */

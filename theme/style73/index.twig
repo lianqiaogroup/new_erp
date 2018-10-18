@@ -1,0 +1,155 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section class="main_wrap">
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		{% if photos %}
+			{% for p in photos %}
+				<div class="swiper-slide">
+					<img src="{{ p.thumb }}" width="100%">
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="swiper-slide">
+				<img src="{{ thumb }}" width="100%">
+			</div>
+		{% endif %}
+	</div>
+</div>
+<div class="sales">
+	<div class="price_wrap">
+		<div class="price">
+			{% if currency_prefix == 1 %}{{ currency_code }}<span>{{ price }}</span>{% endif %}
+			{% if currency_prefix == 0 %}<span>{{ price }}</span>{{ currency_code }}{% endif %}
+		</div>
+		<div class="limit">{{ lang.time_limit }}</div>
+	</div>
+	<div class="title_wrap">
+		<div class="title"><h1>{{ title }}</h1></div>
+		<div class="stars"></div>
+	</div>
+</div>
+<div class="sold">{{ lang.buy_numtext }}{{ sales }}{{ lang.piece }}，{{ lang.pro_last }}{{ stock }}{{ lang.piece }}</div>
+<div class="order" data-error='{{ lang.Th_titleattr }}'>
+	<div class="choose">{{ lang.choose_attr }}</div>
+	{% include 'cmpt-guige.twig' %}
+</div>
+<div class="service_wrap">
+	<div class="service_tt">{{ lang.good_service }}</div>
+	<div class="service">
+		<span>{{ lang.free_yun }}</span>
+		<span>{{ lang.cash_on_delivery }}</span>
+		<span>{{ lang.returned_goods }}</span>
+	</div>
+</div>
+<div class="product_info">
+	<div class="img_tt">{{ lang.pro_description }}</div>
+	<div class="m-img" id="m-img">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+</div>
+</section>
+	{% if comment %}
+	<div class="scroll_tt" id="pinlun_tt">{{ lang.pingjia }}</div>
+    <div id="pinlun_content">
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="userScroll" style="height:250px; overflow: hidden;font-size:14px;">
+            	<div class="picList">
+                {% for a in  comment %}
+                	{% if loop.index <=100 %}
+		            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7;padding-bottom:10px;">
+		                <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+		                    <span class="inm">
+		                    <span id="wi">{{ a.name }}</span>
+		                        {% if a.is_anonymous %}
+		                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+		                        {% endif %}
+		                </span>&nbsp;
+		                    <span>
+		                    {{ lang.score }}：<span style="color: red;">{{ a.star }}</span>
+		                </span>
+		                </div>
+		                <P style="color: #666;padding: 5px;">{{ a.content }}</P>
+		                <div class="msKeimgBox">
+		                    <ul>
+		                        <li>
+		                            {% for b in a.thumb %}
+		                                <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+		                            {% endfor %}                                        
+		                        </li>
+		                    </ul>
+		                </div>
+		            </div>
+		            {% endif %}
+		        {% endfor %}
+		        </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="scroll_tt">{{ lang.new_order }}</div>
+    <div class="new_order">
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="commentScroll" style="height:200px; overflow: hidden;font-size:13px;">
+                <ul class="picList">
+                    <li>
+                        <span>{{ lang.huang }}**（095***3590）</span>
+                        <span style="float:right;">4{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.wang }}**（098***4865）</span>
+                        <span style="float:right;">8{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.li }}**（092***3291）</span>
+                        <span style="float:right;">2{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.zhao }}**（091***6851）</span>
+                        <span style="float:right;">10{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.chen }}**（092***6851）</span>
+                        <span style="float:right;">3{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.liu }}**（093***3943）</span>
+                        <span style="float:right;">1{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.li }}**（096***3943）</span>
+                        <span style="float:right;">1{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>  
+<div class="fb"><a href="http://www.facebook.com" target="_blank"></a></div>
+<footer>
+	<div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}">{{ lang.service_online }}</div>
+	<div class="query" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</div>
+	<div class="buy_now" data-cuckootag="confirm_arrtibute"><button>{{ lang.buy }}</button></div>
+</footer>
+<!-- footer resource -->
+<i class="m-goToTop" style="display: inline;"></i>
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

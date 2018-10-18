@@ -1,0 +1,29 @@
+{# 全局事务 #}
+{% include '/public/theme/bi.twig' %}
+
+{# 公共代码块 #}
+<script src="/public/cache_script/bundle.v3.js?v=7"></script>
+
+{# 当前页面代码块 #}
+{% if pageSign!='' %}
+<script src="theme/{{theme}}/js/{{pageSign}}.js?v=20180803"></script>
+{% endif %}
+
+<script type="text/javascript">
+	{# 本地统计代码 #}
+	{% if embedStatScript %}
+		{% include '/public/javascript/tongji.min.js' %}
+		window.addEventListener('load', function(){ window.submitData({{ embedStatScript|raw }}); });
+	{% endif %}
+</script>
+
+{# 是否增加自动填充小工具 #}
+<script type="text/javascript">
+(document.domain=='www.dzpas.com'||document.domain=='www.ouoho.com'||document.domain=='www.jhyia.com') && require(['autofill']);
+</script>
+
+{# 自定义统计代码 #}
+<div style="display:none;">{% if la %} {{ la|raw }} {% endif %}</div>
+
+</body>
+</html>

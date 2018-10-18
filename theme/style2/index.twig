@@ -1,0 +1,137 @@
+{% include '/public/theme/header_lightning.v3.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<div id="JSONDATA" style="display:none;">{{ jsonDatas }}</div>
+<!--  -->
+<style>
+[v-cloak] { display: none; }
+.fade-enter-active, .fade-leave-active {transition: opacity .5s }
+.fade-enter, .fade-leave-active {opacity: 0 }
+</style>
+<!--  -->
+<div id="app">
+    <transition name="fade">
+    <div v-cloak v-if="loaded">
+        <div class="top">
+            {{ lang.flash_sale }}
+            <span class="timeWrap">
+                {{ lang.time_last }}
+                <span id="timer">
+                    <span  id="h">-</span>
+                    <span class="colon">:</span>
+                    <span id="m">-</span>
+                    <span class="colon">:</span>
+                    <span id="s">-</span>
+                    <span class="colon"></span>
+                </span>
+            </span>
+        </div>
+        <header><h1>${ title }</h1></header>
+        {# <h3 class="top_price">${ currency_code } ${ price }</h3> #}
+        <!--  -->
+        <div id="slider" class="slideBox">
+            <ul class="hd">
+                <li v-for="item in swiperData" v-once><span></span></li>
+            </ul>
+            <ul class="bd">
+                <li v-for="item in swiperData" v-once>
+                    <div class="testPreload">
+                        <img width="100%" class="testPreload" v-bind:src=previewImg v-bind:data-origion=item>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        {#  #}
+        <div class="product_info">
+            <span class="price">${ currency_code }${ price }</span>
+            <span class="market_price"><del>${ currency_code }${ market_price }</del></span>
+            <span class="off">${ off }% OFF</span>
+        </div>
+        {#  #}
+        <div class="product_tags">
+            <template v-for="item in tags.split(',')" v-if="item!=''">
+                <span class="item">${item}</span>
+            </template>
+        </div>
+        {#  #}
+        <div class="product_dec">
+            ${ seo_description }
+        </div>
+        {#  #}
+        <div class="product_sales">
+            {{ lang.buyed_num }}
+            <span>${ sales }</span>
+            {{ lang.piece }}
+        </div>
+        <!--  -->
+        <div class="inforContent">
+            {#  #}
+            <div class="prodcut_comment">
+                <div class="column-title">
+                    <h3>{{ lang.comment }}(<span>${ comment_length }+</span>)</h3>
+                    <span></span>
+                </div>
+                <ul class="comment_list">
+                    <template v-for="(item,index) in comment">
+                        <li v-if="index<5">
+                            <div class="name">
+                                <template v-if="item.name!=''">${ item.name }</template>
+                                <template v-else>{{ lang.anonymous }}</template>
+                                <span class="comment_time">${ item.add_time }</span>
+                            </div>
+                            <div class="comment_content">${ item.content }</div>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+            {#  #}
+            <div class="m-servicePolicy">
+                <div class="column-title">服务</div>
+                <ul>
+                    <li class="item"><span>{{ lang.free_postage }}</span></li>
+                    <li class="item"><span>{{ lang.cash_on_delivery }}</span></li>
+                    <li class="item"><span>{{ lang.support_refunds }}</span></li>
+                </ul>
+            </div>
+            {#  #}
+            <div class="detail_warp">
+                <div class="column-title">{{ lang.product_desc }}</div>
+                <!-- 后台商品介绍 开始-->
+                <div class="detail_cont" v-html="content" v-once></div>
+            </div>
+            <!-- end detail -->
+            <!-- start footer -->
+            <div class="fixednav">
+                <ul class="nav-list">
+                    <li>{{ lang.customs_server }}</li>
+                    <li id="btn_buy">
+                        <a href="/checkout.php?product_id={{ product_id }}" class="conbtn">
+                            <span>{{ lang.buy_now }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- endMainBLock -->
+    </div>
+    </transition>
+</div>
+<div class="m-goToTop"></div>
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="/public/javascript/vue.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include '/public/theme/bi.twig' %}
+<script type="text/javascript">
+// 
+window.smsAuth = {{ is_open_sms }} == 1 ? true : false;
+// 
+function loader(filename, path){
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = filename;
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
+</script>
+</body>
+</html>
+

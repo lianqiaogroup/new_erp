@@ -1,0 +1,134 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" type="text/css" rel="stylesheet" />
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section id="page-index">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}" width="100%">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="detail">
+		<div class="left">
+			<div class="title">{{ title }}</div>
+			{% if currency_prefix == 1 %}<div class="price">{{ currency_code }}{{ price }}</div>{% endif %}
+			{% if currency_prefix == 0 %}<div class="price">{{ price }}{{ currency_code }}</div>{% endif %}
+			<div class="limit">{{ lang.time_limit }}</div>
+			<div class="timeWrap">
+				<span id='clock'>{{ lang.time_over }}</span>
+				<span id="timer">
+	                <span  id="h">10</span>
+                	<span class="">{{ lang.h }}</span>
+                    <span id="m">00</span>
+                    <span class="">{{ lang.m }}</span>
+                    <span id="s">00</span>
+                    <span class="">{{ lang.s }}</span>
+              	</span>
+			</div>
+		</div>
+		<div class="right">
+			<span>{{ lang.special }}</span>
+			<span>{{ lang.for_sell }}</span>
+		</div>
+	</div>
+	<div class="service">
+		<span>{{ lang.free_yun }}</span>
+		<span>{{ lang.cash_on_delivery }}</span>
+		<span>{{ lang.returned_goods }}</span>
+	</div>
+	<div class="tab_bar">
+		<span class="info select">{{ lang.description }}</span>
+		<span class="pinglun">{{ lang.user_comment }}</span>
+		<span class="order_query" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</span>
+	</div>
+	<div class="product_info">
+        <div class="m-img product-img">
+        	{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+        <div class="User_notes" style="margin-top: 10px">
+		    <h2 class="notes">{{ lang.user_notes }}</h2>
+		    <div class="note_text">{{ lang.user_fb }}</div>
+		    <div class="note_title">{{ lang.user_note1 }}</div>
+		    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+		    <div class="note_title">{{ lang.user_note2 }}</div>
+		    <div class="note_text">{{ lang.user_note2_1 }}</div>
+		    <div class="note_title">{{ lang.user_note3 }}</div>
+		    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+		    <div class="note_title">{{ lang.user_note4 }}</div>
+		    <div class="note_text">{{ lang.user_note4_1 }}</div>
+		    <div class="note_title">{{ lang.user_note4_2 }}</div>
+		    <div class="note_title">{{ lang.user_note4_3 }}</div>
+		    <div class="note_text">{{ lang.user_note4_4 }}</div>
+		</div>
+		<div class="pinlun_content" id="pinlun_content">
+	        {% for a in  comment %}
+	            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="margin-bottom: 15px;color:#a8aeb7">
+	                <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+	                    <span class="inm">
+	                    <span id="wi">{{ a.name }}</span>
+	                        {% if a.is_anonymous %}
+	                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                        {% endif %}
+	                </span>&nbsp;
+	                    <span>
+	                    {{ lang.score }}：<span style="color: red;">{{ a.star }}</span>
+	                </span>
+	                </div>
+	                <P style="color: #666;padding: 5px;">{{ a.content }}</P>
+
+
+	                <div class="msKeimgBox">
+	                    <ul>
+	                            <li>
+	                                {% for b in a.thumb %}
+	                                    <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+	                                {% endfor %}                                        
+	                            </li>
+	                            <li>
+	                                {% for b in a.thumb %}
+	                                    <span class="hidden">
+	                                        <img src="{{ b.thumb }}" width="100%" height="auto" />
+	                                    </span>
+	                                {% endfor %}
+	                            </li>
+
+	                    </ul>
+	                    <div class="mskeTogBtn"></div>
+	                    <div style="clear:both;"></div>
+	                </div>
+	            </div>
+	        {% endfor %}
+	    </div>
+    </div>
+    <footer>
+    	<div class="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);">{{ lang.contact }}</div>
+    	<div class="buy_now indexbuy">
+    		<button class="add" id="add">{{ lang.buy_now }}</button>
+    	</div>
+    </footer>
+</section>
+<section id="page-order" data-error="{{ lang.Th_titleattr }}">
+	<div class="header">
+		<div class="back"></div>
+		<div class="conirm">{{ lang.choose_order }}</div>
+	</div>
+	{% include 'cmpt-guige.twig' %}
+	<input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	<meta content="320" name="MobileOptimized" />
+	<meta content="telephone=no" name="format-detection" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="/public/style/page-checkout.css">
+	<link rel="stylesheet" type="text/css" href="/frontend/dist/order/order.css?v=23123123123">
+</head>
+<body>
+	{# 全局变量 #}
+	<div id="_LANG" style="display:none;">{{ lang|json_encode }}</div>
+	<div id="_ORDERINFO" style="display:none;">{{ orderInfo|json_encode }}</div>
+	<script type="text/javascript">
+		// language
+		window.lang = JSON.parse(document.getElementById('_LANG').innerHTML);
+		// region
+		window.region = {
+			id: '{{ regions.region_id }}'
+			, code: '{{ regions.code }}'
+			, title: '{{ regions.title }}'
+			, name: '{{ regions.region_name }}'
+		}
+		//paymentType
+		window.paymentType = {
+			payment_underline:'{{ payment_underline }}'
+			, payment_online:'{{ payment_online }}'
+			, payment_paypal:'{{ payment_paypal }}'
+			, payment_asiabill:'{{ payment_asiabill }}'
+		}
+		// orderInfo
+		window.orderInfo = JSON.parse(document.getElementById('_ORDERINFO').innerHTML);
+	</script>
+
+	<div id="app">
+		{# 头部 #}
+		<section class="header">
+			<a class="goback" href="/{{ identity_tag }}">
+				<i class="checkout-icons icon-goback"></i>
+				{{ lang.click_back_home }}
+			</a>
+		</section>
+		
+		<div class="explain">
+			<h1>{{ lang.order_title }}</h1>
+			<p>{{ lang.warming|raw }}</p>
+		</div>
+
+
+		{# 自定义表单信息 #}
+		<component
+			:is="page"
+			ref="formlayer"
+			@render="afterRender">
+		</component>
+
+		{# 重复下单提示 #}
+		<reorder
+			ref="reorder"
+			:order="order"
+			:formdata="formdata"
+			@confirm="handleSubmit"
+			@cancel="gotoCheckOrder">
+		</reorder>
+		<sms
+			v-if="dialog.sms"
+			ref="sms"
+			:order="order"
+			:formdata="formdata"
+			@submiting="submiting"
+			@cancel="gotoCheckOrder">
+		</sms>
+
+
+		{# 订单信息 #}
+		<section class="order-info">
+			<template v-if="order.is_combo!=0">
+				<div class="m-orderItem">
+					<div class="row-2 flexbox">
+						<div class="goodImg">
+							{% if c.thumb %}
+								<img src="{{ c.thumb }}" width="100%" height="100%">
+							{% else %}
+								<img src="{{ thumb }}" width="100%" height="100%">
+							{% endif %}
+						</div>
+						<div class="goodInfo flex">
+							<div class="goodName">{{ title }}</div>
+							<div class="goodName ti">
+								<span>{{ c.title }}</span>
+								<div class="goodStatus f-fr"><span>{{ lang.num }} : </span><span class="number"></span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="m-goodItems" v-if="isShowCombo">
+					<div class="row-2 flexbox">
+						<div class="goodImg">	
+							<img class="attrimg" src="{{ g.thumb }}">
+						</div>
+						<div class="goodInfo flex u3">
+							<div class="goodName">
+								<span>g.title</span>
+								<div class="goodStatus">
+									<span class="attr">attr.name</span>
+									<span class="attr">attr.name</span>
+									<span class="attr">attr.name</span>
+									<span class="attr">attr.name</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row-2 flexbox">
+						<div class="goodImg">	
+							<img class="attrimg" src="{{ g.thumb }}">
+						</div>
+						<div class="goodInfo flex u3">
+							<div class="goodName">
+								<span>g.title</span>
+								<div class="goodStatus">
+									<span class="attr">attr.name</span>
+									<span class="attr">attr.name</span>
+									<span class="attr">attr.name</span>
+									<span class="attr">attr.name</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div :class="{ 'showCombo': true, 'action': isShowCombo }" @click="showCombo">
+					<span v-if="!isShowCombo">{{ lang.openComboProducts }}</span>
+					<span v-if="isShowCombo">{{ lang.closeComboProducts }}</span>
+				</div>
+				<!-- 套餐包含产品 -->
+			</template>
+			<template v-else>
+				<div class="m-orderItem m-padbot">
+					<div class="row-2 flexbox" v-for="product in order.products">
+						<div class="goodImg">
+							<img :src="product.thumb" width="100%" height="100%">
+						</div>
+						<div class="goodInfo flex">
+							<div class="goodName">${ product.title }</div>
+							<div class="goodName ti">
+								<span v-for="attr in product.proto">${ attr }</span>
+								<div class="goodStatus f-fr">
+									${ lang.num } : ${ product.count }
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+		</section>
+
+		{# 账单信息 #}
+		<section class="bill-info">
+			<ul>
+				<li>
+					<span>{{ lang.freight }}</span>
+					<span>${ formatCurrency('0.00') }</span>
+				</li>
+				<li>
+					<span>{{ lang.total }} </span>
+					<span>${ formatCurrency(order.total) }</span>
+				</li>
+				<li>
+					<span>{{ lang.pay }} </span>
+					<span class="red">${ formatCurrency(order.total) }</span>
+				</li>
+			</ul>
+		</section>
+
+		{#  #}
+		<button type="submit" class="buy_button" @click="handleSubmit">{{ lang.order_sure }}</button>
+
+		{# 底部信息 #}
+		<section class="footer">
+			<ul class="timetips">
+				<li> <i class="checkout-icons icon-7day"></i> {{ lang.returned_goods }} </li>
+				<li> <i class="checkout-icons icon-cod"></i> {{ lang.cash_on_delivery }} </li>
+			</ul>
+		</section>
+
+
+
+		{# 遮罩层 #}
+		<div class="ajaxLoading" v-if="rendering"></div>
+	</div>
+	<script src="http://cdn.stosz.com/build/plugins/vue/vue.js"></script>
+	<script src="/frontend/dist/order/checkout.js?v=1519440297797"></script>
+</body>
+</html>

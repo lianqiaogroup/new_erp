@@ -1,0 +1,202 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link rel="stylesheet" href="{{ THEME }}/css/frozen.css">
+<link rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{{ THEME }}/css/swiper-3.4.0.min.css">
+<script src="{{ THEME }}/js/Marquee.js"></script>
+<!--/page-->
+<input type="hidden" name="combo_id" value="0">
+<input type="hidden" name="product_id" value="{{ product_id }}">
+<input type="hidden" name="act" id="act" value="getAttrPrice">
+<style>
+#marquee6{height:300px; overflow:hidden;background:#EFEFEF;}
+.swiper-container{width: 100%;height: 300px;margin-left: auto;margin-right: auto;}
+.swiper-slide{height: 357px !important;background-size: cover;background-position: center;}
+.gallery-top{height: 357px;width: 100%;}
+.gallery-thumbs{height: 80px;box-sizing: border-box;padding: 10px 0;}
+.gallery-thumbs .swiper-slide{width: 80px !important;height: 80px !important;opacity: 0.4;}
+.gallery-thumbs .swiper-slide-active{opacity: 1;}
+
+</style>
+<!--  -->
+<section id="page-index" class="container">
+    {% if logo %}
+    <div class="ui-header ui-header-positive ui-border-b">
+        <h1><img src="{{ logo }}"></h1>
+    </div>
+    {% endif %}
+    <!--  -->
+    <div class="ui-container" style="overflow: hidden;">
+        <div class="maintitle" style="padding: 10px 0px; text-align: center;color: #7E7E7E;">{{ title }}</div>
+        <!--  -->
+        <div style="padding:0 10px;">
+        <div class="swiper-container gallery-top">
+            <div class="swiper-wrapper">
+                {% if photos %}
+                    {% for p in photos %}
+                        <div class="swiper-slide" style="background-image:url('{{ p.thumb }}')"></div>
+                    {% endfor %}
+                {% else %}
+                    <div class="swiper-slide" style="background-image:url('{{ thumb }}')"></div>
+                {% endif %}
+            </div>
+            <!-- Add Arrows -->
+        </div>
+        <div class="swiper-container gallery-thumbs">
+            <div class="swiper-wrapper">
+                {% if photos %}
+                    {% for p in photos %}
+                        <div class="swiper-slide" style="background-image:url('{{ p.thumb }}')"></div>
+                    {% endfor %}
+                {% else %}
+                    <div class="swiper-slide" style="background-image:url('{{ thumb }}')"></div>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+        <div style="padding: 0 15px">
+        <div class="star_pin"><span class="star_x">★★★★★</span><span class="shop_sales">{{ sales }}{{ lang.buyed_num }}</span></div>
+        </div>
+        {#套餐选择#}
+        <div class="list" style="width: 100%">
+            <ul>
+                <li class="this_li" style="margin: 0 16px">
+                    {% for o in  options %}
+                        <div class="ui-row product_attr" data-group="{{ o.attr_group_id }}" data-id="0" style="float: left;margin: 0 4px;border-radius: 3px;">
+                            <p class="title"><span>{{ o.attr_group_title|raw }}</span><img src="{{ THEME }}/images/down.png" style="width: 15px;height: 15px;position: absolute;right: 10px;top: 9px;" alt=""></p>
+                            <ul class='list-se'>
+                                <p class="title"><span>{{ o.attr_group_title|raw }}</span><img src="{{ THEME }}/images/up.png" style="width: 15px;height: 15px;position: absolute;right: 10px;top: 9px;" alt=""></p>
+                                <li class="option-values"> {% for key,attr in o.attr %}
+                                        <div class="_span" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">{{ attr.name|raw }}</div>
+                                    {% endfor %}</li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                <div class="num_this" style="opacity: 0;position: absolute;right: 10000px">
+                    <p class="title">{{ lang.order_num }}<img src="{{ THEME }}/images/down.png" style="width: 15px;height: 15px;position: absolute;right: 10px;top: 9px;" alt=""></p>
+                    <ul class='list-se'>
+                        <p class="title">{{ lang.order_num }}<img src="{{ THEME }}/images/up.png" style="width: 15px;height: 15px;position: absolute;right: 10px;top: 9px;" alt=""></p>
+                        <li><div onclick="minnumber()" class="less z-dis"><p style="line-height: 45px">
+                                    <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1492393508459" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1090" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><defs><style type="text/css"></style></defs><path d="M94.83132 476.184283l832.971245 0 0 71.631434-832.971245 0 0-71.631434Z" p-id="1091"></path></svg>
+                                </p></div></li>
+                        <li><div class="textWrap">
+                                <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                            </div></li>
+                        <li><div onclick="addnumber()" class="more"><p style="line-height: 45px">
+                                    <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1492393520408" class="icon" style="" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1205" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><defs><style type="text/css"></style></defs><path d="M821.129 454.944H543.324V177.17100000000005c0-23.943-19.387-43.359-43.346-43.359-23.968 0-43.352 19.416-43.352 43.359v277.773H178.871c-23.969 0-43.352 19.416-43.352 43.359 0 23.93 19.383 43.346 43.352 43.346h277.756v277.787c0 23.926 19.384 43.344 43.352 43.344 23.959 0 43.346-19.418 43.346-43.344V541.649h277.805c23.969 0 43.352-19.416 43.352-43.346C864.48 474.36 845.098 454.944 821.129 454.944z" p-id="1206"></path></svg>
+                                </p></div></li>
+                    </ul>
+
+                </div>
+                </li>
+            </ul>
+        </div>
+        <script>
+            $(function () {
+               var len = $(".this_li .product_attr").length;
+               if(len==1){
+                   $('.this_li .product_attr').css({width:'87%'})
+               };
+               if(len==2){
+                   $('.this_li .product_attr').css({width:'42%'})
+               }
+            })
+        </script>
+        <div style="width: 100%;overflow: hidden">
+            <button class="ui-btn-lg black" btn-act-buy>
+            <span class="preview">
+                <label class="red" style="color: white;">
+                    {% if currency_prefix == 1 %}
+                        {{ currency_code }}
+                    {% endif %}
+                    <span render="total">
+                {{ price }}
+                </span>
+                    {% if currency_prefix == 0 %}
+                        {{ currency_code }}
+                    {% endif %}
+                </label>
+            </span><span>{{ lang.buy_now }}</span></button>
+        </div>
+
+        <div class="l_kefu">
+            <div><a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" style="color: #1F4BA4;">{{ lang.service_online }}</a></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($)
+        {
+            $('.list ul li p').clickdown();
+            $('.list-se p[class=title]').clickup();
+            $('.list>ul>li').ad();
+        });
+    </script>
+
+        <!--  -->
+        <div class="options-layer">
+
+        </div>
+        <!--  -->
+<div class="nav_red">
+    <span class="product_t">{{ lang.product_desc }}</span>
+    <span class="eva_this"><a href="#eva_bo">買家評價</a></span>
+</div>
+        <!--  -->
+        <div class="product_this">
+            {{ content|raw }}
+        </div>
+    {% if comment %}
+    <div class="eva_bo" id="eva_bo">
+        <div id="marquee6">
+            <ul>
+                {% for a in  comment %}
+                    <li>
+                    <div class="appr-title mqc">
+                        <!-- <span style="color:red">097****896</span> -->
+                        {% if a.is_anonymous %}
+                            <span style="color:red; margin:0px 3px">匿名用戶</span>
+                        {% else %}
+                            <span style="color:red; margin:0px 3px">{{ a.name }}</span>
+                        {% endif %}
+                        <span>满意度：<font color="red">★★★★★</font></span><br/>
+                        <span  class="rr" style="margin-left:3px; font-size:12px">{{ "now"|date("Y.m.d") }}</span>
+                    </div>
+                    <div class="mqc">
+                        <p><span style="font-family:宋体">{{ a.content }}</span><span style="font-family:宋体"></span></p>
+                    </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+    {% endif %}
+    <script type="text/javascript">
+        $(function(){
+            //Marquee
+            $('#marquee6').kxbdSuperMarquee({
+                isMarquee:true,
+                isEqual:false,
+                scrollDelay:20,
+                controlBtn:{up:'#goUM',down:'#goDM'},
+                direction:'up'
+            });
+        });
+    </script>
+        <!--  -->
+        <div class="warning">
+            {{ lang.warming|raw }}
+        </div>
+    </div>
+    <!--  -->
+    <div class="back_top"></div>
+</section>
+
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/tanchu.js"></script>
+
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

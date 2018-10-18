@@ -1,0 +1,111 @@
+{% include 'header.twig' %}
+<div class="swiper-container main_swiper">
+    <div class="swiper-wrapper">
+        {% if photos %}
+            {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+        {% endif %}
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+<div class="swiper-container control_swiper">
+    <div class="swiper-wrapper">
+        {% if photos %}
+            {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"><div class="shade"></div></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"><div class="shade"></div></div>
+        {% endif %}
+    </div>
+</div>
+<div class="index_content">
+    <div class="title">
+        <h1>{{ title }}</h1>
+        <div>
+            <span class="star"></span>
+            <span class="score">4.5{{ lang.score }}</span>
+        </div>
+    </div>
+    <div class="sale">
+        <div class="flex">
+            <div class="price">
+                {% if currency_prefix == 1 %}
+                    {{ currency_code }}{{price}}
+                {% else %}
+                    {{price}}{{ currency_code }}
+                {% endif %}
+            </div>      
+            {% if modulesParam.flashsale.options.open != '0'  %}
+            <div class="progress" data-value="{{ sales }}"><div data-value="{{ stock }}"></div></div>
+            {% endif %}
+        </div>
+        <div class="flex">
+            <div class="market_price">{{ lang.market_price }}
+                {% if currency_prefix == 1 %}
+                    {{ currency_code }}{{market_price}}
+                {% else %}
+                    {{market_price}}{{ currency_code }}
+                {% endif %}
+            </div>
+            {% if modulesParam.countdown.options.open != '0' %}
+            <div class="time">
+                {% if modulesParam.countdown.options.label %}
+                    <span id='clock'>{{ modulesParam.countdown.options.label }}</span>
+                {% else %}
+                    <span id='clock'>{{ lang.time_last }}: </span>
+                {% endif %}
+                <span
+                    id="timer"
+                    data-fn="module_countdown_core"
+                    data-value="{{ modulesParam.countdown.options.end_timer }}"
+                    data-step="{{ modulesParam.countdown.options.time_step }}">
+                    <span id="h">10</span>
+                    <span>:</span>
+                    <span id="m">00</span>
+                    <span>:</span>
+                    <span id="s">00</span>
+                </span>
+            </div>
+            {% endif %}
+        </div>
+        <div class="service">
+            <ul>
+                <li>{{ lang.service1 }}</li>
+                <li>{{ lang.service2 }}</li>
+                <li>{{ lang.service3 }}</li>
+                <li>{{ lang.service4 }}</li>
+            </ul>
+        </div>
+    </div>
+    {% if comment %}
+    <div class="comment_part">
+        <div class="view_all">{{ lang.view_all }}</div>
+        <div class="swiper-container comment_swiper">
+            <div class="swiper-wrapper">
+                {% for a in comment %}
+                    {% if loop.index <= 5 %}
+                    <div class="swiper-slide">
+                        <div class="name">{% if a.is_anonymous==1 %}{{ lang.anonymous }}{% else %}{{ a.name }}{% endif %}</div>
+                        <div class="stars" data-num='{{ a.star }}'><span></span><span></span><span></span><span></span><span></span></div>
+                        <div class="content">{{ a.content }}</div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="buy_now">
+        {{ lang.buy_now }}
+    </div>
+    {% include 'mob_attr.twig' %}
+
+    <div id="detail">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+</div>
+

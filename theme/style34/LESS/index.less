@@ -1,0 +1,263 @@
+@import 'guige.less';
+@color:#3a77cf;
+h1,h2,h5{margin:0;padding:0;}
+#POP800_PANEL_DIV{
+	display:none;
+}
+body{
+	width:100%;
+	margin:0 auto;
+	max-width:640px;
+	font-size:12px;
+}
+.img_wrap{
+	position:relative;
+	margin-bottom:40px;
+	.swiper-pagination{
+		bottom:-20px;
+		span{
+			margin-right:5px;
+		}
+	}
+}
+.details{
+	padding:0 4%;
+	color:#222;
+	h1{
+	    font-size: 20px;
+	    line-height: 32px;
+	    text-align: center;
+	    margin-bottom:10px;
+		span{
+			color:@color;
+		    background: #f7fa6a;
+		}
+	}
+	.price{
+		font-size:0;
+		text-align:center;
+		position:relative;
+		margin: 10px auto 20px;
+		span{
+			font-size:20px;
+			color:@color;
+			font-weight:bold;
+			&:last-child{
+				font-size:16px;
+				color:#bbb;
+				text-decoration:line-through;
+				position:absolute;
+				bottom:0;
+				font-weight:normal;
+			}
+		}
+	}
+}
+.time_wrap{
+	display:flex;
+	justify-content:space-between;
+	padding:0 8%;
+    flex-wrap: wrap;
+	margin:20px 0;
+	font-size:12px;
+	@media screen and (max-width:580px) {
+		justify-content:space-around;
+		padding:0;
+	}
+	>span{
+		padding:4px 0;
+		margin:3px 0;
+	}
+	.time_limit{
+		padding-left:22px;
+		background:url(../images/bg.png) no-repeat 0 1px;
+		background-size:23px;
+	}
+	#timer{
+		font-size:0;
+		span{
+			font-size:12px;
+		    min-width: 10px;
+		    display: inline-block;
+		    text-align: center;
+		}
+	}
+	#h,#m,#s{
+		padding:0 2px;
+		color:#fff;
+		background:#000;
+		border-radius:4px;
+	}
+}
+.service{
+	padding: 0 4%;
+    line-height: 26px;
+    font-size:12px;
+    div{
+    	padding-left:20px;
+    	background:url(../images/bg.png) no-repeat;
+    	background-size:35px;
+    	&:first-child{
+    		background-position:0 -55px;
+    	}
+    	&:nth-child(2){
+    		background-position:0 -108px;
+    	}
+    	&:last-child{
+    		background-position:0 -159px;
+    	}
+    }
+}
+.details{
+	h2{
+		line-height:36px;
+		font-weight:normal;
+		width:94%;
+		font-size:12px;
+		padding:0 2% 0 4%;
+	    box-shadow: 2px 2px 4px #ccc;
+    	margin:20px 0;
+    	&:after{
+    		content:'';
+    		display:inline-block;
+    		width:8px;
+    		height:8px;
+    		border-bottom:2px solid #222;
+    		border-right:2px solid #222;
+    		-webkit-transform:rotate(45deg);
+    		transform:rotate(45deg);
+    		margin-top:10px;
+    		float:right;
+    	}
+	}
+}
+.m-img {
+	display:none;
+	video{
+		width:100%;
+	}
+	img{
+		width:100%;
+		max-width: 100% !important;
+		height: auto !important;
+	}
+}
+.choose_attr{
+	h2{
+		&:after{
+			-webkit-transform:rotate(-45deg);
+			transform:rotate(-45deg);
+			margin-top:12px;
+		}
+	}
+}
+footer{
+	padding:0 4%;
+	font-size:12px;
+	.left{
+		float:left;
+		width:60%;
+		text-align:center;
+		color:@color;
+		border-right: 1px solid #ccc;
+		margin-right:-1px;
+		padding:10px 0;
+		.inquiry,.kefu{
+			padding:2px 0 2px 26px;
+			background:url(../images/bg.png) no-repeat 6px -192px;
+			background-size:32px;
+			border-radius:4px;
+			border:1px solid @color;
+			width: 140px;
+			min-width:60%;
+    		margin:0 auto 12px;
+		}
+		.kefu{
+			background:url(../images/bg.png) no-repeat 8px -232px;
+			background-size:32px;
+		}
+	}
+	.buy_now{
+		float:left;
+		width:40%;
+		font-size:14px;
+		.wrap{
+		    width: 76px;
+	    	height: 76px;
+		    margin: 0 auto;
+		    background:@color;
+		    color:#fff;
+		    border-radius: 76px;
+		    div{
+		    	padding-top:43px;
+		    	text-align:center;
+		    	background:url(../images/bg.png) no-repeat center -240px;
+		    	background-size:29px;
+		    	line-height: 1;
+		    }
+		}
+	}
+}
+
+//page-order
+.title{
+	line-height:40px;
+	text-align:center;
+	text-indent:-20px;
+	border-bottom: 1px solid #aaa;
+	font-size:14px;
+	span{
+		display:inline-block;
+		width:8px;
+		height:8px;
+		border-bottom:2px solid #222;
+		border-left:2px solid #222;
+		-webkit-transform:rotate(-45deg);
+		transform:rotate(45deg);
+		float: left;
+    	margin: 15px 0 0 20px;
+    	
+	}
+}
+
+.after_sale{
+    padding:20px 15px;
+    font-size:12px;
+    font-family: Thonburi;
+    padding-bottom:50px;
+    max-width: 540px;
+    margin:0 auto;
+    width:calc(~'100% - 30px');
+   
+}
+.after_sale_title{
+    margin-bottom:20px;
+    font-size:14px;
+    color:#444A59 ;
+    box-shadow: 2px 2px 4px 0 rgba(51,51,51,0.15);
+    line-height: 40px;
+
+}
+.after_sale .after_sale_first{
+    color:#666;
+    margin-top:25px;
+}
+.after_sale_content div{
+    line-height: 17px;
+    color:#999;
+    margin-bottom:10px;
+}
+.after_sale_circle{
+    border:1px solid #999;
+    background:#999;
+    display: inline-block;
+    width:5px;
+    height:5px;
+    border-radius: 50%;
+    margin-right:10px;
+}
+.after_sale_circle_right{
+    display: inline-block;
+    vertical-align: top;
+    width: calc(~'100% - 21px');
+}

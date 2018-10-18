@@ -1,0 +1,89 @@
+#money-card-div,#ocean-div{
+	width: 100%;
+    background-color: #F2F2F2;
+    border-radius: 7px;
+    padding: 34px 25px;
+    margin-bottom: 28px;
+    border: 1px solid #E4E4E4;
+    box-sizing: border-box;
+}
+.other-input{
+	display: none;
+}
+
+#opcse-encrypted-form{
+	text-align: left;
+    width: 100%;
+    /*padding: 0px 20px;*/
+    padding-bottom: 20px;
+    background-color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#opcse-encrypted-form label input, #card_year, #card_month,#card_secureCode,#card_number{
+	margin-top: 5px;
+    height: 28px;
+    border-radius: 5px;
+    background-color: #F4F4F4;
+    border: 0;
+}
+
+#card_number{
+	width: 56%;
+}
+
+label[for="card_number"],label[for="card_month"],label[for="card_secureCode"]{
+	width: 100%;
+	color: #585757;
+}
+label[for="card_number"] span,label[for="card_month"] span,label[for="card_secureCode"] span{
+	width: 115px;
+    display: inline-block;
+    text-align: right;
+    
+}
+
+#card_month, #card_year, #card_month, #card_secureCode{
+	width: 75px;
+}
+
+#opcse-encrypted-form label span, .we-accept span{
+	font-size: 16px;
+	font-weight: 700;
+}
+
+#submitButton{
+	width: 74%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #4485b7;
+    color: #fff;
+    font-size: 16px;
+    padding: 14px 0px;
+    margin-top: 57px;
+    display: inherit;
+    border: 0;
+}
+
+.amount-count{
+	height: 56px;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 40px;
+    margin: 32px 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.amount-count span{
+	    color: #EE9342;
+}
+
+.pay-success{
+	font-size: 18px;
+    text-align: center;
+    margin-top: 100px;
+}
+    

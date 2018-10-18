@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="320" name="MobileOptimized" />
+        <meta content="telephone=no" name="format-detection" />
+        <title>{{ title }}</title>
+        <meta name="keywords" content="{{ title }}" />
+        <meta name="description" content="{{ title }}" />
+        <link href="/public/image/del/favicon{{ regions.region_id }}.ico" type="image/x-icon" rel=icon>
+        {% if THEME == '/theme/style2' %}
+            <!-- <script src="/public/javascript/vue.min.js"></script> -->
+            <script src="http://out.stosz.com/vue.min.js"></script>
+            <script src="/public/javascript/require.js" alt={{ THEME }}></script>
+        {% else %}
+            <link rel="stylesheet" href="/public/style/reset.css">
+            <script src="/public/javascript/require.js" alt={{ THEME }}></script>
+            
+            <script src="/public/javascript/jquery-2.2.3.min.js"></script>
+        {% endif %}
+        {% include '/public/theme/facebook_pixel_common.twig' %}
+        {{ yahoo_js|raw }}
+        <!-- google js -->
+        {% include 'google_js_head.twig' %}
+        <!-- end google js -->
+    </head>
+<body>
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<!-- end header resource -->
+<style type="text/css">
+	#POP800_PANEL_DIV{display: none;}
+</style>
+<div style="background:#fff;">
+<div class="header">
+    <div class="backdiv"><a href="javascript:history.go(-1)" class="goback"><i></i></a></div>
+	<div class="title"><img src="{{ logo }}"></div>
+	<div class="homediv"><a href="/" class="home"><img src="{{ THEME }}/images/home.png"></a></div>
+</div>
+<div id="secMainImg">
+    <div id="slider" class="slideBox">
+        <ul>
+            {% if photos %}
+                {% for p in photos %}
+                <li><img width="100%" src="{{ p.thumb }}"></li>
+                {% endfor %}
+            {% else %}
+                <li><img width="100%" src="{{ thumb }}"></li>
+            {% endif %}
+        </ul>
+        <div id="imgNum">
+            <div><span id="imgCnt" class="pageState">1</span></div>
+        </div>
+    </div>
+</div>
+<div class="mesinfo">
+    <h3>{{ title }}</h3>
+    <p>{{ currency_code }}{{ price }}</P>
+    <del>{{ currency_code }}{{ market_price }}</del>
+</div>
+<div class="tip_small">
+	<div class="tip_left">มีลูกค้าสั่ง {{ sales }}</div>
+	<div class="tip_right">ประหยัดทันท {% if price != 0 and market_price != 0 %}{{ (((market_price-price)/market_price)*100.00)|number_format(0) }} {% endif %} %</div>
+</div>
+
+<div id="attr">
+    <form id="form" name="form" method="post" action="order.php">
+        <input type="hidden" name="orderid" id="orderid" value="">
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+        <input type="hidden" name="act" id="act" value="getAttrPrice">
+        <!--  -->
+        <!-- 套餐选择 -->
+        <div class="u-format" id="comb" data-price="">
+            <div class="package {% if combo %}{% else %}hide{% endif %}">
+            {% if combo %}
+                <div class="tt">{{ lang.package }}</div>
+                {% for c in combo %}
+                <label class="tab" rel="1" data-price="{{ c.price }}" data-loopIndex="{{ loop.index }}">
+                    <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="{{ c.combo_id }}" />
+                    <span>{{ c.title|raw }}{{ currency_code }}{{ c.price }}</span>
+                </label>
+
+                {% endfor %}
+            {% else %}
+                <div class="tab tab-sel" rel="1" data-price="{{ price }}" data-loopIndex="1">
+                    <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="0" checked="chekced" />
+                </div>
+            {% endif %}
+            </div>
+        </div>
+        <!-- <p class="tips">{{ tips }}</p> -->
+
+        <!-- 套餐－属性选择 -->
+        {% if combo %}
+            <!-- 循环套餐 -->
+            {% for om in combo %}
+                <section data-loopIndex="{{ loop.index }}" productid="{{ om.product_id }}" style="display: none;">
+                {% for ok in om.goods %}
+                    {% if ok.options %}
+                        <div class="title_ac"><h5>{{ ok.title|raw }}</h5></div>
+                        <div class="tc tc{{ ok.combo_id|raw }}">
+                            {% for o in  ok.options %}
+                                <li class="item protoLayer">
+                                    <div class="group_title">{{ o.attr_group_title }}</div>
+                                    <div class="u-format count_atrr" data-group="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" data-select="0">
+                                        <div class="con">
+                                            <!-- 属性值 -->
+                                            {% for key,attr in o.attr %}
+                                                <div class="tab" data-id="{{ attr.product_attr_id }}" data-name="{{ attr.name }}">
+                                                    {% if attr.thumb %}
+                                                    <img src="{{ attr.thumb }}">
+                                                    {% else %}
+                                                    <span>{{ attr.name|raw }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </section>
+            {% endfor %}
+        {% else %}
+        <!-- 单产品属性选择 -->
+            <section data-loopIndex="1" style="margin-top:10px;">
+            {% for o in  options %}
+                <li class="item protoLayer">
+                    <div class="group_title">{{ o.attr_group_title }}</div>
+                    <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                        <div class="con">
+                            {% for key,attr in o.attr %}
+                                <div class="tab" data-id="{{ attr.product_attr_id }}" data-name="{{ attr.name }}">
+                                    {% if attr.thumb %}
+                                    <img src="{{ attr.thumb }}">
+                                    {% else %}
+                                    <span>{{ attr.name|raw }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </section>
+        {% endif %}
+        <!--产品的所有属性-->
+        <input type="hidden" name="heavn" class="attr_id" value="">
+        <input type="hidden" name="attrnum" value="2">
+
+        <!-- 套餐选择 end -->
+    </form>
+</div>
+
+<div class="numberbox">
+    <div class="m-selnum">
+        <span class="numtitle">จํานวน</span>
+        <div onclick="minnumber()" class="less z-dis">-</div>
+        <div class="textWrap">
+            <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+        </div>
+        <div onclick="addnumber()" class="more">+</div>
+    </div>
+</div>
+<p id="time"><span style="font-weight:500;display:block;line-height:30px;font-size:16px;">ราคาโปรโมชั่นสามารถใช้ได้กับ</span>  <span class="h"></span>:<span class="m"></span>:<span class="s"></span></p>
+<div class="btn">
+    <button class="buyone">รีบซื้อเลย</button>
+</div>
+<div class="tip">
+	
+	<div class="chip"><img src="{{ THEME }}/images/free_shop.png">รวมค่าส่ง</div>
+	<div class="chip"><img src="{{ THEME }}/images/haver_pay.png">เงินสดในการส่งมอบ</div>
+    <div class="chip"><img src="{{ THEME }}/images/7day.png">การคืนสินค้าได้7วัน</div>
+</div>
+<div class="nav">
+	<div class="subnav blue">รายละเอียดสินค้า</div>
+</div>
+<div class="proinfo">
+    <div class="title"><i class="icon"></i>รายละเอียดสินค้า</div>
+    <div id="tab1" class="tab action">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+</div>
+<div class="User_notes" style="margin-top: 10px">
+    <h2 class="notes">ปัญหาทั่วไป</h2>
+    <div class="qut">
+        <div class="note_text">Q. สินค้าทั้งหมดในเว็บไซต์เป็นของแท้หรือเปล่า</div>
+        <div class="note_title">A. เรายึดมั่นในการควบคุมทุกรายละเอียดของสินค้าอย่างเข้มงวด เช่น แหล่งกำเนิด วัตถุดิบ  กระบวนการผลิตสินค้า ฯลฯ เพื่อช่วยให้ผู้บริโภคเลือกสินค้าที่มีคุณภาพมากที่สุด  คุณสามารถเลือกซื้อได้อย่างมั่นใจ</div>
+    </div>
+    <div class="qut">
+        <div class="note_text">Q. ใช้ยานพาหนะอะไรมาขนส่งสินค้า</div>
+        <div class="note_title">A. โดยทั่วไปแล้ว เราจะใช้เครื่องบินมาขนส่งสินค้า </div>
+    </div>
+    <div class="qut">
+        <div class="note_text">Q. วัสดุของฉันจะ ใช้เวลากี่วันในการขนส่ง</div>
+        <div class="note_title"><div style="float:left">A.</div><div style="padding-left:15px;"> 1. เราจะเริ่มจัดส่งสินค้าภายใน7-15 วันหลังจากที่คุณสั่งซื้อสำเร็จ (ยกเว้นวันหยุด).<br>2. ถ้ามีเหตุการฉุกเฉิน เวลาส่งถึงอาจมีความล่าช้าเล็กน้อย<br>3.เนื่องจากว่าโกดังที่เก็บสินค้าอยู่ในแต่ละที่ สินค้าที่อยู่ในแพคเกจเดียวกันอาจจะถูกแบ่งออกเป็นหลายพัสดุ เวลาที่ส่งถึงของแต่ละพัสดุอาจไม่เหมือนกัน </div></div>
+    </div>
+</div>
+<div class="footer" style="display:none">
+    <div class="times">ราคาโปรโมชั่นสามารถใช้ได้กับ：<span class="h"></span>:<span class="m"></span>:<span class="s"></span></div>
+	<div class="btn"><button class="buyflex">รีบซื้อเลย</button></div>
+</div>
+</div>
+
+<i class="m-goToTop" style="display: none;"></i>
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+<script>
+    ga('require', 'ec');
+    
+    ga('ec:addProduct', {
+      'id': '{{product_id}}',
+      'name': '{{title}}',
+      'price': '{{price}}'
+    });
+    ga('ec:setAction', 'detail');
+    ga('send', 'pageview');
+    
+    ga('ec:addProduct', {
+      'id': '{{product_id}}',
+      'name': '{{title}}',
+      'price': '{{price}}'
+    });
+    ga('ec:setAction','checkout', {
+        'step': 1
+    });
+    ga('send', 'pageview');
+</script>
+{% include 'public/theme/footer.twig' %}
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <style type="text/css">
+        html,body{width: 100%;max-width: 540px;background-color: #f7f8f8;font-size: 60px;padding-bottom: 15px;margin:auto;}
+        .back{height: 30px;width: 30px;display: block;background-image: url('/public/image/back.png');background-repeat: no-repeat;background-size: 16px;background-position: center;}
+        .show{width: 100%;padding: 15px 15px 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+        .green{color: #008842;font-size: .32rem;margin-bottom: 10px;}
+        .show .text{/*padding-left: 15px;*/font-size: .21rem;line-height: .35rem}
+        .show h5{font-size: 0.5em;text-align: center;margin-top: 20px;}
+        .show h6{font-size: .30rem;line-height: .35rem;margin-bottom: 10px;margin-top: 10px; color: #008842;}
+    </style>
+</head>
+<body>
+<div class="show">
+    <a href="/" class="back"></a>
+    <h5 class="green"> {{ title }}</h5>
+    <div class="text">{{ content|raw }}</div>
+</div>
+</body>

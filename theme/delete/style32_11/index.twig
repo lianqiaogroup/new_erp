@@ -1,0 +1,340 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet">
+<!-- end header resource -->
+<section id="page-index">
+	<div class="header">
+		<h1>{{ title }}</h1>
+	</div>
+	<div class="img_wrap">
+		<h2>{{ lang.product_img }}</h2>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="details">
+		<h2>{{ lang.time_limit }}</h2>
+		<div class="sales_wrap">
+			<div class="sales">
+				<div class="price">
+					{{ currency_code }}<ins>{{ price }}</ins>
+				</div>
+				<div class="sales_info">
+					<div>
+						<del>{{ market_price }}</del>
+					</div>
+					<div class="sales_num">
+						{{ sales }}{{ lang.piece }}{{ lang.sold }}
+					</div>
+				</div>
+			</div>
+			<div class="time_wrapper">
+				<div class="timeWrap" >
+                    <span id='clock'>{{ market_price - price }} OFF</span>
+					<!-- <span id='clock'>{{ lang.countdown }}</span> -->
+					<span id="timer" style="display:none;">
+		                <span  id="h">10</span>
+	                	<span class="">{{ lang.h }}</span>
+	                    <span id="m">00</span>
+	                    <span class="">{{ lang.m }}</span>
+	                    <span id="s">00</span>
+	                    <span class="">{{ lang.s }}</span>
+	              	</span>
+				</div>
+			</div>
+		</div>
+		<div class="title">
+			<h1>{{ title }}</h1>
+		</div>
+		<div class="service">
+			<span>{{ lang.free_ship }}</span>
+			<span>{{ lang.cash_on_delivery }}</span>
+			<span>{{ lang.returned_goods }}</span>
+		</div>
+		<div class="buy_now">
+			<a href="#page-order">{{ lang.buy_now }}</a>
+		</div>
+	</div>
+	<div class="product_info">
+		<h2>{{ lang.pro_attr }}</h2>
+		<div class="m-img">
+            {{ content|raw }}
+        </div>
+    </div>
+</section>
+<section id="page-order">
+	<h2>{{ lang.order_info }}</h2>
+	<div class="order_title"><h1>{{ title }}</h1></div>
+	<form id="form" name="form" action="order.php" method="post" onSubmit="return postcheck()">
+		<input type="hidden" name="combo_id" value="">
+        <input type="hidden" name="token" value="{{ token }}">
+        <input type="hidden" id="act" name="act" value="getAttrPrice">
+        <!--套餐-->
+        <div class="tips">
+            <p>{{ tips }}</p>
+        </div>
+        <div class="bdbox" id="combo">
+            <label class="bdxx"><em>*</em> {{ lang.pro_choose }} </label>
+            <div class="dxbox red">
+                 {% if combo %}
+                     {% for c in combo %}
+                          <label class="combo" data-loopIndex="{{ loop.index }}" style="padding: 5px;" data-price="{{ c.price }}"><input type="radio" name="combo_id" value="{{ c.combo_id }}"> {{ c.title|raw }}-{{ currency_code }} {{ c.price }}</label>
+                         <br>
+                     {% endfor %}
+                     {% else %}
+                    <label class="combo" data-loopIndex="1" data-price="{{ price }}>
+                         <input type="radio" name="combo_id" value="0"> {{ title|raw }}
+                    </label>
+                 {% endif %}
+               
+            </div>
+        </div>
+		<!--套餐end-->
+		<!--属性开始-->
+        <div id="product_attr">
+            {% if combo %}
+                <!--循环套餐-->
+                {% for om in  combo %}
+                    <section data-loopIndex="{{ loop.index }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+                    <!-- 循环产品 -->
+                    {% for ok in  om.goods %}
+                        {% if ok.options %}
+                        <div class="item">
+                            <div class="tc tc{{ ok.combo_id|raw }}" >
+                                <!-- 循环属性 -->
+                                {% for o in  ok.options %}
+                                    <div class="bdbox" data-prototype-group="{{ loop.index }}"  data-group="{{ o.attr_group_id }}" data-select="0">
+                                            <label class="bdxx">
+                                            	<em>*</em>
+                                                {{ o.attr_group_title|raw }}
+                                            </label>
+                                            <div class="dxbox">
+                                                {% for key,attr in o.attr %}
+
+                                                    <label>
+                                                        {% if attr.thumb %}
+                                                        <img class="lazyload" src="" data-img="{{ attr.thumb }}" style="width: 100%; height: auto;">
+                                                        <br/>
+                                                        {% endif %}
+                                                        <input type="radio"  name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}" style="vertical-align: top;">
+                                                        <span style="font-weight: normal;">{{ attr.name|raw }}</span>
+                                                    </label>
+
+                                                {% endfor %}
+                                            </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </section>
+                {% endfor %}
+            {% else %}
+                <section data-loopIndex="1">
+                <!--循环当前产品属性-->
+                {% for o in  options %}
+                    <div class="bdbox" data-prototype-group="{{ loop.index }}">
+                        <label class="bdxx"><em>*</em>{{ o.attr_group_title|raw }}</label>
+                        <div class="dxbox">
+                            {% for key,attr in o.attr %}
+                                {% if attr.thumb %}
+                                	<label style="width:30%">
+                                		<img class="lazyload" src="" data-img="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>
+                                {% else %}
+                                	<label>
+                                {% endif %}
+                                    <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                    {{ attr.name|raw }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <div class="cls"></div>
+                    </div>
+                {% endfor %}
+                </section>
+            {% endif %}
+            <input type="hidden" name="act" value="getAttrPrice">
+        </div>
+        <!--属性结束-->
+        <div class="bdbox">
+            <label class="bdxx"><em>*</em>{{ lang.money }}</label>
+            <div class="text3box">
+            {% if combo %}
+                {% for a in combo %}
+                    {% if loop.index == 1 %}
+                        <input name="price" readonly style="width:80px;" value="{{ a.price  }}"/>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <input name="price" readonly style="width:80px;" value="{{ discount_price  }}"/>
+            {% endif %}
+            </div>
+        </div>
+        <div class="bdbox">
+	        <label class="bdxx"><em>*</em>{{ lang.num }}</label>
+	        <div class="m-selnum dr">
+                <div onclick="minnumber()" class="less z-dis">-</div>
+                <div class="textWrap">
+                    <div class="tt">&nbsp;<span>1</span></div>
+                    <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                </div>
+                <div onclick="addnumber()" class="more">+</div>
+            </div>
+	    </div>
+	    <div class="bdbox">
+            <label class="bdxx"><em>*</em>{{ lang.name }}</label>
+            <div class="textbox">
+                <input required="required" type="text" name="name" class="inputText" placeholder="{{ lang.input_name }}" />
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx"><em>*</em>{{ lang.mobile }}</label>
+            <div class="textbox">
+                <input required="required" type="text" name="mob" class="inputText" placeholder="{{ lang.input_phone }}" />
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx"><em>*</em>{{ lang.province }}</label>
+            <div class="textbox" id="province">
+                <select name="province">
+                    <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                </select>
+                {% if regions.region_son %}
+                    <select name="city">
+                        <option value="">{{ lang.province_choose }}</option>
+                        {% for i in regions.region_son %}
+                            <option value="{{ i.lang}}">{{ i.lang }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx"><em>*</em>{{ lang.address_full }}</label>
+            <div class="textbox">
+            <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx" for="email"><em></em>E-mail</label>
+            <div class="textbox"><input  name="email" placeholder="{{ lang.email_use }}" maxlength="30" class="inputText" type="email">  </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.note }}</label>
+            <div class="text2box">
+                <textarea name="guest" rows="1" placeholder="{{ lang.order_remark }}"></textarea>
+            </div>
+        </div>
+		<div class="bdbox" style="flex-wrap:wrap;">
+            <label class="bdxx"><em>*</em>{{ lang.cash_style }}</label>
+            <div class="dxbox">
+                <label for="payment_type">
+                    <input name="payment_type" value="0" type="radio">
+                    <span class="huo">{{ lang.cash_on_delivery }}</span>
+                </label>
+            </div>
+            <div class="huo_info">{{ lang.half_pre }}{{ regions.region_name }}{{ lang.half_next }}</div>
+        </div>
+        <div class="submit">
+        	<button type="submit" name="Submit" >{{ lang.confirm }}</button>
+        </div>
+	</form>
+	<div class="new_order"><h1>{{ lang.new_order }}</h1></div>
+	<div style="padding: 8px;background: white">
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="commentScroll" style="height:250px; overflow: hidden;font-size:14px;">
+                <ul class="picList">
+                    <li>
+                        <span>{{ lang.zhang }}**（095***3590）</span>
+                        <span style="float:right;">4{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.wang }}**（098***4865）</span>
+                        <span style="float:right;">8{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.lin }}**（092***3291）</span>
+                        <span style="float:right;">2{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.zhao }}**（091***6851）</span>
+                        <span style="float:right;">10{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.zheng }}**（092***6851）</span>
+                        <span style="float:right;">3{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.liu }}**（093***3943）</span>
+                        <span style="float:right;">1{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                    <li>
+                        <span>{{ lang.li }}**（096***3943）</span>
+                        <span style="float:right;">1{{ lang.before }}</span>
+                        <br>
+                        <span>{{ title }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="like_wrap">
+	<div class="like_shadow">
+	</div>
+	<div class="like">
+		<div class="close"> × </div>
+		<div class="content">有1{{ sales }}人喜歡此產品</div>
+	</div>
+</div>
+<div class="User_notes" style="margin-top: 10px;color:#ccc;line-height: 2em;padding: 3%;">
+    <h2 class="notes">{{ lang.user_notes }}</h2>
+    <div class="note_text">{{ lang.user_fb }}</div>
+    <div class="note_title">{{ lang.user_note1 }}</div>
+    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+    <div class="note_title">{{ lang.user_note2 }}</div>
+    <div class="note_text">{{ lang.user_note2_1 }}</div>
+    <div class="note_title">{{ lang.user_note3 }}</div>
+    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}。</div>
+    <div class="note_title">{{ lang.user_note4 }}</div>
+    <div class="note_text">{{ lang.user_note4_1 }}</div>
+    <div class="note_title">{{ lang.user_note4_2 }}</div>
+    <div class="note_title">{{ lang.user_note4_3 }}</div>
+    <div class="note_text">{{ lang.user_note4_4 }}</div>
+</div>
+<footer>
+	<div class="top">top</div>
+	<div><a href="#page-order">{{ lang.order_now }}</a></div>
+	<div class="inquiry">{{ lang.order_inquiry }}</div>
+</footer>
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

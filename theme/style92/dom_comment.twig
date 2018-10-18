@@ -1,0 +1,73 @@
+<div class="scroll_tt" id="pinlun_tt">{{ lang.View_all }}</div>
+<div class="pinlun_content">
+	<ul id="pinlun_content">
+	{% for a in comment %}
+		{%if loop.index <= 6 %}
+		<li class="lab cover" data-group="{{ a.comment_id }}" data-id="0">
+			<div class="item-wrap {%if a.thumb%}has_img{%endif%}">
+			<div class="msKeimgBox">
+				<div class="item-img box">
+					{% for b in a.thumb %}
+						{%if loop.index == 1%}
+							<img src="{{ b.thumb }}">
+						{%endif%}
+					{% endfor %}
+				</div>
+				<div class="mskeTogBtn"></div>
+				<div style="clear:both;"></div>
+			</div>
+			<div class="main-com" style="padding: 5px;">
+				<div class="inm">
+					{% if a.is_anonymous %}
+						<span id="nm" class="nm">{{ lang.is_anonymous }}</span>
+					{%else%}
+						<span id="wi">{{ a.name }}</span>
+					{% endif %}
+				</div>
+				<div>
+					<span class="iconStar rate{{a.star}}"></span>
+				</div>
+				<P style="color: #666;padding: 5px;word-break: break-all;">{{ a.content }}</P>
+			</div>
+			</div>
+		</li>
+		{% elseif loop.index<= 100 %}
+		<li class="lab cover" data-group="{{ a.comment_id }}" datashowid data-id="0" style="display: none;">
+			<div class="item-wrap {%if a.thumb%}has_img{%endif%}">
+			<div class="msKeimgBox">
+				<div class="item-img box">
+					{% for b in a.thumb %}
+						{%if loop.index == 1%}
+							<img src="{{ b.thumb }}">
+						{%endif%}
+					{% endfor %}
+				</div>
+				<div class="mskeTogBtn"></div>
+				<div style="clear:both;"></div>
+			</div>
+			<div class="main-com" style="padding: 5px;">
+				<div class="inm">
+					{% if a.is_anonymous %}
+						<span id="nm" class="nm">{{ lang.is_anonymous }}</span>
+					{%else%}
+						<span id="wi">{{ a.name }}</span>
+					{% endif %}
+				</div>
+				<div>
+					<span class="iconStar rate{{a.star}}"></span>
+				</div>
+				<P style="color: #666;padding: 5px;word-break: break-all;">{{ a.content }}</P>
+			</div>
+			</div>
+		</li>
+		{%endif%}
+	{% endfor %}
+	</ul>
+	<div id="loadMore" class="loadMore">{{lang.view_more}}</div>
+</div>
+<div class="layer_com">
+	<div class="big_com">
+		<div class="close-btn">×</div>
+		<div class="layer-main"></div>
+	</div>
+</div>

@@ -1,0 +1,214 @@
+        <script type="text/javascript" src="/lib/ocean/luhm_check.js"></script>
+        <style>
+        	label[for="mb_card_number"] span, label[for="mb_card_month"] span, label[for="mb_card_secureCode"] span{
+        		width:100%!important;
+        		text-align: left!important;
+        	}
+        	#money-card-div{
+        		padding: 31px 17px!important;
+        	}
+        	#mb_card_number{
+        		width:100%!important;
+        		
+        	}
+        	#opcse-encrypted-form label input, #mb_card_year, #mb_card_month, #mb_card_secureCode, #mb_card_number{
+        		background-color:#fff!important
+        	}
+        </style>
+        <div id="money-card-div" style="display:none">
+            <link href="/lib/moneybrace/mbstyle.css" type="text/css" rel="stylesheet"/>
+            <label for="mb_card_number">
+                <span>{{ CardNumber }}</span>
+                <input align="right" type="text" id="mb_card_number" value=""maxlength="19" size="20" autocomplete="off" opcse-name="mb_card_number" onchange='checkBankNo(this)' onkeydown="onlyNum()" name="mb_card_number"/>
+            </label>
+            <br>
+
+            <div style="width:100%; color:#585757;">
+                <span style="display:inline-block;width: 100%;  font-weight: 700;">{{ Expiration }}</span>
+                <select placeholder="MM" value="" id="mb_card_month" opcse-name="mb_card_month" name="mb_card_month">
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>/
+                <select placeholder="YYYY" value="" id="mb_card_year" opcse-name="mb_card_year" name="mb_card_year">
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                </select>
+            </div>
+            <br>
+
+            <label for="mb_card_secureCode">
+                <span>{{ CVC }}</span>
+                <input type="password" placeholder='XXX' align="right" type="text" id="mb_card_secureCode" value="" size="3" maxlength="3" autocomplete="off" opcse-name="mb_card_secureCode" onchange='checkSecureCode(this)' onkeydown="onlyNum()" name="mb_card_cvv"/>
+            </label>
+            <br>
+            <a href="javascript:;" class="shooDoc">{{ CVCLINK }}</a>
+            <div style="color: red;">
+              ※クレジットカードのセキュリティはSSLというシステムを利用しております。 カード番号は暗号化されて安全に送信されますので、どうぞご安心ください。
+            </div>
+            <input type="hidden" value="{{ Please_check_your_card_message }}" id="error">
+        <!-- opcse -->
+        <!--<script type="text/javascript" src="/lib/ocean/opcse.js"></script>-->
+       </div>
+        <div class="docLayer">
+            <div>
+                <img src="/lib/moneybrace/images/cvvlink.jpg" alt="">
+            </div>
+            <p>CVV とは、アメリカンエクスプレス、VISAカード、マスターカード、JCBカードをご利用の際に必要な番号のことです。</p>
+            <p>CVV（カードID）はオンラインカード詐欺から保護する為のものでもあリます。</p>
+            <p>カードの承認の為にも必要ですので、このフォームへCVVのご記入をお願いします。</p>
+            <span class="closeBtn">X</span>
+        </div>
+        <style>
+            .docLayer {
+                display: none;
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                z-index: 999;
+                width: 100%;
+                max-width: 750px;
+                margin: 0 auto;
+                background-color: #fff;
+                box-sizing: border-box;
+                padding: 20px;
+            }
+            .docLayer img {
+                width: 100%;
+            }
+            .docLayer p {
+                margin: 20px 0px;
+            }
+            .docLayer .closeBtn {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                background-color: rgba(0,0,0,0.5);
+                border-radius: 25px;
+                width: 25px;
+                height: 25px;
+                color: #fff;
+                text-align: center;
+                line-height: 25px;
+                z-index: 99999;
+            }
+        </style>
+        
+       <script>
+       
+        var modelOptYear = $('#mb_card_year').html();
+        var modelOptMonth = $('#mb_card_month').html();
+        
+        // console.log(modelOptMonth);
+        initDate();
+		var modelOtpMonthVal = $('#mb_card_month').val();
+        $('#mb_card_year').change(function(e){
+            var date=new Date;
+            var year=date.getFullYear(); 
+            obj = e.currentTarget;
+            
+            var index = obj.selectedIndex;
+            var value = obj.options[index].value;
+            if(year!=value){
+              $('#mb_card_month').html(modelOptMonth);
+              //console.log(modelOtpMonthVal);
+              $('#mb_card_month').val(modelOtpMonthVal);
+            }else{
+              initDate();
+              modelOtpMonthVal = $('#mb_card_month option:selected').text();
+              //console.log(modelOtpMonthVal);
+            }
+        });
+        $('#mb_card_month').change(function(e){
+        	modelOtpMonthVal = $('#mb_card_month option:selected').text();
+        	//console.log(modelOtpMonthVal);
+        });
+
+       	function initDate(){
+          var date=new Date;
+          var year=date.getFullYear(); 
+          var month=date.getMonth()+1;
+          if(month<10){
+            $('#mb_card_month').val('0'+month);
+          }else{
+            $('#mb_card_month').val(month);
+          }
+          
+          $('#mb_card_year').val(year);
+          if(month>1){
+            for (i=1;i<month;++i) {
+              if(month<10){
+                $('#mb_card_month option[value=0'+i+']').remove();
+              }else{
+                $('#mb_card_month option[value='+i+']').remove();
+              }
+              
+            }
+          }
+          if(year-2017>1){
+            for (i=2017;i<year;++i) {
+              $('#mb_card_year option[value='+i+']').remove();
+            }
+          }
+        }
+       
+        function onlyNum() 
+        { 
+            if(!((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=96&&event.keyCode<=105)||(event.keyCode==8))) 
+            {
+                event.returnValue=false; 
+            }
+            
+        } 
+        function checkSecureCode(obj){
+            var value = $(obj).val();
+            var valueLen = value.toString().length;
+            if(isNaN(value)){
+                $(obj).val('');
+                alert('数字を入力してください!');
+            }else if(valueLen<3||valueLen>4){
+                $(obj).val('');
+                alert('正しいセキュリティコードを入力してください!');
+            }
+        }
+        function checkBankNo(obj){
+          var value = $(obj).val();
+            if(isNaN(value)){
+                $(obj).val('');
+                $(obj).attr('placeholder','数字を入力してください!');
+                alert('数字を入力してください!');
+            }else if(!luhmCheck(value)){
+              $(obj).val('');
+               $(obj).attr('placeholder','正しいカード番号を入力してください!');
+            }
+        }
+        $('.shooDoc').click(function(event) {
+            /* Act on the event */
+            $('.docLayer').show();
+        });
+        $('.closeBtn').click(function(event) {
+            /* Act on the event */
+            $('.docLayer').hide();
+        });
+       </script>

@@ -1,0 +1,152 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+{% include '/public/theme/google_remarketing_index.twig' %}
+<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.css">
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
+<!--如果你用到了拓展包中的组件，还需要引用下面两个-->
+<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.js' charset='utf-8'></script>
+<div class="page-group">
+        <!-- 单个page ,第一个.page默认被展示-->
+        <div class="page">
+            <!-- 标题栏 -->
+            <header class="bar bar-nav">
+                <a class="icon icon-menu pull-left open-panel"></a>
+                {% if info.logo == '' %}
+                    <h1 class="title logo" style="background-image:url({{ THEME }}/image/logo.png)"></h1>
+                {% else %}
+                    <h1 class="title logo" style="background-image:url({{ info.logo }})"></h1>
+                {% endif %}
+            </header>
+            <!-- 这里是页面内容区 -->
+            <nav class="nav">
+                <div class="type-nav">
+                    <ul>
+                        {% if category_id %}
+                            <li rel="123"><a href="/" class="external">ที่หน้าแรก</a></li>
+                            {% for a in category_title %}
+                                {% if category_id == a.id %}
+                                    <li class="action"><a href="../?category_id={{ a.id }}" class="external">{{ a.title }}</a></li>
+                                {% else %}
+                                    <li><a href="../?category_id={{ a.id }}" class="external">{{ a.title }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <li class="action"><a href="/" class="external">ที่หน้าแรก</a></li>
+                            {% for a in category_title %}
+                                <li><a href="../?category_id={{ a.id }}" class="external">{{ a.title }}</a></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            <div class="content" style="top:3.7rem;">
+                {{ index_focus|raw }}
+                {% if category_id %}
+                    <div class="titlesback catetitle">{{ title }}</div>
+                    <div class="page-index">
+                        <div class="titlesback indextitle">ราคาโปรโมชั่นสามารถใช้ได้กับ</div><div class="ui-panel text-center" data-mid="{mid}"><ul class="products"></ul> </div>
+                        <div class="preload" data-error='{{ lang.no_more }}' style="text-align:center;font-size:12px;color:#666;line-height:2.4;">{{ lang.load }}...</div>
+                    </div>
+                    <div id="category" style="display: none;">
+                        <li>
+                            <a href="{type}">
+                            <div class="ui-grid-halve-img product-classify">
+                                <div class="ui-tag-s-hot product-thumb">
+                                    <img src="{thumb}">
+                                </div>
+                                <div class="product-title">{title}</div>
+                                <div class="product-title listprice"><strong>{price}</strong><del>{market_price}</del></div>
+                            </div>
+                            </a>
+                        </li>
+                    </div>
+                    <div class="ui-panel text-center" data-mid="{mid}" style="display: none;">
+                            <ul class="ui-grid-halve classify">
+                                {% for a in ModuleGoods %}
+                                <li rel="{{ a|json_encode|raw }}">
+                                    <a href="{{ a.type }}">
+                                    <div class="ui-grid-halve-img product-classify">
+                                        <div class="ui-tag-s-hot product-thumb">
+                                            <img src="{{ a.thumb }}">
+                                        </div>
+                                        <div class="product-title">{{ a.title }}</div>
+                                        <div class="product-title listprice"<strong>{{ a.currency_code }}{{ a.price }}</strong><del>{{ a.currency_code }}{{ a.market_price }}</del></div>
+                                    </div>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                {% else %}
+                    <div class="titlesback" style="height:auto"><img class="tipimg" src="{{ THEME }}/image/tips.jpg"></div>
+                    <div class="page-index">
+                        <div class="titlesback indextitle">ราคาโปรโมชั่นสามารถใช้ได้กับ</div><div class="ui-panel text-center" data-mid="{mid}"><ul class="products"></ul> </div>
+                        <div class="preload" data-error='{{ lang.no_more }}' style="text-align:center;font-size:12px;color:#666;line-height:2.4;">{{ lang.load }}...</div>
+                    </div>
+                {% endif %}
+                {{ footer|raw }}<!--底部文章-->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- popup, panel 等放在这里 -->
+    <div class="panel-overlay"></div>
+    <!-- Left Panel with Reveal effect -->
+    <div class="panel panel-left panel-reveal">
+        <div class="slidebar">
+            <ul>
+                <li class="barlogo">
+                    {% if info.logo == '' %}
+                        <img src="{{ THEME }}/image/logo-whire.png">
+                    {% else %}
+                        <img src="{{ info.logo }}">
+                    {% endif %}
+                    <div class="logotext">Fashion in Thailand</div>
+                </li>
+                <li class="close-panel"><a href="/" class="external">ที่หน้าแรก</a></li>
+                {% for a in category_title %}
+                    <li><a href="../?category_id={{ a.id }}" class="external close-panel">{{ a.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!--div class="content-block"-->
+            <!--Click on link with "close-panel" class will close panel -->
+            <!--p><a href="#" class="close-panel">关闭</a></p>
+        </div-->
+    </div>
+    <!--  -->
+    <div id="goods-demo" style="display:none;">
+        <li class="ui-grid-trisect">
+            <a href="{type}">
+                <div class="product-grid flexdiv">
+                    <div class="product-thumb">
+                        <img src="{thumb}">
+                    </div>
+                    <div class="flexitem">
+                        <div class="product-title">{title}</div>
+                        <div class="product-price"><strong>{price}</strong><del class="marprice"> {market_price}</del><span class="cuttext">ประหยัดทันท</span><span class="cutoff">{cutoff}</span></div>
+                            <div class="time" data="">
+                                <span><i id="time"></i></span>
+                                <span class="h"></span>:
+                                <span class="m"></span>:
+                                <span class="s"></span>
+                            </div>
+                            <div class="salesp">มีลูกค้าสั่ง {sales_num}</div>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </div>
+
+    <!-- 默认必须要执行$.init(),实际业务里一般不会在HTML文档里执行，通常是在业务页面代码的最后执行 -->
+    <script>$.init()</script>
+    <script src="{{ THEME }}/script/index.js?12"></script>
+
+{% endblock %}
+{% block footer_js %}
+    
+{% endblock %}
+

@@ -1,0 +1,73 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}" width="100%">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="detail">
+		<div class="title"><h1>{{ title }}</h1></div>
+		<div class="wrap">
+			<div class="sale_wrap">
+				<div class="price">
+					{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+	        		{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+	        		<del>
+	        			{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+	        			{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+	        		</del>
+				</div>
+				<div class="sales">{{ sales }}{{ lang.buy_after }}</div>
+			</div>
+	        <div class="timeWrap">
+	            <span id='clock'>{{ lang.timer }}</span>
+	            <span id="timer">
+	                <span  id="h">10</span>
+	                <span class="">:</span>
+	                <span id="m">00</span>
+	                <span class="">:</span>
+	                <span id="s">00</span>
+	            </span>
+	        </div>
+		</div>
+		<div class="service">
+			<span>{{ lang.returned_goods }}</span>
+			<span>{{ lang.cash_on_delivery }}</span>
+			<span>{{ lang.free_yun }}</span>
+		</div>
+	</div>
+	<div class="m-img">
+		<div class="info_tt">{{ lang.description }}</div>
+        {{ content|raw }}
+    </div>
+</section>
+<section id="page-order">
+	{% include './cmpt-guige.twig' %}
+</section>
+<footer>
+	<div>
+		<div class="query">{{ lang.order_inquiry }}</div>
+		<div class="buy_now"><button>{{ lang.buy_now }}</button></div>
+	</div>
+</footer>
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

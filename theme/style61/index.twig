@@ -1,0 +1,154 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet">
+<!-- end header resource -->
+<section id="page-index">
+	<div class="header">
+		<div><h1>{{ title }}</h1></div>
+		<div class="result">
+			<div class="query" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</div>
+			<div onclick="P8.startGroupChat({{ service_contact_id }},1);">{{ lang.contact_us }}</div>
+		</div>
+	</div>
+	<div class="img_wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="swiper-pagination"></div>
+		<div class="discount">
+			-{{ ((market_price-price)/market_price*100)|number_format(0) }}%
+		</div>
+		<div class="heart like"></div>
+	</div>
+	<div class="price">
+		<div>{{ lang.price }}：</div>
+		<span>
+			{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+			{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+		</span>
+		<del>
+			{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+			{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+		</del>
+	</div>
+	<div class="single">
+		<div class="hint">{{ lang.comments }}</div>
+		<div>{{ lang.message }}</div>
+	</div>
+	<div class="single">
+		<div>{{ lang.information }}</div>
+	</div>
+	<div class="modules">
+		Подобрать по параметрам
+	</div>
+	<section id="page-order">
+		{% include 'cmpt-guige.twig' %}
+	</section>
+	<div class="modules">
+		Интересное предложение
+	</div>
+	<div class="buy">
+		<div class="sale_price">
+			{% if currency_prefix == 1 %}{{ currency_code }}<span id="price">{{ price }}</span>{% endif %}
+			{% if currency_prefix == 0 %}<span id="price">{{ price }}</span>{{ currency_code }}{% endif %}
+		</div>
+		<div class="ships">
+			{{ lang.free_yun }}, 7-15{{ lang.day }}
+		</div>
+		<div class="buy_now">
+			<button>{{ lang.buy_now }}</button>
+		</div>
+	</div>
+	{% if comment %}
+	<div class="single comment_tt">
+		Спортмастер
+		<span></span>
+	</div>
+	{% endif %}
+</section>
+
+
+<section id="add_comment" class="page">
+	<div class="title">
+		{{ lang.comment }}<span></span>
+	</div>
+	<div class="intro">
+		<span>{{ lang.mark }}<span class="red">*</span></span>
+		<span class="right">5</span>
+	</div>
+	<div class="score">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+	<form action="#" method="post">
+		<div class="content">
+			<input type="text" name="name" placeholder="{{ lang.name }}" required="required">
+			<div class="tt">{{ lang.message }}:</div>
+			<textarea placeholder="{{ lang.content }}" rows='5' required="required"></textarea>
+			<div class="file"><span>{{ lang.upload }}</span><input type="file" name=""></div>
+		</div>
+		<div>
+			<button disabled="disabled">{{ lang.send }}</button>
+		</div>
+	</form>
+</section>
+<section id="product_info" class="page">
+	<div class="title">
+		{{ lang.information }}<span></span>
+	</div>
+	<div class="m-img" id="m-img">
+	    {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+	</div>
+</section>
+<section id="pinlun_content" class="page">
+	<div class="title">
+		{{ lang.comments }}<span></span>
+	</div>
+    {% for a in  comment %}
+        <div class="lab" data-group="{{ a.comment_id }}" data-id="0">
+        	<div>
+        		<span id="wi">{{ a.name }}</span>
+                {% if a.is_anonymous %}
+                    <span id="nm" class="nm">{{ lang.anonymous }}</span>
+                {% endif %}
+        	</div>
+        	<div class="stars">
+        		{% if a.star == 5 %}<span class="five">5</span><div>{{ lang.good }}</div>{% else %}<span class="four">4</span><div>{{ lang.notbad }}</div>{% endif %}
+        	</div>
+            <P style="padding:10px 4%">{{ a.content }}</P>
+            <div class="msKeimgBox">
+                <ul>
+                    <li>
+                        {% for b in a.thumb %}
+                            <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+                        {% endfor %}                                        
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+</section>
+
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/guige.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

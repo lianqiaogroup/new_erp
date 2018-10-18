@@ -1,0 +1,253 @@
+{% include 'header.twig' %}
+<div class="header">
+	<a href="javascript:history.go(-1);" class="back"></a>
+	<div>
+		<h2>{{ lang.confirm_order_info }}</h2>
+		<span>{{ lang.required_item }}</span>
+    </div>
+    <div style="font-weight:900;font-size:14px;">{{lang.customer_contact}}</div>
+</div>
+<input type="hidden" id="region_code" value="{{ regions.code }}">
+<input id="theme" value="{{theme}}" type="hidden">
+<input id="noaddress" value="{{lang.no_address}}" type="hidden">
+
+<form id="form" class="clear" name="form" action="order.php" method="post" onsubmit="return prepost()">
+	<input type="hidden" name="combo_id" value="">
+	<input type="hidden" name="token" value="{{ token }}">
+	<input type="hidden" name="num">
+	<input type="hidden" id="act" name="act" value="getAttrPrice">
+	<input type="hidden" name="province" value="{{ regions.region_id }}">
+
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+    <input type="hidden" name="vercode" value="">
+    <input type="hidden" name="orderId" value="">
+    <div class="left">
+    	<div class="address">
+    		<div class="item">
+    			<!-- <div class="placeholder" style="font-size:12px;">县市<span>*</span></div>
+                <div><span></span><span></span></div>
+    			<select></select> -->
+                <div class="province"><select><option>{{ regions.region_name }}</option></select></div>
+    		</div>
+            {% if regions.code == "TW" %}
+            <div class="item">
+                <div class="province">
+                    <select name="city" required="required">
+                        <option value="">{{lang.city}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item">
+                <div class="province">
+                    <select name="district" required="required">
+                        <option value="">{{lang.district}}</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            {% if regions.code == "PHL" %}
+                <div class="item">
+                    <div class="province">
+                        <select name="state" required="required">
+                            <option value="">{{lang.state}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="province">
+                        <select name="city" required="required">
+                            <option value="">{{lang.city}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="province">
+                        <select name="district" required="required">
+                            <option value="">{{lang.district_phl}}</option>
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+    		<div class="item">
+                
+                {% if regions.code == "PHL" %}
+                    <div class="placeholder empty">{{ lang.address }}<span>*</span></div>
+                    <div>
+                        <textarea rows="2" required name="address" class="address_full"></textarea>
+                    </div>
+                {% else %}
+                    <div class="placeholder empty">{{ lang.address }}<span>*</span></div>
+                    <div>
+                        <textarea rows="2" name="address" class="address_full" required="required"></textarea>
+                    </div>
+                {% endif %}
+                
+                
+    		</div>
+    		<div class="item half">
+    			<div class="placeholder empty">{{ lang.name }}<span>*</span></div>
+    			<div class="name"><input type="text" name="name" required="required"></div>
+    		</div>
+    		<div class="item half">
+    			<div class="placeholder empty">{{ lang.phone }}<span>*</span></div>
+    			<div class="phone"><input type="text" name="mob" required="required"></div>
+    		</div>
+    		<div class="item half">
+    			<div class="placeholder empty">{{ lang.email }}</div>
+    			<div class="email"><input type="text" name="email" error="{{ lang.test_email }}"></div>
+    		</div>
+    		<div class="item half" {% if regions.code == "HK" %}style="display:none;"{% endif %}>
+                {% if regions.code == "PHL" %}
+                    <div class="placeholder empty">{{ lang.postal }}<span>*</span></div>
+                    <div class="postal">
+                        <input type="text" name="postal" error="{{ lang.test_postal }}">
+                    </div>
+                {% else %}
+                    <div class="placeholder empty">{{ lang.postal }}</div>
+                    <div class="postal">
+                        <input type="text" name="postal" error="{{ lang.test_postal }}">
+                    </div>
+                {% endif %}
+    			
+    		</div>
+            <div class="item">
+                <div class="placeholder empty">{{ lang.note }}</div>
+                <div class="guest"><input type="text" name="guest"></div>
+            </div>
+    	</div>
+    	<div class="payment">
+    		<span>{{ lang.paymethod }}</span>
+    		<div>{{ lang.cash_on_delivery }}</div>
+    	</div>
+    </div>	
+	<div class="wrap right">
+		<div class="title flex">
+            <span>{{ lang.pic }}</span>
+            <span>{{ lang.info }}</span>
+            <span>{{ lang.attr_num }}</span>
+        </div>
+            <!--  -->
+            <!--套餐-->
+            <div class="m-goodItems">
+            {% if combo %}
+                {% for c in combo %}
+                <div class="m-orderItem" id="goods_{{ c.combo_id }}" style="">
+                    <div class="row">
+                        <div class="goodImg">
+                            {% if c.thumb %}
+                                <img src="{{ c.thumb }}" width="100%" height="100%">
+                            {% else %}
+                                <img src="{{ thumb }}" width="100%" height="100%">
+                            {% endif %}
+                        </div>
+                        <div class="goodInfo">
+                            <div class="goodName ti">
+                                <span>{{ c.title }}</span>
+                                <div class="goodStatus f-fr"><span class="goodNum"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+                
+            <!--选中的套餐-->
+                {% if combo %}
+                <ul class="m-list m-attrs">
+                    <div class="m-goodItem">
+                            <div class="cnt">
+                                <div style="font-size:14px;">{{ lang.confirm_info }}</div>
+                                    {% for c in combo %}
+                                        <div class="combosid_{{ c.combo_id }}" style="display: none">
+                                        {% for g in c.goods %}
+                                            <div class="single">
+                                                <div class="imgWrap">
+                                                    <img src="{{ g.thumb }}">
+                                                </div>
+                                                <div class="right" data-num='{{ g.num }}'>
+                                                    <div optionsGroup goodid="{{g.combo_goods_id}}">{{ g.title }}</div>
+                                                    {% if g.options %}
+                                                        {% for o in g.options %}
+                                                            {% for key,attr in o.attr %}
+                                                                <span style="display: none;" optionsKey goodid="{{g.combo_goods_id}}" group="{{ o.attr_group_id }}" attrid="{{attr.product_attr_id}}">{{ attr.name|raw }}</span>
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    <span class="product_numtext"></span>
+                                                </div>
+                                                <div style="clear:both"></div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                        <input id="mun" type="hidden" name="num" type="text" value="">
+                    </div>
+                </ul>
+                {% else %}
+                <div class="m-orderItem" id="goods_0">
+                    <div class="row">
+                        <div class="goodImg">
+                            <img src="{{ thumb }}">
+                        </div>
+                        <div class="goodInfo" style="text-align:right;" data-num=1 >
+                            <div style="color:#464646;font-size: 16px;text-align:left;">{{ title }}</div>
+                            <!--非套餐属性开始-->
+                            {% for o in  options %}
+                                {% for key,attr in o.attr %}
+                                    <span optionsKey data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                                {% endfor %}
+                            {% endfor %}
+                             <!--属性结束--> 
+                            <span class="product_numtext"></span>
+                        </div>
+                        <div style="clear:both;"></div>
+
+                    </div>
+                </div>
+                {% endif %}
+                                 
+            </div>
+        <div class="total clear">
+            <div class="left">{{ lang.total }}</div>
+            <div class="left">
+                {% if currency_prefix == 1 %}
+                    <span>{{ currency_code }}</span><span class="price"></span>
+                {% else %}
+                    <span class="price"></span><span>{{ currency_code }}</span>
+                {% endif %}
+                
+            </div>
+        </div>
+        <div class="order">
+            <button>{{ lang.confirm }}</button>
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    window.repeatlang = {
+        title: "{{lang.repeat_title}}",
+        prompt: "{{lang.repeat_prompt}}",
+        prompt_out: "{{lang.repeat_prompt_out}}",
+        confirm_order: "{{lang.repeat_confirm_order}}",
+        query_details: "{{lang.repeat_query_details}}",
+        time_d: "{{lang.time_d}}",
+        time_h: "{{lang.time_h}}",
+        time_m: "{{lang.time_m}}",
+        time_just: "{{lang.time_just}}"
+    }
+    window.SMSlang = {
+        'Rp': {
+            'title': "{{lang.title}}",
+            'sendto': "{{lang.sendto}}",
+            'take': "{{lang.take}}",
+            'if_no': "{{lang.if_no}}",
+            'click': "{{lang.click}}",
+            'resend': "{{lang.resend}}",
+            'wait': "{{lang.wait}}",
+            'wait_before': "{{lang.wait_before}}"
+        }
+    }
+</script>

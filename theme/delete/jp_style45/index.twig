@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html lang="jp">
+    <head>
+        <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="320" name="MobileOptimized" />
+        <meta content="telephone=no" name="format-detection" />
+        <title>{{ title }}</title>
+        <meta name="keywords" content="{{ seo_title }}" />
+        <meta name="description" content="{{ seo_description }}" />
+        <link href="/public/image/del/favicon{{ regions.region_id }}.ico" type="image/x-icon" rel=icon>
+        {% if THEME == '/theme/style2' %}
+            <!-- <script src="/public/javascript/vue.min.js"></script> -->
+            <script src="http://out.stosz.com/vue.min.js"></script>
+            <script src="/public/javascript/require.js" alt={{ THEME }}></script>
+        {% else %}
+            <link rel="stylesheet" href="/public/style/reset.css">
+            <script src="/public/javascript/require.js" alt={{ THEME }}></script>
+            
+            <script src="/public/javascript/jquery-2.2.3.min.js"></script>
+        {% endif %}
+        {% include '/public/theme/facebook_pixel_common.twig' %}
+        {{ yahoo_js|raw }}
+        {{ google_analytics_js|raw }}
+    </head>
+    <body>
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<!-- end header resource -->
+
+<section id="index">
+	<!-- banner -->
+	<div class="section" id="secMainImg">
+		<div id="mainItem">
+			<div id="flipWrapper">
+				<div id="mainFlip">
+					<div id="slider" class="slideBox">
+			            <ul class="bd">
+			            	{% if photos %}
+			                    {% for p in photos %}
+			                    <li><div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div></li>
+			                    {% endfor %}
+			                {% else %}
+			                    <li><div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div></li>
+			                {% endif %}
+			            </ul>
+						<div class="arrow" style="display: block;">
+							<p id="mainPrev" class="prev"> <span class="arrowBg arw_bl_03"></span> </p>
+							<p id="mainNext" class="next"> <span class="arrowBg arw_bl_01"></span> </p>
+						</div>
+						<div id="imgNum">
+							<div><span id="imgCnt" class="pageState">1</span></div>
+						</div>
+			        </div>
+				</div>
+				<div id="mainImgFavorite" class="ico_addfavoriteComp2" >
+					<span data-label="favoriteCnt">{{ sales }}</span>
+				</div>
+			</div>
+		</div>
+	<!-- /#secMainImg -->
+	</div>
+
+<section class="section" id="secGoodsMain">
+	<p class="brandName"><a href="/sp/brand/urbanresearchdoorswomens/">{{ title }}</a></p>
+	<div class="priceTbl">
+		<div class="priceCell">
+			<p class="proper">{{ market_price }}{{currency_code}} ↓</p>
+			<p class="price discount">{{ price }}{{currency_code}}<span class="tax"> 税込</span></p>
+		</div>
+		<div class="priceCell">
+			<div id="laterPayWrapper" data-toggle="modal" data-target="#laterPayModal">
+				<p class="laterPayH">販促{{sales}}完売</p>
+				<p class="laterPayLead">代金引換</p>
+				<p class="laterPayLead">
+					<span class="softwrap">7日間の鑑賞期間</span>
+				</p>
+			</div>
+		</div>
+	</div>
+	<p class="priceDown clearfix"><span class="off">{{ (((market_price-price)/market_price)*100)|number_format(0) }}%OFF</span>（値引き額：{{ market_price - price }}）</p>
+	<!--  -->
+	<div id="otherInfo">
+		<!-- <div id="pointWrapper">
+			<p class="point">110ポイント還元
+				<span>（ZOZOCARDなら220ポイント）</span>
+			</p>
+		</div>
+		<div id="tagWrapper" class="clearfix"></div> -->
+		<a href="javascript:;"  class="dataLayer">
+			<div id="amazonPaytBar">
+				<p><span>今日買ってもお支払いは</span><span id="timer"></span><span>でOK</span></p>
+			</div>
+		</a>
+	</div>
+	<div class="btns">
+		<div class="btnCart btnParent">
+			<a href="javascript:void(0)" id="buynow" class="btn btnPrimary btn-lg btnFluid">
+			<div><p><span class="ico_cart"></span>ご購入の手続きへ</p></div>
+			</a>
+		</div>
+		<div id="favoriteBtn" class="btnGroup btnGroupFluid">
+			<a href="/order_quality.php" class="openFavorit btn btnFavorable btnCondensed">
+				<span class="ico_orderHistory"></span>注文履歴を見る
+			</a>
+		</div>
+	</div>
+</section>
+<!-- /#secGoodsMain -->
+
+
+<section id="secGoodsInfo" class="tabContainer">
+	<ul class="switchTab tab tabExtended tab2Part">
+		<li class="current">
+			<a href="#tabItemInfo" class="" data-label="item_detail_2" data-event="goods_tab">アイテム説明</a>
+		</li>
+		{% if comment  %}
+		<li class="">
+			<a href="#tabSizeInfo" class="" data-label="item_size_2" data-event="goods_tab">商品レビューを見る</a>
+		</li>
+		{% endif %}
+	</ul>
+	<div class="tabInner current" id="tabItemInfo">
+		{{ content|raw }}
+	</div>
+	{% if comment  %}
+	<div class="tabInner " id="tabSizeInfo">
+		<div class="comment" id="comment" style="">
+		    <div class="picMarquee-top">
+		        <div data-fn="commentScroll" id="mq">
+		            <ul class="picList" id="mq1">
+		                {% for a in comment %}
+		                    <li data-groud="{{ a.comment_id }}" rel="{{ a.star }}" class="user-item">
+		                        <div class="user_info">
+		                            {% if a.is_anonymous==1 %}
+		                                <div class="user_name">匿名ユーザー</div>
+		                            {% else %}
+		                                <div class="user_name">{{ a.name }}</div>
+		                            {% endif %}
+		                            <span class="stars" rel="{{ a.star }}"></span>
+		                        </div>
+		                        <div class="user-text">{{ a.content }}</div>
+		                        <div class="msKeimgBox">
+		                            <ul>{% for b in a.thumb %}
+		                                    <li>
+		                                        <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+		                                    </li>
+		                                {% endfor %}
+		                            </ul>
+		                            <div class="mskeTogBtn" style="display:none;"></div>
+		                        </div>
+		                    </li>
+		                {% endfor %}
+		            </ul>
+		            <ul id="mq2"></ul>
+		        </div>
+		    </div>
+		    <div style="clear: both"></div>
+		</div>
+	</div>
+	{% endif  %}
+</section>
+	<!--/#secGoodsInfo -->
+</section>
+<div class="modal show" style="display:none;">
+	<div class="modalBg" style="opacity: 0.5;"></div>
+	<div class="modalDialog" style="opacity: 0; margin-top: 77px;">
+		<div class="modalClose" data-dismiss="modal"></div>
+		<div class="modalContent">
+			<div id="cartModalInner" class="addCartTable cartMode">
+				<h2 class="sectionH"></h2>
+				{% if combo %}
+					<div class="indexList" id="combo">
+						<h3 class="subsectionHeader">下記商品リストからご希望の商品をお選びください</h3>
+						<div class="indexItem">
+							<ul class="row">
+							{% for c in combo %}
+							<li {% if loop.index == 1 %}class="action"{% endif %} rel="{{ c.combo_id }}" single_c="{{c.is_single_combo}}">{{ c.title }}</li>
+							{% endfor %}
+							</ul>
+						</div>
+					</div>
+					<input type="hidden" name="combo_id" value="">
+					{% for c in combo %}
+						{% for ok in c.goods %}
+							{% if ok.options %}
+								{% for o in ok.options %}
+									<div class="indexList comItem" comboid="{{ c.combo_id }}" goodid="{{ ok.combo_goods_id }}" groupid="{{ o.attr_group_id }}">
+										<h3 class="subsectionHeader">選んでください{{ o.attr_group_title }}</h3>
+										<div class="indexItem">
+											<ul class="row">
+												{% for key,attr in o.attr %}
+													<li {% if loop.index == 1 %}class="action"{% endif %} attrid="{{ attr.product_attr_id }}">{{ attr.name|raw }}</li>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								{% endfor %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				{% else %}
+					{% for o in options %}
+						<div class="indexList comItem" comboid="0" groupid="{{ o.attr_group_id }}">
+							<h3 class="subsectionHeader">選んでください{{ o.attr_group_title }}</h3>
+							<div class="indexItem">
+								<ul class="row">
+									{% for key,attr in o.attr %}
+										<li {% if loop.index == 1 %}class="action"{% endif %} attrid="{{ attr.product_attr_id }}">{{ attr.name|raw }}</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					{% endfor %}
+					<input type="hidden" name="combo_id" value="0">
+				{% endif %}
+				<input type="hidden" name="act" id="act" value="getAttrPrice">
+				<input type="hidden" name="product_id" value="{{ product_id }}">
+				<div class="qty">
+					<h3 class="subsectionHeader">数量</h3>
+					<div class="qty row">
+						<div class="less" onclick="minnumber()">-</div>
+						<input class="num" id="num" type="tel" name="num" value="1" onchange="inputnumber()">
+						<div class="more" onclick="addnumber()">+</div>
+					</div>
+				</div>
+				<div style="padding: 10px;">
+					総額 :  <strong class="price" id="price"></strong class="price"><strong class="price">{{ currency_code }}</strong>
+				</div>
+				<div class="modalCloseWrap"><p class="btn btnSecondary btnFluid" id="checkout">確認</p></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="pageTop"><a href="#gHeader" class="pageTopLink arw_bk_02 dataLayer" data-event="search_button" data-label="return_top"></a></div>
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

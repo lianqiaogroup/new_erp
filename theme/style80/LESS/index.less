@@ -1,0 +1,238 @@
+@import 'guige.less';
+html{
+	// background:#f2f2f2;
+}
+body{
+	width:100%;
+	max-width:540px;
+	margin:0 auto;
+	padding-bottom:40px;
+}
+h1,h5{
+	margin:0;
+	padding:0;
+}
+img{
+	width:100%;
+	vertical-align:top;
+}
+video{
+	width:100%;
+	height:auto;
+}
+button{
+	background:none;
+	border:none;
+	outline:none;
+}
+.linear(@color1,@color2){
+	background:linear-gradient(to right,@color1,@color2); 
+    background:-moz-linear-gradient(left, @color1, @color2);  
+    background:-webkit-gradient(linear, 0 0, right 0, from(@color1), to(@color2));  
+    background:-o-linear-gradient(left, @color1, @color2); 
+}
+header{
+	position:fixed;
+	width:100%;
+	background:#fafafa;
+	z-index:1;
+	max-width:540px;
+	z-index:1;
+	.homediv{
+		margin-left:14px;
+		a{
+			display:inline-block;
+			background:url(../images/home.png) no-repeat center;
+			background-size:100%;
+			width:5.4vw;
+			max-width:30px;
+			height:50px;
+		}
+	}
+	.title_img{
+		position:absolute;
+		width:28vw;
+		max-width:150px;
+		top:0;
+		left:36%;
+		height:100%;
+		background-size:contain;
+		background-repeat:no-repeat;
+		background-position:center;
+		@media screen and (min-width:540px) {
+			left:205px;
+		}
+	}
+}
+.swiper-pagination-bullet-active{
+	background:#850782 !important;
+}
+.detail{
+	.linear(#3a3d6a,#47286b);
+	color:#fff;
+	text-align:center;
+	font-size:12px;
+	padding:20px 10px;
+	h1{
+		font-weight:normal;
+		font-size:15px;
+		line-height:25px;
+	}
+	.process_wrap{
+		margin:20px 0 30px;
+	}
+	.process{
+		display:inline-block;
+		background:#fff;
+		height:8px;
+		width:29vw;
+		max-width:156px;
+		margin:0 4vw;
+		border-radius:4px;
+		span{
+			display:block;
+			height:8px;
+			border-radius:4px;
+			.linear(#b24d9e,#830582);
+		}
+	}
+	.boundary{
+		width:100%;
+		height:2px;
+		background:linear-gradient(to right,#5abae8 0%,#5abae8 48%,#9058df 52%,#9058df 100%);
+	    background:-moz-linear-gradient(left, #5abae8 0%,#5abae8 48%, #9058df 52%,#9058df 100%);
+	    background:-o-linear-gradient(left, #5abae8 0%,#5abae8 48%, #9058df 52%,#9058df 100%); 
+	}
+	.sales{
+		display:-webkit-flex;
+		display:flex;
+		align-item:center;
+		justify-content: space-around;
+		color:#ca61b6;
+		text-align:left;
+		line-height:40px;
+		>div{
+			div{
+				&:last-child{
+					color:#c6c6c6;
+					font-size:18px;
+					line-height:18px;
+				}
+			}
+		}
+	}
+	.price{
+		margin:18px;
+		span{
+			color:#be24bd;
+			&:last-child{
+				color:#fff;
+				font-weight:bold;
+				font-size:24px;
+				margin-left:6px;
+			}
+		}
+	}
+	.timeWrap{
+		padding:2px 14px 2px 30px;
+		border-radius:10px;
+		background:#830582 url(../images/time.png) no-repeat 12px center;
+		background-size:14px;
+		#timer{
+			font-size:0;
+			span{
+				font-size:12px;
+			}
+		}
+	}
+}
+.product_info{
+	.img_tt{
+		background:#fdfdfd;
+		padding:10px;
+		font-size:0;
+		span{
+			width:50%;
+			font-size:12px;
+			text-align:center;
+			display:inline-block;
+			color:#383838;
+			height:44px;
+			line-height:44px;
+			box-shadow:0 0 6px 1px #d7d7d7;
+		}
+		.active{
+			background:#b338a7;
+			color:#fff;
+			position:relative;
+			box-shadow:none;
+			&:before{
+				content:'';
+				position:absolute;
+				width:10px;
+				height:10px;
+				background:#b338a7;
+				bottom:-5px;
+				left:25%;
+				-webkit-transform:rotate(45deg);
+				transform:rotate(45deg);
+			}
+		}
+	}
+	.product_info_content {
+		img {
+			max-width: 100% !important;
+			height:  auto !important;
+		}
+	}
+}
+.service{
+	padding:0 20px;
+	font-size:14px;
+	div{
+		color:#8a8a8a;
+		height:34px;
+		line-height:34px;
+		border:1px solid #8a8a8a;
+		margin:5px 0;
+		padding-left:40px;
+		&:nth-child(2){
+			background:url(../images/free.png) no-repeat 10px center;
+			background-size:22px;
+		}
+		&:nth-child(3){
+			background:url(../images/huo.png) no-repeat 10px center;
+			background-size:22px;
+		}
+		&:nth-child(4){
+			background:url(../images/seven.png) no-repeat 10px center;
+			background-size:22px;
+		}
+	}
+	h5{
+		text-align:center;
+		color:#8a8a8a;
+		height:40px;
+		line-height:40px;
+	}
+}
+footer{
+	position:fixed;
+	bottom:60px;
+	right:7%;
+	div{
+		width:38px;
+		height:38px;
+		margin-bottom:10px;
+	}
+	.fb{
+		background:url(../images/fb.png) no-repeat;
+		background-size:100%;
+		display:none;
+	}
+	.kefu{
+		background:url(../images/kefu.png) no-repeat;
+		background-size:100%;
+	}
+}
+input[name=district]{background: transparent;}

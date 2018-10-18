@@ -1,0 +1,110 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" type="text/css" rel="stylesheet" />
+<link href="public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section id="page_index" class="container">
+	<div class="swiper-container">
+		<div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}" width="100%">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="detail">
+		<div class="title_row">
+            {% if currency_prefix == 1 %}<div class="top_price">{{ currency_code }}{{price}}</div>{% endif %}
+            {% if currency_prefix == 0 %}<div class="top_price">{{price}}{{ currency_code }}</div>{% endif %}
+			<h1>{{ title }}</h1>
+			<div style="clear:both"></div>
+		</div>
+		<div class="sales_wrap">
+			<div class="sales">
+				<span>{{ lang.special_offer }}</span>
+				<span>{{ lang.for_sell }}</span>
+			</div>
+			<div class="stars"><span></span><span></span><span></span><span></span><span></span></div>
+		</div>
+		<div class="timer_wrapper">
+			<div class="discount">
+				<div class="stock">
+					{{ lang.buy_numtext }}<span>{{ sales }}</span>{{ lang.piece }}，{{ lang.only_last }}<span>{{ stock }}</span>{{ lang.piece }}
+				</div>
+				<div class="limit">{{ lang.time_limit }}</div>
+				<div style="clear:both"></div>
+			</div>
+			<div class="time">
+				<div class="processing">
+					<span class="process" data-value='{{ sales }}'><span data-value='{{ stock }}'></span></span><span class="percent"></span>
+				</div>
+				<span class="timeWrap">
+	            	<span id="timer">
+	                   <span  id="h">10</span>
+	                    <span class="">:</span>
+	                    <span id="m">00</span>
+	                    <span class="">:</span>
+	                    <span id="s">00</span>
+	                    <span class=""></span>
+	              </span>
+	            </span>
+	            <div style="clear:both;"></div>
+			</div>
+		</div>
+        <div id="val-sel" class="arrow_con">
+            <div class="arrow_d up">{{ lang.choose_attr }}</div>
+            <div class="right"></div>
+        </div>
+	</div>
+	<div id="detail_link" class="arrow_con">
+        <div class="arrow">{{ lang.description }}</div>
+    </div>
+    <div class="product_info">
+        <div class="m-img product-img">
+        	{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+        <p><a class="top">TOP</a></p>
+        <div class="User_notes" style="margin-top: 10px">
+		    <h2 class="notes">{{ lang.user_notes }}</h2>
+		    <div class="note_text">{{ lang.user_fb }}</div>
+		    <div class="note_title">{{ lang.user_note1 }}</div>
+		    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+		    <div class="note_title">{{ lang.user_note2 }}</div>
+		    <div class="note_text">{{ lang.user_note2_1 }}</div>
+		    <div class="note_title">{{ lang.user_note3 }}</div>
+		    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+		    <div class="note_title">{{ lang.user_note4 }}</div>
+		    <div class="note_text">{{ lang.user_note4_1 }}</div>
+		    <div class="note_title">{{ lang.user_note4_2 }}</div>
+		    <div class="note_title">{{ lang.user_note4_3 }}</div>
+		    <div class="note_text">{{ lang.user_note4_4 }}</div>
+		</div>
+    </div>
+    <footer>
+    	<div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"><a href="javascript:;" class="left">{{ lang.service_online }}</a></div>
+    	<div class="order_query" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</div>
+    	<div class="buy_now">
+    		<button id="add" data-cuckootag="buy_now" data-event="showAttr">{{ lang.go_buy }}</button>
+    	</div>
+    </footer>
+</section>
+<section id="page-order" class="orange container" data-error="{{ lang.Th_titleattr }}">
+	<div class="title">
+		<div class="back"></div>
+		<div class="conirm">{{ lang.confirm_order }}</div>
+	</div>
+    {% include 'cmpt-guige.twig' %}
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

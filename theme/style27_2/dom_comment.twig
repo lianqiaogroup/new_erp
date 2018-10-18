@@ -1,0 +1,38 @@
+{% if comment %}
+    <div class="detail-block" id="detial-appraise">
+        <h4>{{ lang.new_pinlun }}</h4>
+        <div id="mq" data-fn="commentScroll">
+            <div>
+                {% for a in  comment %}
+                    <div class="appr-title mqc">
+                        {% if a.is_anonymous %}
+                            <span style="color:red; margin:0px 3px">{{ lang.anonymous }}</span>
+                        {% else %}
+                            <span style="color:red; margin:0px 3px">{{ a.name }}</span>
+                        {% endif %}
+                        <span>满意度：<font color="red">★★★★★</font></span><br/>
+                    </div>
+                    <div class="mqc">
+                        <p><span style="font-family:宋体">{{ a.content }}</span><span style="font-family:宋体"></span></p>
+                    </div>
+                    <div class="msKeimgBox">
+                        <ul>
+                            {% for b in a.thumb %}
+                                <li>
+                                    <img src="{{ b.thumb }}" width="75" height="75" />
+                                </li>
+                            {% endfor %}
+                            <div style="clear:both;"></div>
+                        </ul>
+                        <div class="mskeTogBtn"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="mskeLayBg"></div>
+        <div class="mskelayBox">
+            <div class="mske_html">
+            </div>
+        </div>
+    </div>
+{% endif %}

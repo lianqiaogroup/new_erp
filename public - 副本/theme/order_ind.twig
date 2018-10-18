@@ -1,0 +1,307 @@
+<div class="flexbox">
+	<div class="flex regions">{{ regions.region_name }}</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="city" required="required">
+			<option value="">{{ lang.city }}</option>
+		</select>
+	</div>
+</div>
+<div class="table-row">
+	<select name="district" required="required">
+		<option value="">{{ lang.district }}</option>
+	</select>
+</div>
+<div class="table-row">
+    {% if theme == 'style39'%}
+    <input type="text" name="address" placeholder="{{ lang.addr }}">
+    {% else %}
+    <input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+    {% endif %}
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="name" maxlength="50" placeholder="{{ lang.name }}">
+	</div>
+	<div class="flex tab_two">
+		<select required="required" name="postal" error="{{ lang.postal_error }}" placeholder="{{ lang.postal }}">
+			<option value="">{{ lang.postal }}</option>
+		</select>
+	</div>
+</div> 
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="email" name="email" placeholder="{{ lang.email }}">
+	</div>
+</div>
+<div class="table-row" id="showcardid">
+	<div class="cardidtext" style="margin-bottom: 4px;"><span class="tt"></span><span class="vv"></span></div>
+	<!-- <input type="text" name="id_card" placeholder="{{ lang.id_card }}" error="{{ lang.id_card_error }}"> -->
+</div>
+<!-- <div class="table-row">
+	<input type="text" name="passport" placeholder="{{ lang.passport }}" error="{{ lang.passport_error }}">
+</div> -->
+<div class="table-row">
+	<input type="text" name="guest" placeholder="{{ lang.note }}">
+</div>
+<div class="flexbox">
+	{% if payment_underline == 1 %}
+		<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+	{% endif %}
+	{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+		<div class="flex tab_two">
+			<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+		</div>
+	{% endif %}
+	<input name="payment_type" value="0" type="hidden">
+</div>
+<div class="table-row pay-type" style="display: none;">
+	<select id="pay-online">
+		{% if payment_online == 1 %}
+		<option value="1">{{ lang.yijifu }}</option>
+		{% endif %}
+		{% if payment_paypal == 1 %}
+		<option value="2">paypal</option>
+		{% endif %}
+		{% if payment_asiabill == 1 %}
+		<option value="3">Asiabill</option>
+		{% endif %}
+	</select>
+</div>
+<div class="layer"></div>
+<div class="layer_box">
+	<div class="main">
+		<div class="top"><i class="fbicon"></i>{{lang.id_top}}</div>
+		<div class="centre"><div>{{lang.id_center1}}</div><div class="maintips" style="line-height:16px;">{{lang.id_center2}}</div></div>
+		<div class="bottom">
+			<div class="tip">{{lang.id_tips}}</div>
+			<div class="box">
+				<select name="selid">
+					<option value="1">{{ lang.id_card }}</option>
+					<option value="2">{{ lang.passport }}</option>
+				</select>
+				<div class="text">
+					<input class="idval" seleid="1" type="text" name="id_card" data-text="{{ lang.id_card }}">
+					<input class="idval" seleid="2" type="text" name="passport" data-text="{{ lang.passport }}">
+				</div>
+			</div>
+			<div class="errortips">{{lang.id_bottom}} <span id="idtext">{{ lang.id_card }}</span></div>
+			<div class="btnnext">{{lang.id_btn}}</div>
+		</div>
+	</div>
+</div>
+<style>
+	select[name="state"], select[name="city"], select[name="postal"],.cardidtext{
+	    height: 44px;
+	    width: 100%;
+	    font-size: 14px;
+	    color: #666;
+	    border: 1px solid #eee;
+	    border-radius: 4px;
+	    text-indent: 16px;
+	}
+	.cardidtext span{
+		display: inline-block;
+		height: 44px;
+		line-height: 44px;
+	}
+	.tt{
+		width: 90px;
+		text-indent: 0;
+		border-right: 1px solid #eee;
+		padding-right: 28px;
+		background-image: url('/public/image/arrow.png');
+		background-size: 32px;
+		background-position: right;
+		background-repeat: no-repeat;
+	}
+	.layer{
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background: rgba(70, 68, 68, 0.7);
+		z-index: 2;
+	}
+	.layer_box{
+		position: fixed;
+		width: 90%;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 5%;
+		background: #fff;
+		z-index: 2;
+	}
+	.layer_box .main{
+		padding: 0 10px;
+		height: 100%;
+		overflow-y: auto;
+	}
+	.top{
+		text-align: center;
+		margin-bottom: 15px;
+		padding-top: 10px;
+	}
+	.bottom{
+		padding-bottom: 10px;
+	}
+	.bottom .tip{
+		color: #EF5350;
+		font-size: 12px;
+		margin-bottom: 10px;
+	}
+	.centre{
+		font-size: 12px;
+		margin-bottom: 15px;
+	}
+	@media screen and (max-height: 480px) {
+	    .centre .maintips{
+			max-height: 200px;
+			overflow-y: auto;
+		}
+	}
+	
+	.autoFill{
+		display: none;
+	}
+	.box{
+		display: flex; display: -webkit-flex; display: -ms-flex; display: -moz-flex;
+		height: 44px;
+		border: 1px solid #ccc;
+		overflow:hidden;
+	}
+	.box select[name="selid"]{
+		width: 125px;
+		padding-left: 10px;
+		border: none;
+		border-right: 1px solid #ccc;
+	}
+	.box .text{
+		flex: 1; -webkit-flex: 1; -ms-flex: 1; -moz-flex: 1;
+		overflow: hidden;
+	}
+	.box .text input{
+		height: 42px;
+		border: none;
+		width: 100%;
+		text-indent: 16px;
+	}
+	.fbicon{
+		display: inline-block;
+		width: 24px;
+		height: 24px;
+		background-image: url('/public/image/Facebook.png');
+		background-size: 24px 24px;
+		background-position: center;
+		background-repeat: no-repeat;
+		vertical-align: middle;
+		margin-right: 10px;
+	}
+	.btnnext{
+		background: #4460a0;
+		color: #fff;
+		font-size: 14px;
+		text-align: center;
+		height: 44px;
+		line-height: 44px;
+		margin-top: 20px;
+	}
+	.errortips{
+		display: none;
+	}
+	.erroract{
+		color: #EF5350;
+	}
+	.erroract .box{
+		border: 2px solid #EF5350;
+	}
+	.erroract .errortips{
+		display: block;
+	}
+</style>
+<script type="text/javascript">
+	$('[name="city"]').change(function(event) {
+		var id = $(this).children().filter(':selected').attr('data-id');
+		loadCity(id);
+	});
+	$('[name="district"]').change(function(event) {
+		var id = $(this).children().filter(':selected').attr('data-id');
+		loadDistrict(id);
+	});
+
+	+(function loadstate(){
+		$.post('/region.php', { 'region_id': {{ regions.region_id }} }, function(data) {
+			var data = JSON.parse(data);
+				data.map(function(item, index){
+					$('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+				});
+		});
+	})();
+	function loadCity(id, callback){
+		$('[name="postal"]').children().not(":eq(0)").remove();
+		$.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+			$('[name="district"]').children().not(":eq(0)").remove();
+			var data = JSON.parse(data);
+			data.map(function(item, index){
+				$('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+			});
+		});
+	}
+	function loadDistrict(id){
+		$('[name="postal"]').children().not(":eq(0)").remove();
+		$.post('/region.php', { 'yn_region_id': id }, function(data) {
+			var data = JSON.parse(data);
+				data.map(function(item, index){
+					$('[name="postal"]').append('<option value="'+item.name+'">'+item.name+'</option>');
+				});
+		});
+	}
+	// $(window).on('load',function(){
+	// 	t = setInterval(function(){
+ //            $(window).scrollTop(0);   
+ //        }, 100);
+ //        off = function(){
+ //            clearInterval(t);
+ //            $(document).off(events, off);
+ //        }
+ //        events = 'keydown keyup keypress mousemove mousedown mouseup touchstart touchend scroll';
+ //        $(document).on(events, off);
+	// })
+    $(document).ready(function(){
+    	$('select[name="selid"]').change(function(){
+    		var id = $(this).val();
+    		$('input.idval').hide().val('');
+    		$('input[seleid="'+ id +'"]').show();
+    	});
+    	$('.btnnext').click(function(){
+    		var id = $('select[name="selid"]').val();
+    		var errortxt = $('input[seleid="'+ id +'"]').attr('data-text');
+	    	var id_card = $.trim($('[name="id_card"]').val()) || '';
+	        var passport = $.trim($('[name="passport"]').val()) || '';
+	        if( id_card+passport=='' ){
+            	$('.bottom').addClass('erroract');
+				$('#idtext').html(errortxt);
+	        }
+	        var if1 = (id_card!='' && /^\d{12}$/.test(id_card)==true) ? 1 : 0;
+	        var if2 = (passport!='' && /^[A-Z]{1}\d{7}$/.test(passport)==true) ? 1 : 0;
+	        if( if1+if2 == 0 ){
+	            $('.bottom').addClass('erroract');
+				$('#idtext').html(errortxt);
+	        }else{
+	        	$('.layer').hide();
+	        	$('.layer_box').hide();
+	        	$('.tt').html(errortxt);
+	        	$('.vv').html($('input[seleid="'+ id +'"]').val());
+	        }
+    	});
+    	$('.cardidtext').click(function(){
+    		$('.layer').show();
+	        $('.layer_box').show();
+    	})
+    })
+</script>

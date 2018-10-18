@@ -1,0 +1,20 @@
+<?php
+$_LANG["s_mob"]   = "Mobile";
+$_LANG["s_email"]   =   "Email";
+$_LANG["s_postal"]   =   "Postal";
+$_LANG["s_total"]   =   "Total";
+$_LANG["buy_numtext"]   =   "Sold ";
+$_LANG["piece"]   =   "";
+$_LANG["time_limit"]   =   "Time-limited Discount";
+$_LANG['s'] = '';//
+$_LANG['h'] = ' : ';//小時
+$_LANG['m'] = ' : ';//分鐘
+$_LANG["choose_package"]   =   "Choose a package";
+$_LANG["package"]   =   "Package ";
+$_LANG["one"]   =   "one";
+$_LANG["two"]   =   "two";
+$_LANG["buy"]   =   "Buy";
+$_LANG["free_yun"]   =   "Free Shipping";
+$_LANG["anonymous"]   =   "Anonymous User";
+$_LANG["product_information"]   =   "Product Information";
+$_LANG["comment_new"]   =   "Latest comments";

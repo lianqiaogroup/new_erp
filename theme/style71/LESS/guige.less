@@ -1,0 +1,115 @@
+#page-order{
+	background-size:100%;
+	padding-bottom:110px;
+	position: relative;
+	margin-bottom:20px;
+	min-height:76vh;
+}
+.tips{
+    font-size: 14px;
+    padding: 0 4%;
+}
+#comb{
+	font-size:13px;
+	line-height:16px;
+	padding:10px 4% 0;
+	.tab{
+		display:block;
+		border-radius:15px;
+		font-size:12px;
+		line-height:20px;
+		padding:6px 4%;
+		border:1px solid #000;
+		margin-bottom:10px;
+		text-align:center;
+	}
+	.tab-sel{
+		color:#fff;
+		border-color:#FF6800;
+		background:#FF6800;
+	}
+}
+section[data-loopindex]{
+	margin:4% 0;
+	background:#fff;
+	.title_ac{
+		padding:0 4%;
+	}
+	.divide{
+		width:100%;
+		height:6px;
+		background-size:contain;
+	}
+	&:last-child{
+		&:after{
+			content:'';
+			display:block;
+			width:100%;
+		height:6px;
+		background-size:contain;
+		}
+	}
+}
+.count_atrr{
+	padding:0 4%;
+	.con{
+		font-size:0;
+	}
+	.tt{
+		font-size:14px;
+		margin: 8px 0;
+    	text-indent: 8px;
+	}
+	.tab{
+	    display: inline-block;
+    	margin:0 12px 12px 0;
+    	&:last-child{
+    		margin:0;
+    	}
+    	span{
+    		display: inline-block;
+		    padding:5 7px;
+		    font-size: 12px;
+		    border-radius:16px;
+			border:1px solid #000;
+    	}
+	}
+	.tab-sel{
+		span{
+			color:#fff;
+			border-color:#FF6800;
+			background:#FF6800;
+		}
+	}
+
+}
+.u-fornum{
+	padding:0 4%;
+	font-size:0;
+	span{
+		font-size:14px;
+		vertical-align:middle;
+		margin-right:10px;
+	}
+	.m-selnum >div{
+		width:40px;
+		height:30px;
+		display:inline-block;
+		font-size:14px;
+		text-align:center;
+		line-height:30px;
+		vertical-align:middle;
+	}
+	.less{
+		background-size:8px;
+		border:1px solid #bbb;
+	}
+	.more{
+		background-size:8px;
+		border:1px solid #bbb;
+	}
+	.textWrap{
+		border-top:1px solid #bbb;
+		border-bottom:1px solid #bbb;
+	}
+}

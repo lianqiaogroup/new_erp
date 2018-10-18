@@ -1,0 +1,87 @@
+
+<link href="{{ THEME }}/style/checkout.css" type="text/css" rel="stylesheet"/>
+<!--  -->
+<div class="address-input">
+    <div class="address-title">
+        <div style='font-size:15px;'>{{ lang.order_comfirmation }}</div>
+        <div class="kefu">{{ lang.contact }}<a href='javascript:;' onclick="P8.startGroupChat({{ service_contact_id }},1);">{{ lang.online_service }}</a></div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="cell">
+                <input required="required" placeholder="{{ lang.name_placeholder }}" type="text" name="name" class="inputText">
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="cell">
+                <input required="required" placeholder="{{ lang.phone }}" type="number" name="mob" class="inputText">
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="cell">
+                <input placeholder="{{ lang.email_address }}" error="{{ lang.test_email }}" type="email" name="email" class="inputText">
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell" id="province">
+            <select name="province">
+                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell">
+            <select name="state" placeholder="Propinsi" required="required">
+                <option value="">Propinsi</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell">
+            <select name="city" placeholder="kota" required="required">
+                <option value="">kota</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell">
+            <select name="district" placeholder="Dearah" required="required">
+                <option value="">Dearah</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="cell">
+                <input required="required" type="text" name="address" placeholder="{{ lang.full_address }}" class="inputText">
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <label>
+            <div class="cell">
+                <input type="tel" name="postal" required="required" class="inputText" placeholder="{{ lang.postal_long }}" error="{{ lang.test_postal }}" maxlength="5" pattern="[0-9]{5}">
+            </div>
+        </label>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="cell">
+                <textarea placeholder="{{ lang.remark }}" name="guest" class="text_area" rows="1"></textarea>
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell" style="border:none;display:inline-block;margin-left:-2%;">
+            {% if payment_underline ==1 %}
+                <input name="payment_type" value="0" id="0" type="radio"><label for="0" class="check">{{ lang.cash_on_delivery }}</label>
+            {% endif %}
+            {% if payment_online ==1 %}
+                <input name="payment_type" value="1" id="1" type="radio"> <label for="1">{{ lang.yijifu }}</label>
+            {% endif %}
+            {% if payment_paypal == 1 %}
+                <input name="payment_type" value="2" id="2" type="radio"> <label for="2">paypal</label>
+            {% endif %}
+        </div>
+    </div>
+    <div class="submit">
+        <div class="imitatebtn" onclick="checkattrs()">{{ lang.submit }}</div>
+        <input type="submit" style="display:none"  value="{{ lang.submit }}">
+        <input type="hidden" data-cuckootag="confirm_order">
+    </div>
+</div>

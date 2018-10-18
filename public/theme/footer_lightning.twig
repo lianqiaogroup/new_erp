@@ -1,0 +1,42 @@
+{#  #}
+<script type="text/javascript">
+// 
+window.smsAuth = {{ is_open_sms }} == 1 ? true : false;
+// 
+function loader(filename, path){
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = filename;
+	document.getElementsByTagName('head')[0].appendChild(script);
+}
+</script>
+{% include '/public/theme/bi.twig' %}
+<script src="/public/cache_script/bundle.v2.js?v2"></script>
+{% if pageSign!='' %}<script src="theme/{{theme}}/js/{{pageSign}}.js?v=1532954738454"></script>{% endif %}
+{# 本地统计代码 #}
+{% if embedStatScript %}
+<script type="text/javascript">
+{% include '/public/javascript/tongji.min.js' %}
+window.addEventListener('load', function(){ window.submitData({{ embedStatScript|raw }}); });
+</script>
+{% endif %}
+{# 谷歌代码 #}
+{# {% include '/public/theme/google_analytics_basic.twig' %} #}
+{# {% include '/public/theme/google_marketing.twig' %}  #}
+{# 坑爹的pop800客服系统 #}
+{% if service_contact_id != '' %}
+	{% if theme == 'style60' %}
+	<script language="javascript" src="http://api1.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=en"></script>
+	{% else %}
+	<script language="javascript" src="http://api.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=cn"></script>
+	{% endif %}
+{% endif %}
+<script type="text/javascript">(document.domain=='www.dzpas.com'||document.domain=='www.ouoho.com'||document.domain=='www.jhyia.com') && require(['autofill']);</script>
+{% if la %}
+    <!-- 51 la -->
+    <div style="display:none;">
+        {{ la|raw }}
+    </div>
+{% endif %}
+</body>
+</html>

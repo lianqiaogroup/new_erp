@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <style type="text/css">
+        html,body{width: 100%;max-width: 540px;background-color: #fff;font-size: 60px;padding-bottom: 15px;margin:auto;}
+        .show{width: 100%;padding: 15px 15px 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+        .green{color: #222;font-size: .32rem;margin-bottom: 10px;}
+        .show p{/*padding-left: 15px;*/font-size: .21rem;line-height: .35rem}
+        .show h5{font-size: 0.5em;text-align: center;font-weight:500}
+        .show h6{font-size: .30rem;line-height: .35rem;margin-bottom: 10px;margin-top: 10px; color: #008842;}
+        .bar {
+            position: absolute;
+            right: 0;
+            left: 0;
+            z-index: 10;
+            height: 2.2rem;
+            padding-right: 16px;
+            padding-left: 16px;
+            background-color: #f7f7f8;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .bar-nav {
+    top: 0;
+}
+header.bar {
+    height: 44px;
+    background: #f2f2f2;
+}
+.pull-left {
+    float: left;
+}
+.icon {
+    font-family: "iconfont-sm" !important;
+    font-style: normal;
+    display: inline-block;
+    vertical-align: middle;
+    background-size: 100% auto;
+    background-position: center;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.bar .icon {
+    position: relative;
+    z-index: 20;
+    font-size: 1rem;
+    margin-top: 7px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+header.bar .icon {
+    color: #222222;
+    font-size: 26px;
+    font-weight: 600;
+}
+i.back{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image:url(/home/style4/image/back.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+.logo {
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.title {
+    position: absolute;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 2.2rem;
+    color: #3d4145;
+    text-align: center;
+    white-space: nowrap;
+}
+header.bar .title {
+    line-height: 2.2rem;
+    color: #fff;
+    background-color: #f2f2f2;
+    height: 100%;
+}
+element.style {
+    background-image: url(../image/back.png);
+}
+    </style>
+</head>
+<body>
+<header class="bar bar-nav">
+    <a href="javascript:history.go(-1)" class="icon icon-menu pull-left open-panel"><i class="back"></i></a>
+    <h1 class="title logo" style="background-image:url(/home/style4/image/logo.png)"></h1>
+</header>
+<div class="show">
+    <h5 class="green"> {{ title }}</h5>
+    <p>{{ content|raw }}</p>
+</div>
+
+</body>

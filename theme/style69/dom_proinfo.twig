@@ -1,0 +1,75 @@
+<div class="product_info">
+	<div class="img_tt">{{ lang.detail }}</div>
+	<div class="m-img" id="m-img">
+		{{ content|replace({'<img src=': '<img class="lazyload" style="width:100%;" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+     {% if regions.code == 'THA' and lang.after_sales %}
+    <div class="after_sale">
+        <div class="after_sale_title">{{ lang.after_sales }}</div>
+        <div class="after_sale_content">
+            <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+            </div>
+        </div>
+        <div class="after_sale_content">
+            <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+            </div>
+        </div>
+        <div class="after_sale_content">
+            <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+            </div>
+        </div>
+        <div class="after_sale_content">
+            <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+            </div>
+            <div>
+                <span class="after_sale_circle"></span>
+                <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>

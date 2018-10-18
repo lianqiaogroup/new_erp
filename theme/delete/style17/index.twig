@@ -1,0 +1,199 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link rel="stylesheet" href="{{ THEME }}/css/index.css">
+<link rel="stylesheet" href="{{ THEME }}/css/gui.css">
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+
+<!--/page-->
+<section id="page-index" class="container">
+    <!-- 轮播图 -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom">
+            {% if photos %}
+                {% for p in photos %}
+                <span class="whiteicon"></span>
+                {% endfor %}
+            {% else %}
+                <span class="whiteicon"></span>
+            {% endif %}
+        </div>
+    </div>
+    <!--  -->
+    <div class="row1">
+        <div class="statusbar" id="J_PriceBar">
+            <div class="subleft avil">
+                <div class="price">
+                    {{ currency_code}}<strong class="small">{{ price }}</strong>
+                </div>
+                <div class="information">
+                    <div class="soldcount"><span>{{ lang.buy_numtext }}{{sales}}</span>{{ lang.check_produck }}</div>
+                    <div class="oprice"><del>{{ currency_code}}&nbsp;{{market_price}}</del></div>
+                </div>
+            </div>
+            <div class="countdown">
+                <div id="J_CountDownTxt" class="txt">{{ lang.time_last }}</div>
+                <div class="clockrun" id="timer">
+                    <span class="num">17</span><span class="dot">:</span>
+                    <span class="num">08</span><span class="dot">:</span>
+                    <span class="num">24</span><span class="dot">.</span>
+                    <span class="num">06</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 产品信息 -->
+    <div class="row2">
+        <div class="shortname">
+            <h1>
+                <img src="{{ THEME }}/images/favicon.ico" width="20">
+                {{ title }}
+            </h1>
+        </div>
+    </div>
+    <!--  -->
+    <div class="row-3">
+        <ul class="itemfeatures">
+            <li>{{seo_title}}</li>
+            <li>{{ lang.buy_numtext }}{{sales}}件</li>
+            <li>效果請看評價</li>
+        </ul>
+    </div>
+    <!-- 用户权益 -->
+    <div class="servicePolicy">
+        <div class="brandshow">
+            <ul class="showtagnames J_showTagNames">
+                <li>{{ lang.free_yun }}</li>
+                <li>{{ lang.day_appreciate }}</li>
+                <li>{{ lang.cash_on_delivery }}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- 第一條評論 -->
+    {% if comment %}
+    <div class="row5">
+        <div class="firstrate">
+            <div class="tit J_FirstRate"><em>{{ (sales*0.777)|number_format(0,',','') }}</em>條評論<span class="icon"></span></div>
+            <div class="evallist J_FirstRate">
+                <ul>
+                    {% for c in comment %}
+                    {% if loop.index == 1 %}
+                        <li class="evalli">
+                            <div class="userinfo">
+                                {% if c.is_anonymous %}
+                                    <span class="nick">匿名</span>
+                                {% else %}
+                                    <span class="nick">{{ c.name }}</span>
+                                {% endif %}
+                                <span class="section" style="width:{{ c.star*14 }}px">
+                                    <img src="{{ THEME }}/images/TB1.bEIIVXXXXaxXXXXtvlk.FXX-126-18.png_.webp">
+                                </span>
+                            </div>
+                            <div class="evalcon">{{ c.content }}</div>
+                            <div class="otherinfo">
+                                <span>{{ c.add_time }}</span>
+                                <span></span>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- 产品规格 -->
+    <div class="row6">
+        <div class="tabtools" id="J_Tabs">
+            <div class="stab-wrap" data-spm="stab">
+                <div class="stab-scroll-wrap"> 
+                    <div class="stab-scroll" style="width: 100%;">
+                        <div class="stab-canvas" style="width: 300px;">
+                            <ul>
+                                <li data-index="0" class="stab-current">{{ lang.description }}</li>
+                                {% if comment %}
+                                <li data-index="1" class="">{{ lang.comment }}</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tabs-content">
+            <div class="tabs-content-1 h5-desc">
+                {{ content|raw }}
+            </div>
+            <div class="tabs-content-2" style="display:none;">
+                <div class="row5">
+                    <div class="firstrate">
+                        <div class="evallist J_FirstRate">
+                            <ul>
+                                {% for c in comment %}
+                                {% if loop.index <= 5 %}
+                                    <li class="evalli">
+                                        <div class="userinfo">
+                                            {% if c.is_anonymous %}
+                                                <span class="nick">匿名</span>
+                                            {% else %}
+                                                <span class="nick">{{ c.name }}</span>
+                                            {% endif %}
+                                            <span class="section" style="width:{{ c.star*14 }}px">
+                                                <img src="{{ THEME }}/images/TB1.bEIIVXXXXaxXXXXtvlk.FXX-126-18.png_.webp">
+                                            </span>
+                                        </div>
+                                        <div class="evalcon">{{ c.content }}</div>
+                                        <div class="coment_thumb">
+                                            {% for b in c.thumb %}
+                                            <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                            {% endfor %}
+                                        </div>
+                                        <div class="otherinfo">
+                                            <span>{{ c.add_time }}</span>
+                                            <span></span>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="bottom-bar">
+            <div class="btngroup col_2">
+                <div id="J_BtnAddToCart" class="btn cart">
+                    <a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" class="w-button w-button-block btn-comment kefu">
+                    {{ lang.service_online }}
+                    </a>
+                </div>
+                <div id="J_BtnBuy" id="val-selbtn" class="btn buy w-button w-button-block btn-addToCart" data-yahoo-js>
+                    <span class="subText">全球熱賣</span>
+                    <span class="text">{{ lang.limit }}</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</section>
+<section id="page-order" class="container">
+    {% include 'cmpt-guige.twig' %}
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

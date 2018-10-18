@@ -1,0 +1,400 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/public/style/order-style.css">
+{#  #}
+<input id="region_code" value="{{regions.code}}" type="hidden">
+<input id="identity_tag" value="{{identity_tag}}" type="hidden">
+<!-- end header resource -->
+<div class="img_wrap">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {% if photos %}
+                {% for p in photos %}
+                    <div class="swiper-slide">
+                        <img src="{{ p.thumb }}">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide">
+                    <img src="{{ thumb }}">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<section id="page-index">
+    <div id="flag">{% if price != 0 and market_price != 0 %}{{ (((market_price-price)/market_price)*100.00)|number_format(0) }}{% endif %}% off</div>
+    <div class="score">
+        <div class="flexitem">
+            <del class="market_price">
+                {% if currency_prefix == 1 %}
+                    {{ currency_code }}{{ market_price }}
+                {% else %}
+                    {{ market_price }}{{ currency_code }}
+                {% endif %}
+            </del><span class="price">
+                {% if currency_prefix == 1 %}
+                    {{ currency_code }}{{ price }}
+                {% else %}
+                    {{ price }}{{ currency_code }}
+                {% endif %}
+                {{lang.promotion_price}}
+            </span>
+        </div>
+        <div><span class="kefu" data-cuckootag="service" data-value="{{service_contact_id}}"></span></div>
+    </div>
+    <div class="header">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="times"><span id="h"></span>:<span id="m"></span>:<span id="s"></span></div>
+    <div class="score">
+        <div class="flexitem" style="text-align: right;">
+            <a href="#page-order" id="buyButton1">{{ lang.buy_now }}</a>
+        </div>
+    </div>
+    <div class="tabbox">
+        <div class="item action" rel="1"><span>{{lang.pro_attr}}</span></div>
+        <div class="item" rel="2"><span>{{lang.order_inquiry}}</span></div>
+    </div>
+    <div id="tab2" class="tab">
+        <footer>
+            <div class="in_div">
+                <div class="in_title">{{ lang.order_inquiry }}</div>
+                <div style="margin-bottom: 15px;font-size: 12px;">{{ lang.inquiry_tip }}</div>
+                <div class="checkin">
+                    <div class="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}" data-event="check_order"></div>
+                    <input type="tel" name="inmob" placeholder="{{ lang.mobile_placeholder }}">
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div id="tab1" class="tab">
+    	<div class="product_info">
+    		<div class="m-img">
+                {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+            </div>
+        </div>
+    </div>
+</section>
+<div class="service">
+    <div><i class="free"></i><span style="margin-right:10px">{{ lang.Th_free }}{{ lang.Th_time2 }}<span id="timer"></span></span></div>
+    <div><i class="free"></i><span style="margin-right:10px">{{ lang.cash_on_delivery }}</span></div>
+    <div><i class="free"></i><span style="margin-right:10px">{{ lang.returned_goods }}</span></div>
+</div>
+<form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+    <section id="page-order">
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+        <input type="hidden" id="act" name="act" value="getAttrPrice">
+        <!--套餐-->
+        <div class="tips padbor">
+            <p>{{ tips }}</p>
+        </div>
+        <div class="padbor" id="combo">
+            <label class="pro_title">{{ lang.pro_choose }} </label>
+            <div>
+                <ul id="combo_id">
+                 {% if combo %}
+                    {% for c in combo %}
+                        <li class="item {% if loop.index == 1 %}action{% endif %}" data-price="{{ c.price }}" rel="{{ c.combo_id }}" data-single="{{ c.is_single_combo }}">
+                            {{ c.title|raw }}
+                            <input type="radio" name="combo_id" value="{{ c.combo_id }}" {% if loop.index == 1 %}checked="checked"{% endif %} data-loopindex="{{c.combo_id}}">
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="item action" data-price="{{ price }}" rel="0" data-single="0">{{ title|raw }}<input type="radio" name="combo_id" value="0" checked="checked" data-loopindex="0"></li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    	<!--套餐end-->
+    		<!--属性开始-->
+            <div id="product_attr" class="padbor" data-error="{{ lang.Th_titleattr }}">
+                {% if combo %}
+                    <!--循环套餐-->
+                    {% for om in combo %}
+                        <section data-loopIndex="{{ om.combo_id }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+                        <!-- 循环产品 -->
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                            <div class="item">
+                                <div class="tc tc{{ ok.combo_id|raw }}" >
+                                    <!-- 循环属性 -->
+                                    {% for o in  ok.options %}
+                                        <div class="prodiv" data-prototype-group="{{ loop.index }}"  data-group="{{ o.attr_group_id }}" data-select="0">
+                                            <label class="pro_title"> : {{ o.attr_group_title|raw }}</label>
+                                            <select class="dxbox combosel" attr-pro="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" data-id="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]">
+                                                {% for key,attr in o.attr %}
+                                                    {% if loop.length > 1 %}
+                                                        {% if loop.index == 1 %}
+                                                        <option value="0">{{ o.attr_group_title|raw }}</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    <option value="{{ attr.product_attr_id }}">{{ attr.name|raw }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        </section>
+                    {% endfor %}
+                {% else %}
+                    <section data-loopIndex="0">
+                    <!--循环当前产品属性-->
+                    {% for o in  options %}
+                        <div class="prodiv item" data-prototype-group="{{ loop.index }}">
+                            <label class="pro_title">{{ o.attr_group_title|raw }}</label>
+                            <select class="dxbox" attr-pro="{{ o.attr_group_id }}" name="attr[{{o.attr_group_id}}]">
+                                {% for key,attr in o.attr %}
+                                    {% if loop.length > 1 %}
+                                        {% if loop.index == 1 %}
+                                        <option value="0">{{ o.attr_group_title|raw }}</option>
+                                        {% endif %}
+                                    {% endif %}
+                                    <option value="{{ attr.product_attr_id }}">{{ attr.name|raw }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endfor %}
+                    </section>
+                {% endif %}
+                <div id="attr_div"></div>
+                <!--数量-->
+                <div class="bdbox numdiv padbor">
+                    <label class="bdxx">{{ lang.num }} :</label>
+                    <div class="m-selnum dr">
+                        <div onclick="addnumber()" class="more">+</div>
+                        <div class="textWrap">
+                            <div class="tt">&nbsp;<span>1</span></div>
+                            <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" readonly="readonly">
+                        </div>
+                        <div onclick="minnumber()" class="less z-dis">-</div>
+                    </div>
+                </div>
+            </div>
+        <!--属性结束-->
+        <div>{{lang.money}} : {% if currency_prefix == 1 %}<span class="total">{{ currency_code }}</span><span class="total" id="total"></span>{% else %}<span class="total" id="total"></span><span class="total">{{ currency_code }}</span>{% endif %}
+        </div>
+    </section>
+    <div id="details">
+        <div class="explain" style="direction: rtl;">
+            <h1>{{ lang.order_title }}</h1>
+            <p>{{ lang.warming|raw }}</p>
+        </div>
+        <input type="hidden" name="token" value="{{ token }}">
+        <input type="hidden" name="province" value="{{ regions.region_id }}">
+        <div class="table">
+            <div class="flexbox">
+                <div class="flex regions">{{ regions.region_name }}</div>
+            </div>
+            <div class="flexbox">
+                <div class="flex tab_two">
+                    <select name="state" required="required">
+                        <option value="">{{ lang.state }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flexbox">
+                <div class="flex tab_two">
+                    <select name="city" required="required">
+                        <option value="">{{ lang.city }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flexbox">
+                <div class="flex tab_two">
+                    <select name="district" required="required">
+                        <option value="">{{ lang.district }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-row">
+                <p style="color:red; text-align:right">{{ lang.addr_warning }}</p>
+            </div>
+            <div class="table-row">
+                <input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+            </div>
+            <div class="table-row">
+                <input type="text" name="address2" placeholder="{{ lang.addr2 }}">
+            </div>
+            <div class="flexbox">
+                <div class="flex tab_two"><input type="text" required="required" name="name" maxlength="100" placeholder="{{ lang.name }}"></div>
+                <div class="flex tab_two">
+                    <input type="number" name="postal" placeholder="{{ lang.postal }}" maxlength="20">
+                </div>
+            </div>
+            <div class="flexbox">
+                <div class="flex tab_two">
+                    <input type="tel" name="mob_backup" placeholder="{{ lang.phone_backup }}">
+                </div>
+                <div class="flex tab_two">
+                    <input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+                </div>
+            </div>
+            <div class="table-row cardshow">
+                <input type="tel" name="id_card" placeholder="{{ lang.id_card }}">
+            </div>
+            <div class="cardshow" style="color:red; text-align:right">{{lang.id_cardtips}}</div>
+            <div class="table-row">
+                <input type="email" name="email" placeholder="{{ lang.email }}">
+            </div>
+            <div class="flexbox">
+                <div class="flex tab_two">
+                    <select name="send_time" required="required">
+                        <option value=""> تفضل تختار وقت للتسليم</option>
+                        <option value="10：00-12:00 "> 10：00-12:00</option>
+                        <option value="13：00-16:00 "> 13：00-16:00</option>
+                        <option value="17:00-19:00 "> 17:00-19:00</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-row">
+                <input type="text" name="note" placeholder="{{ lang.note }}">
+            </div>
+            {% if payment_underline == 1 %}
+            <div class="flexbox">
+                <div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+            </div>
+            {% endif %}
+            {% if payment_ocean %}
+                <div class="flexbox">
+                    <div class="flex tab_two tab_sele" rel="4"><i class="icon"></i>
+                        <img src="/lib/ocean/image/card_1.gif" style="width: auto;">
+                        <img src="/lib/ocean/image/card_2.gif" style="width: auto;">
+                        <img src="/lib/ocean/image/card_3.gif" style="width: auto;">
+                    </div>
+                </div>
+                <div class="table-row pay-type" style="display: none;">
+                    {{ ocean|raw }}
+                </div>
+            {% endif %}
+            <div class="table-row">
+                <p style="color:red; text-align:right">{{ lang.phone_warning }}</p>
+            </div>
+            <input type="hidden" name="guest">
+            <input name="payment_type" value="0" type="hidden">
+        </div>
+    </div>
+    <div class="footer">
+        <div class="submit">
+            <div class="btndiv" onclick="checkattrs()">{{ lang.order_sure }}</div>
+            <button type="submit" name="Submit" style="display:none"></button>
+            <a href="#form" data-cuckootag="confirm_order" style="display:none"></a>
+        </div>
+    </div>
+</form>
+<style>
+html, body {
+    background: #fff;
+}
+button[data-cuckootag="confirm_order"]{display: none;}
+    select[name="state"], select[name="city"], select[name="send_time"]{
+        height: 44px;
+        width: 100%;
+        font-size: 14px;
+        color: #666;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        text-indent: 16px;
+    }
+    .table-row.cardshow,.cardshow{
+        display: none;
+    }
+</style>
+<div class="timetips" style="direction: rtl;">
+    <ul class="flexbox">
+        <li class="flex" style="padding-left:16px;"><img src="/public/image/7day.png" style="margin-left: 5px;">{{ lang.returned_goods }}</li>
+        <li class="flex" style="padding-right:16px;"><img src="/public/image/huodao.png" style="margin-left: 5px;">{{ lang.cash_on_delivery }}</li>
+    </ul>
+</div>
+<script type="text/javascript">
+
+
++(function loadstate(){
+    $.post('/region.php', { 'region_id': {{ regions.region_id }} }, function(data) {
+        var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="state"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        var id = $('[name="state"]').children().filter(':selected').attr('data-id');
+    });
+})();
+
+
+$('[name="state"]').change(function(event) {
+    var id = $(this).children().filter(':selected').attr('data-id');
+    loadCity(id);
+});
+$('[name="city"]').change(function(event) {
+    var id = $(this).children().filter(':selected').attr('data-id') || 0;
+    loadDistrict(id);
+});
+
+
+
+function loadCity(id, callback){
+    $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+        $('[name="city"]').children().not(":eq(0)").remove();
+        $('[name="district"]').children().not(":eq(0)").remove();
+        var data = JSON.parse(data);
+        data.map(function(item, index){
+            $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+        });
+    });
+}
+function loadDistrict(id){
+    if( id==0 ){
+        try{
+            $('[name="district"]').children().not(":eq(0)").remove();
+        }catch(e){
+            
+        }
+        return false;
+    }
+    $.post('/region.php', { 'yn_region_id': id }, function(data) {
+        $('[name="district"]').children().not(":eq(0)").remove();
+        var data = JSON.parse(data);
+        if( data.length == 0 ){
+            var newInput = '<input name="district" value="" placeholder="{{ lang.district_input }}" />';
+            $('select[name="district"]').before(newInput);
+            $('select[name="district"]').remove();
+        }else{
+            var newInput = '<select name="district"></select>';
+            $('input[name="district"]').before(newInput);
+            $('input[name="district"]').remove();
+            data.map(function(item, index){
+                $('[name="district"]').append('<option value="'+item.name+'">'+item.name+'</option>');
+            });
+        }
+    });
+}
+
+window.repeatlang = {
+    title:"{{lang.repeat_title}}",
+    prompt:"{{lang.repeat_prompt}}",
+    prompt_out:"{{lang.repeat_prompt_out}}",
+    confirm_order:"{{lang.repeat_confirm_order}}",
+    query_details:"{{lang.repeat_query_details}}",
+    time_d:"{{lang.time_d}}",
+    time_h:"{{lang.time_h}}",
+    time_m:"{{lang.time_m}}",
+    time_just:"{{lang.time_just}}"
+}
+function changeguest(){
+    $('[name="guest"]').val($('[name="send_time"]').val() + $('[name="note"]').val());
+}
+$('[name="note"]').on('change',function(){
+    changeguest();
+});
+$('[name="send_time"]').on('change',function(){
+    changeguest();
+})
+</script>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

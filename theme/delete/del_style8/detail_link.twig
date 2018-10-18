@@ -1,0 +1,27 @@
+<div class="m-hd">
+    <div class="m-topBar">
+        <a class="goback"></a>
+        <div style="width: 100%;"><div class="title">圖文詳情</div></div>
+    </div>
+</div>
+<div class="m-img">
+    {{ content|raw }}
+
+    <div class="User_notes" style="margin-top: 10px">
+        <h2 class="notes">{{ lang.user_notes }}</h2>
+        <div class="note_text">{{ lang.user_fb }}</div>
+        <div class="note_title">{{ lang.user_note1 }}</div>
+        <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+        <div class="note_title">{{ lang.user_note2 }}</div>
+        <div class="note_text">{{ lang.user_note2_1 }}</div>
+        <div class="note_title">{{ lang.user_note3 }}</div>
+        <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+        <div class="note_title">{{ lang.user_note4 }}</div>
+        <div class="note_text">{{ lang.user_note4_1 }}</div>
+        <div class="note_title">{{ lang.user_note4_2 }}</div>
+        <div class="note_title">{{ lang.user_note4_3 }}</div>
+        <div class="note_text">{{ lang.user_note4_4 }}</div>
+    </div>
+    
+    <p style="height: 44px;line-height: 44px;text-align: right;background: #fff;border-top: 1px solid #e5e5e5"><a class="top">TOP</a></p>
+</div>

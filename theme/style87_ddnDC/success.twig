@@ -1,0 +1,46 @@
+<!-- resource -->
+<!-- end header resource -->
+<div class="panel_large">
+	
+	<link href="{{ THEME }}/style/success.css" rel="stylesheet">
+	{% include 'header.twig' %}
+	<div class="explain">
+		<h2 class="title">{{ lang.order_detail }}</h2>
+		<div class="link_detail">3{{ lang.location }}</div>
+		<div><a href="/order_quality.php?order={{key}}&order_no={{orderid}}" class="order_quality">{{lang.order_quality}}</a></div>
+	</div>
+
+	{% include 'footer.twig' %}
+</div>
+
+<div class="panel_small">
+	{% include '/public/theme/success.twig' %}
+</div>
+<!-- footer resource -->
+
+
+<script src="{{ THEME }}/js/success.js"></script>
+
+{# pt4test #}
+<input type="hidden" id="product_id4pt4test" value="{{ product_id }}">
+<input type="hidden" id="total4pt4test" value="{{ total }}">
+<div id="pt4test" style="display:none;"></div>
+
+<script type="text/javascript">
+
+    		//pt4test
+		    var product_id4pt4test=document.getElementById('product_id4pt4test').value,total4pt4test=document.getElementById('total4pt4test').value;		
+		    //'²úÆ·ID':{'offer_id':'10000','exchange_rate':0.2462}    
+		    var pt4test = 
+				{
+				'467676':{'oid':'101','er':0.1275}
+				};
+				if(undefined != pt4test[product_id4pt4test])
+				{
+					var total4pt4test2 = pt4test[product_id4pt4test]['er']*total4pt4test;
+					total4pt4test2 = total4pt4test2.toFixed(2);
+					
+					document.getElementById('pt4test').innerHTML=('<iframe src="http://tracking.nexusc.info/aff_l?offer_id='+pt4test[product_id4pt4test]['oid']+'&amount='+total4pt4test2+'&transaction_id=TRANSACTION_ID" scrolling="no" frameborder="0" width="1" height="1"></iframe>');
+				}
+    
+</script>

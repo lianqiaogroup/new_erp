@@ -1,0 +1,22 @@
+<div class="detail">
+	<div class="processing">
+		<div>{{ lang.buyed }}{{ sales }}{{ lang.piece }}</div>
+		<div>
+			<span class="process"><span style="width:{{ (sales/(sales+stock)*100)|number_format(0) }}%"></span></span>
+			<span class="percent">{{ (sales/(sales+stock)*100)|number_format(0) }}%</span>
+		</div>
+	</div>
+	<div class="limit">
+		<div>{{ lang.time_limit }}</div>
+		<span class="timeWrap">{{ lang.time_over }}
+        	<span id="timer">
+               <span  id="h">10</span>
+                <span class="">{{ lang.h }}</span>
+                <span id="m">00</span>
+                <span class="">{{ lang.m }}</span>
+                <span id="s">00</span>
+                <span class="">{{ lang.s }}</span>
+          </span>
+        </span>
+	</div>
+</div>

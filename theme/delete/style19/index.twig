@@ -1,0 +1,159 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/styles.css" rel="stylesheet">
+<link href="{{ THEME }}/css/singleActive.css" rel="stylesheet">
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet">
+<script src="public/jquery-2.2.3.min.js"></script>
+
+<!--  -->
+
+<!--  -->
+<div class="swiper-container">
+    <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+        {% if photos %}
+            {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+        {% endif %}
+    </div>
+    <div class="swiper-pagination swiper-pagination-custom">
+        {% if photos %}
+            {% for p in photos %}
+                <span class="whiteicon"></span>
+            {% endfor %}
+        {% else %}
+            <span class="whiteicon"></span>
+        {% endif %}
+    </div>
+</div>
+<div style="display: flex;align-items: center;">
+    <h1 class="proName">{{ title }}</h1>
+    <h3 class="top_price" style="display: inline-block;">{{ currency_code }}{{ price }}<span class="pre_price">{{ currency_code }}{{ market_price }}</span></h3>
+
+</div>
+<div class="inforContent">
+    <div class="i-p-top">
+        <div class="i-p-b">
+            <span class="soldPart">已搶購{{ sales }}{{ lang.piece }}</span>
+        </div>
+        <div class="i-p-m buyinfo_post">
+            <span class="flag1">{{ lang.flash_sale }}</span>
+            <span class="timeWrap">距離結束
+            <span id="timer">
+                   <span  id="h">10</span>
+                    <span class="">時</span>
+                    <span id="m">00</span>
+                    <span class="">分</span>
+                    <span id="s">00</span>
+                    <span class="">秒</span>
+              </span>
+            </span>
+        </div>
+        <div id="here"></div>
+        <div class="ser_promise">
+            <span>7天鑒賞期</span>
+            <span>免郵費</span>
+            <span>{{ lang.cash_on_delivery }}</span>
+        </div>
+        <ul class="m-servicePolicy">
+            <li class="item"><span>【爆款特賣】&nbsp;{{ title }}</span></li>
+            <li class="item"><span>【原價{{ currency_code }}{{ market_price }}】&nbsp;{{ lang.cash_on_delivery }}</span></li>
+            <li class="item"><span>【官方正品】7天鑒賞期，銷量過萬，歡迎搶購</span></li>
+        </ul>
+    </div>
+    <div class="bTop">
+        <span class="bTitle bTitle1 selecked">產品詳情</span>
+        <a class="pinlun">最新評價</a>
+    </div>
+    <div class="detail_info_wrap">
+        <div class="detail_list" id="detailCont">
+            <div class="detail_item p_desc" id="detail_tab1" style="padding:4px 4px;">
+                <div id="commDesc" class="detail_pc">
+                    <!-- 后台商品介绍 开始-->
+                    <div class="detail_con">
+                        {{ content|raw }}
+                    </div>
+                    <div class="User_notes" style="margin-top: 10px">
+                        <h2 class="notes">{{ lang.user_notes }}</h2>
+                        <div class="note_text">{{ lang.user_fb }}</div>
+                        <div class="note_title">{{ lang.user_note1 }}</div>
+                        <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+                        <div class="note_title">{{ lang.user_note2 }}</div>
+                        <div class="note_text">{{ lang.user_note2_1 }}</div>
+                        <div class="note_title">{{ lang.user_note3 }}</div>
+                        <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+                        <div class="note_title">{{ lang.user_note4 }}</div>
+                        <div class="note_text">{{ lang.user_note4_1 }}</div>
+                        <div class="note_title">{{ lang.user_note4_2 }}</div>
+                        <div class="note_title">{{ lang.user_note4_3 }}</div>
+                        <div class="note_text">{{ lang.user_note4_4 }}</div>
+                    </div>
+                </div>
+            <div class="pinlun_content" id="pinlun_content">
+                {% for a in  comment %}
+                    <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="margin-bottom: 15px">
+                        <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+                            <span class="inm">
+                            <span id="wi">{{ a.name }}</span>
+                                {% if a.is_anonymous %}
+                                    <span id="nm" class="nm">匿名用戶</span>
+                                {% endif %}
+                        </span>&nbsp;
+                            <span>
+                            評分：<span style="color: red;">{{ a.star }}</span>
+                        </span>
+                        </div>
+                        <P style="color: #666;padding: 5px;">{{ a.content }}</P>
+
+
+                        <div class="msKeimgBox">
+                            <ul>
+                                    <li>
+                                        {% for b in a.thumb %}
+                                            <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;" />
+                                        {% endfor %}                                        
+                                    </li>
+                                    <li>
+                                        {% for b in a.thumb %}
+                                            <span class="hidden">
+                                                <img src="{{ b.thumb }}" width="100%" height="auto" />
+                                            </span>
+                                        {% endfor %}
+                                    </li>
+
+                            </ul>
+                            <div class="mskeTogBtn"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+        
+            <div class="fixednav">
+                <ul class="nav-list">
+                    <li>
+                        <a href="javascript:;" class="left" onclick="P8.startGroupChat({{ service_contact_id }},1);">在線客服</a>
+                    </li>
+                    <li id="btn_buy">
+                        <a href="javascript:void (0);" class="conbtn">
+                            <span>{{ lang.buy_now }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ THEME }}/js/swiper-3.4.0.jquery.min.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+<script>
+    if( $(".detail_con video").length > 0 ){
+        //$(".detail_con video").attr("poster", "/public/image/videoPlay.jpg");
+        $(".detail_con video").click(function(){
+            $(this).get(0).play();
+        });
+    }
+</script>
+{% include 'public/theme/footer.twig' %}

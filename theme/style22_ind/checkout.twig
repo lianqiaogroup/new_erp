@@ -1,0 +1,289 @@
+{% include 'public/theme/header_checkout.twig' %}
+<link rel="stylesheet" type="text/css" href="/public/style/page-checkout.css">
+<!--  -->
+<input id="region_code" value="{{regions.code}}" type="hidden">
+<input id="identity_tag" value="{{identity_tag}}" type="hidden">
+<!--  -->
+<div id="details">
+    <div class="header">
+        <a class="goback" href="/{{ identity_tag}}">
+        	<i class="checkout-icons icon-goback"></i>
+        	{{ lang.click_back_home }}
+        </a>
+    </div>
+	<div class="explain">
+	    {% if regions.code == 'ARE' %}
+		    <h1>WARM PROMPT</h1>
+		    <p>Cash on delivery + Free shipping + Seven-day appreciation period. If you have any question about the product, please contact our After-sales Customer Service by sending email to {{ service_email }}, which should including your name, telephone number and the order number, thus we can deal with your problem timely. Wish you a happy shopping!
+Estimated delivery time : About 7 - 15 days.<br/>
+			Please keep your phone on and pay attention to the call, thank you!
+			</p>
+		{% else %}
+		    <h1>{{ lang.order_title }}</h1>
+		    <p>{{ lang.warming|raw }}</p>
+		{% endif %}
+	</div>
+	<form id="form" name="form" action="order.php" method="post" onsubmit="return prepost()">
+		<input type="hidden" name="combo_id" value="">
+		<input type="hidden" name="token" value="{{ token }}">
+		<input type="hidden" name="num">
+		<input type="hidden" id="act" name="act" value="getAttrPrice">
+		<input type="hidden" name="province" value="{{ regions.region_id }}">
+		<div class="table">
+			<div class="flexbox">
+				<div class="flex regions">{{ regions.region_name }}</div>
+			</div>
+			<div class="flexbox">
+				<div class="flex tab_two">
+					<select name="city" required="required">
+						<option value="">{{ lang.city }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="table-row">
+				<select name="district" required="required">
+					<option value="">{{ lang.district }}</option>
+				</select>
+			</div>
+			<div class="table-row">
+				<input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+			</div>
+			<div class="flexbox">
+				<div class="flex tab_two">
+					<input type="text" required="required" name="name" maxlength="50" placeholder="{{ lang.name }}">
+				</div>
+				<div class="flex tab_two">
+					<select required="required" name="postal" error="{{ lang.postal_error }}" placeholder="{{ lang.postal }}">
+						<option value="">{{ lang.postal }}</option>
+					</select>
+				</div>
+			</div> 
+			<div class="flexbox">
+				<div class="flex tab_two">
+					<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+				</div>
+				<div class="flex tab_two">
+					<input type="email" name="email" placeholder="{{ lang.email }}">
+				</div>
+			</div>
+			<div class="table-row">
+				<input type="text" name="guest" placeholder="{{ lang.note }}">
+			</div>
+			<div class="flexbox">
+				{% if payment_underline == 1 %}
+					<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+				{% endif %}
+				{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+					<div class="flex tab_two">
+						<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+					</div>
+				{% endif %}
+				<input name="payment_type" value="0" type="hidden">
+			</div>
+			<div class="table-row pay-type" style="display: none;">
+				<select id="pay-online">
+					{% if payment_online == 1 %}
+					<option value="1">{{ lang.yijifu }}</option>
+					{% endif %}
+					{% if payment_paypal == 1 %}
+					<option value="2">paypal</option>
+					{% endif %}
+					{% if payment_asiabill == 1 %}
+					<option value="3">Asiabill</option>
+					{% endif %}
+				</select>
+			</div>
+			<style>
+				select[name="state"], select[name="city"], select[name="postal"],.cardidtext{
+				    height: 44px;
+				    width: 100%;
+				    font-size: 14px;
+				    color: #666;
+				    border: 1px solid #eee;
+				    border-radius: 4px;
+				    text-indent: 16px;
+				}
+			</style>
+		</div>
+		<div class="this_box">
+			{% if combo %}
+			{% for c in combo %}
+		    <div class="m-orderItem" id="goods_{{ c.combo_id }}" style="display: none;">
+		    	<div class="row-2 flexbox">
+			    	<div class="goodImg">
+			    		{% if c.thumb %}
+			    			<img src="{{ c.thumb }}" width="100%" height="100%">
+			    		{% else %}
+			    			<img src="{{ thumb }}" width="100%" height="100%">
+			    		{% endif %}
+			    	</div>
+			    	<div class="goodInfo flex">
+				    	<div class="goodName">{{ title }}</div>
+				    	<div class="goodName ti">
+				    		<span>{{ c.title }}</span>
+				    		<div class="goodStatus f-fr"><span>{{ lang.num }} : </span><span class="number"></span></div>
+				    	</div>
+			    	</div>
+		    	</div>
+		    </div>
+	        <!-- 套餐包含产品 -->
+	        <div class="m-goodItems" style="display:none;" id="showComboProduct_{{ c.combo_id }}">
+	        {% for g in c.goods %}
+	        	<div class="row-2 flexbox">
+		        	<div class="goodImg">	
+		        		<img class="attrimg" src="{{ g.thumb }}">
+		        	</div>
+		        	<div class="goodInfo flex u3">
+			        	<div class="goodName">
+			        		<span>{{ g.title }}</span>
+			        		<div class="goodStatus">
+			        		{% for a in g.options %}	
+			        		{% for key,attr in a.attr %}
+			        		<span optionsKey data-id="{{ g.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}"  attr_img="{{ attr.thumb }}" class="attr" style="display: none;">&nbsp;&nbsp;{{ attr.name|raw }}</span>
+			        		{% endfor %}
+			        		{% endfor %}
+			        		</div>
+			        	</div>
+		        	</div>
+	        	</div>
+	        {% endfor %}
+	        </div>
+	        {% endfor %}
+	        <div class="notic_show_combo_product action" id="showComboProduct_triggle2" rel="{{ lang.closeComboProducts }}" rel_s="{{ lang.openComboProducts }}">
+	            <span class="uu">
+	            	<span id="lang">{{ lang.openComboProducts }}</span>
+	            	<span class="checkout-icons icon-arrowdown"></span>
+	            </span>
+	        </div>
+	        <!-- 套餐包含产品 -->
+	        {% else %}
+	        <div class="m-orderItem m-padbot" id="goods">
+		    	<div class="row-2 flexbox">
+			    	<div class="goodImg">
+			    		<img src="{{ thumb }}" width="100%" height="100%">
+			    	</div>
+			    	<div class="goodInfo flex">
+				    	<div class="goodName">{{ title }}</div>
+				    	<div class="goodName ti">
+				    	{% for a in options %}
+				    		{% for key,attr in a.attr %}
+				    			<span optionsKey data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name }}</span>
+				    		{% endfor %}
+				    	{% endfor %}
+				    	<div class="goodStatus f-fr"><span>{{ lang.num }} : </span><span class="number"></span></div>
+				    	</div>
+			    	</div>
+		    	</div>
+		    </div>
+	        {% endif %}
+		</div>
+	    <ul class="row-2" id="list_cost">
+	    	<li>
+	            <span class="tips">{{ lang.freight }} </span><span class="tips2">
+	            {% if currency_prefix == 1 %}
+                    {{ currency_code }}0.00
+                {% endif %}
+                {% if currency_prefix == 0 %}
+                    0.00{{ currency_code }}
+                {% endif %}
+                </span>
+	        </li>
+	        <li>
+	            <span class="tips">{{ lang.total }} </span>
+	            {% if currency_prefix == 1 %}
+                    <span class="tips2" id="payment_amount"></span>
+	            	<span class="tips2">{{ currency_code }}</span>
+                {% endif %}
+                {% if currency_prefix == 0 %}
+		            <span class="tips2">{{ currency_code }}</span>
+		            <span class="tips2" id="payment_amount"></span>
+                {% endif %}
+	        </li>
+	        <li>
+	            <span class="tips">{{ lang.pay }} </span>
+	            <span class="tips2 total" style="color: #ff5a5f;font-weight: bold;">
+	            {% if currency_prefix == 1 %}
+                    {{ currency_code }}
+	            	<span id="total"></span>
+                {% endif %}
+                {% if currency_prefix == 0 %}
+	            	<span id="total"></span>{{ currency_code }}
+                {% endif %}
+	            </span>
+	        </li>
+	    </ul>
+		<input type="hidden" name="product_id" value="{{ product_id }}">
+	    <button type="submit" class="btn" data-cuckootag="confirm_order" data-wating-text="{{ lang.order_submiting }}">{{ lang.order_sure }}</button>
+    </form>
+</div>
+<div class="fLogin">
+	<div>
+		<p>{{ lang.service_before }} <b>{{ lang.service_after }}</b></p>
+		<a href="">{{ lang.fb_login }}</a>
+		<div class="close">×</div>
+	</div>
+</div>
+<div class="timetips">
+    <ul class="flexbox">
+        <li class="flex" style="padding-left:16px;">
+        	<i class="checkout-icons icon-7day"></i>
+        	{{ lang.returned_goods }}
+        </li>
+        <li class="flex" style="padding-right:16px;">
+        	<i class="checkout-icons icon-cod"></i>
+        	<img src="" alt="">
+        	{{ lang.cash_on_delivery }}
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">require(['order-public']);</script>
+<script>
+	window.repeatlang = {
+		title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+		confirm_order:"{{lang.repeat_confirm_order}}",
+		query_details:"{{lang.repeat_query_details}}",
+		time_d:"{{lang.time_d}}",
+		time_h:"{{lang.time_h}}",
+		time_m:"{{lang.time_m}}",
+		time_just:"{{lang.time_just}}"
+	}
+	$('[name="city"]').change(function(event) {
+		var id = $(this).children().filter(':selected').attr('data-id');
+		loadCity(id);
+	});
+	$('[name="district"]').change(function(event) {
+		var id = $(this).children().filter(':selected').attr('data-id');
+		loadDistrict(id);
+	});
+
+	+(function loadstate(){
+		$.post('/region.php', { 'region_id': {{ regions.region_id }} }, function(data) {
+			var data = JSON.parse(data);
+				data.map(function(item, index){
+					$('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+				});
+		});
+	})();
+	function loadCity(id, callback){
+		$('[name="postal"]').children().not(":eq(0)").remove();
+		$.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+			$('[name="district"]').children().not(":eq(0)").remove();
+			var data = JSON.parse(data);
+			data.map(function(item, index){
+				$('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+			});
+		});
+	}
+	function loadDistrict(id){
+		$('[name="postal"]').children().not(":eq(0)").remove();
+		$.post('/region.php', { 'yn_region_id': id }, function(data) {
+			var data = JSON.parse(data);
+				data.map(function(item, index){
+					$('[name="postal"]').append('<option value="'+item.name+'">'+item.name+'</option>');
+				});
+		});
+	}
+</script>
+{% include 'public/theme/footer_checkout.twig' %}

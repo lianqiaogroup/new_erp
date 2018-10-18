@@ -1,0 +1,253 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section>
+	<div class="header">
+		<div class="title">{{ title }}</div>
+		<div class="sales">
+			<span>{{ lang.free_yun }}</span>
+			<span>{{ lang.buy_before }}{{ sales }}{{ lang.buy_after }}</span>
+		</div>
+	</div>
+	<div class="img_wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if video.video_url %}
+				<div class="swiper-slide">
+					<video width="100%" poster="{{ video.cover_url }}" id="video" preload="false" src="{{ video.video_url }}" controls="controls"
+					 x5-playsinline="" playsinline="" webkit-playsinline="">
+				</div>
+				{% endif %} {% if photos %} {% for p in photos %}
+				<div class="swiper-slide">
+					<img src="{{ p.thumb }}" width="100%">
+				</div>
+				{% endfor %}
+				{% endif %}
+				{% if video.video_url is empty and photos is empty %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="swiper-button-prev swiper-button-black"></div>
+		<div class="swiper-button-next swiper-button-black"></div>
+	</div>
+	<div class="details">
+		<div class="price">
+			<del>
+				{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+            	{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+			</del>
+			<span>{% if (market_price-price) == 0 %}0% off{% else %}{{ ((market_price-price)/market_price*100)|number_format(0) }}% off{% endif %}</span>
+			<div class="sale_price">
+				{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+            	{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+			</div>
+		</div>
+		<div class="service">
+			<span>{{ lang.cash_on_delivery }}</span>
+			<span>{{ lang.seven_days }}</span>
+		</div>
+		<div class="hot">
+			<div>{{ lang.discount_before }}{% if (market_price-price) == 0 %}0{% else %}{{ ((market_price-price)/market_price*10)|number_format(0) }}{% endif %}{{ lang.discount_after }}</div>
+			<div>{{ lang.hot }}</div>
+		</div>
+	</div>
+	<div class="buy_now">
+		<button data-cuckootag="confirm_arrtibute" data-event="postcheckGuige">{{ lang.buy_now }}</button>
+		<a href="javascript:;" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</a>
+		{% if comment %}<a href="#pinlun_content">{{ lang.view }}</a>{% endif %}
+	</div>
+</section>
+<section id="page-order" data-error='{{ lang.Th_titleattr }}'>
+	{% include './cmpt-guige.twig' %}
+</section>
+<div class="m-img" id="m-img">
+	{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+</div>
+{% if comment %}
+	<div class="scroll_tt" id="pinlun_tt">{{ lang.pingjia }}</div>
+        <div class="pinlun_content">
+        	<ul id="pinlun_content">
+	        {% for a in comment %}
+	        	{%if loop.index <= 6 %}
+	            <li class="lab cover" data-group="{{ a.comment_id }}" data-id="0">
+	            	<div class="item-wrap {%if a.thumb%}has_img{%endif%}">
+	                <div class="msKeimgBox">
+	                	<div class="item-img box">
+	                		{% for b in a.thumb %}
+	                			{%if loop.index == 1%}
+	                				<img src="{{ b.thumb }}">
+	                			{%endif%}
+	                		{% endfor %}
+	                	</div>
+	                    <div class="mskeTogBtn"></div>
+	                    <div style="clear:both;"></div>
+	                </div>
+	                <div class="main-com" style="padding: 5px;">
+	                    <div class="inm">
+	                        {% if a.is_anonymous %}
+	                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                        {%else%}
+	                        	<span id="wi">{{ a.name }}</span>
+	                        {% endif %}
+		                </div>
+	                    <div>
+	                    	<span class="iconStar rate{{a.star}}"></span>
+	                	</div>
+	                	<P style="color: #666;padding: 5px;word-break: break-all;">{{ a.content }}</P>
+	                </div>
+	                </div>
+	            </li>
+	            {% else %}
+	            <li class="lab cover" data-group="{{ a.comment_id }}" datashowid data-id="0" style="display: none;">
+	            	<div class="item-wrap {%if a.thumb%}has_img{%endif%}">
+	                <div class="msKeimgBox">
+	                	<div class="item-img box">
+	                		{% for b in a.thumb %}
+	                			{%if loop.index == 1%}
+	                				<img src="{{ b.thumb }}">
+	                			{%endif%}
+	                		{% endfor %}
+	                	</div>
+	                    <div class="mskeTogBtn"></div>
+	                    <div style="clear:both;"></div>
+	                </div>
+	                <div class="main-com" style="padding: 5px;">
+	                    <div class="inm">
+	                        {% if a.is_anonymous %}
+	                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                        {%else%}
+	                        	<span id="wi">{{ a.name }}</span>
+	                        {% endif %}
+		                </div>
+	                    <div>
+	                    	<span class="iconStar rate{{a.star}}"></span>
+	                	</div>
+	                	<P style="color: #666;padding: 5px;word-break: break-all;">{{ a.content }}</P>
+	                </div>
+	                </div>
+	            </li>
+	            {%endif%}
+	        {% endfor %}
+	        </ul>
+	        <div id="loadMore" class="loadMore">查看更多</div>
+	    </div>
+{% endif %}
+<footer>
+	<div class="buy_now">
+		<button data-cuckootag="confirm_arrtibute" data-event="postcheckGuige">{{ lang.buy_now }}</button>
+	</div>
+	<div class="top">
+		<span class="service" data-cuckootag="service" data-value="{{ service_contact_id }}"></span>
+		<span class="scrollTop"></span>
+	</div>
+</footer>
+<div class="layer_com">
+	<div class="big_com">
+		<div class="close-btn">×</div>
+		<div class="layer-main"></div>
+	</div>
+</div>		
+
+
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+
+<script type="text/javascript">
+	//瀑布流
+var fall=document.getElementById("pinlun_content");
+if(fall){
+function change(){
+    var lis=fall.getElementsByTagName("li");
+    var lis_W=lis[0].offsetWidth;
+    var windowCW = document.getElementById("pinlun_content").offsetWidth;
+    var n = Math.round(windowCW/lis_W); 
+
+    var center = (windowCW - n*lis_W-(n-1)*10)/2;
+    var arrH = [];
+    for(var i=0;i<lis.length;i++){
+        var j=i%n;
+        if (arrH.length==n) {  
+            var min = findMin(arrH);
+            lis[i].style.left = min*(lis_W) +"px";  
+            lis[i].style.top = arrH[min]+10 + "px";
+            arrH[min] += lis[i].offsetHeight + 10;
+            var k=0;
+            for(var b=0;b<n;b++){
+                k=Math.max(arrH[k],arrH[b])==arrH[k] ? k : b;
+            } 
+            fall.style.height= arrH[k]+'px';
+            
+        }else{
+            arrH[j] = lis[i].offsetHeight;        
+            lis[i].style.left = lis_W*j+j + "px";
+            lis[i].style.top = 0;
+        }
+    }
+
+    function findMin(arr) {
+        var m = 0;
+        for (var i = 0; i < arr.length; i++) {
+            m = Math.min(arr[m], arr[i]) == arr[m] ? m : i;
+        }
+        return m;
+    }
+}
+window.onload=function(){
+    change();
+}
+window.onresize=function(){
+    change();
+}
+}
+//点击查看图片大图
+$(document).ready(function(){
+    $(".cover").click(function(){
+        var that = $(this).clone();
+        $('.layer-main').html('').append(that);
+        $('.layer_com').show();
+        $('body').addClass('overflow');
+    });
+    $(".close-btn").click(function(){
+        $('.layer_com').hide();
+        $('body').removeClass('overflow');
+    });
+    //var n = 0;
+    $('#loadMore').click(function(){
+    	var dom = $('li[datashowid]').length;
+    	console.log(dom)
+    	if(parseInt(dom) > 6){
+    		for(var l = 0 ; l < 6;l++){
+    			$('li[datashowid]').eq(l).show();
+    		}
+    		for(var l = 0 ; l < 6;l++){
+    			$('li[datashowid]').eq(0).removeAttr('datashowid');
+    		}
+    	}else{
+    		if(parseInt(dom) != 0){
+	    		for(var l = 0 ; l < dom;l++){
+	    			$('li[datashowid]').eq(l).show();
+	    		}
+	    		$('#loadMore').hide();
+    		}
+    	}
+    	change();
+    })
+});
+
+var domain = window.location.href;
+if (domain == 'http://www.zmlnm.com/smartHK'){
+	$('footer').append('<a></a>')
+    $('footer a').attr({'href':'https://www.messenger.com/t/375275829552511','target':'_blank'});
+}
+
+</script>
+{% include 'public/theme/footer.twig' %}
+

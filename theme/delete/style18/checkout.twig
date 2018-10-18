@@ -1,0 +1,128 @@
+{% include 'public/theme/header.twig' %}
+<!-- resource -->
+<link type="image/x-icon" rel="icon" href="{{ THEME }}/image/favicon.ico" >
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/styles.css" />
+<input type="hidden" id="_region" value="{{ regions.region_name }}">
+<input id="region_code" value="{{regions.code}}" type="hidden">
+<input id="identity_tag" value="{{identity_tag}}" type="hidden">
+<!-- END resource -->
+<style type="text/css">
+    #POP800_PANEL_DIV{display: none;}
+</style>
+
+<header class="flexbox">
+    <a class="goback" href="/{{ identity_tag }}"><img src="{{ THEME }}/image/detail-back.png"></a><h1 class="flex ">{{ lang.order_comfirmation }}</h1>
+</header>
+<div>
+    {% if combo %}
+        {% for c in combo %}
+        <div id="combo_{{ c.combo_id }}" style="display: none;">
+            <div class="item flexbox" style="padding: 10px 15px;">
+                <div class="screenshot"><img id="attr_img" src="{{ thumb }}"></div>
+                <div class="flex" style="margin-left:10px;font-size: 12px;text-align: left;"><span>{{ c.title }}</span><br>
+                {% for o in  c.goods %}
+                {% for a in o.options %}
+                    <span class="keyword">{{ a.attr_group_title }}: </span>
+                    {% for key,attr in a.attr %}
+                        <span class="keyword" optionsKey data-img="{{ attr.thumb }}" data-id="{{ o.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                    {% endfor %}
+                {% endfor %}
+                {% endfor %}<br>
+                <span style="color: #e5084d;font-size: 18px;line-height: 35px;">{{ currency_code }}<span id="price">{{ price }}</span></span><span class="num"></span>
+                </div>
+            </div>
+            
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="item flexbox" style="padding: 10px 15px;">
+            <div class="screenshot"><img id="attr_img" src="{{ thumb }}"></div>
+            <div class="flex" style="margin-left:10px;font-size: 12px;text-align: left;"><span>{{ title }}</span><br>
+            {% for o in options %}
+                <span class="keyword">{{ o.attr_group_title }}: </span>
+                {% for key,attr in o.attr %}
+                    <span class="keyword" optionsKey data-img="{{ attr.thumb }}" data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                {% endfor %}
+            {% endfor %}<br>
+            <span style="color: #e5084d;font-size: 18px;line-height: 35px;">{{ currency_code }}<span id="price">{{ price }}</span></span><span class="num">X</span>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+<input type="hidden" name="combo_id" value="">
+<input type="hidden" name="token" value="{{ token }}">
+<input type="hidden" name="num" value="">
+<input type="hidden" name="price" value="">
+<input type="hidden" id="act" name="act" value="getAttrPrice">
+<div class="content-info">
+    <h3><i class="icon_p"></i><span>{{ lang.consignee }}</span></h3>
+    <div class="info-irem">
+        <input required="required" type="text" name="name" placeholder="{{ lang.name }}">
+    </div>
+    <div class="info-irem">
+        <input required="required" type="text" name="mob" placeholder="{{ lang.mobile }}">
+    </div>
+    <div class="info-irem">
+        <input type="text" name="email" class="width" placeholder="{{ lang.email }}">
+    </div>
+
+    <h3><i class="icon_ad"></i><span>{{ lang.consignee_ad }}</span></h3>
+    <div class="info-irem">
+        <div class="right" style="line-height: 35px;">
+            <select name="province">
+                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+            </select>
+            {% if  regions.region_id == 9 %}
+                <select name="city" style="" onchange="setDistrict()">
+                    {% for i in regions.region_son %}
+                        <option value="{{ i.name}}" cid="{{ i.id_region }}">{{ i.name }}</option>
+                    {% endfor %}
+                </select>
+               <div class="district">
+               </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="info-irem">
+        <input required="required" type="text" name="address" class="width" placeholder="{{ lang.address_full }}">
+    </div>
+    <div class="info-irem">
+        <input type="text" name="postal" class="width" placeholder="{{ lang.postal }}">
+    </div>
+    <div class="info-irem">
+        <textarea type="text" rows="2" name="guest" class="width" placeholder="{{ lang.note }}"></textarea>
+    </div>
+    <div class="info-irem">
+        <div class="right" style="line-height: 35px;color:#e50a01">
+        {% if payment_underline ==1 %}
+            <label><img width="15px" height="15px;" src="{{ THEME }}/image/ok.png"><input name="payment_type" value="0" checked type="hidden">&nbsp;{{ lang.cash_on_delivery }}</label>
+        {% endif %}
+        </div>
+        <div style="float: right;" class="textnumber"></div>
+    </div>
+</div>
+<div class="warming">{{ lang.warming|raw }}</div>
+<footer>
+    <button class="btn" type="submit" name="Submit" value="{{ lang.submit_order }}">{{ lang.submit_order }}</button>
+</footer>
+</form>
+<br>
+<br>
+<!-- js resource -->
+<script src="{{ THEME }}/js/checkout.js"></script>
+<script>
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+</script>
+<!--  -->
+{% include 'public/theme/footer.twig' %}

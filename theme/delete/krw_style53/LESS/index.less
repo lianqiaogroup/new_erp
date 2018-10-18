@@ -1,0 +1,156 @@
+@import 'guige.less';
+html{
+	background:#f1f1f1;
+	font-size:14px;
+}
+body{
+	width:100%;
+	max-width:640px;
+	margin:0 auto;
+	background:#fff;
+	padding-bottom:60px;
+}
+h1,h5{
+	font-weight:normal;
+	margin:0;
+	padding:0;
+}
+img{
+	vertical-align:top;
+	width:100%;
+}
+video{
+	width:100%;height:auto;
+}
+button{
+	background:none;
+	border:none;
+	outline:none;
+}
+select{
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	appearance:none;
+	outline:none;
+}
+.detail{
+	padding:0 4%;
+	.title{
+		h1{
+			font-size:16px;
+			line-height:22px;
+			padding:6px 0;
+		}
+	}
+	.sale_wrap{
+		padding:0 4%;
+		display:-webkit-flex;
+		display:flex;
+		justify-content: space-between;
+		align-items:center;
+		height:60px;
+		.price{
+			font-size:22px;
+			color:#ed366e;
+			font-weight:bold;
+			del{
+				font-size:12px;
+				color:#aaaaaa;
+				font-weight:normal;
+			}
+		}
+		.sales{
+			font-size:14px;
+			color:#aaa;
+		}
+	}
+	.wrap{
+		border:4px solid #3f3f3f;
+		padding:3px;
+	}
+	.timeWrap{
+		text-align:center;
+		color:#3a1e0b;
+		background:#ace327;
+		height:40px;
+		line-height:40px;
+		#timer{
+			display:inline-block;
+		}
+		#h,#m,#s{
+			letter-spacing:13px;
+			background:url(../images/circle.png) repeat-x 0 center;
+			background-size:21px;
+			display: inline-block;
+    		width: 40px;
+    		text-indent:5px;
+		}
+	}
+	.service{
+		background:#f4f4f4;
+		display:-webkit-flex;
+		display:flex;
+		justify-content: space-around;
+		align-items:center;
+		margin:10px 0;
+		span{
+			line-height:28px;
+			padding-top:30px;
+			&:first-child{
+				background:url(../images/7days.png) no-repeat center 6px;
+				background-size:24px;
+			}
+			&:nth-child(2){
+				background:url(../images/cash.png) no-repeat center 6px;
+				background-size:24px;
+			}
+			&:last-child{
+				background:url(../images/free.png) no-repeat center 8px;
+				background-size:30px;
+			}
+		}
+	}
+}
+.m-img{
+	padding:0 4%;
+}
+.info_tt{
+	height:30px;
+	line-height:30px;
+	color:#3f3f3f;
+	background:#ffcb05;
+	text-align:center;
+	font-size:13px;
+}
+footer{
+	width:100%;
+	max-width:640px;
+	position:fixed;
+	bottom:0;
+	z-index:51;
+	>div{
+		display:-webkit-flex;
+		display:flex;
+		padding:8px 3%;
+		background:#e5e5e5;
+		height:40px;
+		line-height:40px;
+		div{
+			flex:1;
+			font-size:14px;
+			text-align:center;
+		}
+	}
+	.query{
+		background:#fff;
+	}
+	.buy_now{
+		background:#2e8de5;
+		color:#fff;
+		button{
+			height:40px;
+			width:100%;
+			color:#fff;
+		}
+	}
+}

@@ -1,0 +1,19 @@
+<div class="ui-slider">
+    <ul class="ui-slider-content" style="width: 300%">
+        {% if index_focus %}
+            {% for c in index_focus %}
+            <li class="current">
+                <a href="/{{ c.type }}">
+                    <span style="background-image:url({{ c.thumb }})"></span>
+                </a>
+            </li>
+            {% endfor %}
+        {% else %}
+            <li class="current">
+                <a href="javascript:;">
+                    <span style="background-image:url(/theme/index/theme1/image/banner.jpg)"></span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

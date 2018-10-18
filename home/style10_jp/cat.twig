@@ -1,0 +1,53 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+{% include '/public/theme/google_remarketing_cat.twig' %}
+{% include 'navigation.twig' %}
+<input type="hidden" value="{{category_id}}" id="cat_id">
+<!--内容产品-->
+    <div id="content" class="container" style="display: none;">
+        <article>
+            <div class="usp-header">
+                <ul>
+                    <li class="usp-content-1">{{lang.return_goods}}</li>
+                    <li class="usp-content-2">{{lang.cash_}}</li>
+                    <li class="usp-content-3">{{lang.free_}}</li>
+                </ul>
+            </div>
+        </article>
+        <div class="product">
+            <div class="row wcolor">
+                
+            </div>
+            <div class="preload" data-error='{{ lang.no_more }}' style="text-align:center;font-size:12px;color:#666;line-height:2.4">{{ lang.load }}...</div>
+        </div>
+    </div>
+    <div id="module_dome" style="display: none;">
+        <div class="col-12-3 col-sm-12-6 items">
+            <a href="{url}">
+                <div class="thumbnail">
+                    <div class="tagWraper">
+                        <div class="imgthumb lazyload empty">
+                            <img src="{thumb}" alt="{title}">
+                        </div>
+                        <div class="badge"><span class="icon-new-label product-icon-label">{{lang.new_tips}}</span></div>
+                    </div>
+                    <div class="goods-color"></div>
+                    <div class="caption">
+                        <h4 class="title">{title}</h4>
+                        <p>{shop_price}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div id="emptydiv" style="display: none;">
+        <div class="emptydiv"><div class="emptyicon list-care"></div><p class="p1">{{lang.empty_category}}</p></div>
+    </div>
+<script src="{{ THEME }}/script/cat.js"></script>
+
+{{ footer|raw }}
+{% endblock %}
+{% block footer_js %}
+{% endblock %}
+

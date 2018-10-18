@@ -1,0 +1,230 @@
+@color:#2C82C5;
+@import 'guige.less';
+#POP800_INIT_DIV,#POP800_PANEL_DIV{
+	display:none;
+}
+#page-order{
+	display:none;
+}
+html{
+	background:#f1f1f1;
+}
+body{
+	background:url(../images/bg.png) repeat;
+	width:100%;
+	max-width:640px;
+	background-size:100%;
+	margin:0 auto;
+	padding-bottom:80px;
+}
+button{
+	border:none;
+	background:none;
+	outline:none;
+}
+.swiper-slide{
+	font-size:0;
+}
+.detail{
+	padding:0 4%;
+	.title{
+		font-size: 15px;
+	    padding: 12px 0;
+	    line-height: 24px;
+	}
+}
+.price{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	.left{
+		color:#d32301;
+		padding-left:30px;
+		background:url(../images/china.png) no-repeat;
+		background-size:23px;
+		font-weight:bold;
+		line-height:40px;
+		del{
+			color:#bbb;
+			font-size:12px;
+			font-weight:500;
+			margin-left:4px;
+		}
+	}
+	.right{
+		font-size:0;
+		>span{
+			padding:2px;
+			&:nth-child(2){
+				margin-right:8px;
+			}
+		}
+		span{
+			display:inline-block;
+			border-radius:26px;
+			border:1px solid @color;
+			span{
+				padding:1px;
+				background:@color;
+				color:#fff;
+				border-radius:14px;
+				font-size:12px;
+			    width: 14px;
+			    text-align: center;
+			    line-height: 14px;
+			}
+		}
+	}
+}
+.limit{
+	display:flex;
+	justify-content: space-between;
+	align-items:center;
+	color:@color;
+	margin:14px 0;
+	.left{
+		font-size:13px;
+		background:url(../images/limit.png) no-repeat;
+		background-size:100% 100%;
+		padding:3px 6px;
+	}
+	.timeWrap{
+		display:flex;
+		flex-direction:column;
+		background:url(../images/time.png) no-repeat;
+		background-size:100% 100%;
+	    align-items: center;
+	    font-size:14px;
+	    padding: 14px 16px 14px 60px;
+	    .clock{
+	    	font-size:12px;
+	    }
+	}
+}
+.service{
+	display:flex;
+	justify-content:space-around;
+	padding:0 8%;
+	height:40px;
+	line-height:40px;
+	background:url(../images/service_bg.png) no-repeat;
+	background-size:100% 100%;
+	font-size:13px;
+}
+.tab_bar{
+	display:flex;
+	justify-content: space-around;
+	color:@color;
+	>span{
+		padding:16px 0;
+		flex:1;
+		text-align:center;
+		span{
+			width:100%;
+			border-right:1px solid @color;
+			display:inline-block;
+			font-size: 14px;
+    		line-height: 14px;
+		}
+		&:last-child{
+			span{
+				border:none;
+			}
+		}
+	}
+	.select{
+		background:url(../images/tab_sel.png) no-repeat bottom center;
+		background-size:4em;
+	}
+
+}
+.m-img{
+	img{
+		width:100%;
+		height: auto !important;
+		max-width: 100% !important;
+	}
+	video{
+		width:100%;
+		height:auto;
+	}
+}
+.pinlun_content{
+	display:none;
+}
+.hidden{
+	display:none;
+}
+footer{
+	position: fixed;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    max-width: 640px;
+    text-align: center;
+    background:url(../images/footer_bg.png) no-repeat;
+    z-index:10;
+    background-size: 100% 100%;
+    min-height: 80px;
+    align-items: center;
+	.kefu{
+	    font-size: 12px;
+	    width: 90px;
+	    background:url(../images/kefu.png) no-repeat;
+	    background-size: 100%;
+	    margin-left:4%;
+	    width: 51px;
+	    color: @color;
+	    height: 51px;
+	    line-height: 51px;
+	    text-align: center;
+	}
+	.buy_now{
+		flex:1;
+		font-size:14px;
+		line-height:36px;
+		button{
+			width:66%;
+			height:36px;
+			background:url(../images/confirm.png) no-repeat;
+			background-size:100% 100%;
+			color:#fff;
+		}
+
+	}
+}
+.footer_bg{
+	position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 640px;
+    background:url(../images/bg.png) repeat;
+    background-size:100%;
+    min-height:80px;
+    opacity:0.7;
+    zoom:1;
+    filter:alpha(opacity=70);
+}
+.header{
+	text-align:center;
+	height:46px;
+	line-height:46px;
+	font-size:0;
+	.back{
+		display:inline-block;
+		width:8px;
+		height:8px;
+		border-bottom:1px solid #222;
+		border-left:1px solid #222;
+		-webkit-transform:rotate(45deg);
+		transform:rotate(45deg);
+		position:absolute;
+		left:4%;
+		top:20px;
+	}
+	.conirm{
+		font-size:16px;
+	}
+}
+.User_notes{padding:2%;text-indent:1rem;line-height:26px;font-size:14px;}
+.notes{font-weight: normal;text-align: center;}

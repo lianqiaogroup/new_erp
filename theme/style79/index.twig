@@ -1,0 +1,157 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" type="text/css" rel="stylesheet" />
+<link href="{{ THEME }}/css/style.css" type="text/css" rel="stylesheet" />
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!--/page-->
+{% if has_home %}
+    <header>
+        <div class="homediv"><a href="/" class="home"></a></div>
+        <div class="title_img" style="background-image:url({{ logo }});">
+            {% if logo == '' %}LOGO{% endif %}
+        </div>
+    </header>
+    <div style="height:1.38667rem;"></div>
+{% endif %}
+<section id="page-index" class="container">
+    <input type="hidden" id="regionCode" value="{{regions.code}}">
+    <div class="tag">{{ sales_title }}</div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom">
+            {% if photos %}
+                {% for p in photos %}
+                <span class="whiteicon"></span>
+                {% endfor %}
+            {% else %}
+                <span class="whiteicon"></span>
+            {% endif %}
+        </div>
+    </div>
+    <!-- 自定义模块 -->
+    <section id="customer_layer">
+        {% if modules %}
+            {% for module in modules %}
+                {% if module %}
+                    {% for m in module %}
+                        {% if m.options.open == 1 %}
+                            {% set moduleName = "./module/"~m.module_name~".twig" %}
+                                {% set moduleParam = m.options %}
+                            {% include moduleName with moduleParam %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% include "./module/product_info.twig" %}
+                    {% include "./module/product_selection.twig" %}
+                    {% include "./module/comment.twig" %}
+                    {% include "./module/product_content.twig" %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% include "./module/product_info.twig" %}
+            {% include "./module/product_selection.twig" %}
+            {% include "./module/comment.twig" %}
+            {% include "./module/product_content.twig" %}
+        {% endif %}
+    </section>
+    <!--  -->
+    
+    <div class="User_notes" style="margin-top: 10px">
+        <div class="notes_title">
+            <h2 class="notes">{{ lang.frequent }}</h2>
+            <div class="line"></div>
+        </div>
+            
+        <div class="note_title">{{ lang.range }}</div>
+        <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+        <div class="note_title">{{ lang.when_fahuo }}</div>
+        <div class="note_text">{{ lang.user_note2_1 }}</div>
+        <div class="note_title">{{lang.user_note3}}？</div>
+        <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+        <div class="note_text">{{ lang.user_note4 }}</div>
+        <div class="note_text">{{ lang.user_note4_1 }}</div>
+        <div class="note_text">{{ lang.user_note4_2 }}</div>
+        <div class="note_title">{{ lang.user_note4_3 }}？</div>
+        <div class="note_text">{{ lang.user_note4_4 }}</div>
+    </div>
+    <!--  -->
+    {# <div class="guess">
+        <div class="notes_title">
+            <h2 class="notes">猜你喜歡</h2>
+            <div class="line"></div>
+        </div>
+        <div class="guess_list">
+            <ul>
+                <li>
+                    <a href="{type}">
+                    <div class="ui-grid-halve-img product-classify">
+                        <div class="ui-tag-s-hot product-thumb">
+                            <img src="{{ THEME }}/images/3.jpg">
+                        </div>
+                        <div class="product-title">標題標題標題標題</div>
+                        <del>$897</del>
+                        <div class="listprice"><strong>$225</strong></div>
+                    </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{type}">
+                    <div class="ui-grid-halve-img product-classify">
+                        <div class="ui-tag-s-hot product-thumb">
+                            <img src="{{ THEME }}/images/3.jpg">
+                        </div>
+                        <div class="product-title">標題標題標題標題</div>
+                        <del>$897</del>
+                        <div class="listprice"><strong>$225</strong><span>88件已售</span></div>
+                    </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div> #}
+    <footer>
+        <a 
+            href="javascript:;"
+            class="left"
+            data-cuckootag="service"
+            data-value="{{ service_contact_id }}">
+        </a>
+        <div id="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</div>
+        <div class="td"><a href="javascript:void(0);" id="val-selbtn" class="w-button w-button-block btn-addToCart" data-cuckootag="buy_now">{{ lang.buy_now }}</a></div>
+        {% if yahoo_js_trigger %}
+            <script type="text/javascript">
+                require(['jquery'], function($){
+                    $('[data-yahoo-js]').click(function(){
+                        try {
+                            {{ yahoo_js_trigger|raw }}
+                            console.log('click done');
+                            console.log(window.dotq);
+                        }
+                        catch(e){
+                            console.error('yahoo js code not working');
+                            console.log(yahooJs);
+                        }
+                    });
+                });
+            </script>
+        {% endif %}
+    </footer>
+</section>
+
+<section id="page-order" class="container" data-error='{{ lang.Th_titleattr }}'>
+    {% include 'cmpt-guige.twig' %}
+</section>
+
+{% include "./module/comment2.twig" %}
+<i class="m-goToTop" style="display: inline;"></i>
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include '/public/theme/footer.twig' %}

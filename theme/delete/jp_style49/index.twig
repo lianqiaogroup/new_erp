@@ -1,0 +1,176 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<!-- end header resource -->
+<div class="bd" id="wrapper">
+	<div class="contents">
+		<!--div id="BreadCrumb" class="container">
+			<div class="breadcrumb">
+				<div class="hznList liMr05" style=" line-height: 25px;"></div>
+			</div>
+		</div-->
+		<div class="pdTopContainer clearfix">
+				<div class="container">
+					<div class="pDetail">
+						<div class="pDetailHeader">
+							<div class="pa10">
+								<div class="pName">
+									<h1>パイオニア PIONEER SE-CH9T-K [ハイレゾ対応インナーイヤーヘッドホン （リケーブルタイプ）]</h1>
+								</div>
+								<!--div class="avgCR hznList liMr10">
+									<ul>
+										<li><a href="javascript:void(0);" id="js_userEvaluationStar"><span class="iconStar rate4_25"></span></a></li>
+										<li><a class="alignM" href="javascript:void(0);" id="js_userEvaluationText">レビュー</a><span class="alignM">（3）</span></li>
+									</ul>
+								</div-->
+							</div>
+							<div class="imgGllyBox pb10 js_touchslider">
+								<div style="overflow: hidden; position: relative;" id="mainImages" class="imgGllyRow js_touchslider-viewport">
+									<ul>
+										{% if photos %}
+	                						{% for p in photos %}
+											<li>
+												<div class="pImg">
+													<img src="{{ p.thumb }}">
+												</div>
+											</li>
+											{% endfor %}
+										{% else %}
+											<li>
+												<div class="pImg">
+													<img src="{{ thumb }}">
+												</div>
+											</li>
+										{% endif %}
+									</ul>
+									<div class="imgGllyIndicator inlineRow alignC js_touchslider-nav-container">
+										<div id="mainImagesBack" class="prev cmnBtn"><a class="btnBase bgGray js_touchslider-prev" href="javascript:void(0);"><span><div class="btnDtBox"><div class="spdt iconArea"><img width="16" src="{{ THEME }}/images/icon64Arw01L_bl.png"></div></div></span></a></div>
+										<div class="blankSpace"></div>
+										<div id="imgNum" style="width: 205px;">
+										{% for p in photos %}
+											<div class="indicatorCell tblcl">
+												
+												<span class="point"></span>
+												
+											</div>
+											{% endfor %}
+										</div>
+										<div class="blankSpace"></div>
+										<div id="mainImagesNext" class="next cmnBtn"><a class="btnBase bgGray js_touchslider-next" href="javascript:void(0);"><span><div class="btnDtBox"><div class="spdt iconArea"><img width="16" src="{{ THEME }}/images/icon64Arw01R_bl.png"></div></div></span></a></div>
+									</div>
+									
+								</div>
+							</div>
+						<div class="buyArea">
+							<ul class="liMt10Fn">
+								<li>
+								<div class="cmnBtn">
+									<a class="btnUnit btnRed" id="js_smp_submitRelated" href="/checkout.php?product_id={{ product_id }}">
+									<div class="btnInner">
+										<strong>ご購入の手続きへ</strong>
+									</div>
+									</a>
+								</div>
+								</li>
+								<li>
+								<div class="cmnBtn">
+									<a class="btnUnit btnGray" href="/order_quality.php">
+									<div class="btnInner">
+										<strong>{{ lang.order_inquiry }}</strong>
+									</div>
+									</a>
+								</div>
+								</li>
+							</ul>
+						</div>
+
+						<div class="pDetailInfo">
+							<div class="pDetailInfoTbl">
+								<table cellspacing="0" cellpadding="0" border="0">
+								<tbody>
+								<tr>
+									<th>
+										<span class="dgray">参考価格：</span>
+									</th>
+									<td>
+										<span class="liThr listPrice">{{ market_price }}{{ currency_code }}</span>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<span class="dgray">価格：</span>
+									</th>
+									<td>
+										<strong class="red alignM">{{ price }}{{ currency_code }}</strong><span class="fs10">（税込）</span><span class="alignM"></span>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<span class="dgray">ポイント：</span>
+									</th>
+									<td>
+										<strong class="orange">{{ (((market_price-price)/market_price)*100)|number_format(0) }}% OFF</strong><strong class="orange">（{{ market_price - price }}{{ currency_code }} 相当）</strong>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<span class="dgray">お届け日：</span>
+									</th>
+									<td>
+										<span class="stockInfo"><span id="salesInfoTxt" class="green">在庫残少 ご注文はお早めに！</span></span><br>
+										<span id="js_scl_message" class="deliveryInfo"><span class="red">ご注文日よりぐ</span>2－5営業日後お届けします、</span><span class="orange">送料無料、７日間の無条件返品保証</span>
+									</td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container bt1s01dgr">
+				<div class="ctnrTtl js_InfoTitle">
+					<div class="spDtBox">
+						<div class="spdt strcArea">
+							<strong>商品概要</strong>
+						</div>
+						<div class="spdt iconArea">
+							<span class="iconIbS js_NaviIcon iconArw01ubl"></span>
+						</div>
+					</div>
+				</div>
+				<div class="shCnt js_Info" id="content_info">
+					<div class="cntsBlock ctnrCmnBody">
+						{{ content|raw }}
+					</div>
+				</div>
+				<div style="display: block;" class="shCnt js_Info">
+					<div class="shCntLink js_BottomClose">
+						<div class="inlineRow">
+							<div class="blankSpace">
+							</div>
+							<div class="spDtBox">
+								<div class="spdt iconArea">
+									<span class="iconIbS iconArw01ubl"></span>
+								</div>
+								<div class="spdt txtArea black pl05 fs12">
+									<strong>商品概要を閉じる</strong>
+								</div>
+							</div>
+							<div class="blankSpace">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	</div>
+</div>
+<div class="js_fixedToTop" id="fixedToTop"><a class="js_PageTop" href="javascript:void(0);"><div class="toTopIcon"><span class="iconIbS iconArw01ubl"></span></div></a></div>
+
+
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

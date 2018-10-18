@@ -1,0 +1,59 @@
+<div class="flexbox">
+	<div class="flex regions">{{ regions.region_name }}</div>
+</div>
+<div class="table-row">
+    {% if theme == 'style39'%}
+    <input type="text" name="address" placeholder="{{ lang.addr }}">
+    {% else %}
+    <input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+    {% endif %}
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="name" maxlength="50" placeholder="{{ lang.name }}">
+	</div>
+	{% if regions.code == 'COL' %}
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="postal" placeholder="{{ lang.postal }}" maxlength="6" pattern="[0-9]{6}">
+	</div>
+	{% else %}
+	<div class="flex tab_two">
+		<input type="number" required="required" name="postal" placeholder="{{ lang.postal }}" maxlength="10">
+	</div>
+	{% endif %}
+</div> 
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="email" name="email" required="required" placeholder="{{ lang.email }}">
+	</div>
+</div>
+<div class="table-row">
+	<input type="text" name="guest" placeholder="{{ lang.note }}">
+</div>
+<div class="flexbox">
+	{% if payment_underline == 1 %}
+		<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+	{% endif %}
+	{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+		<div class="flex tab_two">
+			<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+		</div>
+	{% endif %}
+	<input name="payment_type" value="0" type="hidden">
+</div>
+<div class="table-row pay-type" style="display: none;">
+	<select id="pay-online">
+		{% if payment_online == 1 %}
+		<option value="1">{{ lang.yijifu }}</option>
+		{% endif %}
+		{% if payment_paypal == 1 %}
+		<option value="2">paypal</option>
+		{% endif %}
+		{% if payment_asiabill == 1 %}
+		<option value="3">Asiabill</option>
+		{% endif %}
+	</select>
+</div>

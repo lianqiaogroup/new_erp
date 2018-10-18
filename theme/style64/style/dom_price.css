@@ -1,0 +1,22 @@
+.detail {
+  padding: 0 13px;
+}
+.detail .price {
+  font-size: 15px;
+}
+.detail .price del {
+  color: #A2A2A2;
+  line-height: 15px;
+}
+.detail .price div {
+  font-size: 30px;
+  line-height: 52px;
+}
+.detail .price div span.discount {
+  font-size: 15px;
+  color: #fff;
+  padding: 0 10px;
+  background: #44BA54;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlNjQvbGVzcy9kb21fcHJpY2UubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLGVBQUE7O0FBREQsT0FFQztFQUNDLGVBQUE7O0FBSEYsT0FFQyxPQUVDO0VBQ0MsY0FBQTtFQUNBLGlCQUFBOztBQU5ILE9BRUMsT0FNQztFQUNDLGVBQUE7RUFDQSxpQkFBQTs7QUFWSCxPQUVDLE9BTUMsSUFHQyxLQUFJO0VBQ0gsZUFBQTtFQUNBLFdBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUEiLCJzb3VyY2VzQ29udGVudCI6WyIuZGV0YWlse1xyXG5cdHBhZGRpbmc6MCAxM3B4O1xyXG5cdC5wcmljZXtcclxuXHRcdGZvbnQtc2l6ZToxNXB4O1xyXG5cdFx0ZGVse1xyXG5cdFx0XHRjb2xvcjojQTJBMkEyO1xyXG5cdFx0XHRsaW5lLWhlaWdodDoxNXB4O1xyXG5cdFx0fVxyXG5cdFx0ZGl2e1xyXG5cdFx0XHRmb250LXNpemU6MzBweDtcclxuXHRcdFx0bGluZS1oZWlnaHQ6NTJweDtcclxuXHRcdFx0c3Bhbi5kaXNjb3VudHtcclxuXHRcdFx0XHRmb250LXNpemU6MTVweDtcclxuXHRcdFx0XHRjb2xvcjojZmZmO1xyXG5cdFx0XHRcdHBhZGRpbmc6MCAxMHB4O1xyXG5cdFx0XHRcdGJhY2tncm91bmQ6IzQ0QkE1NDtcclxuXHRcdFx0fVxyXG5cdFx0fVxyXG5cdH1cclxufSJdLCJmaWxlIjoic3R5bGU2NC9sZXNzL2RvbV9wcmljZS5jc3MifQ== */

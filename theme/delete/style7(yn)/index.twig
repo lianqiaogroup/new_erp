@@ -1,0 +1,141 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link rel="stylesheet" href="{{ THEME }}/css/frozen.css">
+<link rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{{ THEME }}/css/swiper-3.4.0.min.css">
+<script src="/public/jquery-2.2.3.min.js"></script>
+<!--/page-->
+<input type="hidden" name="combo_id" value="0">
+<input type="hidden" name="act" id="act" value="getAttrPrice">
+<!--  -->
+<section id="page-index" class="container">
+    {% if logo %}
+    <div class="ui-header ui-header-positive ui-border-b">
+        <h1><img src="{{ logo }}"></h1>
+    </div>
+    {% endif %}
+    <!--  -->
+    <div class="ui-container" style="padding: 0px 20px;">
+        <div class="maintitle" style="padding: 20px 0px; text-align: center;">{{ title }}</div>
+        <!--  -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                {% if photos %}
+                    {% for p in photos %}
+                    <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                    {% endfor %}
+                {% else %}
+                    <div class="swiper-slide"><img width="100%" src="{{ thumb }}" id="attrimg"></div>
+                {% endif %}
+            </div>
+            <div class="swiper-pagination swiper-pagination-custom">
+                {% if photos %}
+                    {% for p in photos %}
+                    <span class="whiteicon"></span>
+                    {% endfor %}
+                {% else %}
+                    <span class="whiteicon"></span>
+                {% endif %}
+            </div>
+        </div>
+        <!--  -->
+        <div class="baseInfo">
+            <span class="red price">
+                {% if currency_prefix == 1 %} 
+                {{ currency_code }}
+                {% endif %}
+                <label render="price">-</label>
+                {% if currency_prefix == 0 %} 
+                {{ currency_code }}
+                {% endif %}
+            </span>
+            <span class="market_price">
+                {% if currency_prefix == 1 %} 
+                {{ currency_code }}
+                {% endif %}
+                <span render="format">{{ market_price }}</span>
+                {% if currency_prefix == 0 %} 
+                {{ currency_code }}
+                {% endif %}
+            </span>
+            <span >({{ (((market_price-price)/market_price)*100)|number_format(0) }}% OFF)</span>
+            <div><span class="tag1">{{ lang.cash_on_delivery }}</span></div>
+        </div>
+        
+        <div class="options-layer">
+            
+            {% if combo %}
+            <div class="ui-row">
+                <div class="ui-col ui-col-25  option-name" style="padding-top: 8px;">{{ lang.product }}</div>
+                <div class="ui-col ui-col-75" id="combo">
+                    <div class="ui-row" style="padding: 0px;">
+                        {% for c in combo %}
+                        <div class="ui-col ui-col-50" data-id="{{ c.combo_id }}">
+                            <label>{{ c.title|raw }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="ui-row">
+                <div class="ui-col ui-col-25 option-name">{{ lang.quantity }}</div>
+                <div class="ui-col ui-col-75">
+                    <div class="m-selnum dr">
+                        <div onclick="minnumber()" class="less z-dis"></div>
+                        <div class="textWrap">
+                            <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                        </div>
+                        <div onclick="addnumber()" class="more"></div>
+                    </div>
+                </div>
+            </div>
+            {% for o in  options %}
+            <div class="ui-row product_attr" data-group="{{ o.attr_group_id }}" data-id="0">
+                <div class="ui-col ui-col-25 option-name">
+                    {{ o.attr_group_title|raw }}
+                </div>
+                <div class="ui-col ui-col-75 option-values">
+                    {% for key,attr in o.attr %}
+                    <span data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">{{ attr.name|raw }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!--  -->
+        <div class="preview">
+            {{ lang.total }}: 
+            <label class="red">
+                {% if currency_prefix == 1 %} 
+                {{ currency_code }}
+                {% endif %}
+                <span render="total">
+                {{ price }}
+                </span>
+                {% if currency_prefix == 0 %} 
+                {{ currency_code }}
+                {% endif %}
+            </label>
+        </div>
+        <button class="ui-btn-lg black" btn-act-buy>{{ lang.buy_now }}</button>
+        <!--  -->
+        <div class="product-detail">
+            {{ content|raw }}
+        </div>
+        <!--  -->
+        <div class="warning">
+            {{ lang.warming|raw }}
+        </div>
+        <button class="ui-btn-lg black" style="margin-top: 20px;" btn-act-buy>{{ lang.buy_now }}</button>
+    </div>
+    <!--  -->
+</section>
+
+<!--/page-->
+<script src="{{ THEME }}/js/swiper-3.4.0.jquery.min.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

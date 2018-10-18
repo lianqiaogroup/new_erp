@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="320" name="MobileOptimized" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="/theme/xlzdnu.com/css/qdwap.css">
+    <LINK href="/theme/xlzdnu.com/image/favicon.ico" type="image/x-icon" rel=icon>
+    <title>{{ title }}</title>
+    <meta name="keywords" content="{{ seo_title }}" />
+    <meta name="description" content="{{ seo_description }}" />
+    <script src="{{ THEME }}/js/jquery.js"></script>
+    <script src="{{ THEME }}/js/time.lesser.js"></script>
+    <script src="{{ THEME }}/js/demo.js"></script>
+    <script src="{{ THEME }}/js/timer.js"></script>
+    <script type="text/javascript" src="{{ THEME }}/images/notorder.js"></script>
+    <script src="{{ THEME }}/images/jquery.js" language="javascript" type="text/javascript"></script>
+    <link href="{{ THEME }}/images/style.css" type="text/css" rel="stylesheet"/>
+    
+</head>
+
+<body>
+<div id="page">
+    <section class="item_sec">
+        <div class="item_wrap rel">
+            <h2 style="text-align: center;font-size:25px">{{ title }}</h2>
+        </div>
+    </section>
+    <div class='banner'><img width="100%" src="{{ thumb }}"></div>
+    <section class="buy">
+        <div class="row1">
+            <strong>{{ currency_code }}{{ price }}</strong>
+            <ol>
+                <li><p>原價</p>{{ currency_code }}{{ market_price }} </li>
+                <li><p>折扣</p><span id="dis"></span></li>
+                <li><p>節省</p>{{ currency_code }}{{ market_price - price  }}
+                    </li>
+            </ol>
+        </div>
+        
+        <p style="text-align:left; padding:20px 0 25px 20px; color:#A87742;"><span style="color:#A87742">時間剩餘</span>：<foHK id="timer" style="color:#A87742; text-align:left;"><span>12</span>小时<span>2</span>分<span>23</span>秒</foHK></p>
+        
+        
+        <p style="color:#A87742; text-align:left; padding-left:20px;"><abbr>{{ sales }}人已購買&nbsp;&nbsp;&nbsp;&nbsp;剩餘<foHK color="#f00" id="sy">{{ stock }}</foHK>双</abbr>&nbsp;&nbsp;售完即止</p>
+        
+        
+        
+        <article class="des"></article>
+        <a class="btn" href="#buy">立即購買</a>
+    </section>
+    
+    <article class="showcontent">
+        <h2>
+            搶購描述</h2>
+        <div class="btn" style="height: 110px;">
+            <p></p><p><span style="font-family: 微软雅黑; line-height: 24px; background-color: rgb(249, 249, 249);">【官方店慶活動】<span style="font-family: 微软雅黑; line-height: 24px; background-color: rgb(249, 249, 249);">{{ seo_description }}</span>【原價<strong><span style="font-family: 微软雅黑; line-height: 24px; background-color: rgb(255, 255, 0);">{{ currency_code }}{{ market_price }}</span></strong><strong><span style="font-family: 微软雅黑; line-height: 24px; background-color: rgb(255, 255, 0);"></span></strong>】【店慶活動價<span style="font-family: 微软雅黑; line-height: 24px; background-color: rgb(255, 255, 0);"><span style="font-family: 微软雅黑; line-height: 24px; background-color: rgb(255, 255, 0);"><strong>{{ currency_code }}{{ price }}</strong></span><strong></strong></span>】貨到付款，支持七天無理由退換貨！</span></p><p></p>
+        </div>
+        
+        <h2>
+            產品簡介</h2>
+            {{ content|raw }}
+        
+        <br />
+        <br />
+        
+        <h2>
+            客戶服務</h2>
+        <div class="btn">
+            <div align="ceHKer"><p style="foHK: 16px/24px Helvetica, Arial, san-serif; color: rgb(0, 0, 0); text-transform: none; text-indeHK: 0px; letter-spacing: normal; word-spacing: 0px; float: none; display: inline !importaHK; white-space: normal; foHK-size-adjust: none; foHK-stretch: normal; background-color: rgb(249, 249, 249); -webkit-text-stroke-width: 0px;">國貿專櫃，限量3折299圓，貨到付款、免郵費！</p>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    
+    </article>
+    
+    <article>
+        <h2>客戶評價</h2>
+    
+        {% include 'comment.twig' %}
+    </article>
+    
+    
+    
+    <script type="text/javascript" src="/theme/xlzdnu.com/images/bddq.js" charset="gb2312"></script>
+    
+    <article id="buy">
+        <h2>訂單信息</h2>
+        {#<script src="theme/xlzdnu.com/js/3001.js"></script>#}
+        {% include 'order.twig' %}
+    </article>
+</div>
+<!--/page-->
+
+<nav>
+    <ul class="Transverse">
+        <li><a href="#buy"><strong style="color: white">在線下單</strong></a></li>
+    </ul>
+</nav>
+
+
+
+<script type="text/javascript" src="/theme/xlzdnu.com/images/bdsuba.js"></script>
+<script language="javascript" src="http://api.pop800.com/800.js?n=222668&s=01&p=l&l=cn"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+          var price ="{{ price }}"  ;
+          var market_price = "{{ market_price }}" ;
+          value = (parseFloat(price/market_price).toFixed(1))*10;
+          $('#dis').text(value);
+    })
+</script>
+{% include 'footer.twig' %}
+</body>
+</html>

@@ -1,0 +1,192 @@
+body {
+	background-color: #fff;
+	max-width: 640px;
+	margin: 0 auto;
+}
+
+.ui-header-positive {
+	position: relative;
+	background-color: #282828;
+}
+.ui-header-positive h1 {
+	color: #fff;
+}
+
+.ui-header img {
+	display: inline-block;
+	height: 100%;
+	width: auto;
+}
+
+.ui-header h1 {
+	height: 100%;
+}
+
+.ui-header ~ .ui-container {
+	border-top: 0px;
+}
+
+.red {
+	color: #d43532;
+}
+
+/* */
+.maintitle {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+/* baseinfo start */
+.baseInfo {
+	padding: 20px 0px;
+	border-bottom: dashed 1px #ddd;
+}
+.baseInfo .price {
+	font-size: 28px;
+	font-weight: bold;
+}
+.baseInfo .market_price {
+	text-decoration: line-through;
+}
+.baseInfo .tag1 {
+	background-color: #333;
+	color: #fff;
+	padding: 3px 10px;
+	margin-left: 10px;
+	position: relative;
+}
+.baseInfo .tag1:after {
+	position: absolute;
+	left: -24px;
+	top: 0px;
+	border: solid 12px transparent;
+	border-right-color: #333;
+	content: " ";
+}
+.baseInfo .tag1:before {
+	position: absolute;
+	left: 0px;
+	top: 10px;
+	content: " ";
+	background: #fff;
+	width: 5px;
+	height: 5px;
+	border-radius: 5px;
+}
+/* end base info */
+
+
+/* 选产品 */
+#combo .ui-col {
+	padding: 5px;
+	font-size: 14px;
+}
+#combo .ui-col label {
+	padding: 3px;
+	display: block;
+}
+#combo .ui-col.active label {
+	display: block;
+	background-color: #eee;
+}
+/* 选产品 */
+
+
+/* 选属性 */
+.options-layer {
+	padding: 5px 0px;
+	border-bottom: dashed 1px #ddd;
+}
+.options-layer .option-name {
+	color: #bcbcbc;
+	font-weight: bold;
+}
+.options-layer .ui-row {
+	padding: 5px 0px;
+}
+.options-layer .option-values {}
+.options-layer .option-values > span {
+	padding: 3px 5px;
+}
+.options-layer .option-values > span.active {
+	background-color: #eee;
+}
+/* 选属性 */
+
+
+/* 数量 */
+.m-selnum {
+	display: inline-block;
+	background-image: url(../images/selnum.png);
+	background-size:100% 100%;
+}
+.m-selnum.dr{background-image: url(../images/selnum.png)}
+.m-selnum .less, .m-selnum .more, .m-selnum .textWrap, .m-selnum input{border: none;
+	background-color: transparent;
+}
+.m-selnum .less, .m-selnum .more, .m-selnum .textWrap{position: relative;
+	float: left;
+	height: 32px;
+}
+.m-selnum .textWrap{position: relative;
+	width: 60px;
+	text-align: center;
+	font-size: 14px;
+}
+.m-selnum .less, .m-selnum .more{width: 41px;
+}
+.m-selnum .textWrap input{position: relative;
+	z-index: 1;
+	font-size: 14px;
+}
+.m-selnum input{height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	text-align: center;
+	color: #333;
+}
+/* 数量 */
+
+/* total */
+.preview {
+	padding: 10px 0px;
+	font-weight: bold;
+	color: #222;
+	font-size: 20px;
+}
+.preview .red {
+	font-size: 24px;
+}
+/* total */
+
+/* button */
+.ui-btn-lg.black {
+	color: #fff;
+	background: #222;
+	border-radius: 0px;
+}
+.ui-btn-lg.black:before {
+	display: none;
+}
+.ui-btn-lg.black:active {
+	color: #fff !important;
+	background: #333 !important;
+}
+/* button */
+
+
+
+.product-detail {
+	margin: 10px 0px;
+}
+.product-detail img {
+	max-width: 100%;
+}
+
+
+.warning {
+	border: solid 1px #ddd;
+	padding: 12px;
+}
+.product-detail video{width: 100%}

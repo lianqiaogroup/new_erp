@@ -1,0 +1,159 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet">
+<!-- end header resource -->
+<div class="out">
+     <div class="main">
+          <div class="slidebg">
+               <div class="slide">
+                    <em id="btop"></em>
+                    <div class="swiper-container slidebox">
+                         <div class="swiper-wrapper">
+                            {% if photos %}
+								{% for p in photos %}
+									<div class="swiper-slide">
+										<img src="{{ p.thumb }}" width="100%">
+									</div>
+								{% endfor %}
+							{% else %}
+								<div class="swiper-slide">
+									<img src="{{ thumb }}" width="100%">
+								</div>
+							{% endif %}
+                         </div>
+                    </div>
+                    <div class="swiper-pagination tip"></div>
+                </div>
+          </div>
+          <div class="conbox">
+               <div class="picttl"><img src="{{ THEME }}/images/111111.png"/></div>
+               <div class="box">
+                    <div class="topbuy">
+                         <div class="downcount">
+                              <div class="datetime"><p class="backtime" id="timer">{{ lang.salestime_last }}<span class="hours count" id="h">00</span>{{ lang.h }}<span class="minutes count" id="m">00</span>{{ lang.m }}<span class="seconds count" id="s">00</span>{{ lang.s }}</p></div>
+                         </div>
+                    </div>
+                    <p class="newpri">{{ lang.price }}：
+                    {% if currency_prefix == 1 %}<span id="pri1">{{ currency_code }}&nbsp;{{ price }}</span>({{ lang.market_price }})&nbsp;&nbsp;&nbsp;<span id="pri2">{{ currency_code }}&nbsp;{{ market_price }}</span>{% endif %}
+                    {% if currency_prefix == 0 %}<span id="pri1">{{ currency_code }}&nbsp;{{ price }}</span>({{ lang.market_price }})&nbsp;&nbsp;&nbsp;<span id="pri2">{{ currency_code }}&nbsp;{{ market_price }}</span>{% endif %}
+                    <p class="newname">{{ lang.product }}：<span id="newname">{{ title }}</span></p>
+                    <p class="magic"><i></i>{{ lang.cash_on_delivery }}</p>
+                    <p class="magic"><i></i>{{ lang.time_limit }}</p>
+                    <p class="magic"><i></i>{{ lang.free_yun }}</p>
+                    <p class="magic"><i></i>{{ lang.returned_goods }}</p>
+                    {% if photos %}
+						{% for p in photos %}
+							{% if loop.index == 1 %}
+							<img class="best1" onClick="showpic($(this))" src="{{ p.thumb }}" width="100%">
+							{% endif %}
+							{% if loop.index == 2 %}
+							<img class="best2" onClick="showpic($(this))" src="{{ p.thumb }}" width="100%">
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<img class="best1" onClick="showpic($(this))" src="{{ thumb }}" width="100%">
+					{% endif %}</div>
+          <div class="clear"></div>
+          </div>
+          <div class="buycenter">
+               <img class="longcat" src="{{ THEME }}/images/35d3af015ea84decc8cdd6fab351d33c.png"/>
+               <p class="posttime">{{ lang.order_now }}&nbsp;<span class="deliveryTime">{mon1}{{ lang.month }}{day1}{{ lang.day }} ~ {mon2}{{ lang.month }}{day2}{{ lang.day }}</span>&nbsp;{{ lang.delivery }}</p>
+               <div style="width:90%; margin:0 auto;">
+               <a data-cuckootag="buy_now" href="checkout.php">{{ lang.rush_buy }}</a>
+               <a  data-cuckootag="buy_now" href="checkout.php" class="checksize">{{ lang.choose_attr_short }}</a>
+               </div>
+          </div>
+          <div class="detail">
+               <img class="girl" src="{{ THEME }}/images/upload_14323706490277666.png"/>
+               <div class="pic">
+                    <div class="title" id="tiptuwen">
+                        <span>{{ lang.product_desc }}</span>
+                    </div>                    
+                    <div class="picbox">
+                         {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+                    </div>
+               </div>
+               <div class="ass">
+                    <img class="girl" src="{{ THEME }}/images/upload_14323706490277666.png"/>
+                    <div class="title" id="tipguige">
+                         <span>{{ lang.product_attr }}</span>
+                    </div>
+                    <div class="type">
+	                    <table>
+	                        <tr>
+	                               <td width="90" class="tname">{{ lang.product_fullname }}</td>
+	                               <td>{{ title }}</td>
+	                        </tr>
+	                        {% for o in  options %}
+	                          	<tr><td width="90" class="tname">{{ o.attr_group_title|raw }}：</td>
+                              	<td>{% for key,attr in o.attr %}{{ attr.name|raw }}&nbsp;&nbsp;{% endfor %}</td>
+                              	</tr>
+	                        {% endfor %}
+	                        <tr>
+	                            <td class="tname">{{ lang.delivery_method }}</td>
+	                            <td>{{ lang.free_yun }}，{{ lang.cash_on_delivery }}</td>
+	                        </tr>
+	                    </table>
+                    </div>
+               </div>
+               <div class="usernote">
+                    <img class="girl" src="{{ THEME }}/images/upload_14323706490277666.png"/>
+                    <div class="title" id="tipshenming">
+                         <span>{{ lang.user_notes }}</span>
+                    </div>
+                    <div class="cont">
+                         <div class="det spc">{{ lang.buy_know|raw }}
+                         </div>
+                    </div>
+               </div>
+            </div>
+     </div>
+     <div class="buy">
+          <ul>
+               <li class="order"><a href="javascript:;" style="font-size: 14px;"  data-cuckootag="check_order"  data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</a></li>
+               <li class="buyon"><a href="checkout.php"><span>{{ lang.rush_buy }}</span></a></li>
+               <div class="clear"></div>
+          </ul>
+     </div>
+</div>
+<script>
+$(function(){
+  function scollDown(id,time){
+          var liHeight=$("#"+id+" ul li").height();
+          var time=time||2500;
+          setInterval(function(){
+          $("#"+id+" ul").prepend($("#"+id+" ul li:last").css("height","0px").animate({
+            height:liHeight+"px"
+          },"slow"));
+          },time);  
+  }
+  scollDown("pingjia",3000);
+});
+</script>
+<div class="totop" onClick="backtop()"><img src="{{ THEME }}/images/totop.gif"/></div>
+<div class="bigview"><!--img,pic-->
+     <div>
+         <span></span>
+         <img src=""/>
+     </div>
+     <i></i>
+</div>
+<img class="nbgirl" src="{{ THEME }}/images/newbuy.png"/>
+<div class="newbuy"><p>{{ lang.name1 }}（****6530）5{{ lang.buyed_m }} {{ title }}</p></div>
+<div class="nbdata">
+     <span> {{ lang.name2 }}（****8340）15{{ lang.buyed_m }} {{ title }}</span>
+     <span>{{ lang.name3 }}（****6154）15{{ lang.buyed_m }} {{ title }}</span>
+     <span>{{ lang.name4 }}（****9541）45{{ lang.buyed_m }} {{ title }}</span>
+     <span>{{ lang.name5 }}（****8920）1{{ lang.buyed_h }} {{ title }}</span>
+     <span>{{ lang.name6 }}（****9213）3{{ lang.buyed_h }} {{ title }}</span>
+</div>
+<script src="{{ THEME }}/js/index.js"></script>
+
+
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

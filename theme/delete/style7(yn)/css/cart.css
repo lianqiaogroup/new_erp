@@ -1,0 +1,141 @@
+body {
+	background-color: #fff;
+	max-width: 640px;
+	margin: 0 auto;
+}
+.ui-header {
+	position: relative;
+	background-color: #fff;
+	color: #222;
+}
+.ui-header i {
+	color: #222;
+}
+
+.ui-header ~ .ui-container {
+	border-top: 0px;
+}
+
+
+.enjoythis {
+	padding: 10px 0px;
+	border-bottom: dashed 1px #ddd;
+	line-height: 1.7em;
+}
+.enjoythis p {
+	padding-left: 15px;
+}
+.enjoythis li {
+	font-weight: bold;
+	position: relative;
+	padding-left: 15px;
+}
+.enjoythis li:before {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	color: red;
+	content: "*";
+}
+
+.ui-form input {
+	border: solid 1px #ddd;
+	height: 34px;
+}
+
+.ui-form textarea {
+	border: solid 1px #ddd;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.ui-form input, .ui-form select, .ui-form textarea {
+	padding-left: 7px;
+}
+
+.ui-form > form > .ui-row {
+	height: auto;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+.ui-form > form > .ui-row > .ui-col {
+	height: 35px;
+	line-height: 35px;
+}
+
+.ui-form > form > .ui-row.fortextarea {
+	height: 70px;
+}
+
+.ui-form .ui-select {
+	margin-left: 0px;
+	border: solid 1px #ddd;
+	height: 35px;
+	margin-right: 0px;
+	line-height: 35px;
+}
+@media only screen and (max-width:375px) and (min-width: 310px) {
+	.ui-form > form > .ui-row {
+		height: auto;
+		margin-bottom: 10px;
+		font-size: 16px;
+	}
+
+	.ui-form > form > .ui-row > .ui-col {
+		height: auto;
+		line-height: 35px;
+		width: 100%;
+	}
+
+	.ui-form > form > .ui-row.fortextarea {
+		height: 70px;
+	}
+
+	.ui-form .ui-select {
+		margin-left: 0px;
+		border: solid 1px #ddd;
+		height: 35px;
+		margin-right: 0px;
+	}
+}
+
+
+/* button */
+.ui-btn-lg.black {
+	color: #fff;
+	background: #222;
+	border-radius: 0px;
+}
+.ui-btn-lg.black:before {
+	display: none;
+}
+.ui-btn-lg.black:active {
+	color: #fff !important;
+	background: #333 !important;
+}
+/* button */
+
+
+.red {
+	color: #d43532;
+}
+
+
+
+
+
+.product-info {
+	width: 100%;
+	margin-bottom: 20px !important;
+	line-height: 1.5em;
+}
+
+.product-info .ui-form-item {
+	height: auto;
+	line-height: 1.5em;
+}
+
+.product-info .img {
+	float: left;
+}

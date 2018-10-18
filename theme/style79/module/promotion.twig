@@ -1,0 +1,9 @@
+{% set promotion_list = moduleParam.list|split("\n") %}
+<div class="promotion">
+	<label for="">促销:</label>
+    <ul>
+    	{% for item in promotion_list %}
+    	{% if item != "" %}<li>{{ item }}</li>{% endif %}
+    	{% endfor %}
+    </ul>
+</div>

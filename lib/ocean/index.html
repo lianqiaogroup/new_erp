@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>信用卡加密demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <form method="POST" action="./order_payment.php" id="opcse-encrypted-form">
+
+		<label for="card_number">
+			<span>Card Number</span>
+			<input type="text" id="card_number" value="4111111111111111" size="20" autocomplete="off" opcse-name="card_number" />
+		</label>
+		<br>
+
+		<label for="card_month">
+			<span>Expiration (MM/YYYY)</span>
+			<input type="text" value="06" id="card_month" maxlength="2" size="2" autocomplete="off" opcse-name="card_month" /> /
+		</label>
+		<input type="text" value="2021" id="card_year" maxlength="4" size="4" autocomplete="off" opcse-name="card_year" />
+		<br>
+
+		<label for="card_secureCode">
+			<span>CVC</span>
+			<input type="text" id="card_secureCode" value="737" size="4" maxlength="4" autocomplete="off" opcse-name="card_secureCode" />
+		</label>
+		<br>
+
+		<!-- submit方式 -->
+		<input type="submit" value="Submit提交" />
+		
+		<!-- button方式 -->
+		<input type="button" value="Button提交" onclick="submitForm()" id="submitButton" />
+
+    </form>
+    <!-- opcse -->
+    <script type="text/javascript" src="opcse.js"></script>
+    <script type="text/javascript">
+    // 表单卡号信息将会加密提交,参数1：表单id,参数2：公钥key
+    var opcseForm = opcse.encryptForm('opcse-encrypted-form', '9c11907035ff0877ccdc46d9ce5df7738e06ce5c35e665954682252e7479ca6f3c54f187bc306638cadcb8f1a363410029a5898ab13ed67291b1f9fb30227a47d96c33fa37ef88a845a01db582b53d5b9ce87cb7edd47f73d87a4bb7a855d9845f67a047cfb8251cbfbd09d865db8283b248b11ac11c5a4474d8cc81e1810371');
+	
+	// Button提交方式
+	function submitForm(){
+		// Button提交方式处理
+		
+		//opcseForm.handleSubmit();
+		opcseForm.handleSubmit();
+		//...
+		document.getElementById('opcse-encrypted-form').submit();
+	}
+    </script>
+</body>
+
+</html>

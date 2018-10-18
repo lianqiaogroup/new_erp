@@ -1,0 +1,19 @@
+<?php
+$_LANG['time_limit'] = "Time-limited Discount";
+$_LANG['free_yun'] = "Free Shipping";
+$_LANG['day_appreciate'] = "Seven days appreciation period";
+$_LANG['s'] = '';//
+$_LANG['h'] = ':';//小時
+$_LANG['m'] = ':';//分鐘
+$_LANG['piece'] = "";
+$_LANG['buy_numtext'] = "Sold";
+$_LANG['product_desc'] = "Information";
+$_LANG['product_attr'] = "Details";
+$_LANG['comment'] = "Comments";
+$_LANG['kefu_online'] = "Service online";
+$_LANG['receg_titel'] = "Delivery Information";
+$_LANG['package'] = "Package";
+$_LANG['product'] = "Product";
+$_LANG['check_total'] = "Total";
+$_LANG['check_all'] = "Quantity";
+$_LANG['Order'] = "Submit";

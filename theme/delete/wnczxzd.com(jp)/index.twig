@@ -1,0 +1,149 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/styles.css" rel="stylesheet">
+<link href="{{ THEME }}/css/singleActive.css" rel="stylesheet">
+<!--  -->
+<div class="mod_bar" id="header_normal">
+    <!--这里是标题-->
+    <div class="mod_bar_tit">{{ title }}</div>
+    
+</div>
+<div class="mod_slider" id="loopImgDiv">
+    <div class="inner">
+        <div class="pic_list" id="loopImgUl">
+            <!--这里是后台上传的缩略图-->
+            <img src="{{ thumb }}" style="width:100%;">
+        </div>
+    </div>
+</div>
+<div class="inforContent">
+    <div class="i-p-top">
+        <span class="acticePrice">
+            <span></span>
+            {{ price }}{{ currency_code }}
+        </span>
+        <span class="oldPrice">
+            参考価格：
+            <span>{{ market_price }}{{ currency_code }}</span>
+        </span>
+        <span class="flag">特価</span>
+        <span class="flag">販促</span>
+    </div>
+    <div class="i-p-m buyinfo_post">
+        <span class="flag1">タイムセール</span>
+        <span class="timeWrap">販促
+        <span id="timer">
+               <span  id="h">10</span>
+                <span class="colon">時</span>
+                <span id="m">00</span>
+                <span class="colon">分</span>
+                <span id="s">00</span>
+                <span class="colon">秒</span>
+          </span>
+        </span>
+    </div>
+    <div id="here"></div>
+    <div class="i-p-b">
+        <span class="soldPart">販促<span id="soldNum">{{ sales }}</span>完売</span>
+        <span class="percentBar" data-value='{{ sales }}'>
+          <span id="progress"></span>
+        </span>
+        <span id="percentNum"></span>
+    </div>
+    <div class="btn">
+        <a href="/checkout.php" class="conbtn">ご購入の手続きへ</a>
+    </div>
+</div>
+
+<div class="bTop">
+    <span class="bTitle bTitle1">詳細情報</span>
+    <div class="line"></div>
+</div>
+<div class="detail_info_wrap">
+    <div class="detail_list" id="detailCont">
+        <div class="detail_item p_desc" id="detail_tab1" style="padding:4px 4px;">
+            <div id="commDesc" class="detail_pc">
+                <!-- 后台商品介绍 开始-->
+                <div class="detail_con">
+                    {{ content|raw }}
+                </div>
+            </div>
+        </div>
+        
+        <div name="comment" id="comment" class="comment">
+            <div class="com_title">この商品のレビュー({{ comment|length }})</div>
+            <ul class="com_list">
+                {% if comment %}
+                    {#{ comment|json_encode|raw }#}
+                    {% for a in comment %}
+                        <li class="list_nate">
+                            {% if a.is_anonymous==1 %}匿名ユーザー{% else %}{{ a.name }}さん{% endif %}
+                            <font class="red">{% for i in 1..a.star|abs %}★{% endfor %}</font>
+                            <span class="addtime" d_time="{{ a.add_time|raw }}"></span>
+                        </li>
+                        <li class="list_com" data_img="{{ a|json_encode|raw }}">
+                            {% if a.thumb %}
+                            <ul class="com_img">
+                            {% for b in a.thumb %}
+                                <li  class="list_img">
+                                    <img data-zoom-img src="{{ b.thumb }}">
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <div class="com_text">{{ a.content }}</div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                <li class="com_my"><span id="sub">商品レビューを書く<i class="icon_pen"></i></span></li>
+            </ul>
+        </div>
+
+        <div class="fixednav">
+            <ul class="nav-list">
+                <li>
+                    <a href="/checkout.php" class="conbtn">
+                        <span>{{ lang.buy_now }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--  -->
+<section id="com-layer">
+    <form action="/index.php" method="post" id="apprForm" class="zoom-boxer">
+        <div class="zoom-bd">
+            <div class="con-box">
+                <div>商品レビューを書く</div>
+                <div class="com-item flexbox">
+                    <label style="line-height: 33px;">氏名 :</label><input class="flex" type="text" name="name">
+                </div>
+                <div class="com-item flexbox">
+                    <label style="line-height: 33px;">評価 :</label>
+                    <div class="flex" style="text-align: left;">
+                    <span class="star action" data_id="1"></span>
+                    <span class="star action" data_id="2"></span>
+                    <span class="star action" data_id="3"></span>
+                    <span class="star action" data_id="4"></span>
+                    <span class="star action" data_id="5"></span>
+                    <input type="hidden" name="star" value="5">
+                    </div>
+                </div>
+                <div class="com-item flexbox">
+                    <label>商品レビューの本文 :</label><textarea class="flex" type="text" rows="4" name="note"></textarea>
+                </div>
+                <input id="com_btn" type="button" name="Submit" value="投稿する" data-id="{{ product_id }}">
+                <div id="close" class="close"></div>
+            </div> 
+        </div>
+    </form>
+</section>
+<!--  -->
+
+<script src="{{ THEME }}/js/jquery.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+
+
+{% include '/public/theme/footer.twig' %}

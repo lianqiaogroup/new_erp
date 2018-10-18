@@ -1,0 +1,130 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<link rel="stylesheet" href="{{ THEME }}/css/styles.css">
+<style type="text/css">
+	#POP800_PANEL_DIV{display: none;}
+</style>
+<div class="swiper-container">
+    <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+        {% if photos %}
+            {% for p in photos %}
+            <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+        {% endif %}
+    </div>
+    <div class="swiper-pagination swiper-pagination-custom">
+        {% if photos %}
+            {% for p in photos %}
+            <span class="whiteicon"></span>
+            {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+</div>
+<div class="title">{{ title }}</div>
+<div class="nav">
+    {% if combo %}
+        {% for c in combo %}
+        <div class="subnav {% if loop.index == 1 %}basecolor{% endif %}" combo_id="{{ c.combo_id }}" c_price="{{ c.price }}"><i class="nav-icon"></i>{{ c.title|raw }} <span class="right">{{ currency_code }}{{ c.price }}</span></div>
+        {% endfor %}
+        <input type="hidden" name="combo_id" value="">
+    {% else %}
+    <div class="subnav basecolor" combo_id="0" c_price="{{ price }}"><i class="nav-icon"></i>{{ title }} <span class="right">{{ currency_code }}{{ price }}</span></div>
+    <input type="hidden" name="combo_id" value="0">
+    {% endif %}
+    
+    <input type="hidden" name="price" value="">
+</div>
+<div class="tip">
+	<div class="chip"><img src="{{ THEME }}/image/min-7day.png">7天退換貨</div>
+	<div class="chip"><img src="{{ THEME }}/image/min-free_shop.png">免郵費</div>
+	<div class="chip"><img src="{{ THEME }}/image/min-haver_pay.png">貨到付款</div>
+</div>
+<div class="content">
+	<div class="bTop"><div style="display: inline-block; position: relative;z-index: 3;background-color: #fff; padding-left: 15px;padding-right: 15px; "><span class="bTitle bTitle1">商品詳情</span></div><div class="line"></div></div>
+	{{ content|raw }}
+</div>
+<div class="User_notes" style="margin-top: 10px">
+    <h2 class="notes">{{ lang.user_notes }}</h2>
+    <div class="note_text">{{ lang.user_fb }}</div>
+    <div class="note_title">{{ lang.user_note1 }}</div>
+    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+    <div class="note_title">{{ lang.user_note2 }}</div>
+    <div class="note_text">{{ lang.user_note2_1 }}</div>
+    <div class="note_title">{{ lang.user_note3 }}</div>
+    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+    <div class="note_title">{{ lang.user_note4 }}</div>
+    <div class="note_text">{{ lang.user_note4_1 }}</div>
+    <div class="note_title">{{ lang.user_note4_2 }}</div>
+    <div class="note_title">{{ lang.user_note4_3 }}</div>
+    <div class="note_text">{{ lang.user_note4_4 }}</div>
+</div>
+<div class="footer">
+	<span class="total">共計 : <strong>{{ currency_code }}</strong><strong id="price">0</strong></span>
+	<span class="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);"><img src="{{ THEME }}/image/kefu.png"></span>
+	<button class="btn_success">購買</button>
+</div>
+<section id="list" style="display: none;">
+<input type="hidden" name="product_id" value="{{ product_id }}">
+{% if combo %}
+    {% for c in combo %}
+    	{% for o in  c.goods %}
+		<div class="item" datakey comdid="{{ c.combo_id }}" style="display: none;">
+			<div class="guild">
+				<div class="screenshot"><img src="{{ thumb }}" class="attrimg"></div>
+				<div class="right" style="margin-left: 10px;"><span>{{ o.title }}{{ currency_code }}{{ o.price }}</span><br><span style="font-size:12px;">已選擇&nbsp;&nbsp;</span><span class="keyword"></span></div>
+			</div>
+			{% for a in o.options %}
+			<div class="guild products">
+				<div  class="left"><label>{{ a.attr_group_title }}</label></div>
+				<ul class="right attrs">
+				{% for key,attr in a.attr %}
+					<li data-combo="{{ c.combo_id }}" data-attr="true" data-number="{{ o.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}" class="{% if loop.index==1 %}action{% endif %}">{{ attr.name|raw }}</li>
+				{% endfor %}
+				</ul>
+			</div>
+			{% endfor %}
+		</div>
+		{% endfor %}
+	{% endfor %}
+{% else %}
+	<div class="item" datakey comdid="0">
+		<div class="guild">
+			<div class="screenshot"><img src="{{ thumb }}" class="attrimg"></div>
+			<div class="right" style="margin-left: 10px;"><span>{{ title }}{{ currency_code }}{{ price }}</span><br><span style="font-size:12px;">已選擇&nbsp;&nbsp;</span><span class="keyword"></span></div>
+		</div>
+		{% for o in options %}
+		<div class="guild products">
+			<div class="left"><label>{{ o.attr_group_title }}</label></div>
+			<ul class="right attrs">
+			{% for key,attr in o.attr %}
+				<li data-combo="0" data-attr="true" data-number="{{ o.attr_group_id }}-{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}" class="{% if loop.index==1 %}action{% endif %}">{{ attr.name|raw }}</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
+	</div>
+{% endif %}
+    <div class="quantity">
+        <h4>{{ lang.num }} : </h4>
+        <div class="m-selnum">
+            <div onclick="minnumber()" class="less">-</div>
+            <div class="textWrap">
+                <input type="text" class="text numbertext form-control" value="1" name="number" id="num" onblur="inputnumber();">
+            </div>
+            <div onclick="addnumber()" class="more">+</div>
+        </div>
+    </div>
+    <br>
+    <br>
+	<div class="btn_add">確定</div>
+</section>
+
+<br>
+<br>
+<br>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}

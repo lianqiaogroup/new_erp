@@ -1,0 +1,236 @@
+{% include 'public/theme/header.twig' %}
+<!-- resource -->
+<link type="image/x-icon" rel="icon" href="{{ THEME }}/image/favicon.ico" >
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/styles.css" />
+<link type="text/css" rel="stylesheet" href="public/bootstrap/css/bootstrap.min.css" />
+<!--  -->
+<input type="hidden" id="_region" value="{{ regions.region_name }}">
+<!-- END resource -->
+
+<div id="order">
+    <div class="warp">
+        <form id="form" name="form" action="order.php" method="post" onSubmit="return postcheck();">
+            <div class="nav-header">
+                <div class="header-left"><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-menu-left" style="color: black;"></span></a> </div>
+                <h2>{{ lang.product_information }}</h2>
+            </div>
+
+            <div class="nav_top_one">
+                <div class="nav_top_left">
+
+                    <img class="small_o" src="{{ thumb }}" alt="">
+
+                </div>
+                <div class="nav_top_right">
+                    <div class="right_one">{{ title }}</div>
+                    <div class="right_two">
+                        {{ seo_description }}
+                    </div>
+                </div>
+            </div>
+
+
+            <!--套餐-->
+            <div class="_state">
+                <div class="nav_num">
+
+                        <div class="bdbox">
+                            <label class="bdxx" style="color: #555;width: 40px;text-align: left">{{ lang.num }}</label>
+                            <div class="input-group" id="read_inp" style="width: 110px;margin-left: 20px">
+                                <span class="input-group-btn" >
+                                     <p  class="less" type="button" onClick="minnumber()">-</p>
+                                </span>
+                                <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onBlur="inputnumber();" style="text-align: center;height: 30px;border-left: 0;border-right:0;width: 40px;color: black;">
+                                <span class="input-group-btn">
+                                    <p class="more" type="button" onClick="addnumber()">+</p>
+                                </span>
+                            </div>
+                        </div>
+
+                </div>
+
+                <div class="bdbox" id="combo">
+                    <label class="bdxx"> {{ lang.product }} </label>
+                    <div class="dxbox red">
+                         {% if combo %}
+                             {% for c in combo %}
+                                  <label><input type="radio" name="combo_id" value="{{ c.combo_id }}" class="combo"> {{ c.title|raw }}</label>
+                             {% endfor %}
+                             {% else %}
+                                 <input type="radio" name="combo_id" value="0"> {{ title|raw }}
+                         {% endif %}
+                       
+                    </div>
+                </div>
+            
+            <!--套餐-->
+             <!--属性开始-->
+            <div id="product_attr">
+                {#{% for o in  options %}
+                    <div class="bdbox">
+                        <label class="bdxx"><em class="glyphicon glyphicon-play"></em>{{ o.attr_group_title|raw }}</label>
+                        <div class="dxbox red" id="dxbox">
+                            {% for key,attr in o.attr %}
+                                <label style="width:45%;display:inline-block;padding:5px;">
+                                    {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                    <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                    {{ attr.name|raw }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}#}
+                {% if combo %}
+                    <!--产品套餐属性-->
+                    {% for om in  combo %}
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                                <div class="tc tc{{ ok.combo_id|raw }}" style="display: none;"><div style="padding-left: 15px"><h4>{{ ok.title|raw }}</h4></div>
+                                    {% for o in  ok.options %}
+                                    <div class="bdbox">
+                                        <label class="bdxx">{{ o.attr_group_title|raw }}</label>
+                                        <div class="dxbox red" id="dxbox">
+                                            {% for key,attr in o.attr %}
+                                                <label style="width:45%;display:inline-block;padding:5px;">
+                                                    {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                                    <input type="radio" id="iin" style="" name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                                    {{ attr.name|raw }}
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <!--产品属性-->
+                    {% for o in  options %}
+                        <div class="bdbox">
+                            <label class="bdxx"><em class="glyphicon glyphicon-play"></em>{{ o.attr_group_title|raw }}</label>
+                            <div class="dxbox red" id="dxbox">
+                                {% for key,attr in o.attr %}
+                                    <label style="width:45%;display:inline-block;padding:5px;">
+                                        {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                        <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                        {{ attr.name|raw }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <input type="hidden" name="act" value="getAttrPrice">
+            </div>
+              <!--属性结束-->
+
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em class=""></em>{{ lang.name }}</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="name" class="inputText" placeholder="{{ lang.name_placeholder }}"/>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em></em>{{ lang.mobile }}</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="mob" class="inputText" placeholder="{{ lang.mobile_placeholder }}"/>
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx" for="email"><em></em>E-mail</label>
+                <div class="textbox"><input name="email" placeholder="{{ lang.email_use }}" maxlength="30" class="inputText" type="email">  </div>
+            </div>
+        
+            <div class="bdbox">
+                <label class="bdxx"><em></em>{{ lang.address_full }}</label>
+                <div class="textbox" id="province">
+                    <select name="province" style="background: transparent;width: 90px;height: 30px;">
+                        <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                    </select>
+                    {% if regions.region_son %}
+                        <select class="info_sel" name="city" style="background: transparent;width:auto;height: 30px;">
+                            <option value="">{{ lang.province_choose }}</option>
+                            {% for i in regions.region_son %}
+                                <option value="{{ i.lang}}">{{ i.lang }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"></label>
+                <div class="textbox">
+                <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"> {{ lang.postal }}</label>
+                <div class="textbox">
+                    <input type="text" name="postal"  class="inputText">
+                </div>
+            </div>
+
+            <div class="bdbox">
+                <label class="bdxx">{{ lang.note }}</label>
+                <div class="text2box">
+                    <textarea name="guest" placeholder="{{ lang.order_remark }}"></textarea>
+                </div>
+            </div>
+
+            <div class="bdbox">
+                <label class="bdxx"><em></em>{{ lang.cash_style }}</label>
+                <div class="dxbox" id="img_pay">
+                    {% if payment_online ==1 %}
+                        <input name="payment_type" value="1" type="radio"> {{ lang.yijifu }}
+                    {% endif %}
+                    {% if payment_paypal == 1 %}
+                        <input name="payment_type" value="2" type="radio"> <img src="/public/image/p_paypal.jpg">
+                    {% endif %}
+                    {% if payment_underline ==1 %}
+                        <input name="payment_type" value="0" type="radio"> <img src="{{ THEME }}/image/hdfk.gif">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="bdbox">
+                <div style="padding: 10px">
+                    <font color='red'>{{ lang.warming|raw }}</font>
+                </div>
+            </div>
+            <input type="hidden" name="token" value="{{ token }}">
+          
+          <div class="footer">
+              <div class="money_total">
+                  <div class="text3box" style="">
+                      <span>{{ lang.money }}：</span>
+                      {% if currency_prefix ==1 %} <span class="code_pri">{{ currency_code }}</span> {% endif %} <span><input name="price" readonly style="width:80px;" value="{{ discount_price  }}"/></span> {% if currency_prefix ==0 %}
+                          <span style="line-height: 35px;float: right;color: #fc5f8d;">{{ currency_code }}</span> {% endif %}  <span id="zfbyh"></span>
+                  </div>
+                  <div class="" style="text-align: right;float: right;width: 30%;height: 0">
+                      <span class="" style="display: inline-block; vertical-align: middle; line-height: 35px;"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1491359849989" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17502" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><defs><style type="text/css"></style></defs><path d="M131.253515 789.333333C87.810305 789.333333 52.51282 753.473975 52.51282 709.41763L52.51282 69.333333 26.25641 96 892.853331 96C936.231586 96 971.487179 131.853286 971.487179 175.915703L971.487179 816 997.74359 789.333333 525.128205 789.333333 517.234323 789.333333 510.649171 793.754413 285.912493 944.636066C273.815607 952.757562 270.491629 969.301024 278.488179 981.586923 286.484727 993.872821 302.773675 997.248736 314.87056 989.127241L539.607238 838.245587 525.128205 842.666667 997.74359 842.666667 1024 842.666667 1024 816 1024 175.915703C1024 102.41369 965.24899 42.666667 892.853331 42.666667L26.25641 42.666667 0 42.666667 0 69.333333 0 709.41763C0 782.925715 58.804881 842.666667 131.253515 842.666667L268.117303 842.666667C282.618319 842.666667 294.373713 830.727593 294.373713 816 294.373713 801.272407 282.618319 789.333333 268.117303 789.333333L131.253515 789.333333Z" p-id="17503"></path><path d="M367.589743 442.666667C367.589743 383.756294 320.568162 336 262.564102 336 204.560043 336 157.538461 383.756294 157.538461 442.666667 157.538461 501.577039 204.560043 549.333333 262.564102 549.333333 320.568162 549.333333 367.589743 501.577039 367.589743 442.666667ZM210.051282 442.666667C210.051282 413.211479 233.562074 389.333333 262.564102 389.333333 291.566133 389.333333 315.076924 413.211479 315.076924 442.666667 315.076924 472.121854 291.566133 496 262.564102 496 233.562074 496 210.051282 472.121854 210.051282 442.666667Z" p-id="17504"></path><path d="M630.153845 442.666667C630.153845 383.756294 583.132265 336 525.128205 336 467.124145 336 420.102564 383.756294 420.102564 442.666667 420.102564 501.577039 467.124145 549.333333 525.128205 549.333333 583.132265 549.333333 630.153845 501.577039 630.153845 442.666667ZM472.615386 442.666667C472.615386 413.211479 496.126176 389.333333 525.128205 389.333333 554.130236 389.333333 577.641026 413.211479 577.641026 442.666667 577.641026 472.121854 554.130236 496 525.128205 496 496.126176 496 472.615386 472.121854 472.615386 442.666667Z" p-id="17505"></path><path d="M892.717948 442.666667C892.717948 383.756294 845.696367 336 787.692307 336 729.688247 336 682.666667 383.756294 682.666667 442.666667 682.666667 501.577039 729.688247 549.333333 787.692307 549.333333 845.696367 549.333333 892.717948 501.577039 892.717948 442.666667ZM735.179488 442.666667C735.179488 413.211479 758.690278 389.333333 787.692307 389.333333 816.694338 389.333333 840.205129 413.211479 840.205129 442.666667 840.205129 472.121854 816.694338 496 787.692307 496 758.690278 496 735.179488 472.121854 735.179488 442.666667Z" p-id="17506"></path></svg></span>
+                      <span style="display: inline-block; vertical-align: middle;margin-bottom: 10px;"><a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" style="color: #222;">聯繫我們</a></span>
+                  </div>
+              </div>
+
+              <div class="subbox" >
+                  <input type="submit" name="Submit" class="btn-style" style="font-size: 8px" value="{{ lang.submit_order }}">
+              </div>
+
+          </div>
+        </form>
+        <div style="clear:both;"></div>
+        <div style="clear:both;"></div>
+    </div>
+</div>
+<!-- js resource -->
+<script src="{{ THEME }}/js/jquery.js"></script>
+<script src="{{ THEME }}/js/checkout.js"></script>
+<script src="{{ THEME }}/js/not31.js"></script>
+<!--  -->
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+
+{% include 'public/theme/footer.twig' %}

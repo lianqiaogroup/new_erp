@@ -1,0 +1,34 @@
+.module_service {
+    display:-webkit-flex;
+    display:flex;
+    font-size:.37333rem;
+    line-height:1;
+    padding: 14px;
+    background-color: #fff;
+    > div:first-child {
+        margin-right:.26667rem;
+        text-align:center;
+    }
+    > div:last-child {
+        flex:1;
+    }
+    ul {
+        flex:1;
+        color:#7f7f7f;
+        li{
+            float:left;
+            margin:0 .53333rem .21333rem 0;
+            &:before {
+                content:'';
+                display:inline-block;
+                width:.10667rem;
+                height:.10667rem;
+                border-radius:100%;
+                background:#b4282d;
+                vertical-align: middle;
+                margin-top: -2px;
+                margin-right:.10667rem;
+            }
+        }
+    }
+}

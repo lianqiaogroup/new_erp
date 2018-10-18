@@ -1,0 +1,21 @@
+{% set countdownClass = 'a' %}
+{% if moduleParam.class == null %}
+    {% set countdownClass = 'a' %}
+{% else %}
+    {% set countdownClass = moduleParam.class %}
+{% endif %}
+
+<div class="countdown style-{{ moduleParam.class }}">
+    <span class="clock">{{ lang.time_limit }}</span>
+    <span class="timeWrap">
+        <span id="timer">
+           <span  id="h">10</span>
+            <span class="">:</span>
+            <span id="m">00</span>
+            <span class="">:</span>
+            <span id="s">00</span>
+        </span>
+        <span class="countdown_label">倒计时</span>
+    </span>
+    <span class="hot_sell">超值热卖</span>
+</div>

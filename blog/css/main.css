@@ -1,0 +1,491 @@
+﻿/* body {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    line-height: 1.2;
+    padding: 0;
+    margin: 0;
+    background: url("../images/body_bg.jpg") no-repeat right top, url("//dadbab.info/content/Hammer_HK_preland_emmablog/img/body_bg_gradient.jpg") repeat;
+    background-attachment: fixed;
+} */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+*:not(a:hover) {
+    cursor: default;
+}
+
+p {
+    font-size: 16px;
+    color: #6e6c6c;
+}
+.post img{
+    max-height:310px;
+}
+img {
+    /* max-height: 310px; */
+}
+
+a {
+    color: #f2322f;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover:not(.btn1) {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+span {
+    font-weight: bold;
+}
+
+strong {
+    font-size: inherit;
+}
+
+h1 {
+    color: #fff;
+    font-size: 30px
+}
+
+h2 {
+    font-size: 24px;
+    /* text-transform: uppercase; */
+    padding: 20px 0;
+    color: #454444;
+}
+
+h3 {
+    color: #2e2d2d;
+    font-size: 22px
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.floatLeft {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.floatRight {
+    float: right;
+    margin: 20px 0 20px 20px;
+}
+
+.center {
+    display: block;
+    margin: 0 auto;
+}
+
+.btn1 {
+    display: table;
+    max-width: 90%;
+    padding: 10px 25px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 22px;
+    /* text-transform: uppercase; */
+    margin: 20px auto;
+    color: #fff;
+    text-decoration: none;
+    background-color: #f2322f;
+    outline: 2px solid white;
+    outline-offset: -5px;
+    border-radius: 5px;
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+
+}
+
+.btn1:hover {
+
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+}
+
+blockquote {
+    background-color: #F2322F;
+    padding: 18px 0;
+    outline: 2px solid white;
+    outline-offset: -5px;
+}
+
+blockquote p {
+    padding: 0 20px;
+    color: #fff;
+}
+
+
+
+.wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 20px;
+    position: relative;
+}
+
+.wrapper main,
+.wrapper .commentary,
+.wrapper .title {
+    max-width: 620px;
+    width: 100%;
+    float: right;
+    display: block;
+    padding: 0 30px 30px 30px;
+    background-color: #fff;
+    position: relative;
+}
+.wrapper .title{
+    padding-top: 10px;
+}
+
+.wrapper .commentary > p,
+.wrapper .title > p {
+    padding: 20px 0;
+}
+
+.wrapper header {
+    position: absolute;
+    width: 290px;
+    z-index: 100;
+    background-color: #f2f2f2;
+    left: 8px;
+    top: 8px;
+}
+
+.wrapper header .logoWrap {
+    padding: 25px;
+    text-align: center;
+}
+
+/* .wrapper header .logoWrap .logo {
+    display: block;
+    box-sizing: content-box;
+    width: 100px;
+    height: 100px;
+    background: url("../images/sb_logo.jpg") no-repeat center center;
+    background-size: cover;
+    border: 4px solid #f2f2f2;
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0 0 0 1px #cccccc;
+} */
+
+.wrapper header .logoWrap span:not(:last-child) {
+    color: #f2322f;
+    font-size: 44px;
+    font-weight: normal;
+    font-family: Georgia, "Century Schoolbook L", Serif;
+    word-break: break-word;
+}
+
+.wrapper header .logoWrap span:last-child {
+    color: #6c6c6c;
+    /* text-transform: uppercase; */
+    font-weight: bold;
+}
+
+.wrapper header nav {
+    padding: 0 25px;
+}
+
+.wrapper header nav ul li {
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom: 2px dashed #2c2b2b;
+    padding: 10px 0;
+    color: #fff;
+}
+
+.wrapper header nav ul li.active {
+    background-color: #200707;
+    color: #ae1d1d;
+    padding-left: 20px;
+}
+
+/* .title {
+    height: 340px;
+    padding: 30px 0;
+    background-image: url("../images/main_bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: auto;
+} */
+
+.title p {
+    padding-right: 30px !important;
+}
+
+.title h1 {
+    color: #fff;
+    text-shadow: 2px 2px 5px #000;
+    font-weight: normal;
+    font-size: 40px;
+}
+
+.title h1 span {
+    color: #fe4845;
+    font-size: inherit;
+}
+
+.title p {
+    padding-top: 190px;
+    color: #ededed;
+    font-size: inherit;
+    bottom: 0;
+    position: absolute;
+}
+
+.title p span {
+    color: #f2322f;
+}
+
+.title .cinema {
+    background: url("../images/bg_cinema.jpg") no-repeat center center;
+    padding: 10px 0;
+}
+
+.title .cinema img {
+    display: block;
+    margin: 0 auto;
+}
+
+.commentary .headComment {
+    font-size: 32px;
+    padding: 30px 20px;
+}
+
+.commentary .headComment span {
+    color: #d43539;
+    font-size: inherit;
+}
+
+.commentary .comment .logoCom {
+    float: left;
+    margin-right: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.commentary .comment .date {
+    float: right;
+    font-size: 12px;
+    color: #a4a4a4;
+}
+
+.commentary .comment .date span {
+    font-weight: normal;
+}
+
+.commentary .comment .fillComment {
+    padding: 10px;
+    margin-left: 70px;
+    margin-bottom: 20px;
+    border: 1px solid #dfdfdf;
+    position: relative;
+}
+
+.commentary .comment .fillComment::before {
+    content: "";
+    display: inline-block;
+    background: url("../images/icon_arr_left.jpg") no-repeat;
+    width: 7px;
+    height: 12px;
+    position: absolute;
+    left: -7px;
+    top: 10px;
+}
+
+.commentary .comment .fillComment .nameCom {
+    font-weight: bold;
+    font-size: 18px;
+    color: #d43539;
+}
+
+.commentary .comment .fillComment p {
+    max-width: 650px;
+    font-size: 16px;
+    padding: 10px 11px;
+}
+
+.commentary .comment .fillComment p span {
+    font-weight: normal;
+    font-size: inherit;
+    color: #f2322f;
+}
+
+.commentary .comment .fillComment .like {
+    float: right;
+    margin: 10px 0;
+    font-weight: normal;
+}
+
+.commentary .comment .fillComment .like::before {
+    content: "";
+    width: 12px;
+    height: 11px;
+    display: inline-block;
+    background: url("../images/icon_heart.png");
+    position: relative;
+    right: 3px;
+}
+
+.commentary .comment .fillComment img {
+    max-height: 300px;
+    max-width: 95%;
+}
+
+.commentary .copyright {
+    text-align: center;
+    padding: 50px 0;
+    font-size: 18px;
+}
+
+.commentary .copyright span {
+    font-size: inherit;
+    font-weight: normal;
+}
+
+.border {
+    position: absolute;
+    top: 0;
+    bottom: 79px;
+    right: 0;
+    left: 0;
+    max-width: 300px;
+    border: 3px solid #f2f2f2;
+}
+
+aside {
+    background-color: #f2f2f2;
+    max-width: 290px;
+    position: absolute;
+    left: 5px;
+    right: 0;
+    bottom: 5px;
+    top: 8px;
+    padding-top: 300px;
+}
+
+aside .bloggersOnline {
+    padding: 25px;
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+aside .bloggersOnline .boxLogo {
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 48px;
+    width: 48px;
+    margin: 10px 3px;
+}
+
+aside .posts {
+    width: 289px;
+    padding: 25px;
+}
+
+aside .posts ul {
+    font-family: "Roboto", sans-serif;
+}
+
+aside .posts ul li {
+    color: #343434;
+    padding: 10px 0;
+    list-style-type: disc;
+}
+
+aside .posts ul li:not(:last-child) {
+    border-bottom: 1px solid #e4e4e4;
+}
+
+aside .posts ul li p {
+    padding: 5px 0;
+    font-size: inherit;
+    color: #f2322f;
+}
+
+aside .posts ul li span {
+    color: #6e6c6c;
+    font-style: normal;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+aside .posts ul li span:last-child {
+    float: right;
+    color: #a4a4a4;
+    display: block;
+    width: 49px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+aside .posts ul li span:last-child::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 11px;
+    background: url("../images/icon_heart.png");
+    position: relative;
+    right: 3px;
+    top: 2px;
+}
+
+footer {
+    width: 100%;
+    float: right;
+    text-align: center;
+    color: #000;
+}
+
+footer .copyright {
+    padding: 30px;
+}
+
+footer .copyright span {
+    font-weight: normal;
+}
+
+.asidebtn {
+    font-size: 18px;
+    padding: 8px 20px;
+    line-height: 26px;
+    max-width: 100%;
+}
+
+#sub-frame-error{
+    display:none;
+}
+
+img{
+    width:100%;
+}
+/* main img{
+    width:auto;
+} */
+*{
+    word-break: break-word;
+}
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,99 @@
+body{background-color: #fff;max-width: 640px;margin: 0 auto;}
+.ui-header-positive{position: relative;background-color: #282828;}
+.ui-header-positive h1{color: #fff;}
+.ui-header img{display:block;max-height: 44px;width: auto;margin: auto;}
+.ui-header h1{height: 44px;margin-bottom: 0;}
+.ui-header ~ .ui-container{border-top: 0px;}
+.red{color: #d43532;}
+/**/
+.maintitle{font-size: 14px;height: 44px;line-height: 44px;text-align: center;background: #333;color: #fff;}
+#page-index .swiper-pagination-custom{bottom: -15px;}
+#page-index .swiper-button-prev,#page-index .swiper-button-next{width: 16px;height: 29px;}
+#page-index .swiper-button-prev{background-image: url('../images/prev.png');background-size: 32px 32px;}
+#page-index .swiper-button-next{background-image: url('../images/next.png');background-size: 32px 32px;}
+.whiteicon{display:inline-block;width: 6px;height: 6px;border-radius: 50%;background: #E5E5E5;margin-right: 3px;}
+.redicon{display:inline-block;width: 6px;height: 6px;border-radius: 50%;background: #222;margin-right: 3px;}
+/* baseinfo start*/
+.baseInfo{border-bottom: dashed 1px #ddd;padding: 15px 16px;}
+.baseInfo .price{font-size: 16px;font-weight: bold;}
+.baseInfo .market_price{text-decoration: line-through;}
+.tags{margin-top: 10px;}
+.baseInfo .tag1{background-color: #333;color: #fff;font-size: 12px; padding: 3px 10px;margin-left: 10px;position: relative;}
+.baseInfo .tag1:after{position: absolute;left: -22px;top: 0px;border: solid 11px transparent;border-right-color: #333;content: " ";}
+.baseInfo .tag1:before{position: absolute;left: 0px;top: 8px;content: " ";background: #fff;width: 5px;height: 5px;border-radius: 5px;}
+/* end base info*//* 选产品*/
+#combo .ui-col{padding: 5px;font-size: 14px;display:inline-block;}
+#combo .ui-col label{padding: 3px;display: block;}
+#combo .ui-col.active label{display: block;background-color: #eee;}
+/* 选产品*//* 选属性*/
+.options-layer{border-bottom: dashed 1px #ddd;padding: 15px 16px;font-size: 14px;}
+.options-layer .option-name{color: #bcbcbc;}
+.options-layer .ui-row{padding: 14px 0px;display: -webkit-box;line-height: 1;}
+.options-layer .option-values > span{padding: 3px 5px;}
+.options-layer .option-values > span.active{background-color: #eee;}
+.ui-col-25{width: 25%;}
+.ui-col-75{width: 75%;text-align: right;}
+/* 选属性*//* 数量*/
+.m-selnum{display: inline-block;border: 1px solid #BBB;}
+.m-selnum .less, .m-selnum .more, .m-selnum .textWrap, .m-selnum input{border: none;background-color: transparent;}
+.m-selnum .less, .m-selnum .more, .m-selnum .textWrap{position: relative;float: left;height: 24px;}
+.m-selnum .textWrap{position: relative;width: 56px;text-align: center;font-size: 14px;}
+.m-selnum .less, .m-selnum .more{width: 24px;text-align: center;line-height: 24px;}
+.m-selnum .textWrap input{position: relative;z-index: 1;font-size: 14px;}
+.m-selnum input{height: 100%;width: 100%;box-sizing: border-box;margin: 0;text-align: center;color: #333;}
+/* 数量*//* total*/
+.preview{padding: 10px 0px;font-weight: bold;color: #222;font-size: 14px;padding:16px;}
+.preview .red{font-size: 14px;}
+.kefu{width: 23px;float: right;}
+/* total*//* button*/
+.btn{padding: 0 16px;}
+.ui-btn-lg.black{color: #fff;background: #222;border-radius: 0px;display: block;width: 100%;height: 40px;line-height: 40px;border:none;}
+.ui-btn-lg.black:before{display: none;}
+.ui-btn-lg.black:active{color: #fff !important;background: #333 !important;}
+.inquiry{width: 100%;height: 40px;line-height: 40px;border: 1px solid #000;text-align: center;background: #fff;margin-top:10px; }
+/* button*/
+.product-detail{padding: 10px 16px;}
+.product-detail img{max-width: 100%;}
+.warning{border: solid 1px #ddd;margin: 10px 16px;padding: 12px;}
+.product-detail video{width: 100%}
+.g_title{color: #bcbcbc;font-size: 14px;margin-left: 25%;}
+
+.after_sale{
+    padding:20px 15px;
+    font-size:12px;
+    font-family: Thonburi;
+    border: solid 1px #ddd;
+    margin: 10px 16px;
+    padding-top:0;
+   
+}
+.after_sale_title{
+    margin-bottom:20px;
+    font-size:14px;
+    color:#444A59 ;
+    border-bottom: 1px solid #ddd;
+    line-height: 46px;
+}
+.after_sale .after_sale_first{
+    color:#666;
+    margin-top:25px;
+}
+.after_sale_content div{
+    line-height: 17px;
+    color:#999;
+    margin-bottom:10px;
+}
+.after_sale_circle{
+    border:1px solid #999;
+    background:#999;
+    display: inline-block;
+    width:5px;
+    height:5px;
+    border-radius: 50%;
+    margin-right:10px;
+}
+.after_sale_circle_right{
+    display: inline-block;
+    width: calc(100% - 21px);
+    vertical-align: top;
+}

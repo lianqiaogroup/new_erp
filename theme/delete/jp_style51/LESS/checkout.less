@@ -1,0 +1,225 @@
+#POP800_PANEL_DIV{
+	display:none;
+}
+html{
+	background:#f1f1f1;
+}
+body{
+	min-height:100vh;
+	width:100%;
+	max-width:640px;
+	margin:0 auto;
+	background:#fff;
+}
+button{
+	border:none;
+	background:none;
+	outline:none;
+}
+input,textarea,select{
+	border:none;
+	outline:none;
+	background:inherit;
+}
+textarea{
+	resize:none;
+}
+select[name='province']{
+	-moz-appearance: none;
+    -webkit-appearance:none;
+            appearance:none;
+}
+a{
+	color:#b4282d;
+}
+input[type='radio']{
+	width: inherit !important;
+	height: inherit !important;
+}
+img{
+	vertical-align:top;
+}
+.header{
+	text-align:center;
+	height:46px;
+	line-height:46px;
+	font-size:0;
+    border-bottom:1px solid #dddddd;
+	>div{
+		display:inline-block;
+	}
+	.back{
+		display:inline-block;
+		width:8px;
+		height:8px;
+		border-bottom:1px solid #222;
+		border-left:1px solid #222;
+		-webkit-transform:rotate(45deg);
+		transform:rotate(45deg);
+		margin:0 -8% 0 4%;
+	}
+	.conirm{
+		font-size:16px;
+	    text-align: center;
+	    width: 100%;
+	}
+}
+
+.warp{
+	padding:2%;
+	.process{
+		height:35px;
+		line-height:35px;
+		font-size:12px;
+		color:#707070;
+		padding:0 2%;
+		.next{
+			width:6px;
+			height:6px;
+			display:inline-block;
+			border-bottom:1px solid #bababa;
+			border-right:1px solid #bababa;
+			-webkit-transform:rotate(-45deg);
+			transform:rotate(-45deg);
+			margin-right:4px;
+		}
+	}
+}
+.m-goodItems{
+	border:1px solid #ddd;
+	background:#f5f5f5;
+	.tt{
+		padding:0 4%;
+		font-size:14px;
+	}	
+}
+.m-goodItem{
+	position:relative;
+	padding:6px;
+}
+.imgWrap{
+    display: inline;
+    margin: 4px 16px 4px 4px;
+	img{
+		width:70px;
+		height:70px;
+	}
+}
+.cnt{
+	line-height:22px;
+	font-size:12px;
+	padding:4px 6px;
+    background: #fff;
+}
+.attr{
+	color:#888;
+}
+.product_numtext{
+    color:#a9a9a9;
+    float:right;
+}
+.price{
+	line-height:42px;
+	margin-top:18px;
+	text-indent: 20px;
+	.left{
+		span{
+			font-weight:bold;
+			color:#c60b19;
+		}
+	}
+}
+.buy-single-row{
+	background:#fff;
+	padding:0 2%;
+	.cell{
+		border-bottom:2px dotted #ddd;
+		display:-webkit-flex;
+		display:flex;
+		span{
+			font-size: 13px;
+		    width:7em;
+		    line-height: 40px;
+		    text-indent: 6px;
+		}
+	}
+	&:last-child{
+		border:none;
+		line-height:40px;
+	}
+	#province{
+		padding-left:6%;
+		display:inline-block;
+		width:94%;
+	}
+	input,select,textarea{
+		width:94%;
+		height:40px;
+		font-size:14px;
+		line-height:40px;
+	}
+	select{
+		width:90%;
+		margin-left:2%;
+	}
+}
+.address-input{
+	padding:2%;
+ 	background:#f5f5f5;
+ 	border:1px solid #ddd;
+ 	margin-top:12px;
+ 	font-size:13px;
+ 	.input_title{
+	    background: #fff;
+	    padding:0 2%;
+	    text-indent: 6px;
+	    line-height:40px;
+	    div{
+    	    border-bottom: 1px solid #ddd;
+    	    padding:1px 0;
+	    }
+ 		span{
+ 			display:block;
+		    border-bottom: 1px solid #ddd;
+ 			&:after{
+				content:'';
+				display:inline-block;
+				width:20px;
+				height:40px;
+				vertical-align:top;
+				background:url(../images/letter.png) no-repeat center;
+				background-size:18px;
+				margin-left:6px;
+			}
+ 		}
+			
+ 	}
+}
+button.btn{
+	background:#083065;
+	color:#fff;
+	width:100%;
+	height:40px;
+
+}
+.single{
+    display: flex;
+    align-items: center;
+	background:#fff url(../images/border.png) repeat-x 0 top;
+	padding:6px 0;
+	border-bottom:1px;
+	&:first-child{
+		background:#fff;
+	}
+	.right{
+		flex: 1;
+		margin-right: 4%;
+	}
+}
+
+
+#money-card-div, #ocean-div {
+	display: none;
+	box-sizing: border-box;
+	line-height: 1.5em !important;
+}

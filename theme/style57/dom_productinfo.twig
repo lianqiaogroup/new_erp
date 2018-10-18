@@ -1,0 +1,24 @@
+<div class="product_info">
+	<div class="tab_bar">
+		<ul>
+			<li class="tab active" data="1">{{ lang.pro_intro }}</li>
+			{% if modulesParam %}
+			    {% if modulesParam and modulesParam.countdown.options.open == '1' %}
+					<li class="tab" data="2">{{ lang.comment }}（{{ (sales*0.7)|number_format(0,'','') }}）</li>
+			    {% endif %}
+			{% else %}
+					<li class="tab" data="2">{{ lang.comment }}（{{ (sales*0.7)|number_format(0,'','') }}）</li>
+			{% endif %}
+		</ul>
+	</div>
+	<div class="info_box m-img product-img">
+		{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+	</div>
+	{% if modulesParam %}
+	    {% if modulesParam and modulesParam.countdown.options.open == '1' %}
+	        {% include 'dom_comment.twig' %}
+	    {% endif %}
+	{% else %}
+	    {% include 'dom_comment.twig' %}
+	{% endif %}
+</div>

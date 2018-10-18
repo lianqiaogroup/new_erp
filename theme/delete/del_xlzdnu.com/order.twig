@@ -1,0 +1,253 @@
+<div id="order">
+    <div class="warp">
+        <form id="form" name="form" action="order.php?" method="post" onSubmit="return postcheck()" target="_blank">
+            <input type="hidden" name="orderid" id="orderid" value="">
+            <br/>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>產品</label>
+                <div class="dxbox red" id="combo">
+                    {% if combo %}
+                        {% for c in combo %}
+                            <input type="radio" name="combo_id" value="{{ c.combo_id }}" class="combo"> {{ c.title|raw }} <br/>
+                        {% endfor %}
+                    {% else %}
+                        <input type="radio" name="combo_id" value="0"> {{ title|raw }}
+                    {% endif %}
+                </div>
+            </div>
+            <!--附加属性b-->
+            <div id="product_attr">
+            {#{% for o in  options %}
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>{{ o.attr_group_title|raw }}</label>
+                    <div class="dxbox red">
+                        {% for key,attr in o.attr %}
+                            <input type="radio" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr"> {{ attr.name|raw }} {% if attr.thumb %} <img src="{{ attr.thumb }}" width="80" height="80">{% endif %} <br/>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}#}
+                {% if combo %}
+                    <!--产品套餐属性-->
+                    {% for om in  combo %}
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                                <div class="bdbox">
+                                    <div class="tc tc{{ ok.combo_id|raw }}" style="display: none;"><div><h4 style="border-bottom: 1px dotted #ccc;padding-left: 12px">{{ ok.title|raw }}</h4></div>
+                                        {% for o in  ok.options %}
+                                            <li class="item protoLayer">
+                                                <div style="clear: both"></div>
+                                                <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                                    <div class="tt" style="width: 16%;text-align: right;padding-right: 2%;"><em>*</em>{{ o.attr_group_title|raw }}</div>
+                                                    <div class="con">
+                                                        {% for key,attr in o.attr %}
+                                                            <label>
+                                                                <img src="{{ attr.thumb }}" width="75" height="75">
+                                                                <p><span><input type="radio" name="attr[{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}">{{ attr.name|raw }}</span></p>
+                                                            </label>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="cls"></div>
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <!--产品属性-->
+                    {% for o in  options %}
+                        <li class="item protoLayer">
+                            <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                <div class="con">
+                                    {% for key,attr in o.attr %}
+                                        <label style="max-width:32%;display:inline-block;padding:5px;background: #eee">
+                                            {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                            <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                            {{ attr.name|raw }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="cls"></div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                <input type="hidden" name="act" value="getAttrPrice">
+            </div>
+            <!--附加属性e-->
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>數量</label>
+                <div class="xltextbox scount">
+                    <a class="addmin" href="javascript:void(0)" onClick="minnumber()">-</a><input type="text" class="text numbertext" value="1" name="num" id="num" onBlur="inputnumber();"><a class="addmin" href="javascript:void(0)" onClick="addnumber()">+</a>
+                    <font class="STYLE17" color="#BD0000">*訂購數量(點擊增減或填寫)</font>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>姓名</label>
+                <div class="textbox">
+                    <input type="text" name="name" class="inputText">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>手機</label>
+                <div class="textbox">
+                    <input type="text" name="mob" class="inputText">
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx" for="email"><em>*</em>E-mail</label>
+                <div class="textbox"><input name="email" placeholder="填寫常用的郵箱" maxlength="30" class="inputText" type="email">  </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>詳細地址</label>
+                    <div class="textbox" id="province">
+                        <select name="province">
+                            <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"></label>
+                <div class="textbox">
+                    <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"> {{ lang.postal }}</label>
+                <div class="textbox">
+                    <input type="text" name="postal"  class="inputText">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>金額</label>
+                <div class="text3box">
+                    {% if currency_prefix ==1 %} {{ currency_code }} {% endif %} <input name="price" readonly style="width:80px;" value="{{ discount_price  }}"/> {% if currency_prefix ==0 %} {{ currency_code }} {% endif %}  <span id="zfbyh"></span>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>付款</label>
+                <div class="dxbox">
+                    {% if payment_online ==1 and payment_underline ==1 %}
+                        <input name="payment_type" value="1" type="radio" checked>   {{ lang.yijifu }}
+                        <input name="payment_type" value="0" type="radio">  <img src="/theme/xlzdnu.com/images/hdfk.gif">
+    
+                    {% elseif payment_online ==1 %}
+                        <input name="payment_type" value="1" checked type="radio">   {{ lang.yijifu }}
+                    {% elseif payment_underline ==1 %}
+                        <input name="payment_type" value="0" checked type="radio">  <img src="/theme/xlzdnu.com/images/hdfk.gif">
+                    {% endif %}
+                  
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx"></label>
+                <div class="textbox">
+                    <font color=red>溫馨提示：支持貨到付款，免郵費！收到貨有任何疑問請聯繫我們在線客服!
+                        如有問題，也可隨時聯繫:<a href="mailto:snarvo@bmzmail.com"><font color="red">snarvo@bmzmail.com</font></a>。同時,請附上您的姓名及聯繫方式在郵件當中，以便我們能快速的給您及時處理，購物愉快！！！</font>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx">留言</label>
+                <div class="text2box">
+                    <textarea name="guest" placeholder="如備用聯繫電話"></textarea>
+                </div>
+            </div>
+            <input type="hidden" name="token" value="{{ token }}">
+            <div class="subbox">
+                <input type="submit" name="Submit" class="btn-style" value="提交訂單">
+            </div>
+
+        </form>
+        <div style="clear:both;"></div>
+
+    </div>
+
+</div>
+
+<div id="fahuo"></div>
+<script src="/theme/xlzdnu.com/images/fahuo.js" type="text/javascript"></script>
+<script type="text/javascript" src="/theme/xlzdnu.com/images/not3.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+//默认第一个属性选中
+$('#product_attr .bdbox').each(function(){
+$(this).find('input[type=radio]').eq(0).attr("checked", true);
+}) ;
+
+
+$("#combo").find('input[type=radio]').eq(0).attr("checked", true);
+refresh_price();
+}) ;
+
+$('.combo').click(function () {
+refresh_price();
+}) ;
+
+function addnumber(){
+$('#num').val(parseInt($('#num').val())+1);
+refresh_price() ;
+}
+function minnumber(){
+if($('#num').val()>1){
+$('#num').val(parseInt($('#num').val())-1);
+refresh_price() ;
+}
+}
+
+function refresh_price() {
+$.ajax({
+url: '/checkout.php?',
+type: 'post',
+data: $('#combo input[type=\'radio\']:checked,#product_attr input[type=\'hidden\'],input[name=\'num\']'),
+dataType: 'json',
+success: function(json) {
+if(json.ret)
+{
+$("input[name='price']").val(json.total);
+}
+else{
+alert(json.msg)
+}
+},
+error: function(xhr, ajaxOptions, thrownError) {
+}
+});
+}
+
+function  postcheck() {
+//FIXME: js验证数据 balabala
+return true;
+}
+
+$(document).ready(function(){
+    $("input[name='combo_id']").each(function(){
+        if($(this).attr('checked')){
+            $(".tc"+$(this).val()).show();
+        }else{
+            $(".tc"+$(this).val()).hide();
+        }
+        $(this).click(function(){
+            $(".tc").hide();
+            $(".tc"+$(this).val()+" .con label").addClass('active').removeClass('active');
+            $(".tc .con label").children('input').removeAttr("checked");
+            //$(".tc"+$(this).val()+" .con label").eq(0).addClass('active').children('input').attr("checked", 'true');
+            $(".tc"+$(this).val()).show();
+        });
+    })
+});
+if($(".protoLayer .con label img").attr('src')==""){
+    $(".protoLayer .con label img").css("display","none")
+}else{
+    $(".protoLayer .con label img").css("display","block")
+
+}
+</script>
+

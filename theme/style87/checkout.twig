@@ -1,0 +1,123 @@
+{% include 'public/theme/header.twig' %}
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/style/checkout.css" />
+<!-- END header resource -->
+<div class="panel_small">
+    {% include 'mob_checkout.twig' %}
+</div>
+<div class="panel_large">
+    {% include 'pc_checkout.twig' %}
+</div>
+
+
+<!-- footer resource -->
+{% include 'footer.twig' %}
+<script src="{{ THEME }}/js/checkout.js"></script>
+{% include 'public/theme/footer.twig' %}
+<script>
+    if('{{regions.code}}' == 'PHL'){
+        $('[name="state"]').change(function(event) {
+        var id = $(this).children().filter(':selected').attr('data-id');
+        loadCity(id);
+    });
+    $('[name="city"]').change(function(event) {
+        var id = $(this).children().filter(':selected').attr('data-id');
+        loadDistrict(id);
+    });
+
+    function loadstate(){
+        $.post('/region.php', { 'region_id': {{ regions.region_id }} }, function(data) {
+            var data = JSON.parse(data);
+                data.map(function(item, index){
+                    $('[name="state"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+                });
+            var id = $('[name="state"]').children().filter(':selected').attr('data-id');
+        });
+    }
+    function loadCity(id, callback){
+        $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+            $('[name="city"]').children().not(":eq(0)").remove();
+            $('[name="district"]').children().not(":eq(0)").remove();
+            var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        });
+    }
+    function loadDistrict(id){
+        $.post('/region.php', { 'yn_region_id': id }, function(data) {
+            $('[name="district"]').children().not(":eq(0)").remove();
+            var data = JSON.parse(data);
+            if( data.length == 0 ){
+                var newInput = $('[name="district"]').children().first();
+                $('select[name="district"]').children().remove();
+                $('select[name="district"]').append(newInput);
+            }else{
+                var newInput = '<select name="district"></select>';
+                $('input[name="district"]').before(newInput);
+                $('input[name="district"]').remove();
+                data.map(function(item, index){
+                    $('[name="district"]').append('<option value="'+item.name+'">'+item.name+'</option>');
+                });
+            }
+        });
+    }
+    loadstate();
+    }else{
+        loadstate();
+        $('[name="city"]').change(function (event) {
+            var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+            loadCity(id);
+        });
+        function loadstate() {
+            var region_id = '{{regions.region_id}}', regionCode = '{{regions.code}}';
+            if (regionCode == 'TW') {
+                $.post('/region.php', { 'region_id': region_id }, function (data) {
+                    var data = JSON.parse(data);
+                    data.map(function (item, index) {
+                        $('[name="city"]').append('<option value="' + item.name + '" data-id="' + item.id_region + '">' + item.name + '</option>');
+                    });
+                    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+                });
+            }
+        }
+        function loadCity(id, callback) {
+            $.post('/region.php', { 'yn_region_id': id }, function (data, textStatus, xhr) {
+                var districtFirst = $('[name="district"]').children().first();
+                $('[name="district"]').children().remove();
+                $('[name="district"]').append(districtFirst);
+                $('[name="district"]').val('');
+                var data = JSON.parse(data);
+                data.map(function (item, index) {
+                    $('[name="district"]').append('<option value="' + item.name + '" data-id="' + item.id_region + '">' + item.name + '</option>');
+                });
+            });
+        }
+    }
+	
+</script>
+
+<script type="text/javascript">
+    window.repeatlang = {
+        title: "{{lang.repeat_title}}",
+        prompt: "{{lang.repeat_prompt}}",
+        prompt_out: "{{lang.repeat_prompt_out}}",
+        confirm_order: "{{lang.repeat_confirm_order}}",
+        query_details: "{{lang.repeat_query_details}}",
+        time_d: "{{lang.time_d}}",
+        time_h: "{{lang.time_h}}",
+        time_m: "{{lang.time_m}}",
+        time_just: "{{lang.time_just}}"
+    }
+    window.SMSlang = {
+        'Rp': {
+            'title': "{{lang.title}}",
+            'sendto': "{{lang.sendto}}",
+            'take': "{{lang.take}}",
+            'if_no': "{{lang.if_no}}",
+            'click': "{{lang.click}}",
+            'resend': "{{lang.resend}}",
+            'wait': "{{lang.wait}}",
+            'wait_before': "{{lang.wait_before}}"
+        }
+    }
+</script>

@@ -1,0 +1,23 @@
+<div class="dt-section">
+    <div class="btn" id="addToCart">
+        <a href="javascript:void(0);" class="w-button btn-addToCart" data-cuckootag="buy_now" data-yahoo-js>{{ lang.buy_now }}</a>
+    </div>
+    <div class="btn">
+        <a href="javascript:void(0);" data-cuckootag="check_order" data-value="{{ identity_tag }}" class="inquiry">{{ lang.order_inquiry }}</a>
+    </div>
+    {{ yahoo_js|raw }}
+    {% if yahoo_js_trigger %}
+        <script type="text/javascript">
+            require(['jquery'], function($){
+                $('[data-yahoo-js]').click(function(){
+                    try {
+                        {{ yahoo_js_trigger|raw }}
+                    }
+                    catch(e){
+                        console.warn('yahoo js code not working');
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+</div>

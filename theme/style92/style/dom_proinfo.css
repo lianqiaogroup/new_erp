@@ -1,0 +1,15 @@
+.product-info p {
+  word-break: break-all;
+}
+.product-info img {
+  width: 100%;
+  max-width: 540px;
+  display: block;
+}
+.product-info video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlMjIvbGVzcy9kb21fcHJvaW5mby5sZXNzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGFBQ0M7RUFDQyxxQkFBQTs7QUFGRixhQUlDO0VBQ0MsV0FBQTtFQUNBLGdCQUFBO0VBQ0EsY0FBQTs7QUFQRixhQVNDO0VBQ0MsY0FBQTtFQUNBLFdBQUE7RUFDQSxZQUFBIiwic291cmNlc0NvbnRlbnQiOlsiLnByb2R1Y3QtaW5mbyB7XG5cdHAge1xuXHRcdHdvcmQtYnJlYWs6YnJlYWstYWxsXG5cdH1cblx0aW1nIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRtYXgtd2lkdGg6IDU0MHB4O1xuXHRcdGRpc3BsYXk6IGJsb2NrO1xuXHR9XG5cdHZpZGVvIHtcblx0XHRkaXNwbGF5OiBibG9jaztcblx0XHR3aWR0aDogMTAwJTtcblx0XHRoZWlnaHQ6IGF1dG87XG5cdH1cbn0iXSwiZmlsZSI6InN0eWxlMjIvbGVzcy9kb21fcHJvaW5mby5jc3MifQ== */

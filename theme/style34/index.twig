@@ -1,0 +1,174 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet">
+<!-- end header resource -->
+<section id="page-index">
+    <input id="region_code" value="{{ regions.code }}" type="hidden">
+	<div class="img_wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="swiper-pagination swiper-pagination-fraction"></div>
+	</div>
+	<div class="details">
+		<h1><span>{{ title }}</span></h1>
+		<div class="price">
+			<span>
+				{{ new_price_format.symbol_left }}
+		        {{ new_price_format.price_format }}
+		        {{ new_price_format.symbol_right }}
+			</span>
+			<span>
+				{{ new_price_format.symbol_left }}
+		        {{ new_price_format.market_price_format }}
+		        {{ new_price_format.symbol_right }}
+			</span>
+		</div>
+		<div class="time_wrap">
+			<span class="time_limit">{{ lang.time_limit }}</span>
+			<span class="timeWrap">
+				<span id='clock'>{{ lang.time_last }}</span>
+				<span id="timer">
+	                <span  id="h">10</span>
+	            	<span class="">:</span>
+	                <span id="m">00</span>
+	                <span class="">:</span>
+	                <span id="s">00</span>
+	          	</span>
+			</span>
+		</div>
+		<div class="service">
+			<div>{{ lang.returned_goods }}</div>
+			<div>{{ lang.free_yun }}</div>
+			<div>{{ lang.cash_on_delivery }}</div>
+		</div>
+	    <div class="choose_attr" data-cuckootag="buy_now" data-event="showAttributeLayer">
+	    	<h2>{{ lang.choose_attr }}</h2>
+	    </div>
+		<div class="product_info">
+			<h2>{{ lang.product_desc }}</h2>
+			<div class="m-img product-img">
+                {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+                 {% if regions.code == 'THA'  and lang.after_sales %}
+                <div class="after_sale">
+                    <div class="after_sale_title">{{ lang.after_sales }}</div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+                        </div>
+                    </div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+                        </div>
+                    </div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+                        </div>
+                    </div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+	    </div>
+	</div>
+	<footer>
+		<div class="left">
+			<div class="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</div>
+			<div class="kefu"  data-cuckootag="service" data-value="{{service_contact_id }}">{{ lang.service_online }}</div>
+		</div>
+		<div class="buy_now" data-cuckootag="buy_now" data-event="showAttributeLayer">
+			<div class="wrap" id="add">
+				<div>{{lang.buy}}</div>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+	</footer>
+	{% if regions.code == 'Rp' %}
+    <div style="padding:0 16px;font-size:14px;line-height:20px;">
+        <div>{{lang.return_goods_top}}</div>
+        <div>{{lang.return_goods_1}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_2}}</div>
+        <div>{{lang.return_goods_3}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_4}}</div>
+        <div>{{lang.return_goods_5}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_6}}</div>
+        <div>{{lang.return_goods_7}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_8}}</div>
+        <div>{{lang.return_goods_9}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_10}}</div>
+    </div>
+    {% endif %}
+</section>
+<section id="page-order" data-error="{{ lang.Th_titleattr }}">
+	<div class="title"><span></span>{{ lang.choose_pro }}</div>
+	{% include 'cmpt-guige.twig' %}
+</section>
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

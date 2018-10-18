@@ -1,0 +1,258 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/style.css" type="text/css" rel="stylesheet" />
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!--/page-->
+<section id="page-index" class="container">
+    <input id="region_code" value="{{ regions.code }}" type="hidden">
+    <header>
+        {% if has_home %}
+        <a href="/" class="goback"><img src="{{ THEME }}/images/detail-back.png" alt=""></a>
+        {% endif %}
+        <h1>{{ title }}</h1>
+        {% if has_home %}
+            <a href="/" class="home"><img src="{{ THEME }}/images/home.png" alt=""></a>
+        {% endif %}
+    </header>
+    <!--  -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom">
+            {% if photos %}
+                {% for p in photos %}
+                <span class="whiteicon"></span>
+                {% endfor %}
+            {% else %}
+                <span class="whiteicon"></span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!--  -->
+    <ul class="m-servicePolicy">
+        <li class="item"><i class="u-icon u-icon-servicePolicyRed"></i><span>{{ lang.free_yun }}</span></li>
+        <li class="item"><i class="u-icon u-icon-servicePolicyRed"></i><span>{{ lang.cash_on_delivery }}</span></li>
+    </ul>
+    <div class="dt-section">
+        <div class="m-detailBaseInfo">
+            <div class="info">
+                <div class="line2">
+                    <em class="retailPrice">
+                        {{ new_price_format.symbol_left }}
+                        {{ new_price_format.price_format }}
+                        {{ new_price_format.symbol_right }}
+                    </em>
+                    <del>
+                        {{ new_price_format.symbol_left }}
+                        {{ new_price_format.market_price_format }}
+                        {{ new_price_format.symbol_right }}
+                    </del> 
+                </div>
+                <div class="i-p-b" style="text-align: left;">
+                    <span class="soldPart">{{ lang.sales }}<span id="soldNum">{{ sales }}</span></span>
+                     <span class="percentBar" data-value='{{ sales }}'>
+                      <span id="progress"></span>
+                     </span>
+                    <span id="percentNum"></span>
+                </div>
+            </div>
+            <div class="specSelect">
+                <div class="m-listItem" id="val-sel">
+                    <div class="f-vc">
+                        <div class="inner"><span class="it" style="font-weight:normal;">{{ lang.choose }}</span></div>
+                    </div>
+                    <i class="icon u-icon u-address-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bTop">
+        <span class="bTitle active">{{ lang.product_info }}</span>
+        {% if comment  %}<span class="bTitle">{{ lang.comment }}</span>{% endif %}
+    </div>
+    <!--  -->
+    <div class="product-info tab-bar" id="product-info">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+    {% if comment  %}
+    <div class="tab-bar">
+        <div class="biao"> <h3>{{ lang.comment }}</h3></div>
+        <div style="padding: 8px;background: white">
+            <div class="picMarquee-top">
+                <div class="bd" data-fn="commentScroll" style="height: 300px; overflow: hidden">
+                    <ul class="picList">
+                        {% for a in comment %}
+                            <li data-groud="{{ a.comment_id }}" style="margin-bottom: 8px;height: auto;">
+                                {% if a.is_anonymous==1 %}
+                                    <span style="color: red;font-size: 14px">{{ lang.anonymous }}</span>
+                                {% else %}
+                                    <span style="color: red;font-size: 14px">{{ a.name }}</span>
+                                {% endif %}
+                                &nbsp;<span style="font-size: 14px;">{{ lang.satisfy }}：<span style="color: red;">{{ a.star }}</span></span>
+                                <div style="border-top:1px dotted #d0d6d6;margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                                <div class="msKeimgBox">
+                                    <ul>
+                                        {% for b in a.thumb %}
+                                            <li>
+                                                <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div class="buyinfo_hd">{{ lang.note_online }}</div>
+
+            <form id="big-i" name="form" action="#" method="post">
+                <div class="buyinfo_table">
+                    <div class="closeBtn" style=""></div>
+                     <div class="zaix">{{ lang.note_online }}</div>
+                    <div class="buyinfo_table_box">
+                        <table>
+                            <tr>
+                                <td class="table_td"><span class="require"></span>{{ lang.name }}:</td>
+                                <td class="table_cell"><input type="text" required="required" placeholder="{{ lang.name_placeholder }}" class="mui-input-clear input01" name="name" maxlength="10"></td>
+                            </tr>
+                            <tr>
+                                <td class="table_td"><span class="require"></span>{{ lang.phone }}:</td>
+                                <td class="table_cell"><input type="text" required="required" placeholder="{{ lang.phone_placeholder }}" class="input01" name="phone" maxlength="20"></td>
+                            </tr>
+                            <tr>
+                                <td class="table_td">{{ lang.satisfy }}:</td>
+                                <td class="table_cell">
+                                    <script type="text/javascript">
+                                        function rate(obj,oEvent){
+                                            var imgSrc = '{{ THEME }}/images/star2.png';
+                                            var imgSrc_2 = '{{ THEME }}/images/star.png';
+                                            if(obj.rateFlag) return;
+                                            var e = oEvent || window.event;
+                                            var target = e.target || e.srcElement;
+                                            var imgArray = obj.getElementsByTagName("img");
+                                            for(var i=0;i<imgArray.length;i++){
+                                                imgArray[i]._num = i;
+                                                imgArray[i].onclick=function(){
+                                                    if(obj.rateFlag) return;
+                                                    //alert(this._num+1);
+                                                    var inputid=this.parentNode.previousSibling
+                                                    inputid.value=this._num+1;
+                                                }
+                                            }
+                                            if(target.tagName=="IMG"){
+                                                for(var j=0;j<imgArray.length;j++){
+                                                    if(j<=target._num){
+                                                        imgArray[j].src=imgSrc_2;
+                                                    } else {
+                                                        imgArray[j].src=imgSrc;
+                                                    }
+                                                    target.parentNode.onmouseout=function(){
+                                                        var imgnum=parseInt(target.parentNode.previousSibling.value);
+                                                        for(n=0;n<imgArray.length;n++){
+                                                            imgArray[n].src=imgSrc;
+                                                        }
+                                                        for(n=0;n<imgnum;n++){
+                                                            imgArray[n].src=imgSrc_2;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                    </script>
+                                    <input type="hidden" name="star" value="0"><p onmouseover="rate(this,event)" id="img_1">
+                                        <img src="{{ THEME }}/images/star.png"><img src="{{ THEME }}/images/star.png"><img src="{{ THEME }}/images/star.png"><img src="{{ THEME }}/images/star.png"><img src="{{ THEME }}/images/star.png">
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table_td">{{ lang.note }}:</td>
+                                <td class="table_cell">
+                                    <textarea placeholder="{{ lang.note_content }}" name="content"  class="textarea_style"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                            <td class="table_td" style="padding-top:8px;">{{ lang.upimage }}:</td>
+                                <td class="table_cell" style="padding-top:10px;">
+                                    <input id="file" type="file" name="file" class="upimage">
+                                    <div class="file_imgs"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="tj">
+                                    <input id="btnAppraise" type="submit" name="Submit" class="input_btn01" value="{{ lang.submit_comment }}" style="color:white">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    {% if regions.code == 'Rp' %}
+        <div style="padding:0 16px;font-size:14px;line-height:20px;">
+            <div>{{lang.return_goods_top}}</div>
+            <div>{{lang.return_goods_1}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_2}}</div>
+            <div>{{lang.return_goods_3}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_4}}</div>
+            <div>{{lang.return_goods_5}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_6}}</div>
+            <div>{{lang.return_goods_7}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_8}}</div>
+            <div>{{lang.return_goods_9}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_10}}</div>
+        </div>
+    {% else %}
+    <div class="User_notes" style="margin-top: 10px">
+        <h2 class="notes">{{lang.user_notes}}</h2>
+        <div class="note_text">{{ lang.user_fb }}</div>
+        <div class="note_title">{{ lang.user_note1 }}</div>
+        <!-- <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div> -->
+        <div class="note_title">{{ lang.user_note2 }}</div>
+        <div class="note_text">{{ lang.user_note2_1 }}</div>
+        <div class="note_title">{{ lang.user_note3 }}</div>
+        <div class="note_text">1.{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+        <div class="note_text">2.{{ lang.user_note4 }}</div>
+        <div class="note_text">{{ lang.user_note4_1 }}</div>
+        <div class="note_title">{{ lang.user_note4_2 }}</div>
+        <div class="note_title">{{ lang.user_note4_3 }}</div>
+        <div class="note_text">{{ lang.user_note4_4 }}</div>
+    </div>
+    {% endif %}
+    <footer class="footer">
+        <a href="javascript:;" class="left" data-cuckootag="service" data-value="{{ service_contact_id }}"></a>
+        <div class="right">
+            <div class="m-table">
+                <div class="tr">
+                    <div class="td" id="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">
+                        <img src="{{ THEME }}/images/search.png">{{ lang.order_quality }}
+                    </div>
+                    <div class="td"><a href="javascript:void(0);" id="val-selbtn" class="w-button w-button-block btn-addToCart" data-cuckootag="buy_now" data-event="showLayer">{{ lang.buy_now }}</a></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--  -->
+</section>
+<section id="page-order" class="container" data-error="{{ lang.Th_titleattr }}">
+    {% include 'cmpt-guige.twig' %}
+</section>
+<i class="m-goToTop" style="display: inline;"></i>
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

@@ -1,0 +1,257 @@
+@color:#a68a62;
+@import 'cmpt-guige.less';
+html,body,h1,h5{margin:0;padding:0}
+html{
+	background:#f1f1f1;
+}
+body{
+	max-width:640px;
+	margin:0 auto 50px;
+	background:#fff;
+}
+button{
+	background:none;
+	border:none;
+	outline:none;
+}
+#POP800_PANEL_DIV{
+	display:none;
+}
+.swiper-pagination{
+	padding:4px 14px;
+	width:auto !important;
+	background:@color;
+	color:#fff;
+	border-top-left-radius:14px;
+	border-bottom-left-radius:14px;
+	left:auto !important;
+	right:0;
+	bottom:4% !important;
+}
+.swiper-slide{
+	font-size:0;
+}
+.details{
+	padding:0 4%;
+}
+h1{
+	font-size:15px;
+	font-weight:normal;
+	margin:4% 0;
+}
+.top_price{
+	font-size:16px;
+	font-weight:bold;
+	color:#a6885f;
+	.pre_price{
+		font-size:12px;
+		font-weight:500;
+		margin-left:4px;
+		text-decoration:line-through;
+	}
+	+ div{
+		position:relative;
+		margin:10px 0;
+	}
+}
+.stars{
+	font-size:0;
+	span{
+		width:12px;
+		height:12px;
+		display:inline-block;background:url(../images/star.png) no-repeat;
+		background-size:12px;
+		margin-right:2px;
+	}
+}
+.special{
+	font-size:0;
+	position: absolute;
+    top: -17px;
+    right: 0;
+	span{
+		color:@color;
+		display:inline-block;
+		padding:4px 12px;
+		border:1px solid @color;
+		border-radius:2px;
+		font-size:14px;
+		&:first-child{
+			margin-right:10px;
+		}
+	}
+}
+.time_wrapper{
+	background:#f4f4f4;
+	font-size:0;
+	padding:2%;
+	position:relative;
+	.sales{
+		font-size:13px;
+		display:inline-block;
+		vertical-align:middle;
+		line-height:22px;
+		div{
+			span{color:#a68862;}
+		}
+	}
+	.timeWrap{
+		font-size:14px;
+	    line-height: 14px;
+	    position: absolute;
+	    top: 50%;
+	    margin-top: -7px;
+	    right: 2%;
+	    #timer{
+	    	font-size:0;
+	    	span{
+	    		font-size:14px;
+	    	}
+	    }
+	    #h,#m,#s{
+			padding:2px 4px;
+			color:#fff;
+			background:#000;
+			border-radius:4px;
+	    }
+	}
+}
+.service{
+	color:@color;
+	font-size:0;
+	div{
+		font-size:14px;
+		padding-top:48px;
+		display:inline-block;
+		width:33%;
+		text-align:center;
+		&:nth-child(1){
+			background:url(../images/free.png) no-repeat center 14px;
+			background-size:28px;
+		}
+		&:nth-child(2){
+			background:url(../images/huo.png) no-repeat center 14px;
+			background-size:28px;
+		}
+		&:nth-child(3){
+			background:url(../images/7day.png) no-repeat center 14px;
+			background-size:28px;
+		}
+	}
+}
+.bTitle{
+	font-size:0;
+	span{
+		width:31%;
+		font-size:15px;
+		text-align:center;
+		color:@color;
+		display:inline-block;
+		height:42px;
+		line-height:42px;
+		box-shadow:2px 2px 10px #eee8e0;
+		margin:20px 3.5% 30px 0;
+		border-radius:4px;
+		&:last-child{
+			margin-right:0;
+		}
+		&.select{
+			box-shadow:none;
+			background:@color;
+			color:#fff;
+		}
+
+	}
+}
+
+.product_info{
+	img{
+		max-width:100% !important;
+		height: auto !important;
+	}
+	video{
+		width:100%;
+		height:auto;
+	}
+	.pinlun_content{
+		font-size:14px;
+		display:none;
+		.msKeimgBox{
+			font-size:0;
+		}
+		.hidden{
+			display:none;
+		}
+	}
+}
+footer{
+	position:fixed;
+	width:100%;
+	max-width:640px;
+	bottom:0;
+	box-shadow:4px 0 10px @color;
+	font-size:0;
+	z-index:10;
+	div{
+		display:inline-block;
+		font-size:14px;
+		background:@color;
+		height:44px;
+		line-height:44px;
+		width:35%;
+		text-align:center;
+		vertical-align:top;
+	}
+	.totle_price{
+		background:#fff;
+		width:65%;
+		color:@color;
+		text-indent:4%;
+		text-align:left;
+		font-size:0;
+		span{
+    		font-size: 14px;
+    		&:nth-child(2){
+    			padding-left:4%;
+    		}
+		}
+		.kefu{
+			display: inline-block;
+		    width: 44px;
+		    height: 32px;
+		    vertical-align: top;
+		    margin-top:6px;
+		    border-right: 1px solid #a68a62;
+		    background:url(../images/kefu2.png) no-repeat center;
+		    background-size:18px;
+		}
+	}
+	button{
+		color:#fff;
+		height:44px;
+		line-height:44px;
+	}
+}
+.title{
+	padding:16px 4%;
+	background:#fff;
+	.back{
+		float:left;
+		width:8px;
+		height:8px;
+		border-left:1px solid #222;
+		border-bottom:1px solid #222;
+		transform:rotate(45deg);
+		-webkit-transform:rotate(45deg);
+		margin:3px -8px 0 0;
+
+	}
+	.conirm{
+		width:100%;
+		text-align:center;
+		font-size:16px;
+		line-height:16px;
+	}
+}
+.User_notes{padding:2%;text-indent:1rem;line-height:26px;font-size:14px;}
+.notes{font-weight: normal;text-align: center;}

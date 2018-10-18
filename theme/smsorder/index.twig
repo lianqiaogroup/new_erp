@@ -1,0 +1,67 @@
+<style>
+    table,table tr th, table tr td { border:1px solid #0094ff; }
+    table {margin: 0 auto; width: 1000px; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse;}   
+    #querysms{margin: 0 auto; width: 1000px;}
+    .date { width: 200px; padding: 5px; font-family: Arial, Helvetica, sans-serif;}
+</style>
+<link rel="stylesheet" href="http://admin.stosz.com/build/css/ion.calendar.css">
+<form name="querysms" id="querysms" action="/sms.php" method="get">
+	<input type="" name="start_date" class="date" placeholder="请选择日期">起始日期
+	<input type="" name="end_date" class="date" placeholder="请选择日期">结束日期
+	<input type="button" value="查询" id="toquery">
+</form>
+<!-- script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script -->
+<script src='http://libs.baidu.com/jquery/1.10.2/jquery.min.js'></script>
+<script src="http://admin.stosz.com/build/js/moment.min.js"></script>
+<script src="http://admin.stosz.com/build/js/moment.zh-cn.js"></script>
+<script src="http://admin.stosz.com/build/js/ion.calendar.min.js"></script>
+<script>
+$(document).ready(function() {
+	$('.date').each(function(){
+		$(this).ionDatePicker({
+			lang: 'zh-cn',
+			format: 'YYYY-MM-DD'
+		});
+	});
+});
+$(function(){
+	// $('.date').each(function(){
+	// 	$(this).ionDatePicker({
+	// 		lang: 'zh-cn',
+	// 		format: 'YYYY-MM-DD'
+	// 	});
+	// });
+});
+</script>
+<table>
+	<tr>
+		<td>产品id</td>
+		<td>产品链接</td>
+		<td>产品短信发送总次数</td>
+		<td>产品短信验证成功次数</td>
+		<td>产品短信验证成功率</td>
+	</tr>
+{% for p in  products %}
+	<tr>
+		<td>{{p.product_id}}</td>
+		<td><a href="http://{{p.domain}}/{{p.identity_tag}}">{{p.domain}}/{{p.identity_tag}}</a></td>
+		<td>{{p.times}}</td>
+		<td>{% if p.succ_times == 0 %} 0 {% else %} {{p.succ_times}} {% endif %} </td>
+		<td>{% if p.times == 0 %} 0 {% else %} {{(p.succ_times * 10000  // p.times) / 100}}% {% endif %}</td>
+	</tr>
+{% endfor %}
+	<tr>
+	<td>不区分产品总计</td>
+	<td></td>
+	<td>{{all}}</td>
+	<td>{{succ}}</td>
+	<td>{% if all == 0 %} 0 {% else %} {{(succ  * 10000  //  all) / 100}}% {% endif %}</td>
+		
+	</tr>
+</table>
+
+<script type="text/javascript">
+$('#toquery').click(function(){
+	$("#querysms").submit();
+});
+</script>

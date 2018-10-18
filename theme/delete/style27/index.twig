@@ -1,0 +1,146 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section id="page-index" class="container">
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-fraction"></div>
+    </div>
+    <div class="message">
+    	<div id="fahuo">
+    		<span>{{ lang.looking_1 }}{{ sales }}{{ lang.looking_2 }}</span>
+    	</div>
+    	<div id="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);"></div>
+    </div>
+    <!--  -->
+    <div class="detial">
+        <div class="buyinfo_post">
+        	<div class="price b_price">
+        		<span class="top_price">{{ currency_code }}{{price}}</span>
+        		<span class="pre_price">{{ lang.market_price }}&nbsp;{{ currency_code }}{{ market_price }}</span>      		
+        	</div>
+        	<div class="timeWrap b_timeWrap">
+        		<span id='clock'>{{ lang.time_over }}</span>
+        		<span id="timer">
+                   <span  id="h">10</span>
+                    <span class="">:</span>
+                    <span id="m">00</span>
+                    <span class="">:</span>
+                    <span id="s">00</span>
+              </span>
+              <span class="process" data-value='{{ sales }}'>
+              	<span data-value='{{ stock }}'></span>
+              </span>
+        	</div>
+        	<div class=" b_triangle"></div>
+            <div style="clear:both"></div>
+        </div>
+        <h1 class=" b_title">{{ title }}</h1>
+        <div class="ensure">
+            <ul class="j_product_info">
+                <li class="j_product_icon b_ensure">{{ lang.tag_1 }}</li>
+                <li class="j_product_icon b_ensure">{{ lang.tag_2 }}</li>
+            </ul>
+            <div style="clear:both"></div>
+        </div>
+        <div class="arrival_time" data-text="{{ lang.arride }}">
+        	{{ lang.arride }}
+        </div>
+        <div class="service b_service">
+        	<ul>
+        		<li>{{ lang.tag_3 }}</li>
+        		<li>{{ lang.tag_4 }}</li>
+        		<li>{{ lang.tag_5 }}</li>
+        	</ul>
+        	<div class="right"></div>
+	        <div class="service_detail">
+	        	<h3>{{ lang.tips }}</h3>
+	        	<p>{{ lang.warming|raw }}</p>
+	        </div>
+        	<div style="clear:both"></div>
+        </div>
+    </div>  
+    <!--  -->
+    <div class="product_info">
+        <div class="m-img">
+            {{ content|raw }}
+            <p class="top"><a></a></p>
+        </div>
+        {% if comment %}
+            <div class="detail-block" id="detial-appraise">
+                <h4>{{ lang.new_pinlun }}</h4>
+                <div id="mq" data-fn="commentScroll">
+                    <div>
+                        {% for a in  comment %}
+                            <div class="appr-title mqc">
+                                {% if a.is_anonymous %}
+                                    <span style="color:red; margin:0px 3px">{{ lang.anonymous }}</span>
+                                {% else %}
+                                    <span style="color:red; margin:0px 3px">{{ a.name }}</span>
+                                {% endif %}
+                                <span>满意度：<font color="red">★★★★★</font></span><br/>
+                            </div>
+                            <div class="mqc">
+                                <p><span style="font-family:宋体">{{ a.content }}</span><span style="font-family:宋体"></span></p>
+                            </div>
+                            <div class="msKeimgBox">
+                                <ul>
+                                    {% for b in a.thumb %}
+                                        <li>
+                                            <img src="{{ b.thumb }}" width="75" height="75" />
+                                        </li>
+                                    {% endfor %}
+                                    <div style="clear:both;"></div>
+                                </ul>
+                                <div class="mskeTogBtn"></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="mskeLayBg"></div>
+                <div class="mskelayBox">
+                    <div class="mske_html">
+
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        {% endif %}
+    </div>
+</section>
+<section id="page-order" class="black container">
+    {% include 'cmpt-guige.twig' %}
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+
+<footer class="footer b_footer">
+    <ul>
+        <li class="price_lost">
+        	<span>{{ lang.last }}<span>{{ stock }}</span>件</span>
+            
+        </li>
+        <li class="buy_now">
+            <button id="add" class="w-button w-button-block">{{ lang.qiang }}</button>
+            <span></span>
+        </li>
+    </ul>
+    <div style="clear:both;"></div>
+</footer>
+
+
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

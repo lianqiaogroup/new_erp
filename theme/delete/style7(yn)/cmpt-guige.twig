@@ -1,0 +1,95 @@
+<div style="margin-bottom: 60px;" id="ui-paramselect">
+    <div class="dt-paramselect">
+        <form id="form" name="form" method="post" action="order.php" onsubmit="return postcheckGuige()">
+            <input type="hidden" name="orderid" id="orderid" value="">
+            <input type="hidden" name="product_id" value="{{ product_id }}">
+            <input type="hidden" name="act" id="act" value="getAttrPrice">
+            <!--  -->
+            <div class="info-con" style="padding-top:15px;">
+                <div class="left f-fl">
+                    <!--产品属性图-->
+                    <img id="attrimg" src="{{ thumb }}">
+                </div>
+                <div class="right f-fl">
+                    <div class="con" style="padding-top:5px;">
+                        <p class="price">
+                            <span>價　　格：</span><span class="money">{{ currency_code }} <span currentprice>0</span></span>
+                        </p>
+                        <p class="sku">
+                            <span style="display: inline-block;">產品名稱：</span>
+                            <span class="it" style="line-height: 21px;">{{ title }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--产品目录-->
+            <div class="u-format" id="comb" data-price="">
+                <br>
+                <div class="tt"><em>*</em>產品</div>
+                <div class="package">
+                {% if combo %}
+                    {% for c in combo %}
+                    <div class="tab" rel="1" data-price="{{ c.price }}">
+                        <input type="hidden" name="combo_id" value="{{ c.combo_id }}" />
+                        <span>{{ c.title|raw }} {{ currency_code }}{{ c.price }}<i class="u-icon u-spec-sel"></i></span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="tab tab-sel" rel="1" data-price="{{ price }}">
+                        <input type="hidden" name="combo_id" value="0" checked="chekced" />
+                        <span>
+                            {{ title }} {{ currency_code }}{{ price }}
+                            <i class="u-icon u-spec-sel"></i>
+                        </span>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+            <!--产品属性-->
+            {% for o in  options %}
+            <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                <div class="tt"><em>*</em>{{ o.attr_group_title|raw }}</div>
+                <div class="con">
+                    {% for key,attr in o.attr %}
+                    <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                        <span>{{ attr.name|raw }}</span>
+                        <i class="u-icon u-spec-sel"></i>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+
+            <!--产品的所有属性-->
+            <input type="hidden" name="heavn" class="attr_id" value="">
+            <input type="hidden" name="attrnum" value="2">
+            <!--数量-->
+            <div class="u-fornum">
+                <div class="tt"><em>*</em>數量</div>
+                <div class="con">
+                    <div class="m-selnum dr">
+                    <div onclick="minnumber()" class="less z-dis"></div>
+                    <div class="textWrap">
+                        <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                    </div>
+                    <div onclick="addnumber()" class="more"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PROTOTYPE -->
+            <footer class="m-orderFt">
+                <div style="float: left;" class="detailback"><i class="u-icon u-detail-back"></i></div>
+                <button class="btn w-button" id="linkto">確定</button>
+                <div class="actualPrice">
+                    <label class="label">金額:&nbsp;</label>
+                    <input type="hidden" name="zfbprice" value="22788">
+                    <input type="hidden" name="price" value="22788">
+                    <span id="price" class="value">{{ price }}</span><span class="decimal">元</span>
+                </div>
+            </footer>
+        </form>
+    </div>
+</div>
+<!--  -->
+<script src="{{ THEME }}/js/guige.js"></script>

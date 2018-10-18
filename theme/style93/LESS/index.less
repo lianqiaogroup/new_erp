@@ -1,0 +1,194 @@
+@import 'guide.less';
+html{
+	background:#f1f1f1;
+}
+body{
+	width:100%;
+	max-width:640px;
+	margin:0 auto;
+	background:#fff;
+	color:#383838;
+    height: 100%;
+    word-wrap: break-word;
+}
+img{
+	width:100%;
+	vertical-align:top;
+}
+video{
+	width:100%;
+	height:auto;
+}
+button{
+	border:none;
+	background:none;
+	outline:none;
+}
+h1,h3,h5{
+	margin:0;
+	padding:0;
+}
+.gree{
+    font-size: 15px;
+    color: #fff;
+    padding: 0 10px;
+    background: #44BA54;
+}
+.img_wrap{
+	position:relative;
+	.discount{
+		position:absolute;
+		width:44px;
+		height:54px;
+		line-height:44px;
+		color:#fff;
+		font-size:12px;
+		text-align:center;
+		top:0;
+		right:18px;
+		background:url(../images/top.png) no-repeat;
+		background-size:44px;
+		z-index:10;
+	}
+}
+@import 'dom_title.less';
+@import 'dom_price.less';
+@import 'dom_sales.less';
+@import 'dom_valsel.less';
+@import 'dom_proinfo.less';
+@import 'dom_comment.less';
+.fLogin{
+	width:100%;
+	height:100%;
+	position:fixed;
+	background:rgba(0, 0, 0, 0.5);
+	top:0;
+	left:0;
+	z-index:11;
+	font-size:13px;
+	display:none;
+	.close{
+		width:24px;
+		height:24px;
+		position:absolute;
+		top:0;
+		right:10px;
+		font-size:24px;
+	}
+	>div{
+		background:#fff;
+		width:280px;
+		height:140px;
+		margin:calc(~'50vh - 100px') auto 0;
+		padding-top: 40px;
+    	text-align: center;
+    	position:relative;
+    	a{
+    		margin: 20px 0;
+    		display:inline-block;
+    		color:#fff;
+    		background:#3e5998;
+    		padding:5px 16px;
+    	}
+	}
+}
+
+.footer{
+	position:fixed;
+	bottom:10px;
+	width:100%;
+	max-width:640px;
+	font-size:0;
+	div{
+		font-size:16px;
+		border-radius:20px;
+		height:40px;
+		vertical-align:middle;
+		line-height:40px;
+		text-align:center;
+	}
+	.buy_now{
+		button{
+			background:#BB9F68;
+			color:#fff;
+			height:40px;
+			width:100%;
+			border-radius:20px;
+		}
+	}
+	.inquiry{
+		width:28%;
+		margin:4%;
+		background:#f84058;
+		color:#fff;
+	}
+}
+
+#page-order{
+	width:100%;
+	max-width:640px;
+    position: absolute;
+    top: 0;
+    z-index:11;
+	background:#fff;
+	min-height:100vh;
+	display:none;
+	>.tt{
+		text-align:center;
+		box-shadow:0 2px 6px #f6f6f6;
+		margin-bottom:5px;
+		height:44px;
+		line-height:44px;
+		position:relative;
+		.back{
+			width:10px;
+			height:10px;
+			border-bottom:2px solid;
+			border-left:2px solid;
+			-webkit-transform:rotate(45deg);
+			transform:rotate(45deg);
+			position:absolute;
+			left:6%;
+			top:16px;
+		}
+	}    
+}
+.expand{
+	margin-bottom: 25px;
+	.left,.right{
+		width: 50%;
+		float: left;
+		text-align: center;
+		font-size: 16px;
+		color: #383838;
+	}
+	&:after{
+		content: " ";
+		display: block;
+		clear: both;
+	}
+	.inquiry{
+		&:before{
+			content: " ";
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 40%;
+			margin-right: 10px;
+			background: #44ba54;
+			vertical-align: middle;
+		}
+	}
+	.userev{
+		&:before{
+			content: " ";
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 40%;
+			margin-right: 10px;
+			background: #ee2b56;
+			vertical-align: middle;
+		}
+	}
+}

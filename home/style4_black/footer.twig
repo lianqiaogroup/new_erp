@@ -1,0 +1,16 @@
+{% if article %}
+<footer class="ui-footer ui-footer-stable ui-border-t text-center">
+    <ul class="ui-row">
+        {% for a in article %}
+        <li class="ui-col ui-col-100">
+            <a href="/article/{{ a.article_id }}">{{ a.title }}</a>
+        </li>
+        {% endfor %}
+        <li class="ui-col ui-col-100" style="color:#999;font-size:13px;border-top: 1px solid rgba(88, 88, 88, 0.76);padding-top:10px;">การบริการลูกค้า ：{{ info.mail }}</li>
+    </ul>
+    <div style="font-size:12px;background:#d7d7d7;line-height:26px;color:rgba(34, 34, 34, 0.78)">Copyright 2017 ลิขสิทธิ์</div>
+</footer>
+<!--div class="pageTop" style="opacity: 1;"><a href="#gHeader" class="pageTopLink"><i class="ui-icon-gototop"></i></a></div-->
+{% endif %}
+{{ google_js|raw }}
+<!-- <p>footer</p> -->

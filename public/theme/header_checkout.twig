@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="320" name="MobileOptimized" />
+        <meta content="telephone=no" name="format-detection" />
+        <title>{{ title }}</title>
+        <meta name="keywords" content="{{ title }}" />
+        <meta name="description" content="{{ title }}" />
+        <script src="public/javascript/require.js?v2" alt={{ THEME }}></script>
+        <script src="http://imgcn.stosz.com/static/javascript/jquery-2.2.3.min.js"></script>
+        {% include '/public/theme/facebook_pixel_common.twig' %}
+        {% include '/public/theme/test_google.twig' %}
+    </head>
+    {% if regions.region_name == "جمهوری اسلامی ایران" or regions.region_name=="سلطنة عُمان" or regions.region_name=="قطر" or regions.region_name=="مملكة عربية سعودية" or regions.code == 'OMN' or regions.code == 'QAT' or regions.code == "SAU" or regions.code == "IRN" %}
+    <style>
+        input,select,textarea{direction:rtl !important;text-align:right !important;}
+        .regions{text-align:right !important;padding-right:16px;}
+        html body{font-family:Droid Arabic Naskh,Tahoma,Arial,Sans-serif;}
+        .explain{direction:rtl !important;text-align:right !important;}
+    </style>
+    {% endif %}
+<body>

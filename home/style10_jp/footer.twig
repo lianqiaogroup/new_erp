@@ -1,0 +1,18 @@
+<footer class="footer bg_article">
+	
+	{% if article %}
+		<div class="article">
+			<ul>
+				{% for a in article %}
+					<li><a href="/article/{{ a.article_id }}">{{ a.title }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+	<div class="footer-cont-left">
+		<h3>ようこそ、楽天市場店へ</h3>
+		
+		<div>日頃のご愛顧、大変感謝申し上げます。今後も皆様にご満足頂けるよう努めて参ります。</div>
+	</div>
+</footer>
+{{ google_js|raw }}

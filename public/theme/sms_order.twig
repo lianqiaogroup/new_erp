@@ -1,0 +1,145 @@
+<link rel="stylesheet" type="text/css" href="/public/style/page-checkout.css">
+<div id="details">
+    <div class="header">
+        <a class="goback" href="/{{ identity_tag}}">{{ lang.click_back_home }}</a>
+    </div>
+	<div class="explain">
+	    <h1>{{ lang.order_title }}</h1>
+	    <p>{{ lang.warming|raw }}</p>
+	</div>
+	<form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+		<input type="hidden" name="combo_id" value="">
+		<input type="hidden" name="token" value="{{ token }}">
+		<input type="hidden" name="num">
+		<input type="hidden" id="act" name="act" value="getAttrPrice">
+		<input type="hidden" name="province" value="{{ regions.region_id }}">
+		<input type="hidden" name="province_code" value="{{ regions.code }}">
+		<input type="hidden" name="vercode" value="">
+        <input type="hidden" name="orderId" value="">
+		<div class="table">
+			{% if regions.code == "THA" %}<!--泰国-->
+				{# for 泰国 #}
+				{% include 'public/theme/order_tha.twig' %}
+			{% elseif regions.code == "TW" or regions.code == "HK" or regions.code == "MOP" %}
+				{# for 台湾 香港 澳门 #}
+				{% include 'public/theme/order_tw.twig' %}
+			{% endif %}
+		</div>
+		<div class="this_box">
+			{% if combo %}
+			{% for c in combo %}
+		    <div class="m-orderItem" id="goods_{{ c.combo_id }}" style="display: none;">
+		    	<div class="row-2 flexbox">
+			    	<div class="goodImg">
+			    		{% if c.thumb %}
+			    			<img src="{{ c.thumb }}" width="100%" height="100%">
+			    		{% else %}
+			    			<img src="{{ thumb }}" width="100%" height="100%">
+			    		{% endif %}
+			    	</div>
+			    	<div class="goodInfo flex">
+				    	<div class="goodName">{{ title }}</div>
+				    	<div class="goodName ti">
+				    		<span>{{ c.title }}</span>
+				    		<div class="goodStatus f-fr"><span>{{ lang.num }} : </span><span class="number"></span></div>
+				    	</div>
+			    	</div>
+		    	</div>
+		    </div>
+	        <!-- 套餐包含产品 -->
+	        <div class="m-goodItems" style="display:none;" id="showComboProduct_{{ c.combo_id }}">
+	        {% for g in c.goods %}
+	        	<div class="row-2 flexbox">
+		        	<div class="goodImg">	
+		        		<img class="attrimg" src="{{ g.thumb }}">
+		        	</div>
+		        	<div class="goodInfo flex u3">
+			        	<div class="goodName">
+			        		<span>{{ g.title }}</span>
+			        		<div class="goodStatus">
+			        		{% for a in g.options %}	
+			        		{% for key,attr in a.attr %}
+			        		<span optionsKey data-id="{{ g.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}"  attr_img="{{ attr.thumb }}" class="attr" style="display: none;">&nbsp;&nbsp;{{ attr.name|raw }}</span>
+			        		{% endfor %}
+			        		{% endfor %}
+			        		</div>
+			        	</div>
+		        	</div>
+	        	</div>
+	        {% endfor %}
+	        </div>
+	        {% endfor %}
+	        <div class="notic_show_combo_product action" id="showComboProduct_triggle2" rel="{{ lang.closeComboProducts }}" rel_s="{{ lang.openComboProducts }}">
+	            <span class="uu"><span id="lang">{{ lang.openComboProducts }}</span><img src="/public/image/down14px.png" alt=""></span>
+	        </div>
+	        <!-- 套餐包含产品 -->
+	        {% else %}
+	        <div class="m-orderItem m-padbot" id="goods">
+		    	<div class="row-2 flexbox">
+			    	<div class="goodImg">
+			    		<img src="{{ thumb }}" width="100%" height="100%">
+			    	</div>
+			    	<div class="goodInfo flex">
+				    	<div class="goodName">{{ title }}</div>
+				    	<div class="goodName ti">
+				    	{% for a in options %}
+				    		{% for key,attr in a.attr %}
+				    			<span optionsKey data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name }}</span>
+				    		{% endfor %}
+				    	{% endfor %}
+				    	<div class="goodStatus f-fr"><span>{{ lang.num }} : </span><span class="number"></span></div>
+				    	</div>
+			    	</div>
+		    	</div>
+		    </div>
+	        {% endif %}
+		</div>
+	    <ul class="row-2" id="list_cost">
+	    	<li>
+	            <span class="tips">{{ lang.freight }} </span><span class="tips2">
+	            {% if currency_prefix == 1 %}
+                    {{ currency_code }}0.00
+                {% endif %}
+                {% if currency_prefix == 0 %}
+                    0.00{{ currency_code }}
+                {% endif %}
+                </span>
+	        </li>
+	        <li>
+	            <span class="tips">{{ lang.total }} </span>
+	            {% if currency_prefix == 1 %}
+                    <span class="tips2" id="payment_amount"></span>
+	            	<span class="tips2">{{ currency_code }}</span>
+                {% endif %}
+                {% if currency_prefix == 0 %}
+		            <span class="tips2">{{ currency_code }}</span>
+		            <span class="tips2" id="payment_amount"></span>
+                {% endif %}
+	        </li>
+	        <li>
+	            <span class="tips">{{ lang.pay }} </span>
+	            <span class="tips2 total" style="color: #ff5a5f;font-weight: bold;">
+	            {% if currency_prefix == 1 %}
+                    {{ currency_code }}
+	            	<span id="total"></span>
+                {% endif %}
+                {% if currency_prefix == 0 %}
+	            	<span id="total"></span>{{ currency_code }}
+                {% endif %}
+	            </span>
+	        </li>
+	    </ul>
+		<input type="hidden" name="product_id" value="{{ product_id }}">
+	    <button type="submit" name="Submit" class="btn" data-wating-text="{{ lang.order_submiting }}">{{ lang.order_sure }}</button>
+    </form>
+</div>
+<div class="timetips">
+    <ul class="flexbox">
+        <li class="flex" style="padding-left:16px;"><img src="/public/image/7day.png" alt="">{{ lang.returned_goods }}</li>
+        <li class="flex" style="padding-right:16px;"><img src="/public/image/huodao.png" alt="">{{ lang.cash_on_delivery }}</li>
+    </ul>
+</div>
+<!--div style="display: none;">{{ lang.mobile_error }}</div-->
+<img id="loading" src="/public/image/loading.png">
+<script src="/public/javascript/sms_order.js"></script>
+<div class="5a_la" style="display: none;">{{ la|raw }}</div>

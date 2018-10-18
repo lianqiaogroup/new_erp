@@ -1,0 +1,27 @@
+.detail{
+	padding:0 13px;
+	.service{
+		font-size:12px;
+		div{
+			padding-left:66px;
+			height:34px;
+			line-height:34px;
+			background:url(../images/bg.png) no-repeat 27px center;
+			background-size:20px;
+			&:nth-child(1){
+				background-position:27px 12px;
+			}
+			&:nth-child(3){
+				background-position:27px -48px;
+			}
+		}
+		@media screen and (max-width:500px) {
+			&.rub{
+				div{
+					margin-left:-18px;
+					text-indent:-10px;
+				}
+			}
+		}
+	}
+}

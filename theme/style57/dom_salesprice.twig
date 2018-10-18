@@ -1,0 +1,23 @@
+<div class="detail">
+	<div class="sales">
+		<div class="price">
+			{{ lang.activity_price }}：
+			<span>
+				{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+        		{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}/{{ lang.piece }}</span>
+		</div>
+		<div class="discount">
+			<div>{{ lang.discount }}：<span class="number">
+				{% if regions.code == 'SG' %}
+				{{ (price/market_price*100)|number_format(0) }}%
+				{% else %}
+				{{ (price/market_price*10)|number_format(1) }}
+				{% endif %}
+				</span>{{ lang.discount_prefix }}</div>
+			<div class="right">
+				<span>{{ lang.for_sell2 }}</span>
+				<span>{{ lang.for_sell }}</span>
+			</div>
+		</div>
+	</div>
+</div>

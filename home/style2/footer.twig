@@ -1,0 +1,15 @@
+{% if article %}
+<footer class="ui-footer ui-footer-stable ui-border-t text-center">
+    <ul class="ui-row">
+        {% for a in article %}
+        <li class="ui-col ui-col-100">
+            <a href="/article/{{ a.article_id }}">{{ a.title }}</a>
+        </li>
+        {% endfor %}
+
+    </ul>
+</footer>
+<div class="pageTop" style="opacity: 1;"><a href="#gHeader" class="pageTopLink"><i class="ui-icon-gototop"></i></a></div>
+{% endif %}
+{{ google_js|raw }}
+<!-- <p>footer</p> -->

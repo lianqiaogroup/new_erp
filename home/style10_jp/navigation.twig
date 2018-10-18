@@ -1,0 +1,35 @@
+<div class="header-fixed">
+	<header class="header">
+		<div class="header-container">
+			<nav class="navbar" id="header">
+				<div class="header-left clearfix">
+				    <span class="glyphicon glyphicon-menu none block-sm"><a class="classify" href="javascript:void(0)" id="menu"><i class="material-icons">menu</i></a></span>
+				    <h1 class="h_logo"><a href="/"><img src="{{ info.logo }}" class="logo"></a></h1>
+				    <div class="navbar-menu events-header-scroll inline-block">
+				    	<div class="scroller-wrap">
+				    		<ul class="nav">
+				    			{% for c in category_title %}
+				    			<li>
+				    				<a href="./?category_id={{ c.id }}&show=1">{{ c.title }}</a>
+				    			</li>
+				    			{% endfor %}
+				    		</ul>
+				    	</div>
+				    </div>
+				</div> 
+			</nav>
+			<nav class="navbar navbar-default" id="search_nav" style="display: none;">
+			  <div class="container-fluid">
+			      <form role="search" id="search" action="">
+			            <div class="form-group">
+			                <input type="text" class="form-control" placeholder="{{lang.click_to_search}}" name="keyword" value="">
+			                <i class="material-icons search">search</i>
+			                <i class="material-icons textclose"></i>
+			            </div>
+			      </form>
+			  </div>
+			</nav>
+		</div>
+	</header>
+</div>
+{% include 'left.twig' %}

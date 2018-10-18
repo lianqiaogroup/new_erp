@@ -1,0 +1,52 @@
+{% include '/public/theme/bi.twig' %}
+{#  #}
+<script type="text/javascript">
+// 
+window.smsAuth = {{ is_open_sms }} == 1 ? true : false;
+// 
+require(['jquery','widget'],function($){
+    $(function(){
+        // 立即购买
+        $(document).on('click', '[data-cuckootag="confirm_order"]', function(event) {
+
+            window.widget.postintdata();
+            // 确认订单
+            if( typeof(ga_btn_event)!="undefined" ){
+                if( ga_btn_event_locked==false ){
+                    ga_btn_event_locked=true;
+                    ga_btn_event && ga_btn_event('order', function(){
+
+                        var prepost0918 = prepost();
+                        if(prepost0918)
+                        {
+                            console.log(Math.random());
+                            return false;
+                        }
+
+                        $('#form').find('[type="submit"]').trigger('click');
+                        setTimeout(function(){
+                            ga_btn_event_locked=false;
+                        }, 300);
+                    });
+                    return false;
+                }else{
+                    ga_btn_event_locked = false;
+                    var prepost0918 = prepost();
+                        if(prepost0918)
+                        {
+                            console.log(Math.random());
+                            return false;
+                        }
+                    return true;
+                }
+            }
+        });
+    });
+});
+</script>
+
+{# 自定义代码 #}
+<div style="display:none;" alt="customercode">{% if la %} {{ la|raw }} {% endif %}</div>
+
+</body>
+</html>

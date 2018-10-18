@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{{ lang.order_success }}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html">
+    <link rel="stylesheet" href="{{ THEME }}/css/success.css">
+    {% include 'public/theme/facebook_pixel_common.twig' %}
+</head>
+<body>
+    <div class="m-hd">
+        <div class="m-topBar">
+            <a class="goback" href="index.php"></a>
+            <div style="width: 100%;">
+                <div class="title">{{ lang.order_detail }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="m-orderItem">
+        <div class="row-1">
+            <div>
+                <span class="tips_orderid">{{ lang.order_time }} :&nbsp;&nbsp;&nbsp;</span>{{ add_time }}
+            </div>
+            <div>
+                <span class="tips_orderid">{{ lang.order_noumber }} :&nbsp;&nbsp;&nbsp;</span>{{ order_id }}
+            </div>
+        </div>
+        <div class="row-2">
+            <div class="goodImg f-fl">
+                <img src="{{ thumb }}" width="100%" height="100%">
+            </div>
+            <div class="goodInfo f-fl">
+                <div class="goodName">{{ title }}</div>
+                <div class="goodNum">{{ attr_name }}</div>
+                <div class="goodName">{{ currency_code }}{{ price }}&nbsp;&nbsp;&nbsp;
+                    <span class="old_price">{{ currency_code }}{{ market_price }}</span>
+                </div>
+            </div>
+            <div class="goodStatus f-fr">
+                <div>
+                    <span>x</span>
+                    <span>{{ num }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="timetips">{{ lang.service_time }} :  09:00 - 22:00</div>
+    <div class="w-tips">
+        <a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" class="w-button w-button-block btn-comment kefu">
+            <i class="u-icon u-icon-detail-kefu"></i>{{ lang.service_online }}
+        </a>
+    </div>
+    <div class="m-orderItem">
+        <div class="row-1">
+            <div>{{ name }} {{ last_name }} &nbsp;&nbsp;&nbsp;{{ mobile }}</div>
+            <div>{{ address }}</div>
+        </div>
+        <div class="row-2">
+            <div>
+                <span class="tips">{{ lang.payment_method }}:  </span>{{ pay_method }}</div>
+            <div>
+                <span class="tips">{{ lang.total }}:  </span>{{ currency_code }}{{ total }}</div>
+            <div>
+                <span class="tips">{{ lang.freight }}:  </span>{{ currency_code }}{{ shipping }}</div>
+        </div>
+        <div class="row-2 red">
+            <span class="tipred">{{ lang.pay }}:  </span>
+            {{ currency_code }}{{ total }}
+        </div>
+    </div>
+{% include 'public/theme/facebook_pixel_success.twig' %}
+{% include 'public/theme/footer.twig' %}

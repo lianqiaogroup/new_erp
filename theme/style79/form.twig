@@ -1,0 +1,229 @@
+<div class="address-input">
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+                <div class="cell fixed">{{ lang.name }}</div>
+            </div>
+            <div class="cell">
+                <input required="required" placeholder="{{ lang.name_placeholder }}" type="text" name="name" class="inputText">
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+                <div class="cell fixed">{{ lang.mobile }}</div>
+            </div>
+            <div class="cell">
+                <input required="required" placeholder="{{ lang.mobile_placeholder }}" type="tel" name="mob" class="inputText">
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+                <div class="cell fixed">{{ lang.email }} </div>
+            </div>
+            <div class="cell">
+                <input placeholder="{{ lang.email_placeholder }}" type="email" name="email" class="inputText" error="{{ lang.test_email }}">
+            </div>
+    </div>
+
+
+
+
+
+
+     {% if regions.code == 'MYS' %}
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ regions.region_name }}</div>
+        </div>
+        <div class="cell" id="province">
+            <input type="hidden" name="province" value="{{ regions.region_id }}">
+        </div>
+    </div>
+    
+    <div class="buy-single-row label-input">
+        <div class="cell">
+            <select name="state" required="required" class="form-control">
+                <option value="" selected>{{lang.ms_state}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell">
+            <select name="city" required="required" class="form-control">
+                <option value="" selected>{{lang.city}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell">
+            <select name="district" required="required" class="form-control">
+                <option value="" selected> {{lang.ms_district}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="cell">
+            <select name="street" required="required" class="form-control">
+                <option value="" selected>{{lang.area}}</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.addr }}</div>
+        </div>
+        <div class="cell">
+            <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+        </div>
+    </div>
+    {% else %}
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.address_full }}</div>
+        </div>
+        <div class="cell" id="province">
+            <select name="province" class="form-control">
+                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+            </select>
+        </div>
+        {% if regions.region_son and regions.code != 'MYS' and regions.code != 'TW'%}
+        <div class="cell" id="city">
+            <select name="city">
+                <option value="">{{ lang.province_choose }}</option>
+                {% for i in regions.region_son %}
+                <option value="{{ i.lang}}">{{ i.lang }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+    </div>
+    {% if regions.code == "TW" %}
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"></div>
+        </div>
+        <div class="cell" style="margin-right:5px;">
+            <select name="city" required="required">
+                <option value="">{{lang.city}}</option>
+            </select>
+        </div>
+        <div class="cell">
+            <select name="district" required="required">
+                <option value="">{{lang.district}}</option>
+            </select>
+        </div>
+    </div>
+    {% endif %}
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"></div>
+        </div>
+        <div class="cell">
+            {% if regions.region_name == '澳门' %}
+            <input required="required" type="text" name="address" placeholder="{{ lang.address_warming_macro }}" class="inputText"> {% else %}
+            <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText"> {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {# <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.address_full }}</div>
+        </div>
+        <div class="cell" id="province">
+            <select class="sel_area" name="province" style="padding: 3px;margin-right: 10px;">
+                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+            </select>
+            {% if regions.region_son and regions.code != 'MYS'  %}
+                <select class="sel_city" name="city" style="padding: 3px;margin-right: 10px;">
+                    <option value="">{{ lang.province_choose }}</option>
+                    {% for i in regions.region_son %}
+                        <option value="{{ i.lang}}">{{ i.lang }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+                <div class="cell fixed"></div>
+            </div>
+            <div class="cell">
+                {% if regions.region_name == '澳门' %}
+                    <input  type="text" name="address" placeholder="{{ lang.address_warming_macro }}" class="inputText">
+                {% else %}
+                    <input  type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                {% endif %}
+            </div>
+    </div> #}
+
+
+
+
+
+
+
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+                <div class="cell fixed">{{ lang.postal }}</div>
+            </div>
+            <div class="cell">
+                <input type="text" name="postal" data-error="{{ lang.postal_error }}" error="{{ lang.test_postal }}" class="inputText">
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+            <div class="cell fixed">{{ lang.cash_style }}</div>
+            </div>
+            <div class="cell">
+                {% if payment_online ==1 %}
+                    <label><input name="payment_type" value="1" type="radio"> {{ lang.yijifu }}</label>
+                {% endif %}
+                {% if payment_paypal == 1 %}
+                    <label><input name="payment_type" value="2" type="radio"> <img src="/public/image/p_paypal.jpg"></label>
+                {% endif %}
+                {% if payment_underline ==1 %}
+                    <label><input name="payment_type" value="0" type="radio">   {{ lang.cash_on_delivery }}</label>
+                {% endif %}
+            </div>
+    </div>
+    <div class="buy-single-row label-input">
+            <div class="input-label">
+                <div class="cell fixed">{{ lang.note }}</div>
+            </div>
+            <div class="cell" style="line-height: 18px;">
+                <textarea placeholder="{{lang.note_placeholder}}" name="guest" class="text_area" rows="1" style="padding-top:17px;"></textarea>
+            </div>
+    </div>
+</div>
+<script>
+    loadstate();
+    $('[name="city"]').change(function(event) {
+        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        loadCity(id);
+    });
+    function loadstate(){
+        var region_id = '{{regions.region_id}}',regionCode = '{{regions.code}}';
+        if(regionCode == 'TW'){
+        $.post('/region.php', { 'region_id': region_id }, function(data) {
+            var data = JSON.parse(data);
+                data.map(function(item, index){
+                    $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+                });
+            var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        });
+        }
+    }
+    function loadCity(id, callback){
+        $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+            var districtFirst = $('[name="district"]').children().first();
+            $('[name="district"]').children().remove();
+            $('[name="district"]').append(districtFirst);
+            $('[name="district"]').val('');
+            var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        });
+    }
+</script>

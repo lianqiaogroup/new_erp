@@ -1,0 +1,135 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" type="text/css" rel="stylesheet" />
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+
+<!-- /page -->
+<section id="page-index" class="container">
+    <input type="hidden" id="regionCode" value="{{regions.code}}">
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+		<div class="time_sale">
+			<span class="txt">{{lang.time_sale}}</span>
+		</div>
+        <div class="swiper-pagination swiper-pagination-fraction"></div>
+    </div>
+    <!--  -->
+    <div class="detail">
+        <h1>{{ title }}</h1>
+        <div class="tagList">
+            {% if currency_prefix == 1 %}<span>{{ currency_code }}</span><h3 class="top_price">{{price}}</h3>{% endif %}
+            {% if currency_prefix == 0 %}<h3 class="top_price">{{price}}</h3><span>{{ currency_code }}</span>{% endif %}
+        </div>
+        <div class="buyinfo_post">
+            {{ lang.buy_numtext }}<span class="sold">{{ sales }}</span>{{ lang.piece }}，{{ lang.only_last }}<span class="left">{{ stock }}</span>{{ lang.piece }}
+        </div>
+        <div>
+            <div class="item e_tag"><em>【{{ lang.new_discount }}】</em>{{ lang.earn }}</div>             
+            <div class="item e_tag"><em>【{{ lang.time_limit }}】</em>{{ lang.new_limit }}{{ ((price/market_price)*10)|number_format(0) }}{{lang.discount_prefix}}</div>             
+        </div>
+        <div class="buy_now">
+        	<button data-cuckootag="buy_now" class="add" class="w-button w-button-block">{{ lang.buy_now }}</button>
+        </div>
+        <div class="">
+        	<button class="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</button>
+        </div>
+        <div class="ensure">
+            <ul class="j_product_info">
+                <li class="j_product_icon"><span>{{ lang.returned_goods }}</span></li>
+                <li class="j_product_icon"><span>{{ lang.cash_on_delivery }}</span></li>
+                <li class="j_product_icon"><span>{{ lang.free_freight }}</span></li>
+            </ul>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div id="detail" class="container">
+	    <div class="jump">
+		    <div class="bTop">
+		        <span class="bTitle bTitle1 selecked">
+					<span>{{ lang.product }}{{ lang.details }}</span>
+				</span>
+		        <a class="pinlun" href="#pinlun_content"><span>{{ lang.evaluate }}</span></a>
+		    </div>
+	    </div>
+	    <!--  -->
+	    <div class="product_info">
+	        {% include 'detail_link.twig' %}
+	    </div>
+		{% if comment %}
+	    <div class="pinlun_content" id="pinlun_content">
+	    	<div class="pinglun_tt">{{ lang.new_pinlun }}</div>
+	        {% for a in  comment %}
+	            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="margin-bottom: 15px;color:#a8aeb7;display:none;">
+	                <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+	                    <span class="inm">
+	                    <span id="wi">{{ a.name }}</span>
+	                        {% if a.is_anonymous %}
+	                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                        {% endif %}
+	                </span>&nbsp;
+	                    <span>
+	                    評分：<span style="color: red;">{{ a.star }}</span>
+	                </span>
+	                </div>
+	                <P style="color: #666;padding: 5px;word-wrap: break-word;">{{ a.content }}</P>
+
+
+	                <div class="msKeimgBox">
+	                    <ul>
+	                            <li>
+	                                {% for b in a.thumb %}
+	                                    <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+	                                {% endfor %}                                        
+	                            </li>
+	                            <li>
+	                                {% for b in a.thumb %}
+	                                    <span class="hidden">
+	                                        <img src="{{ b.thumb }}" width="100%" height="auto" />
+	                                    </span>
+	                                {% endfor %}
+	                            </li>
+
+	                    </ul>
+	                    <div class="mskeTogBtn"></div>
+	                    <div style="clear:both;"></div>
+	                </div>
+	            </div>
+	        {% endfor %}
+	        <div class="load_more"><a href="javascript:;">查看更多</a></div>
+	    </div>
+	    {% endif %}
+	</div>
+</section>
+<section id="page-order" style="display:none;" data-error="{{ lang.Th_titleattr }}">
+	<div id="ui-paramselect">
+		<div class="title">
+			<div class="back"></div>
+			<div class="conirm">{{ lang.confirm_order }}</div>
+		</div>
+
+	    {% include 'cmpt-guige.twig' %}
+	    <input type="hidden" name="product_id" value="{{ product_id }}">
+	</div>
+</section>
+	
+<footer>
+	<div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}">{{ lang.kefu }}</div>
+	<div class="buy_now"><button data-cuckootag="buy_now" class="add" class="w-button w-button-block">{{ lang.buy_now }}</button></div>
+</footer>
+
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

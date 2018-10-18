@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="320" name="MobileOptimized" />
+        <meta content="telephone=no" name="format-detection" />
+        <title>{{ title }}</title>
+        <meta name="keywords" content="{{ title }}" />
+        <meta name="description" content="{{ title }}" />
+        <link href="/public/image/favicon.ico" type="image/x-icon" rel=icon>
+        <link rel="stylesheet" href="/public/style/reset.css">
+        <script src="/public/javascript/require.js" alt={{ THEME }}></script>
+        
+        <script src="/public/javascript/jquery-2.2.3.min.js"></script>
+        {% include '/public/theme/facebook_pixel_common.twig' %}
+        {{ yahoo_js|raw }}
+        <!-- google js -->
+        {% include 'google_js_head.twig' %}
+        <!-- end google js -->
+    </head>
+<body>
+{% include 'public/theme/order.twig' %}
+<script>
+	ga('require', 'ec');
+	ga('ec:addProduct', {
+	  'id': '{{product_id}}',
+	  'name': '{{title}}',
+	  'price': '{{price}}',
+	  'quantity': '{{product_number}}'
+	});
+	ga('ec:setAction','checkout', {
+		'step': 2
+	});
+	ga('send', 'pageview');
+</script>
+</body>
+</html>

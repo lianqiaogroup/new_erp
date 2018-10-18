@@ -1,0 +1,43 @@
+<!-- Google Analytics -->
+{% if google_etc %}
+	{% if google_etc.google_analytics_id %}
+		<script>
+			ga('create', '{{ google_etc.google_analytics_id }}', 'auto', 'mytracker');
+			ga('mytracker.require', 'ecommerce');
+			ga('mytracker.require', 'ec');
+			ga('mytracker.send', 'pageview');
+		</script>
+	{% endif %}
+{% endif %}
+
+{% if pageSign == 'success' and has_referer == 1 %}
+    {# google 转化代码 #}
+    {% if google_etc.google_conversion_id %}
+        {% include '/public/theme/google_conversion.twig' %}
+    {% endif %}
+
+    {# 电子商务 #}
+    {% if google_etc.google_analytics_id %}
+    <script>
+        //发送交易数据
+        ga('mytracker.ecommerce:addTransaction', {
+          'id': '{{ product_id }}',                    // id.
+          'shipping': '{{ total }}'                // 包含运费的价格.
+        });
+        //商品数据
+        ga('mytracker.ecommerce:addItem', {
+          'id': '{{ product_id }}',                     // Transaction ID. Required.
+          'name': '{{ title }}',    // Product name. Required.
+          'price': '{{ total }}',                 // Unit price.
+          'quantity': '1'                   // Quantity.
+        });
+        //发送
+        ga('mytracker.ecommerce:send');
+        //清除
+        ga('mytracker.ecommerce:clear');
+    </script>
+    {% endif %}
+{% endif %}
+
+
+<!-- End Google Analytics -->

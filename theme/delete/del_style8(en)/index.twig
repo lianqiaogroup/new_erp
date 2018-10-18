@@ -1,0 +1,238 @@
+{% include '/public/theme/header.twig' %}
+<!---->
+<link type="text/css" rel="stylesheet" href="public/reset.css" />
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<script type="text/javascript" src="public/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="{{ THEME }}/js/index.js"></script>
+<!---->
+<link rel="stylesheet" type="text/css" href="{{ THEME }}/css/swiper-3.4.0.min.css">
+<!--/page-->
+<div class="big_banner">
+    <div style="color: red;border: 1px solid red;">{{ lang.close }}</div>
+    {% for p in photos %}
+        <img src="{{ p.thumb}}" >
+    {% endfor %}
+</div>
+<input type="hidden" name="style" id="style" value="style8">
+<section id="page-index" class="container">
+    <!--  -->
+    <div class="top_banner">
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style=" transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom">
+            {% if photos %}
+                {% for p in photos %}
+                <span class="whiteicon"></span>
+                {% endfor %}
+            {% else %}
+                <span class="whiteicon"></span>
+            {% endif %}
+        </div>
+    </div>
+        <ul class="lun_right">
+            <li>
+                {% for p in photos %}
+                    <img src="{{ p.thumb}}" >
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
+    <!--  -->
+
+    <div class="title_read">
+            <span class="sign_one" style=""><span style="width: 80%">{{seo_description}}</span><span class="span_last" style="color: #2aabd2;">{{ lang.Price }}</span></span>
+            <span><span class="sigin_two">{{seo_title}}</span> <span class="_price_one" style="width: 20%">{{ currency_code}}<a style="color:#b4282d ">{#{{price}}#}</a></span></span>
+    <div style="clear: both"></div>
+    </div>
+
+
+{#购买属性#}
+
+    <div style="" id="ui-paramselect">
+        <div class="dt-paramselect">
+            <form id="form" name="form" method="post" action="order.php" onsubmit="return postcheck()">
+                <input type="hidden" name="orderid" id="orderid" value="">
+                <input type="hidden" name="act" id="act" value="getAttrPrice">
+                <!--  -->
+                <!--产品目录-->
+                <div class="u-format" id="comb" data-price="">
+                    <div class="tt"><em></em>{{ lang.product }}
+                        <div class="package">
+                            {% if combo %}
+                                {% for c in combo %}
+                                    <label class="tab" rel="1" data-price="{{ c.price }}">
+                                        <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="{{ c.combo_id }}" />
+                                        <span>{{ c.title|raw }}<br>{{ currency_code}}<a>{{ c.price }}</a></span>
+                                    </label>
+                                {% endfor %}
+                            {% else %}
+                                <label class="tab tab-sel" rel="1">
+                                    <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="0" checked="chekced" />
+                                    <span>
+                                {{ title }} {{ currency_code}}{{ price }}
+                                        <i class="u-icon u-spec-sel"></i>
+                            </span>
+                                </label>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--产品属性-->
+                {#{% for o in  options %}
+                    <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                        <div class="tt"  style="padding-top: 10px;"><em></em><span style="line-height: 30px;">{{ o.attr_group_title|raw }}</span>
+
+                            <div class="con">
+                                {% for key,attr in o.attr %}
+
+                                    <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                        <span id="idd">{{ attr.name|raw }}</span>
+                                        {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}#}
+
+                {% if combo %}
+                    <!--产品套餐属性-->
+                    {% for om in  combo %}
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                                <div class="tc tc{{ ok.combo_id|raw }}" style="display: none;"><div style="padding-top: 10px"><h2 style="text-align: center;width: auto;">{{ ok.title|raw }}</h2></div>
+                                    {% for o in  ok.options %}
+                                        <li class="item protoLayer">
+                                            <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                                <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                                <div class="con">
+                                                    {% for key,attr in o.attr %}
+
+                                                        <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                                            <span id="idd">{{ attr.name|raw }}</span>
+                                                            {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="cls"></div>
+                                        </li>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <!--产品属性-->
+                    {% for o in  options %}
+                        <li class="item protoLayer">
+                            <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                <div class="con">
+                                    {% for key,attr in o.attr %}
+                                        <label style="max-width:32%;display:inline-block;padding:5px;background: #eee">
+                                            {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                            <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                            {{ attr.name|raw }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="cls"></div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+
+
+                <script>
+                    if("#idd"){
+                        $(".count_atrr .con .tab img").css({"height":"60px"})
+                    }
+                </script>
+                <!--产品的所有属性-->
+                <input type="hidden" name="heavn" class="attr_id" value="">
+                <input type="hidden" name="attrnum" value="2">
+                <!--数量-->
+                <div class="u-fornum">
+                    <div class="tt"><em></em><span style="line-height: 45px;">{{ lang.num }}</span>
+                        <div class="con" style="height: 45px;width: 68%;float: right;">
+                            <div class="m-selnum dr">
+                                <div onclick="minnumber()" class="less z-dis">-</div>
+                                <div class="textWrap">
+                                    <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                                </div>
+
+                                <div onclick="addnumber()" class="more">+</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- END PROTOTYPE -->
+                <footer class="m-orderFt">
+                    <button class="btn w-button" id="linkto">{{ lang.btn_confirm }}</button>
+                    <div class="actualPrice"><a href="javascript:;" class="left" onclick="P8.startGroupChat({{ service_contact_id }},1);"></a>
+                    </div>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <!-- -->
+
+
+
+    <div class="bTop"><span class="bTitle bTitle1">{{ lang.Buying_guide }}</span><div class="line"></div></div>
+    <div class="content_two">
+        <span style="color:#b81b22;">{{content|raw}}</span>
+    </div>
+
+    <!--  -->
+
+    <!-- -->
+
+    {#<div class="User_notes">
+
+        <h2 class="notes">用户须知</h2>
+        <div class="note_title">·關於發貨方式</div>
+        <div class="note_text">配送範圍全{{ regions.region_name }}。</div>
+        <div class="note_title">·關於配送時間</div>
+        <div class="note_text">下單成功之後，我們會按照下單先後順序進行配貨，配貨週期為3個工作日左右，一般到達時間為7個工作日左右。</div>
+        <div class="note_title">·如何申請退換貨</div>
+        <div class="note_text">1.由於個人原因產生的退換貨：至收到商品之日起30天內，在不影響二次銷售的情況下向售後服務中心發送郵件，售後客服會在收到郵件后的1-3個工作日內受理您的請求，退換貨所產生的運費需自行承擔。</div>
+        <div class="note_text">2.由於質量原因產生的退換貨：至收到商品之日起7天內，向售後服務中心發送郵件至<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>，客服會在收到郵件后的1-3個工作日內受理您的請求，退換貨所產生的運費由我方承擔。</div>
+        <div class="note_title">3.退換貨流程:</div>
+        <div class="note_text">確認收貨—申請退換貨—客服審核通過—用戶寄回商品—倉庫簽收驗貨—退換貨審核—退款/換貨；</div>
+        <div class="note_title">退換貨請註明：訂單號、姓名、電話。</div>
+        <div class="note_title">·如何取消訂單</div>
+        <div class="note_text">取消訂單需要向售後服務中心發送郵件并注明相关原因，邮件内容应註明您的訂單號、姓名、電話。</div>
+    </div>#}
+
+    <!--  -->
+</section>
+<div class="att_fixed">
+    <p>{{ lang.Please_select_properties }}</p>
+    <button>{{ lang.btn_confirm }}</button>
+</div>
+<section id="page-order" class="container">
+    {% include 'cmpt-guige.twig' %}
+</section>
+<i class="m-goToTop" style="display: inline;"></i>
+<!--/page-->
+<script src="{{ THEME }}/js/swiper-3.4.0.jquery.min.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+
+<!---->
+{% include 'public/theme/footer.twig' %}

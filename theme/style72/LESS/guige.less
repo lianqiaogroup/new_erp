@@ -1,0 +1,134 @@
+.linear(@direction1,@direction2,@color1,@color2){
+	background:-webkit-linear-gradient(@direction1,@color1,@color2);
+	background:-o-linear-gradient(@direction2,@color1,@color2);
+	background:-moz-linear-gradient(@direction2,@color1,@color2);
+	background:linear-gradient(to @direction2,@color1,@color2);
+}
+#ui-paramselect{
+	.tt{
+		font-size:14px;
+		margin-top:8px;
+    	text-indent: 8px;
+    	line-height:36px;
+    	position:relative;
+    	&:after{
+    		content:'';
+    		position:absolute;
+    		right:26px;
+    		top:10px;
+    		width:8px;
+    		height:8px;
+    		border-bottom:2px solid #fff;
+    		border-right:2px solid #fff;
+    		-webkit-transform:rotate(45deg);
+    		transform:rotate(45deg);
+    	}
+    	.linear(left,right,#fbe27c,#ff9795);
+	}
+}
+.tips{
+    font-size: 14px;
+    padding: 0 4%;
+}
+#comb{
+	font-size:13px;
+	line-height:16px;
+	padding:0 4%;
+	.tt{
+		margin-top:18px;
+	}
+	.package{
+		padding:8px;
+		box-shadow:0 0 12px lighten(#FE7543, 18%);
+	}
+	.tab{
+		display:block;
+		font-size:12px;
+		line-height:20px;
+		padding:6px 4%;
+		margin-bottom:10px;
+		text-align:center;
+		background:#F2F2F2;
+	}
+	.tab-sel{
+		color:#fff;
+		background:#FE7543;
+	}
+}
+section[data-loopindex]{
+	margin:4% 0;
+	background:#fff;
+	.title_ac{
+		padding:14px 4% 0;
+	}
+	.divide{
+		width:100%;
+		height:6px;
+		background-size:contain;
+	}
+	&:last-child{
+		&:after{
+			content:'';
+			display:block;
+			width:100%;
+			height:6px;
+			background-size:contain;
+		}
+	}
+}
+.count_atrr{
+	padding:0 4%;
+	.con{
+		font-size:0;
+		padding:8px;
+		box-shadow:0 0 12px lighten(#FE7543, 18%);
+	}
+	.tab{
+	    display: inline-block;
+    	margin:0 12px 12px 0;
+    	&:last-child{
+    		margin:0;
+    	}
+    	span{
+    		display: inline-block;
+		    padding:5 7px;
+		    font-size: 12px;
+			background:#F2F2F2;
+    	}
+	}
+	.tab-sel{
+		span{
+			color:#fff;
+			background:#FE7543;
+		}
+	}
+
+}
+.u-fornum{
+	padding:0 4%;
+	font-size:0;
+	span{
+		font-size:14px;
+		vertical-align:middle;
+		margin-right:10px;
+	}
+	.m-selnum >div{
+		width:54px;
+		height:38px;
+		display:inline-block;
+		font-size:14px;
+		text-align:center;
+		line-height:38px;
+		vertical-align:middle;
+	}
+	.less,.more{
+		background-size:8px;
+		border:1px solid #bbb;
+		font-size: 22px !important;
+    	font-family: monospace;
+	}
+	.textWrap{
+		border-top:1px solid #bbb;
+		border-bottom:1px solid #bbb;
+	}
+}

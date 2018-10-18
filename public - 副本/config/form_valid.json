@@ -1,0 +1,271 @@
+{
+	"TW": {
+		"name": {
+			"required": true
+			, "reg": [ "/^[a-zA-Z\\u4e00-\\u9fa5\\s]{2,}$/" ]
+			, "error": "請輸入真實姓名"
+		}
+		, "mob": {
+			"required": true
+			, "reg": [
+				"/^09\\d{8}$/"
+			]
+			, "error": "請檢查您的移動電話"
+		}
+		, "address": {
+			"required": true
+			, "reg": ["/^[\\s\\S]{5,}$/"]
+			, "error": "請輸入詳細的收件地址"
+		}
+		, "city": {
+			"required": true
+			, "reg": []
+			, "error": "請選擇城市"
+		}
+		, "district": {
+			"required": true
+			, "reg": []
+			, "error": "請選擇區域"
+		}
+		, "postal": {
+			"required": false
+			, "reg": ["/^\\d{5}$/"]
+		}
+		, "email": {
+			"required": false
+			, "reg": ["/^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$/"]
+		}
+	}
+	, "HK": {
+		"name": {
+			"required": true
+			, "reg": [ "/^[a-zA-Z\\u4e00-\\u9fa5\\s]{2,}$/" ]
+			, "error": "請輸入真實姓名"
+		}
+		, "address": {
+			"required": true
+			, "reg": ["/^[\\s\\S]{5,}$/"]
+			, "error": "請輸入詳細的收件地址"
+		}
+	}
+	, "THA": {
+		"mob": {
+			"required": true
+			, "reg": [
+				"/^\\d{10}$/"
+				, "/^0(6|8|9)\\d{8}$/"
+            ]
+            ,"error":"กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง"
+		}
+		, "postal": {
+			"required": true
+			, "reg": []
+		}
+		, "district": {
+			"required": true
+			, "reg": []
+			, "error": "ตำบล อำเภอ"
+		}
+	}
+	, "MYS": {
+		"mob": {
+			"required": true
+			, "reg": [
+				"/^\\d{10,11}$/"
+			]
+			, "error": "Please confirm the phone number"
+		}
+	}
+	, "COL": {
+		"mob": {
+			"required": true
+			, "reg": [
+				"/(^(30|31)+\\d{8}$)|(^(([0-2]{1}[0-9]{1})|([4-9]{1}[0-9]{1})|(3[2-9]{1})){1}\\d{5,9}$)/"
+			]
+			, "error": "Introduzca el número correcto en el teléfono"
+		}
+	}
+	, "MEX": {
+		"mob": {
+			"required": true
+			, "reg": [
+				"/^\\d{8,10}$/"
+			]
+			, "error": "Introduzca el número correcto en el teléfono"
+		}
+	}
+	, "AGO": {
+		"email": {
+			"required": true
+			, "reg": []
+			, "error": "Digite o e - mail"
+		}
+	}
+	, "SAU": {
+		"mob": {
+			"required": true
+            , "reg": []
+            ,"error":"تقديم رقم الهاتف الصحيح من فضلك"
+		}
+		, "state": {
+			"required": true
+			, "reg": []
+		}
+		, "city": {
+			"required": true
+			, "reg": []
+		}
+		, "district": {
+			"required": true
+			, "reg": []
+		}
+		, "address": {
+			"required": true
+			, "reg": ["/^[\\s\\S]{5,}$/"]
+			, "error": "أحرف على الأقل 5"
+		}
+	}
+	, "PHL": {
+		"mob": {
+			"required": true
+			, "reg": [
+				"/^09\\d{9}$/"
+            ]
+            ,"error":"Please provide the correct phone number."
+		}
+		, "state": {
+			"required": true
+			, "reg": []
+		}
+		, "city": {
+			"required": true
+			, "reg": []
+		}
+		, "district": {
+			"required": true
+			, "reg": []
+		}
+		, "address":{
+			"required": true
+			, "reg": []
+		}
+		, "postal": {
+			"required": true
+			, "reg": ["/^[0-9]*$/"]
+		}
+		, "email": {
+			"required": false
+			, "reg": ["/^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$/"]
+		}
+	}
+	, "Rp":{
+		"mob": {
+			"required": true
+			, "reg": ["/^08\\d{7,10}$/"]
+			, "error": "Mohon Anda berikan nomor telepon yang benar"
+		}
+		, "province": {
+			"required": true
+			, "reg": []
+		}
+		, "state": {
+			"required": true
+			, "reg": []
+		}
+		, "city": {
+			"required": true
+			, "reg": []
+		}
+		, "district": {
+			"required": true
+			, "reg": []
+		}
+		, "postal": {
+			"required": true
+			, "reg": ["/^\\d{5}$/"]
+		}
+		, "email": {
+			"required": false
+			, "reg": ["/^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$/"]
+		}
+	}
+	, "ARE": {
+		"name": {
+			"required": true
+            , "reg": ["/^[\\s\\S]{1,}$/"]
+		}
+		, "address": {
+			"required": true
+			, "reg": [
+				"/^.{1,100}$/"
+			]
+			, "error": "Limit up to 100 characters"
+		}
+		, "mob": {
+			"required": true
+			, "reg": [
+				"/(^5\\d{8}$)|(^00971\\d{9}$)|(^\\+971\\d{9}$)/"
+			]
+		}
+		, "mob_backup": {
+			"required": false
+			, "reg": [
+				"/(^5\\d{8}$)|(^00971\\d{9}$)|(^\\+971\\d{9}$)/"
+			]
+		}
+		, "postal": {
+			"required": true
+			, "reg": [
+				"/^\\d{1,10}$/"
+			]
+		}
+		, "note": {
+			"required": false
+			, "reg": [
+				"/^.{1,100}$/"
+			]
+			, "error": "Limit up to 100 characters"
+		}
+	}
+	, "IND": {
+		"postal": {
+			"required": true
+			, "reg": [
+				"/^\\d{6}$/"
+			]
+		}
+	}
+	, "KEN": {
+		"postal": {
+			"reg": [
+				"/^\\d{5}$/"
+			]
+        },
+        "mob": {
+            "required": true,
+            "reg": [
+                "/(^[+](2547)\\d{8}$)|(^07\\d{8}$)/"
+            ]
+            ,"error":"Please provide the correct phone number."
+        }
+	}
+	, "TUR": {
+		"mob": {
+			"required": true
+			, "reg": [
+				"/(^5\\d{9}$)|(^05\\d{9}$)/"
+			]
+			, "error": "telefon nomerasın kontrol edin"
+		}
+    }
+    ,
+    "PAK": {
+        "mob": {
+            "required": true,
+            "reg": [
+                "/(^[+](92)\\d{10}$)|(^0092\\d{10}$)|(^92\\d{10}$)|(^01\\d{9}$)|(^03\\d{9}$)|(^05\\d{9}$)|(^06\\d{9}$)|(^08\\d{9}$)|(^3\\d{9}$)/"
+            ],
+            "error": "Please confirm the phone number"
+        }
+    }
+}

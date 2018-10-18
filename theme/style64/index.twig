@@ -1,0 +1,212 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<!-- end header resource -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<section id="page-index">
+	<div class="img_wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="discount"> - {{ ((market_price-price)/market_price*100)|number_format(0) }}%</div>
+	</div>
+	{#  #}
+	<div class="detail">
+		<div class="title"><h1>{{ title }}</h1></div>
+		<div class="rating">
+			<div class="stars"></div>{{ lang.positive_pre }}96% {{ lang.positive }}
+		</div>
+	</div>
+	{#  #}
+	<div class="detail">
+		<div class="price">
+			{% if regions.region_id == 29 %}
+				<del>
+					{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price|number_format(0,'',',') }}{% endif %}
+					{% if currency_prefix == 0 %}{{ market_price|number_format(0,'',',') }}{{ currency_code }}{% endif %}
+                </del>
+                <span class="discount gree">
+                    {{ lang.discount }} {{ ((market_price-price)/market_price*100)|number_format(0) }}% {{ lang.discount_after }}
+                </span>
+				<div>
+					<span>
+						{% if currency_prefix == 1 %}{{ currency_code }}<span>{{ price|number_format(0,'',',') }}</span>{% endif %}
+						{% if currency_prefix == 0 %}<span>{{ price|number_format(0,'',',') }}</span>{{ currency_code }}{% endif %}
+					</span>
+					
+				</div>
+			{% else %}
+				<del>
+					{% if currency_prefix == 1 %}{{ currency_code }}{{ new_price_format.market_price_format }}{% endif %}
+					{% if currency_prefix == 0 %}{{ new_price_format.market_price_format }}{{ currency_code }}{% endif %}
+                </del>
+                <span class="discount gree">
+                    {{ lang.discount }} {{ ((market_price-price)/market_price*100)|number_format(0) }}% {{ lang.discount_after }}
+                </span>
+				<div>
+					<span>
+						{% if currency_prefix == 1 %}{{ currency_code }}<span>{{ new_price_format.price_format }}</span>{% endif %}
+						{% if currency_prefix == 0 %}<span>{{ new_price_format.price_format }}</span>{{ currency_code }}{% endif %}
+					</span>
+					
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	{% if modulesParam.flashsale.options.open == '1'  %}
+	<div class="detail">
+		<div class="sales">
+			<div class="progress" data-value="{{ sales }}">
+				<span data-value="{{ stock }}"></span>
+			</div>
+			<div class="stock">{{ lang.only_last }} {{ stock }} {{ lang.piece }}</div>
+		</div>
+	</div>
+	{% endif %}
+	<div id="val-sel" class="arrow_con">
+		<div class="arrow_d" data-cuckootag="buy_now">{{ lang.choose_attr }}</div>
+	</div>
+	<div class="expand">
+		<div class="left" data-cuckootag="check_order" data-value="{{ identity_tag }}"><span class="inquiry">{{ lang.order_quality }}</span></div>
+		{% if modulesParam.comment.options.open == '1'  %}
+		<div class="right"><span class="userev">{{lang.user_evaluation}}</span></div>
+		{% endif %}
+	</div>
+	{#  #}
+	<div class="product_info">
+		<div class="tt">
+			<div class="title">{{ lang.detail }}</div>
+			<div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}" onclick="P8.startGroupChat({{ service_contact_id }},1);"></div>
+		</div>
+		<div class="render_content">
+			{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+         {% if regions.code == 'THA' and lang.after_sales %}
+        <div class="after_sale_title">{{ lang.after_sales }}</div>
+        <div class="after_sale">
+        
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+	</div>
+	{% if modulesParam.comment.options.open == '1'  %}
+		{% include 'dom_comment.twig' %}
+	{% endif %}
+	<footer class="footer">
+		<div class="buy_now">
+			<button data-cuckootag="buy_now">{{ lang.buy_now }}</button>
+		</div>
+	</footer>
+	{% if regions.code == 'Rp' %}
+    <div style="padding:0 16px;font-size:14px;line-height:20px;padding-bottom:50px;word-break: break-word;">
+        <div>{{lang.return_goods_top}}</div>
+        <div>{{lang.return_goods_1}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_2}}</div>
+        <div>{{lang.return_goods_3}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_4}}</div>
+        <div>{{lang.return_goods_5}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_6}}</div>
+        <div>{{lang.return_goods_7}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_8}}</div>
+        <div>{{lang.return_goods_9}}</div>
+        <div style="margin-top:10px;">{{lang.return_goods_10}}</div>
+    </div>
+    {% endif %}
+</section>
+<section id="page-order" data-error='{{ lang.Th_titleattr }}'>
+	<div class="tt">
+		<div class="back"></div>
+		{{ lang.pro_attr }}
+	</div>
+	{% include 'cmpt-guige.twig' %}
+</section>
+
+<div class="fLogin">
+	<div>
+		<p>{{ lang.service_before }} <b>{{ lang.service_after }}</b></p>
+		<a href="">{{ lang.fb_login }}</a>
+		<div class="close">×</div>
+	</div>
+</div>
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

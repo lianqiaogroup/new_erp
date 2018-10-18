@@ -1,0 +1,34 @@
+<div class="head">
+	<div><a href="javascript:;"></a></div>
+	<div>{{ lang.all_comment }}</div>
+</div>
+<div class="comment_wrap">
+	{% for a in comment %}
+		{% if loop.index <= 100 %}
+		<div class="comment_item">
+			<div class="info">
+				<div class="left">{% if a.is_anonymous==1 %}{{ lang.anonymous }}{% else %}{{ a.name }}{% endif %}</div>
+				<div class="right small" data-buyTime='{{ a.add_time }}'><span></span>{{ lang.buy_time }}</div>
+				<div class="right large">{{ a.add_time|date('Y.m.d') }}</div>
+				<div class="clear"></div>
+			</div>
+			<div class="stars" data-num='{{ a.star }}'><span></span><span></span><span></span><span></span><span></span></div>
+			<div class="content">
+				{{ a.content }}
+			</div>
+			{% if a.thumb %}		
+				<div class="img_wrap">
+				{% for b in a.thumb %}
+					<img src="{{ b.thumb }}">
+				{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+		{% endif %}
+	{% endfor %}
+	{% if comment %}
+	<div class="page_wrap"></div>
+	{% else %}
+	<div style="padding:20px 0;text-indent:1em;">{{ lang.no_comment }}</div>
+	{% endif %}
+</div>

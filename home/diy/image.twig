@@ -1,0 +1,21 @@
+<style>
+	.module_single_image {
+		display: block;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	.module_single_image img {
+		display: block;
+		width: 100%;
+	}
+</style>
+
+<div class="module_single_image"
+	 style="margin: {{ margin.top }}px {{ margin.right }}px {{ margin.bottom }}px {{ margin.left }}px;">
+	 {% if href %}
+		<a href="{{ href }}"><img src="{{ url }}" alt="{{ alt }}"></a>
+	 {% else %}
+		<img src="{{ url }}" alt="{{ alt }}">
+	 {% endif %}
+</div>

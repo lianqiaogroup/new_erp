@@ -1,0 +1,198 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<!--/page-->
+<input id="region_code" value="{{regions.code}}" type="hidden">
+<input id="identity_tag" value="{{identity_tag}}" type="hidden">
+{#  #}
+<section id="page-index" class="container">
+    {% if has_home %}
+    <header>
+        <a href="/" class="goback">
+            <img src="#" alt="">
+            <span>{{ lang.go_home }}</span>
+        </a>
+    </header>
+    {% endif %}
+    <!--  -->
+    <div class="swiper-container" style="background: white; position: relative">
+        <div class="swiper-wrapper">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination mun_banner">
+        </div>
+    </div>
+    <!--  -->
+    <div class="dt-section">
+        <div class="m-detailBaseInfo">
+            <div class="info">
+                <div class="com">
+                    <h2>{{ title }}</h2>
+                    <div class="star">★★★★★<span>{{ lang.Th_score }}</span></div>
+                </div>
+                <div class="line2" style="text-align: right;">
+                    <div class="retailPrice">
+                        {% if currency_prefix == 1 %}
+                            <span class="small_price" style="position: relative;top: -3px;">{{ currency_code }}</span>
+                            <span>{{ price }}</span>
+                        {% endif %}
+                        {% if currency_prefix == 0 %}
+                            <span>{{ price }}</span>
+                            <span class="small_price" style="position: relative;top: -3px;">{{ currency_code }}</span>
+                        {% endif %}
+                        <span style="font-size: 12px;color:#91949F;float: right;margin-top: 2px;font-weight: 100 ">
+                            <i class="this_i"></i>
+                            {{ lang.last }}{{ stock }}{{ lang.lastL }}</span></div>
+                    <div class="market_price_onr">
+                        <span>{{ lang.market_price }}</span>
+                        <del>
+                        {% if currency_prefix == 1 %}
+                            {{ currency_code }}{{ market_price }}
+                        {% endif %}
+                        {% if currency_prefix == 0 %}
+                            {{ market_price }}{{ currency_code }}
+                        {% endif %}
+                        </del>
+                    </div>
+                </div>
+                <div class="stat">{{ lang.Th_free }}{{ lang.Th_time1 }}<span id="timer"></span>{{ lang.Th_time2 }}</div>
+            </div>
+        </div>
+    </div>
+    <!-- details -->
+    <div class="product-info" id="bTop">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+    <!--  -->
+    <section id="page-order" class="container" style="">
+        <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+        {% include 'cmpt-guige.twig' %}
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+        <!--  -->
+        <link rel="stylesheet" type="text/css" href="/public/style/order-style.css">
+        <div id="details">
+            <input type="hidden" id="region_code" value="{{ regions.code }}">
+                <input type="hidden" name="token" value="{{ token }}">
+                <input type="hidden" id="act" name="act" value="getAttrPrice">
+                <input type="hidden" name="province" value="{{ regions.region_id }}">
+                <div class="table">
+                    <div class="flexbox">
+                        <div class="flex regions">{{ regions.region_name }}</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="flex tab_two">
+                            <select name="state" required="required">
+                                <option value="">{{ lang.state }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="flex tab_two">
+                            <select name="city" required="required">
+                                <option value="">{{ lang.city }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="flex tab_two">
+                            <select name="district" required="required">
+                                <option value="">{{ lang.district }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+                    </div>
+                    <div class="flexbox">
+                        <div class="flex tab_two">
+                            <input type="text" required="required" name="name" maxlength="50" placeholder="{{ lang.name }}">
+                        </div>
+                        <div class="flex tab_two">
+                            <input type="number" required="required" name="postal" placeholder="{{ lang.postal_en }}" error="{{ lang.test_postal }}" maxlength="20">
+                        </div>
+                    </div> 
+                    <div class="flexbox">
+                        <div class="flex tab_two">
+                            <input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}" style="-webkit-appearance:none;">
+                        </div>
+                        <div class="flex tab_two">
+                            <input type="email" name="email" placeholder="{{ lang.email }}" error="{{ lang.test_email }}">
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <input type="text" name="guest" placeholder="{{ lang.note }}">
+                    </div>
+                    <div class="flexbox">
+                        {% if payment_underline == 1 %}
+                            <div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+                        {% endif %}
+                        {% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+                            <div class="flex tab_two">
+                                <div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+                            </div>
+                        {% endif %}
+                        <input name="payment_type" value="0" type="hidden">
+                    </div>
+                    <div class="table-row pay-type" style="display: none;">
+                        <select id="pay-online">
+                            {% if payment_online == 1 %}
+                            <option value="1">{{ lang.yijifu }}</option>
+                            {% endif %}
+                            {% if payment_paypal == 1 %}
+                            <option value="2">paypal</option>
+                            {% endif %}
+                            {% if payment_asiabill == 1 %}
+                            <option value="3">Asiabill</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <div class="btn-layer">
+                    <button type="submit" class="btn-addToCart">{{ lang.buy_now }}</button>
+                    <input type="hidden"  data-cuckootag="confirm_order">
+                </div>
+                <ul class="m-servicePolicy">
+                    <li class="item"><i style="height:18px;width:18px;background: url('{{ THEME }}/images/7day@2x.png')no-repeat left;background-size: 14px;"></i><span>{{ lang.returned_goods }}</span></li>
+                    <li class="item"><i style="height:18px;width:18px;background: url('{{ THEME }}/images/ap@2x.png')no-repeat left;background-size: 14px;"></i><span>{{ lang.cash_on_delivery }}</span></li>
+                </ul>
+                <!-- <a href="javascript:void(0);" class="inquiry">{{ lang.order_inquiry }}</a> -->
+            </div>
+        </form>
+        <div class="explain">
+            <h1>{{ lang.order_title }}</h1>
+            <p>{{ lang.warming|raw }}</p>
+        </div>
+    </section>
+    <div style="height:60px;">&nbsp;</div>
+    <!--  -->
+    {% if has_home %}
+        <i class="home" onclick="gohome()"></i>
+    {% endif %}
+    <i class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"></i>
+    <i class="m-goToTop" style="display: inline;"></i>
+</section>
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none !important; }</style>
+<script>
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+</script>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

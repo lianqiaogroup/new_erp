@@ -1,0 +1,16 @@
+<link href="public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet">
+<div class="swiper-container">
+	<div class="swiper-wrapper" style="height:340px;">
+		{% if photos %}
+			{% for p in photos %}
+				<div class="swiper-slide">
+					<img src="{{ p.thumb }}" width="100%">
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="swiper-slide">
+				<img src="{{ thumb }}" width="100%">
+			</div>
+		{% endif %}
+	</div>
+</div>

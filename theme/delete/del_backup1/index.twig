@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{THEME}}/css/test.css">
+    <script type="text/javascript" src="public/javascript/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+    <section id="test">
+        <div data-role="1" class="layer">1</div>
+        <div data-role="2" class="layer">2</div>
+        <div data-role="3" class="layer">3</div>
+        <div data-role="4" class="layer">4</div>
+        <div data-role="5" class="layer">5</div>
+    </section>
+
+
+
+<script type="text/javascript">
+
+
+var isMouseDown = false;
+var dragDomRole = '';
+var position = { x: 0, y: 0 };
+
+
+$(function(){
+
+
+    $('#test').on('mousedown', '.layer', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        isMouseDown = true;
+        dragDomRole = $(this).attr('data-role');
+        position.x = event.clientX;
+        position.y = event.clientY;
+    });
+
+    $('#test').on('mousemove', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        if( isMouseDown ){
+            console.log(event.clientX+":"+event.clientY);
+
+        }
+    });
+
+    $('#test').on('mouseup', function(event) {
+        event.preventDefault();
+        isMouseDown = false;
+        dragDomRole = '';
+    });
+
+
+    $('#test .layer').map(function(){
+        console.log($(this));
+    });
+
+
+
+
+
+
+
+});
+
+
+</script>
+
+
+</body>
+</html>

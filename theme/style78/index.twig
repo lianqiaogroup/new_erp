@@ -1,0 +1,128 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		{% if photos %}
+			{% for p in photos %}
+				<div class="swiper-slide">
+					<img src="{{ p.thumb }}">
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="swiper-slide">
+				<img src="{{ thumb }}">
+			</div>
+		{% endif %}
+	</div>
+</div>
+<form id="form" name="form" method="post" action="order.php" onSubmit="return prepost()">
+<div class="detail">
+	<div class="title"><h1>{{ title }}</h1></div>
+	<div class="price">
+		{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+		{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+	</div>
+	<div class="welfare">
+		{{ lang.free }}
+	</div>
+	<div class="limit">
+		<span class="timeWrap">
+        	<span id="timer">
+               <span  id="h">10</span>
+                <span class="">:</span>
+                <span id="m">00</span>
+                <span class="">:</span>
+                <span id="s">00</span>
+          	</span>
+        </span>
+		<span class="clock">{{ lang.time_limit }}</span>
+	</div>
+	{% include 'cmpt-guige.twig' %}
+	<div class="service">
+		<span>{{ lang.cash_on_delivery }}</span>
+		<span>{{ lang.returned_goods }}</span>
+		<span>{{ lang.free_yun }}</span>
+	</div>
+</div>
+<div class="product_info">
+	<div class="img_tt">{{ lang.pro_description }}</div>
+	<div class="m-img" id="m-img">
+		{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+	</div>
+</div>
+<div class="addr">
+	{% include 'checkout.twig' %}
+</div>
+<div class="footer">
+	<div class="buy">
+		<div class="buy_now"><button type="submit">{{ lang.buy_now }}</button></div>
+		<div class="query"  data-cuckootag="check_order" data-value="{{ identity_tag }}"><div>{{ lang.order_query }}</div></div>
+	</div>
+	<div class="total">{{ lang.total }}
+		<div>
+			{% if currency_prefix == 1 %}{{ currency_code }}<span class="price">{{ price }}</span>{% endif %}
+			{% if currency_prefix == 0 %}<span class="price">{{ price }}</span>{{ currency_code }}{% endif %}
+		</div>
+	</div>
+</div>
+</form>
+
+{% if comment %}
+<div class="scroll_tt" id="pinlun_tt">{{ lang.pingjia }}</div>
+<div id="pinlun_content">
+    <div class="picMarquee-top">
+        <div class="bd" data-fn="commentScroll" style="height:250px; overflow: hidden;font-size:14px;">
+        	<div class="picList">
+            {% for a in  comment %}
+	            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7;padding-bottom:10px;">
+	                <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+	                    <span class="inm">
+	                        {% if a.is_anonymous %}
+	                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                        {% else %}
+	                        	<span id="wi">{{ a.name }}</span>
+	                        {% endif %}
+		                </span>
+	                    <span>
+		                    {{ lang.score }}：<span style="color: red;">{{ a.star }}</span>
+		                </span>
+	                </div>
+	                <P style="color: #666;padding: 5px;">{{ a.content }}</P>
+	                <div class="msKeimgBox">
+	                    <ul>
+	                        <li>
+	                            {% for b in a.thumb %}
+	                                <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+	                            {% endfor %}                                        
+	                        </li>
+	                    </ul>
+	                </div>
+	            </div>
+	        {% endfor %}
+	        </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+<script>
+	window.repeatlang = {
+		title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+		confirm_order:"{{lang.repeat_confirm_order}}",
+		query_details:"{{lang.repeat_query_details}}",
+		time_d:"{{lang.time_d}}",
+		time_h:"{{lang.time_h}}",
+		time_m:"{{lang.time_m}}",
+		time_just:"{{lang.time_just}}"
+	}
+</script>
+{% include 'public/theme/footer.twig' %}
+

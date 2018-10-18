@@ -1,0 +1,177 @@
+{% include 'public/theme/header.twig' %}
+<link rel="stylesheet" type="text/css" href="/public/style/inquiry.css">
+<style type="text/css">
+	#POP800_INIT_DIV{display: none}
+	#POP800_PANEL_DIV{display: none}
+	#POP800_LEAVEWORD_DIV{display: none}
+</style>
+{% if regions.code == "QAT" or regions.code == "OMN" or regions.code == "SAU" or regions.code == "ARE" or regions.code == "IRN"%}
+<style type="text/css">
+	.pro_item .text_left{direction: rtl;}
+</style>
+{% endif %}
+{#  #}
+<input id="identity_tag" value="{{identity_tag}}" type="hidden">
+{#  #}
+<div class="content" style="display: none;">
+	<div class="header">
+		<a class="goback" href="/{{ identity_tag }}"></a>
+		<h2 class="title">{{ lang.order_inquiry }}</h2>
+	</div>
+	<div class="prompt">{{ lang.inquiry_tip }}</div>
+	<div class="from flexbox">
+		<input class="inquiry_mob flex" type="text" name="mob" placeholder="{{ lang.mobile_placeholder }}">
+		<button id="go" errormag="{{ lang.mobile_placeholder }}"></button>
+	</div>
+	<div id="inquiry_list" data_time="{{ lang.order_time }}" data_num="{{ lang.order_noumber }}" data_sea="{{ lang.order_viewdetails }}" data_null="{{ lang.order_null }}">
+	</div>
+	<div class="nextpage" mob="" allp="" error="{{ lang.next_null  }}" style="display: none;">{{ lang.next_page }}</div>
+	<div class="buy_tips">
+		<div style="text-align: center;line-height: 16px;margin-bottom: 10px;"><i class="	"></i><span>{{lang.repeat_title}}</span></div>
+		<p>{{ lang.buy_know|raw }}</p>
+	</div>
+	<div class="timetips timetips_ab">
+	    <ul>
+	        <li><img src="/public/image/7day.png" alt="">{{ lang.returned_goods }}</li>
+	        <li><img src="/public/image/huodao.png" alt="">{{ lang.cash_on_delivery }}</li>
+	    </ul>
+	</div>
+</div>
+<div id="model" style="display: none;">
+	<div class="item">
+		<div class="flexbox" style="margin-bottom: 10px;">
+			<div class="time flex"><div class="deviate1">{erp_no}</div></div>
+			<div class="states flex"><div class="deviate2">{state}</div></div>
+		</div>
+		<div class="flexbox" style="margin-bottom: 10px;">
+			<div class="pro_thumb"><img src="{thumb}"></div>
+			<div class="flex pro_title">
+				<h3>{title}</h3>
+				<div class="attrs">{attr}</div>
+				<span class="number">{{lang.in_quantity}}</span>
+			</div>
+		</div>
+		<div class="flexbox pro_item">
+			<div class="flex text_left"><span>{{lang.in_goodsnum}}</span></div>
+			<div class="btn_div">
+				<button rel="{order_id}" orderno="{order_no}" class="order_details">{{lang.order_viewdetails}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="details" style="display: none;">
+    <div class="header">
+        <a class="goback" href="/{{ identity_tag}}"></a>
+        <h2 class="title">{{ lang.inquiry_details }}</h2>
+    </div>
+    <div class="order_status">
+    	<span id="erp_status"></span>
+    	<span id="yx_reason" class="yx_reason"></span>
+    </div>
+	<div class="explain">
+	    <div style="font-size: 14px;margin-bottom: 8px;"><span id="name"></span><span id="mobile" style="margin-left: 15px;"></span></div>
+	    <div>
+	    	<table class="receg_titel">
+	    		<tbody>
+	    			<tr>
+	    				<td class="receg_left">{{lang.address_}} :</td>
+	    				<td id="address"></td>
+	    			</tr>
+	    			<tr>
+	    				<td class="receg_left">{{lang.email}} :</td>
+	    				<td id="email"></td>
+	    			</tr>
+	    			<tr>
+	    				<td class="receg_left">{{lang.postal}} :</td>
+	    				<td id="postal"></td>
+	    			</tr>
+	    			<tr>
+	    				<td class="receg_left">{{lang.note}} :</td>
+	    				<td id="note"></td>
+	    			</tr>
+	    		</tbody>
+	    	</table>
+	    </div>
+	</div>
+	<div class="this_box">
+	    <div class="m-orderItem" id="goods">
+	    </div>
+        <!-- 套餐包含产品 -->
+        <div class="m-goodItems" style="display:none;" id="showComboProduct_content">
+        </div>
+        <div class="notic_show_combo_product action" id="showComboProduct_triggle2" rel="{{ lang.closeComboProducts }}" rel_s="{{ lang.openComboProducts }}">
+            <span class="uu"><span id="lang">{{ lang.openComboProducts }}</span><img src="/public/image/down14px.png" alt=""></span>
+        </div>
+
+        <!-- 套餐包含产品 -->
+	</div>
+	<div class="logistics">
+	    <ul>
+	    	<li><span class="receg_left">{{lang.order_noumber}} :</span><input type="text" id="erp_no" value="" readonly="readonly"><span id="copyerp_no" class="copy">{{lang.erp_no_copy}}</span></li>
+	    	<li><span class="receg_left">{{ lang.payment_method }} :</span><span id="pay_type"></span></li>
+	    	<li><span class="receg_left">{{lang.order_time}} :</span><span id="add_time"></span></li>
+	    	<li style="display:none;"><span class="receg_left">{{lang.in_delivery}} :</span><span id="shipping_name"></span></li> 
+	    	<li><span class="receg_left">{{lang.in_delivery_time}} :</span><span id="delivery_time"></span></li>
+	    </ul>
+	</div>
+	<div class="m-orderItem" style="margin-bottom: 37px;padding: 10px;">
+	    <ul id="list_cost">
+	        <li>
+	            <span class="tips">{{ lang.total }} :</span><span class="tips2" id="payment_amount"></span>
+	        </li>
+	        <li>
+	            <span class="tips">{{ lang.freight }} :</span>
+	            <span class="tips2">
+	            {% if currency_prefix == 1 %}
+                    {{ currency_code }}0.00
+                {% endif %}
+                {% if currency_prefix == 0 %}
+                    0.00{{ currency_code }}
+                {% endif %}
+                </span>
+	        </li>
+	        <li>
+	            <span class="tips">{{ lang.pay }} :</span>
+	            <span class="tips2 total" style="color: #ff5a5f;font-weight: bold;"></span>
+	        </li>
+	    </ul>
+	</div>
+	<div class="timetips">
+	    <ul class="flexbox">
+	        <li class="flex"><img src="/public/image/7day.png" alt="">{{ lang.returned_goods }}</li>
+	        <li class="flex"><img src="/public/image/huodao.png" alt="">{{ lang.cash_on_delivery }}</li>
+	    </ul>
+	</div>
+	<div class="flexbox fixed_box">
+		<div class="flex fixed_left" style="font-size: 12px;text-align: left;">
+			<div class="doubt">{{lang.in_doubt}}</div>
+		</div>
+		<div class="fixed_right">
+			{% if service_contact_id %}
+			<a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" class="kefu">{{ lang.service_online }}</a>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<!--div style="display: none;">{{ lang.mobile_error }}</div-->
+<img id="loading" src="/public/image/loading.png">
+<script>
+	window.ordererp_status = {
+		erp_status_df:"{{lang.erp_status_df}}",
+		erp_status_yf:"{{lang.erp_status_yf}}",
+		erp_status_ys:"{{lang.erp_status_ys}}",
+		erp_status_yx:"{{lang.erp_status_yx}}",
+		erp_status_dt:"{{lang.erp_status_dt}}",
+		erp_status_tz:"{{lang.erp_status_tz}}",
+		erp_status_yt:"{{lang.erp_status_yt}}",
+		yx_reason11:"{{lang.yx_reason11}}",
+		yx_reason12:"{{lang.yx_reason12}}",
+		yx_reason13:"{{lang.yx_reason13}}",
+		yx_reason14:"{{lang.yx_reason14}}"
+	}
+</script>
+{% include 'public/theme/bi.twig' %}
+<script language="javascript" src="http://api.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=cn"></script>
+
+</body>
+</html>

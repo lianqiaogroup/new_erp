@@ -1,0 +1,89 @@
+#page-index {margin-bottom: 60px; }
+#page-index .product-info img {width: 100%; max-width: 540px; display: block; }
+#page-index .product-info video { display: block; width: 100%; height: auto; }
+#page-index footer { width: 100%; max-width: 540px; height: 50px; position: fixed; padding-left: 90px; z-index: 200; background-color: #fff; bottom: 0; box-sizing: border-box; }
+#page-index footer > a.left {position: absolute; left: 0; top: 0; width: 90px; height: 50px; border-top: 1px solid #d9d9d9; background-image: url(../images/detail-kefu.png); background-repeat: no-repeat; background-position: center; background-size: auto 100%; }
+#page-order {display: none; }
+
+/*规格*/
+.header{height: 44px;width: 100%;}
+.u-i{height: 15px;width: 40px;background: url("../images/detail-back.png")no-repeat center;display: inline-block;background-size:40px;}
+.backbtn {
+    position: absolute;
+    left: 0px;
+}
+.f-fl{float: left;}
+.dt-btns:after, .dt-paramselect .info-con:after{display: block;clear: both;visibility: hidden;height: 0;overflow:hidden;content: ".";}
+.dt-paramselect .spec-con{padding: 0 15px 60px 15px;}
+.dt-paramselect .info-con{padding: 15px;padding-top: 30px; background: #fff; border-bottom: 1px solid #E0E0E0;}
+.dt-paramselect .info-con .left{width: 100px;overflow: hidden;border-radius: 2px;background-color: #fff;margin-right: -100px;}
+.dt-paramselect .info-con .left img{width: 100%;height: 100%;}
+.dt-paramselect .info-con .right{line-height: 15px;width: 100%;padding-top: 0px;padding-left: 10px;}
+.dt-paramselect .info-con .right .con{margin-left: 100px;}
+.dt-paramselect .info-con .right .price{font-size: 16px;padding-bottom: 10px;}
+.dt-paramselect .info-con .right .money{font-weight: 600}
+.dt-paramselect .info-con .right .sku{font-size: 16px;}
+.dt-paramselect .info-con .right .sku .it{margin-right: 5px;}
+.u-fornum{padding: 0 15px;font-size: 16px}
+.u-format{}
+.u-format .tt,.u-fornum .tt{line-height: 15px;padding-bottom: 10px;font-size: 16px;}
+.u-format .package{padding-bottom: 10px;}
+.u-format .package .tab{padding:10px 0;display: inline-block;width: 100%; position: relative;vertical-align: middle;font-size: 14px;text-align: center;margin-right: 15px;margin-bottom: 10px;}
+.u-format .package .u-spec-sel{width: 20px;height: 20px;background-image: url(../images/spec-sel.png);background-repeat: no-reqeat;background-size: 100%;}
+.u-format .package .tab .u-spec-sel{display: none;position: absolute;bottom: -2px;right: -2px;}
+.u-format .con{padding-bottom: 15px;}
+.u-format .con .tab{display: inline-block;}
+.u-format .con .tab{position: relative;vertical-align: middle;border-radius: 3px;padding: 0 15px;font-size: 14px;line-height: 30px; text-align: center;margin-right: 15px;color:#666;margin-bottom: 10px;border: 1px solid #666;}
+.u-format .con .tab-sel{border: 1px solid #E61414;color: #E61414;}
+.u-format .package .tab-sel{background:white;border-bottom: 2px solid #E61414;padding: 10px 0;}
+.u-format .con .u-spec-sel{width: 20px;height: 20px;background-image: url(../images/spec-sel.png);background-repeat: no-reqeat;background-size: 100%;}
+.u-format .con .tab .u-spec-sel{display: none;position: absolute;bottom: -2px;right: -2px;}
+.u-format .con .tab-sel .u-spec-sel,.u-format .package .tab-sel .u-spec-sel{display: block;}
+.m-selnum{display: inline-block;background: url(../images/selnum.png)no-repeat white;border-radius:5px;background-size:100% 100%;margin-top: 7px;margin-left: 16px;}
+.m-selnum.dr{background-image: url(../images/selnum.png)}
+.m-selnum .less, .m-selnum .more, .m-selnum .textWrap, .m-selnum input{border: none;background-color: transparent;}
+.m-selnum .less, .m-selnum .more, .m-selnum .textWrap{position: relative;float: left;height: 32px;}
+.m-selnum .textWrap{position: relative;width: 60px;text-align: center;font-size: 14px;}
+.m-selnum .less, .m-selnum .more{width: 20px;}
+.m-selnum .textWrap input{position: relative;z-index: 1;font-size: 14px;}
+.m-selnum input{height: 100%;width: 66%;box-sizing: border-box;margin: 0;text-align: center;color: #333;}
+.u-detail-back{width: 50px;height: 50px; background-image: url(../images/detail-back.png);background-repeat: no-repeat;background-size: 100% 100%;}
+.swiper-slide-active{ height:auto !important;}
+.swiper-container { width: 100%; overflow: hidden;}
+.swiper-container img{width: 100%;}
+@media screen and (min-width: 320px) and (max-width: 374px) {
+    .m-selnum{display: inline-block;background: url(../images/selnum.png)no-repeat white;background-size:100% 100%;margin-top: 7px;margin-left: 0;}
+
+}
+.shuxing-price{position: absolute;width: 100px;height: 20px;right: 16px;top: 14px;text-align: right}
+.num_price{    width: 50px;
+    position: absolute;
+    right: -22px;
+    top: 50px;}
+.market_this{width: 100px;
+    position: absolute;
+    right: -34px;
+    top: 33px;
+    color: #ccc;}
+.biao{width: 100%;height: 24px;padding: 10px 0;background: white;}
+.biao h3{text-align: center;height:24px;line-height: 24px;width: 110px;background: #000;border-radius: 5px;color: white;margin: 0 auto;font-size: 16px;font-weight: 300}
+.m-orderFt{max-width:540px;height: 45px;position: fixed;width: 100%;bottom:0;background: #F9F9F9;z-index: 99;border-top:1px solid #E1E1E1;}
+.m-orderFt button{width: 100px;height: 35px;border-radius:5px;margin-top:5px;margin-right:16px;border:none;background: #E61414;float: right;color: white;font-size: 16px;}
+.this_price{overflow: hidden;float: right;text-align: right;padding-right: 10px;padding-top: 4px;}
+.actualPrice{color:#E61414;}
+.title_ac{overflow: hidden;margin-bottom: 10px;position: relative}
+.title_ac img{width: 70px;height: 70px; float: left;}
+.title_ac h5{float: left;padding: 10px;padding-top: 8px;}
+.tc{background: white;padding: 8px;overflow: hidden;border-bottom: 1px solid #E1E1E1}
+.shuxin_tan{display: none;position: fixed;overflow: auto;width: 100%;background: white;left: 0;z-index: 100;bottom:0;}
+.shuxin_tan .buy_this{padding: 12px 25px;width: 45px;margin: 0 auto;background:#E61414;border-radius:5px;text-align: center;color: white;font-size: 14px;}
+.price_shuxing{position: absolute;bottom:5px;left: 80px;color: #E61414;}
+.xuanz{white-space: nowrap;overflow:hidden;text-overflow: ellipsis;width:76px;padding:4px 23px 4px 5px;border: 1px solid #ccc;position: absolute;left: 80px;bottom: 5px;background: url("../images/down.png")no-repeat 82px;background-size: 17px;color:#E61414; }
+.coment_thumb {
+	font-size: 0px;
+	margin-top: 5px;
+}
+.coment_thumb > img {
+	margin-right: 5px;
+	margin-bottom: 5px;
+}

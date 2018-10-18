@@ -1,0 +1,168 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<link rel="stylesheet" href="{{ THEME }}/css/styles.css">
+<style type="text/css">
+	#POP800_PANEL_DIV{display: none;}
+</style>
+<div class="title">{{ title }}</div>
+<div class="swiper-container">
+    <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+        {% if photos %}
+            {% for p in photos %}
+            <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+        {% endif %}
+    </div>
+    <div class="swiper-pagination swiper-pagination-custom">
+        {% if photos %}
+            {% for p in photos %}
+            <span class="whiteicon"></span>
+            {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+</div>
+<div class="color_lump">
+	<div class="sales_tip">{{ lang.flash_sale }}</div>
+	<div style="font-size: 12px;">
+		<span>Thời gian kết thúc khuyến mãi</span>
+		<time id="timer">
+			<span id="h"></span>H
+			<span id="m"></span>phút
+			<span id="s"></span>giây
+		</time>
+	</div>
+</div>
+<div class="center_price">
+	<div>
+		<span class="price">{{ currency_code }}<strong id="price">{{ price }}</strong></span><span id="market_price">{{ currency_code }}{{ market_price }}</span>
+	</div>
+	<div style="font-size: 12px;margin-top: 10px;">{{ sales }}lượt mua，còn<span data_sale="{{ sales }}" data_stock="{{ stock }}" id="surplus"></span>cái</div>
+</div>
+<div class="tip">
+	<div class="chip action"><img src="{{ THEME }}/image/details_act.png">{{ lang.details }}</div>
+	<div class="chip" data-cuckootag="service" data-value="{{ service_contact_id }}"><img src="{{ THEME }}/image/kefu_dis.png">{{ lang.service_online }}</div>
+	<a href="#comment" class="chip"><img src="{{ THEME }}/image/comment_dis.png">{{ lang.evaluate }}</a>
+</div>
+<div class="tip_msg">
+	<span>○</span>{{ lang.seven_days }}<br>
+	<span>○</span>{{ lang.free_postage }}<br>
+	<span>○</span>{{ lang.cash_on_delivery }}<br>
+</div>
+<div class="nav flexbox">
+	<div class="combotitle">{{ lang.select_set }} : </div>
+    {% if combo %}
+    	<div class="flex">
+        {% for c in combo %}
+        <div class="subnav {% if loop.index==1 %}basecolor{% endif %}" combo_id="{{ c.combo_id }}" c_price="{{ c.price }}">{{ c.title|raw }}</div>
+        {% endfor %}
+        <input type="hidden" name="combo_id" value="">
+        </div>
+    {% else %}
+    <div class="subnav flex basecolor" combo_id="0" c_price="{{ price }}">{{ title }}</div>
+    <input type="hidden" name="combo_id" value="0">
+    {% endif %}
+    <input type="hidden" name="price" value="{{ price }}">
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</div>
+<section id="list">
+{% if combo %}
+    {% for c in combo %}
+    	<div datakey comdid="{{ c.combo_id }}" style="{% if loop.index==1 %}display: block;{% else %}display: none;{% endif %}">
+    	{% for o in  c.goods %}
+		<div class="item">
+			{% for a in o.options %}
+			<div class="flexbox products">
+				<div class="attr_title">{{ a.attr_group_title }}</div>
+				<ul class="flex attrs">
+				{% for key,attr in a.attr %}
+					<li data-combo="{{ c.combo_id }}" data-attr="true" data-number="{{ o.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}" class="{% if loop.index==1 %}action{% endif %}">
+					{{ attr.name|raw }}
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+			{% endfor %}
+		</div>
+		{% endfor %}
+		</div>
+	{% endfor %}
+{% else %}
+	<div class="item">
+		{% for o in options %}
+		<div class="flexbox products">
+			<div class="attr_title">{{ o.attr_group_title }} : </div>
+			<ul class="flex attrs">
+			{% for key,attr in o.attr %}
+				<li data-combo="0" data-attr="true" data-number="{{ o.attr_group_id }}-{{ attr.product_attr_id }}" class="{% if loop.index==1 %}action{% endif %}">
+				{{ attr.name|raw }}
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
+	</div>
+{% endif %}
+</section>
+<div class="footer flexbox">
+	<div class="flex total">
+		<strong>{{ currency_code }}</strong><strong id="total">{{ price }}</strong>
+		<span style="font-size: 12px;">({{ ((price/market_price)*100)|number_format(0) }}% off)</span>
+	</div>
+	<button class="btn_success" data-cuckootag="buy_now" data-event="postCheck">{{ lang.buy_now }}</button>
+</div>
+<div class="content" id="m-img">
+	{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+</div>
+{% if comment %}
+<div name="comment" id="comment" class="comment">
+	<div class="com_title">{{ lang.comment }}</div>
+	<ul class="com_list">
+	{% for a in comment %}
+		<li class="list_nate">{% if a.is_anonymous==1 %}{{ lang.anonymous }}{% else %}{{ a.name }}{% endif %}<span class="addtime" d_time="{{ a.add_time|raw }}"></span></li>
+		<li class="list_com">
+			{% if a.thumb %}
+			<ul class="com_img">
+			{% for b in a.thumb %}
+				<li  class="list_img">
+					<img data-zoom-img src="{{ b.thumb }}">
+				</li>
+			{% endfor %}
+			</ul>
+			{% endif %}
+			<div class="com_text">{{ a.content }}</div>
+		</li>
+	{% endfor %}
+	<li class="com_my"><span id="sub">{{ lang.to_comment }}<i class="icon_pen"></i></span></li>
+	</ul>
+</div>
+{% endif %}
+<div id="go_top"></div>
+<br>
+<br>
+<section id="com-layer">
+	<form action="/index.php" method="post" id="apprForm" class="zoom-boxer">
+		<div class="zoom-bd">
+			<div class="con-box">
+			<div>{{ lang.com_note }}</div>
+			<div class="com-item flexbox">
+				<label>{{ lang.name }} :</label><input class="flex" type="text" name="name">
+			</div>
+			<div class="com-item flexbox">
+				<label>{{ lang.mobile }} :</label><input class="flex" type="text" name="mob">
+			</div>
+			<div class="com-item flexbox">
+				<label>{{ lang.note }} :</label><textarea class="flex" type="text" rows="2" name="note"></textarea>
+			</div>
+			<input id="com_btn" type="button" name="Submit" value="{{ lang.com_submit }}">
+			<div id="close" class="close"></div>
+			</div>
+			
+		</div>
+	</form>
+</section>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}

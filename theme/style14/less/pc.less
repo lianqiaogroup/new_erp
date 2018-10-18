@@ -1,0 +1,258 @@
+.screen-small{
+   display: block;
+}
+.screen-large{
+   display: none;
+}
+.gallery-thumbs {
+    box-sizing: border-box;
+    padding: 10px 0;
+    height: 84px;
+    .swiper-slide{
+        border:1px solid #f9f9fb;
+        width: 66px;
+        height: 62px;
+        text-align: center;
+        opacity: 0.4;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 64px;
+    }
+    .swiper-slide-active{
+        opacity: 1;
+        border:1px solid #00a699;
+    }
+}
+@media screen and (min-width: 1000px){
+   body{
+       background: rgb(70, 170, 233);
+   }
+   .screen-small{
+       display: none;
+   }
+    #tistcombo{
+       text-align: left;
+    }
+    .products{
+        .left{
+            width: 160px;
+        }
+    }
+   .screen-large{
+       color: #1B1B1B;
+       display: block;
+       width: 1000px;
+       position: absolute;
+       left: 50%;
+       transform: translateX(-50%);
+       background: white;
+       .container{
+           .swiper-slide img{
+               margin: auto 15px;
+           }
+            .swiper-slide{
+                margin: auto 0px;
+            }
+       }
+       .product-info{
+           display: flex;
+           flex-flow: row nowrap;
+           .left-panel, .right-panel{
+                width: 50%;
+                display: table-cell;
+                overflow: hidden;
+           }
+       }
+        
+   } 
+    .guild{
+        width: 90%;
+        display: flex;
+        .esun{
+            display: none;
+        }
+        flex-flow: row wrap;
+    }
+    .guild .combo_nav{
+        width: 45%;
+        margin-right: 8px;
+        display: flex;
+        background: white;        
+        padding:8px;
+        &.check{
+            border-radius: 4px;
+            box-shadow: 0px 4px 8px rgba(70, 170, 233, 0.5);
+        }
+        img{
+            width: 32px;
+            height: 32px;
+            margin:auto 8px;
+            display: inline-block;
+        }
+        span{
+            display: inline-block;
+            font-size: 12px;
+        }
+    }
+    .btn_add{
+        width: 200px;
+        margin-left: 0px;
+    }
+    .icons{
+        position: absolute;
+        display: flex;
+        width: auto;
+        height: auto;
+        right: 15px;
+        top: 4px;
+    }
+    #list{
+        padding: 30px 30px 0;
+        border-bottom: none;
+    }
+    #list{
+            max-height: 800px;
+            width:100%;
+            overflow: hidden;
+            position: relative;
+            .title{
+                font-size: 14px;
+                padding-left: 10px;
+            }
+
+            .combos{
+                width: 400px;
+            }
+            
+            .item{
+                display: block;
+                margin-left: 0px;
+                padding: 0;
+                position: relative;
+                .goods_title{
+                    text-align: center;
+                    margin: auto auto auto 0px;
+                    width: 300px;
+                    color: #1B1B1B;
+                    word-break: break-all;
+                    width: 100px;
+                    color: #1B1B1B;
+                    font-weight: bold;
+                    line-height: 14px;
+                    height: 14px;
+                    padding-bottom: 10px;
+                    padding-top: 10px;
+                    z-index: 10;
+                    position: relative;
+                    border-radius: 5px 5px 0px 0px;
+                    border-bottom: 2px dashed #EEE;
+                    padding-right:30px;
+                }
+
+                .products{
+                    //border-left: 2px solid rgba(70, 170, 233, 0.5);
+                    //border-right: 2px solid rgba(70, 170, 233, 0.5);
+                    width: 400px;
+                    //background: rgba(70, 170, 233, 0.3);
+                    margin-right: 30px;
+                    padding-left: 10px;
+                    position: relative;
+                    z-index: 5;
+                    display: flex;
+                    .left{
+                        width: 10%;
+                        line-height: 30px;
+                        word-wrap: break-word;
+                    }
+                    .right{
+                        width: 90%;
+                        li{
+                            border-color: white;
+                        }
+                    }
+                    &:nth-child(2){
+                      //  border-top: 2px solid rgba(70, 170, 233, 0.5);
+                    }
+                    &:last-of-type{
+                      //  border-bottom: 2px solid rgba(70, 170, 233, 0.5);    
+                    }
+                    ul li{
+                        margin-bottom:0;
+                        margin-right:3px;
+                    }
+                }
+            }
+
+          
+        }
+    .right-panel > .header{
+        padding: 30px;
+        .title{
+            width: 300px;
+        }
+    }
+    .left-panel{
+        padding: 30px;
+    }
+    .tip_small{
+        padding-left: 30px;
+    }
+    .goods_title{
+        border-bottom: none;
+    }
+
+    .quantity{
+        border-bottom: none;
+        border-top: none;
+    }
+
+    .tip{
+        border-top: none;
+        margin: 0 0px 0 30px;
+    }
+    .nav{
+        // width: 30%;
+        margin-left: 60px;
+    }
+    #tab1, #tab2, .User_notes{
+        font-size: 13px;
+    }
+    .User_notes{
+        padding: auto 60px;
+    }
+    .kefu, .inquiry{
+        position: relative;
+        // width: 80px;
+        line-height: 24px;
+    }
+    .gallery-thumbs{
+        display:block;
+    }
+}
+
+.icons{
+    height: 24px;
+    line-height: 24px;
+}
+.kefu, .inquiry{
+    span{
+        line-height: 14px;
+        height: 24px;
+        font-size: 12px;    
+        margin: auto;
+        transform: translateY(-8px);
+        display: inline-block;
+        margin-left: 8px;   
+    }
+    img{
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+*[onclick], .subnav, .kefu, .inquiry, [comob_id], button, .btn_add, li[data-attr="true"]{
+    cursor: pointer;
+}
+

@@ -1,0 +1,78 @@
+<div class="close"></div>
+    <div class="dt-paramselect">
+        <form id="form" name="form" method="post" action="order.php" onsubmit="return postcheckGuige()">
+            <input type="hidden" name="orderid" id="orderid" value="">
+            <input type="hidden" name="product_id" value="{{ product_id }}">
+            <input type="hidden" name="act" id="act" value="getAttrPrice">
+            <!-- 套餐选择 -->
+            <div class="u-format" id="comb" data-price="">
+                <div class="package">
+                    <select>
+                        {% if combo %}
+                            {% for c in combo %}
+                                <option value="{{ c.combo_id }}" data-price="{{ c.price }}" data-single="{{ c.is_single_combo }}">{{ c.title|raw }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option value="0" data-single="0">{{ title }}</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            <!-- 套餐选择 end -->
+
+            <!-- 套餐－属性选择 -->
+            {% if combo %}
+                <!-- 循环套餐 -->
+                {% for om in combo %}
+                    <section data-loopIndex="{{ loop.index }}" productid="{{ om.product_id }}" style="display: none;">
+                    {% for ok in om.goods %}
+                        {% if ok.options %}
+                            <div class="tc tc{{ ok.combo_id|raw }}"><div class="title_ac"><h5>{{ ok.title|raw }}</h5></div>
+                                {% for o in  ok.options %}
+                                <select class="count_atrr" data-group="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}">
+                                    <option value="0">{{ o.attr_group_title|raw }}</option>
+                                    {% for key,attr in o.attr %}
+                                    <option value="{{ attr.product_attr_id }}" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">{{ attr.name|raw }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </section>
+                {% endfor %}
+            {% else %}
+            <!-- 单产品属性选择 -->
+                <section data-loopIndex="1">
+                    {% for o in  options %}
+                        <select class="count_atrr" data-group="{{ o.attr_group_id }}">
+                            <option value="0">{{ o.attr_group_title|raw }}</option>
+                            {% for key,attr in o.attr %}
+                            <option value="{{ attr.product_attr_id }}" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">{{ attr.name|raw }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endfor %}
+                </section>
+            {% endif %}
+            <div class="count_num">
+                <div class="stock">{{ stock }}{{ lang.piece }}{{ lang.only_last }}</div>
+                <!--数量-->
+                <div class="u-fornum">
+                    <div class="con">
+                        <div class="m-selnum">
+                        <div onclick="minnumber()" class="less z-dis">-</div>
+                        <div class="textWrap">
+                            <div class="tt">1</div>
+                            <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                        </div>
+                        <div onclick="addnumber()" class="more">+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <span>{{ lang.total }}</span>
+                <span>{{ currency_code }}<span id="price">{{ price }}</span></span>
+            </div>
+        </form>
+    </div>

@@ -1,0 +1,181 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section>
+	<div class="img_wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="swiper-pagination swiper-pagination-fraction"></div>
+	</div>
+	<div class="detail">
+		<div class="title">{{ title }}</div>
+		<div class="sales">
+			<div class="service">
+				<span>{{ lang.free_yun }}</span>
+				<span>{{ lang.cash_on_delivery }}</span>
+				<span>{{ lang.returned_goods }}</span>
+			</div>
+			<div class="left">
+				<div>{{ lang.last }}{{ stock }}{{ lang.piece }}</div>
+				<div class="timeWrap">
+					<span id='clock'>{{ lang.time_over }}</span>
+					<span id="timer">
+		                <span  id="h">10</span>
+	                	<span class=""> ：</span>
+	                    <span id="m">00</span>
+	                    <span class=""> ：</span>
+	                    <span id="s">00</span>
+	                    <span class=""></span>
+	              	</span>
+				</div>
+			</div>
+		</div>
+		<div class="u-format" id="combo">
+			<input type="hidden" name="product_id" value="{{ product_id }}">
+			<div class="tt">{{ lang.choose_package }}</div>
+			<div class="package">
+				{% if combo %}
+					{% for c in combo %}
+					<label class="tab" data-price="{{ c.price }}" data-loopIndex="{{ loop.index }}" combo_id="{{ c.combo_id }}">
+						<!-- <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="{{ c.combo_id }}" /> -->
+                        <span>{{ c.title|raw }}</span>
+                    </label>
+					{% endfor%}
+				{% else %}
+                    <label class="tab tab-sel" data-price="{{ price }}" data-loopIndex="1" combo_id='0'>
+                        <!-- <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="0" checked="chekced" /> -->
+                        <span>
+                            {{ title }} 
+                        </span>
+                    </label>
+				{% endif %}
+			</div>
+		</div>
+		<div class="comment">
+			<div class="left">
+				<div class="comment_num">{{ (sales*0.7)|number_format(0,"","") }}{{ lang.comment_count }}</div>
+				<div class="stars">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+			<div class="right">
+				<button>+ {{ lang.comment }}</button>
+			</div>
+		</div>
+		<div class="wrap">
+			<div class="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);">{{ lang.contact }}</div>
+			<div class="order_query">{{ lang.order_inquiry }}</div>
+		</div>
+	</div>
+	<div class="product_info">
+        <div class="m-img">
+            {{ content|raw }}
+        </div>
+        {% if comment %}
+            <div class="detail-block" id="detial-appraise">
+                <h4>{{ lang.new_pinlun }}</h4>
+                <div id="mq" data-fn="commentScroll">
+                    <div>
+                        {% for a in  comment %}
+                            <div class="appr-title mqc">
+                                {% if a.is_anonymous %}
+                                    <span style="color:red; margin:0px 3px">{{ lang.anonymous }}</span>
+                                {% else %}
+                                    <span style="color:red; margin:0px 3px">{{ a.name }}</span>
+                                {% endif %}
+                                <span>{{ lang.Satisfaction }}：<font color="red">★★★★★</font></span><br/>
+                            </div>
+                            <div class="mqc">
+                                <p><span>{{ a.content }}</span><span></span></p>
+                            </div>
+                            <div class="msKeimgBox">
+                                <ul>
+                                    {% for b in a.thumb %}
+                                        <li>
+                                            <img src="{{ b.thumb }}" width="75" height="75" />
+                                        </li>
+                                    {% endfor %}
+                                    <div style="clear:both;"></div>
+                                </ul>
+                                <div class="mskeTogBtn"></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        {% endif %}
+    </div>
+
+	<footer>
+		<div class="left">
+			<del class="market_price">{{ currency_code }}{{ market_price }}</del>
+			<span class="price">{{ currency_code }}{{ price }}</span>
+		</div>
+		<div class="buy_now">
+			<button id="add">{{ lang.buy }}</button>
+		</div>
+	</footer>
+	<form id="add_comment" name="form" action="#" method="post">
+		<div class="wrap">
+			<div class="close"></div>
+			<div class="title">{{ lang.comment }}</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.name }}:</span>
+				<input type="text" name="name" class="right" required="required">
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.phone }}:</span>
+				<input type="text" name="phone" class="right" required="required">
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.Satisfaction }}:</span>
+				<span class="right">
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+				</span>
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lan.comment }}:</span>
+				<input type="text_area" name="message" class="right" required="required">
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.upload_file }}:</span>
+				<input type="file" name="file" class="right" required="required">
+			</div>
+			<div class="submit">
+				<input type="submit" name="submit" value="{{ lang.submit_comment }}">
+			</div>
+		</div>
+	</form>
+
+</section>
+
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="810 16 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#91949f"/>
+      <stop offset="1" stop-color="#252c41"/>
+    </linearGradient>
+  </defs>
+  <g id="ic_shopping_cart_black_24px" transform="translate(810 16)">
+    <path id="Subtraction_12" data-name="Subtraction 12" class="cls-1" d="M-794-759a2,2,0,0,1-1.99-2,2,2,0,0,1,1.99-2,2,2,0,0,1,2,2A2,2,0,0,1-794-759Zm-10,0a2,2,0,0,1-1.99-2,2,2,0,0,1,1.99-2,2,2,0,0,1,2,2A2,2,0,0,1-804-759Zm12-5h-12a2,2,0,0,1-2-2,1.934,1.934,0,0,1,.25-.96l1.35-2.45L-808-777h-2v-2h3.27l.941,2H-791a1,1,0,0,1,1,1,.976.976,0,0,1-.12.48l-3.58,6.49A1.993,1.993,0,0,1-795.45-768h-7.45l-.9,1.63-.03.12a.247.247,0,0,0,.249.25H-792v2Zm-13-11,2.3,5h7.6l2.7-5H-805Z" transform="translate(812 781)"/>
+    <path id="Path_2047" data-name="Path 2047" class="cls-2" d="M0,0H24V24H0Z"/>
+  </g>
+</svg>

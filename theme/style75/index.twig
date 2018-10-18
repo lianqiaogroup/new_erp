@@ -1,0 +1,193 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section id="page-index">
+	<div class="header">
+	    <div class="backdiv"><a href="javascript:history.go(-1)" class="goback"><i></i></a></div>
+		<div class="title_img"><img src="{{ logo }}"></div>
+		<div class="homediv"><a href="/" class="home"><img src="{{ THEME }}/images/home.png"></a></div>
+	</div>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}" width="100%">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="sales">
+		<div class="title"><h1>{{ title }}</h1></div>
+		<div class="sales_number">
+            <span style="display:block;float:left">{{ lang.sales_number_before }}<span><strong style="color:#097aa9;">{{ sales }}</strong></span>{{ lang.sales_number_after }}</span>
+            <span style="width:120px; height:4px;border:1px solid #f00;display: block;float:left;margin:7px">
+
+              <span style="width:{{ (sales/(sales+stock)*100)|number_format(0) }}%; height:4px;background:#f00;display: block;"></span>
+            </span>
+            <span>{{ (sales/(sales+stock)*100)|number_format(0) }}%</span>
+        </div>
+        <div class="sales_price">
+        	<div class="price">
+				<div>
+					<span>{{ lang.price }}:</span>
+					<span class="price_now">{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+					{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}</span>
+					<span>（{{ lang.tax }}）</span>
+				</div>
+				<div>
+					{{ lang.markrt_price }}:
+					{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+					{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+					<span class="discount">{{ ((market_price-price)/market_price*100)|number_format(0) }}% OFF</span>
+				</div>
+			</div>
+			<div class="timeWrap">
+				<span class="clock">{{ lang.end }}</span>
+				<span id="timer">
+	                <span  id="h">10</span>
+	            	<span class="unit">:</span>
+	                <span id="m">00</span>
+	                <span class="unit">:</span>
+	                <span id="s">00</span>
+	          	</span>
+			</div>
+        </div>
+        <div class="service">
+        	<div>*{{ lang.huo }}</div>
+        	<div>*{{ lang.free_yun }}</div>
+        	<div>*{{ lang.return_goods }}</div>
+        </div>
+	</div>
+	<div class="product_info">
+		<nav class="img_tt">
+			<div><a href='#m-img'>{{ lang.product_information }}</a></div>
+			{% if comment %}<div><a href='#pinlun_tt'>{{ lang.comment }}({{ (sales*0.7)|number_format('0','','') }})</a></div>{% endif %}
+			<div><a href="#intro">お買い物ガイド</a></div>
+		</nav>
+		<div class="m-img" id="m-img">
+		    {{ content|raw }}
+		</div>
+		{% if comment %}
+			<div class="scroll_tt" id="pinlun_tt">{{ lang.pingjia }}</div>
+			<div id="pinlun_content">
+			    <div class="picMarquee-top">
+			        <div class="bd" data-fn="commentScroll" style="height:250px; overflow: hidden;font-size:14px;">
+			        	<div class="picList">
+			            {% for a in  comment %}
+				            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7;padding-bottom:10px;">
+				                <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+				                    <span class="inm">
+				                    <span id="wi">{{ a.name }}</span>
+				                        {% if a.is_anonymous %}
+				                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+				                        {% endif %}
+				                </span>&nbsp;
+				                    <span>
+				                    {{ lang.score }}：<span style="color: red;">{{ a.star }}</span>
+				                </span>
+				                </div>
+				                <P style="color: #666;padding: 5px;">{{ a.content }}</P>
+				                <div class="msKeimgBox">
+				                    <ul>
+				                        <li>
+				                            {% for b in a.thumb %}
+				                                <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+				                            {% endfor %}                                        
+				                        </li>
+				                    </ul>
+				                </div>
+				            </div>
+				        {% endfor %}
+				        </div>
+			        </div>
+			    </div>
+			</div>
+		{% endif %}
+	</div>
+	<footer>
+		<div class="query" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.inquiry }}</div>
+		<div class="buy_now">{{ lang.buy_now }}</div>
+		<div class="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);">{{ lang.kefu }}</div>
+	</footer>
+</section>
+<div id="intro" style="padding:0px 0 40px;">
+    <table class="data-table">
+        <tbody>
+            <tr class="first odd">
+                <th colspan="2" style="background-color: #d2d2d2;text-align: left;">お支払いについて</th>
+            </tr>
+            <tr class="first odd">
+                <th>クレジットカード決済</th>
+                <td>
+                	<span class="visabox">
+                        <img src="{{ THEME }}/images/card_logo.png">
+                    </span>
+                	<p>JCB、MASTERS、VISA のカードをご利用いただけます。</p>
+                    <p>※クレジットカードのセキュリティはSSLというシステムを利用しております。 カード番号は暗号化されて安全に送信されますので、どうぞご安心ください。</p>
+                </td>
+            </tr>
+            <tr class="first odd">
+                <th>代金引換</th>
+                <td>
+                    <p>商品受取時に現金・クレジットカード・電子マネー（QUICPay)・デビットカードでお支払いください。商品と送料を含んだ合計金額に応じて別途手数料がかかります。ご了承ください。</p>
+                </td>
+            </tr>
+            <tr class="first odd">
+                <th colspan="2" style="background-color: #d2d2d2;text-align: left;">配送について</th>
+            </tr>
+            <tr class="first odd">
+                <td colspan="2">
+                   <p>送料は全て無料！（商品代金に含まれています）</p>
+                   <p>・配送は佐川急便または、日本郵便ゆうパケットでお届けいたします。</p>
+                   <p>・ご注文確認（前払いの場合はご入金確認）後、速やかな発送をこころがけておりますが、万が一ご出荷が遅れる場合は　メールでご連絡致します。</p>
+                
+            </td></tr>
+            <tr class="first odd">
+                <th colspan="2" style="background-color: #d2d2d2;text-align: left;">返品・交換について</th>
+            </tr>
+            <tr class="first odd">
+                <td colspan="2">
+                   <p>商品到着後【7日以内】に限り、商品の返品及び交換が可能です。商品の返品、交換をご希望される場合は、商品到着後【7日以内】に『お問い合わせ』よりご連絡ください。早急に対処させていただきます。</p>
+                
+            </td></tr>
+            <tr class="first odd">
+                <th colspan="2" style="background-color: #d2d2d2;text-align: left;">プライバシーポリシー</th>
+            </tr>
+            <tr class="first odd">
+                <td colspan="2">
+					<p>はご利用者様のプライバシーを尊重し、ご利用者様の個人情報を厳格に保護することが重要な責務であると考えております。この一環として、個人情報を適切に保護し、取り扱うために、当プライバシーポリシーを定め全社員に周知徹底を図り、これを遵守いたします。安心してお買い物をお楽しみ下さい。</p>
+                
+            </td></tr>
+            <tr class="first odd">
+                <th colspan="2" style="background-color: #d2d2d2;text-align: left;">お問い合わせについて</th>
+            </tr>
+            <tr class="first odd">
+                 <td colspan="2">
+                    <p style="">商品の品質には万全を期しておりますが、万一、不良・破損・汚損・誤納品などがございましたら商品到着後7日以内にご連絡下さい。早急に対応させて頂きます。</p>
+                </td>
+            </tr>
+            <tr class="first odd">
+                <th colspan="2" style="background-color: #d2d2d2;text-align: left;">会社概要</th>
+            </tr>
+            <tr class="first odd">
+                <td colspan="2">
+                    <p>『毎日のショッピングを楽しめる』という理念の実現を目指し、 お客様の期待にお応えする魅力あふれる商品・サービスを提供するサイトです。 </p>
+                </td>
+            </tr>
+        </tbody>
+	</table>
+</div>
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

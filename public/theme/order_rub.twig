@@ -1,0 +1,88 @@
+<div class="flexbox">
+	<div class="flex regions">{{ regions.region_name }}</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="country" placeholder="{{ lang.country }}">
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="state" placeholder="{{ lang.state }}">
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="city" placeholder="{{ lang.city }}">
+	</div>
+</div>
+<div class="table-row">
+	<input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="name" placeholder="{{ lang.name }}">
+		<div style="font-size:12px;color:#666;text-align:left;">( Фамилию, имя и отчество необходимо целостно заполнить.)</div>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" name="postal" placeholder="{{ lang.postal }}" maxlength="5" pattern="[0-9]{5}">
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="email" name="email" placeholder="{{ lang.email }}">
+	</div>
+</div>
+<div class="table-row">
+	<input type="text" required="required" name="passnr" placeholder="{{ lang.passport_no }}" pattern="[A-Za-z0-9]{10}">
+</div>
+<div class="table-row">
+	<input type="tel" required="required" name="self_tax_code" placeholder="{{ lang.individual_tax_number_1 }}" maxlength="20" pattern="^[0-9]*$">
+	<div style="font-size:12px;color:#666;text-align:left;">( {{ lang.individual_tax_number_2 }} )</div>
+</div>
+<div class="table-row">
+	<input type="text" name="guest" placeholder="{{ lang.note }}">
+</div>
+<div class="flexbox">
+{% if payment_underline == 1 %}
+	<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+{% endif %}
+{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+	<div class="flex tab_two">
+		<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+	</div>
+{% endif %}
+	<input name="payment_type" value="0" type="hidden">
+</div>
+<div class="table-row pay-type" style="display: none;">
+	<select id="pay-online">
+		{% if payment_online == 1 %}
+		<option value="1">{{ lang.yijifu }}</option>
+		{% endif %}
+		{% if payment_paypal == 1 %}
+		<option value="2">paypal</option>
+		{% endif %}
+		{% if payment_asiabill == 1 %}
+		<option value="3">Asiabill</option>
+		{% endif %}
+	</select>
+</div>
+<style>
+select[name="state"], select[name="city"] {
+    height: 44px;
+    width: 100%;
+    font-size: 14px;
+    color: #666;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    text-indent: 16px;
+}
+</style>
+<div class="explain">
+	<p>{{ lang.information_tips }}</p>
+</div>

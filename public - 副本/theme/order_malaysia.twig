@@ -1,0 +1,174 @@
+<div class="flexbox">
+	<div class="flex regions">{{ regions.region_name }}</div>
+</div>
+{% if regions.code == 'MYS' %}
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="state" required="required">
+			<option value="">{{lang.ms_state}}</option>
+		</select>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="city" required="required">
+			<option value="">{{lang.city}}</option>
+		</select>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="district" required="required">
+			<option value="">{{lang.ms_district}}</option>
+		</select>
+	</div>
+</div>
+<div class="flexbox">
+    <div class="flex tab_two">
+        <select name="street"  required="required">
+            <option value="">{{lang.area}}</option>
+        </select>
+    </div>
+</div>
+{% endif %}
+
+<div class="table-row">
+    {% if theme == 'style39'%}
+    <input type="text" name="address" placeholder="{{ lang.addr }}">
+    {% else %}
+    <input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+    {% endif %}
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="name" maxlength="50" placeholder="{{ lang.name }}">
+	</div>
+	<div class="flex tab_two">
+        <input type="number" required="required" {% if regions.code == 'MYS' %} readonly {% endif %} name="postal" placeholder="{{ lang.postal }}">
+	</div>
+</div> 
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="email" name="email" placeholder="{{ lang.email }}">
+	</div>
+</div>
+<div class="table-row">
+	<input type="text" name="guest" placeholder="{{ lang.note }}">
+</div>
+<div class="flexbox">
+	{% if payment_underline == 1 %}
+		<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+	{% endif %}
+	{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+		<div class="flex tab_two">
+			<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+		</div>
+	{% endif %}
+	<input name="payment_type" value="0" type="hidden">
+</div>
+<div class="table-row pay-type" style="display: none;">
+	<select id="pay-online">
+		{% if payment_online == 1 %}
+		<option value="1">{{ lang.yijifu }}</option>
+		{% endif %}
+		{% if payment_paypal == 1 %}
+		<option value="2">paypal</option>
+		{% endif %}
+		{% if payment_asiabill == 1 %}
+		<option value="3">Asiabill</option>
+		{% endif %}
+	</select>
+</div>
+
+{% if regions.code == 'MYS' %} 
+
+<script>
+    $("[name='state']").change(function(event) {
+    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+    loadCity(id);
+});
+$('[name="city"]').change(function(event) {
+    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+    loadDistrict(id);
+});
+$('[name="district"]').change(function (event) {
+    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+    loadStreet(id);
+});
+$('[name="street"]').change(function (event) {
+    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-postal');
+    if(id){
+        $('[name="postal"]').val(id)
+    }else{
+        $('[name="postal"]').val("")
+    }
+});
+
+
+function loadstate(){
+    var region_id = '{{regions.region_id}}';
+    $.post('/region.php', { 'region_id': region_id }, function(data) {
+        var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="state"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+    });
+}
+function loadCity(id, callback){
+    $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+        var first =  $('[name="city"]').children().first();
+        $('[name="city"]').children().remove();
+        $('[name="city"]').append(first);
+        var districtFirst = $('[name="district"]').children().first();
+        $('[name="district"]').children().remove();
+        $('[name="district"]').append(districtFirst);
+        var postalFirst = $('[name="street"]').children().first();
+        $('[name="street"]').children().remove();
+        $('[name="street"]').append(postalFirst);
+        $('[name="postal"]').val("");
+        var data = JSON.parse(data);
+        data.map(function(item, index){
+            $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+
+        });
+    });
+}
+function loadDistrict(id){
+    $.post('/region.php', { 'yn_region_id': id }, function(data) {
+        var districtFirst = $('[name="district"]').children().first();
+        $('[name="district"]').children().remove();
+        $('[name="district"]').append(districtFirst);
+        var postalFirst = $('[name="street"]').children().first();
+        $('[name="street"]').children().remove();
+        $('[name="street"]').append(postalFirst);
+        $('[name="postal"]').val("");
+        var data = JSON.parse(data);
+
+            var newInput = '<select name="district"></select>';
+            $('input[name="district"]').before(newInput);
+            $('input[name="district"]').remove();
+            data.map(function(item, index){
+                $('[name="district"]').append('<option data-id="'+item.id_region+'" value="'+item.name+'">'+item.name+'</option>');
+            });
+
+    });
+}
+function loadStreet(id){
+    $.post('/region.php', { 'yn_region_id': id }, function (data) {
+        var first = $('[name="street"]').children().first();
+        $('[name="street"]').children().remove();
+        $('[name="street"]').append(first);
+        var data = JSON.parse(data);
+        data.map(function (item, index) {
+            $('[name="street"]').append('<option data-postal="'+item.post_code+'" value="' + item.name + '">' + item.name + '</option>');
+        });
+    });
+};
+loadstate();
+</script>
+
+{% endif %}

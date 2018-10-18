@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+        <link rel="dns-prefetch" href="http://imgcn.stosz.com">
+        <link rel="dns-prefetch" href="http://cdn.bgnht.com">
+        <link rel="dns-prefetch" href="https://connect.facebook.net">
+        <link rel="dns-prefetch" href="https://www.google-analytics.com">
+        <link rel="dns-prefetch" href="http://api.pop800.com">
+        <link rel="dns-prefetch" href="http://data.pop800.com">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="320" name="MobileOptimized" />
+        <meta content="telephone=no" name="format-detection" />
+        <title>{{ title }}</title>
+        <meta name="keywords" content="{{ title }}" />
+        <meta name="description" content="{{ title }}" />
+        {% if has_referer == 1 %}
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            {% for i in fb_px %}
+            fbq('init', {{ i }});
+            {% endfor %}
+            fbq('track', "PageView");
+            fbq('track', "ViewContent");
+
+            fbq('track', 'Purchase', {value: "30", currency:"USD", tags:"{{ product_md_ddn }}"});
+            
+        </script>
+        <!-- Facebook Pixel Code -->
+        {% endif %}
+        {% include '/public/theme/test_google.twig' %}
+        <link rel="stylesheet" href="/public/style/page-success.css">
+    </head>
+    {% if regions.region_name == "جمهوری اسلامی ایران" or regions.region_name=="سلطنة عُمان" or regions.region_name=="قطر" or regions.region_name=="امارات عربية متحدة" or regions.region_name=="مملكة عربية سعودية" or regions.code == 'OMN' or regions.code == 'QAT' or regions.code == "SAU" or regions.code == "ARE" or regions.code == "IRN" %}
+    <style>
+        input,select,textarea{direction:rtl !important;text-align:right !important;}
+        .regions{text-align:right !important;padding-right:16px;}
+        html body{font-family:Droid Arabic Naskh,Tahoma,Arial,Sans-serif;}
+    </style>
+    {% endif %}
+<body>   

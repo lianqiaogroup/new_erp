@@ -1,0 +1,260 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<!--link rel="stylesheet" href="{{ THEME }}/css/frozen.css"-->
+<link rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{{ THEME }}/css/swiper-3.4.0.min.css">
+<!--/page-->
+<input type="hidden" name="product_id" value="{{ product_id }}">
+<input type="hidden" name="act" id="act" value="getAttrPrice">
+<input type="hidden" id="regionCode" value="{{regions.code}}">
+<!--  -->
+<section id="page-index" class="container">
+    {% if logo %}
+    <div class="ui-header ui-header-positive ui-border-b">
+        <h1><img src="{{ logo }}"></h1>
+    </div>
+    {% endif %}
+    <!--  -->
+    <div class="ui-container">
+        <div class="maintitle">{{ title }}</div>
+        <div style="padding:0 36px;position:relative">
+        <div class="swiper-container">
+            <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                {% if photos %}
+                    {% for p in photos %}
+                    <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                    {% endfor %}
+                {% else %}
+                    <div class="swiper-slide"><img width="100%" src="{{ thumb }}" id="attrimg"></div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom">
+                {% if photos %}
+                    {% for p in photos %}
+                    <span class="whiteicon"></span>
+                    {% endfor %}
+                {% else %}
+                    <span class="whiteicon"></span>
+                {% endif %}
+            </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        </div>
+        <!--  -->
+        <div class="baseInfo">
+            <span class="red price">
+                {% if currency_prefix == 1 %} 
+                {{ currency_code }}
+                {% endif %}
+                <label render="price">-</label>
+                {% if currency_prefix == 0 %} 
+                {{ currency_code }}
+                {% endif %}
+            </span>
+            <span class="market_price">
+                {% if currency_prefix == 1 %} 
+                {{ currency_code }}
+                {% endif %}
+                <span render="format">{{ market_price }}</span>
+                {% if currency_prefix == 0 %} 
+                {{ currency_code }}
+                {% endif %}
+            </span>
+            <span >({{ (((market_price-price)/market_price)*100)|number_format(0) }}% OFF)</span>
+            <div class="tags"><span class="tag1">{{ lang.cash_on_delivery }}</span></div>
+        </div>
+        
+        <div class="options-layer" data-error='{{ lang.Th_titleattr }}'>
+            {% if combo %}
+            <div class="ui-row">
+                <div class="ui-col ui-col-25  option-name" style="padding-top: 8px;">{{ lang.product }}</div>
+                <div class="ui-col ui-col-75" id="combo" data-type="combo">
+                    <div class="ui-row" style="padding: 0px;">
+                        {% for c in combo %}
+                            {% if loop.index == 1 %}
+                                <input type="hidden" name="combo_id" value="{{ c.combo_id }}">
+                            {% endif %}
+                            <div class="ui-col {% if loop.index == 1%}active{% endif %}" data-id="{{ c.combo_id }}" single_c="{{c.is_single_combo}}">
+                                <label>{{ c.title|raw }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <input type="hidden" name="combo_id" value="0">
+            {% endif %}
+
+            <div class="ui-row">
+                <div class="ui-col-25 option-name">{{ lang.quantity }}</div>
+                <div class="ui-col-75">
+                    <div class="m-selnum">
+                        <div onclick="minnumber()" class="less z-dis">-</div>
+                        <div class="textWrap">
+                            <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                        </div>
+                        <div onclick="addnumber()" class="more">+</div>
+                    </div>
+                </div>
+            </div>
+            {% if combo %}
+                {% for c in combo %}
+                    <div class="combos" id="combo_{{ c.combo_id }}" style="{% if loop.index != 1 %}display: none;{% endif %}">
+                    {% for g in  c.goods %}
+                        <div class="g_title">{{ g.title }}</div>
+                        {% for o in  g.options %}
+                        <div class="ui-row product_attr" data-group="{{ o.attr_group_id }}" data-id="0" data-goods="{{ g.combo_goods_id }}">
+                            <div class="ui-col ui-col-25 option-name">
+                                {{ o.attr_group_title|raw }}
+                            </div>
+                            <div class="ui-col ui-col-75 option-values">
+                                {% for key,attr in o.attr %}
+                                <span data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}" dats-combo="{{ c.combo_id }}">{{ attr.name|raw }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div id="combo_0">
+                {% for o in  options %}
+                <div class="ui-row product_attr" data-group="{{ o.attr_group_id }}" data-id="0">
+                    <div class="ui-col ui-col-25 option-name">
+                        {{ o.attr_group_title|raw }}
+                    </div>
+                    <div class="ui-col ui-col-75 option-values">
+                        {% for key,attr in o.attr %}
+                        <span data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">{{ attr.name|raw }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <!--  -->
+        <div class="preview">
+            {{ lang.total }}: 
+            <label class="red">
+                {% if currency_prefix == 1 %} 
+                {{ currency_code }}
+                {% endif %}
+                <span render="total">
+                </span>
+                {% if currency_prefix == 0 %} 
+                {{ currency_code }}
+                {% endif %}
+            </label>
+            <img data-cuckootag="service" data-value="{{ service_contact_id }}" src="{{ THEME }}/images/kefu-min.png" class="kefu">
+        </div>
+        <div class="btn">
+            <button class="ui-btn-lg black" data-cuckootag="confirm_arrtibute" btn-act-buy>{{ lang.buy_now }}</button>
+        </div>
+        <div class="btn">
+            <button id="inquiry" class="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</button>
+        </div>
+        <div class="product-detail">
+            {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png"  style="width:100%;" data-img='})|raw }}
+        </div>
+        {% if regions.code == 'Rp' %}
+        <div style="padding:0 16px;font-size:14px;line-height:20px;">
+            <div>{{lang.return_goods_top}}</div>
+            <div>{{lang.return_goods_1}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_2}}</div>
+            <div>{{lang.return_goods_3}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_4}}</div>
+            <div>{{lang.return_goods_5}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_6}}</div>
+            <div>{{lang.return_goods_7}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_8}}</div>
+            <div>{{lang.return_goods_9}}</div>
+            <div style="margin-top:10px;">{{lang.return_goods_10}}</div>
+        </div>
+        {% endif %}
+        <div class="warning">
+            {{ lang.warming|raw }}
+        </div>
+        {% if regions.code == 'THA'  and lang.after_sales %}
+        <div class="after_sale">
+            <div class="after_sale_title">{{ lang.after_sales }}</div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="btn">
+        <button class="ui-btn-lg black" style="margin-top: 20px;" btn-act-buy>{{ lang.buy_now }}</button>
+        </div>
+    </div>
+    <!--  -->
+</section>
+
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

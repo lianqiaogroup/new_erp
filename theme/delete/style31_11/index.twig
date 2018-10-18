@@ -1,0 +1,88 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section id="page-index">
+	<h1>{{ title }}</h1>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}" width="100%">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+			{% endif %}
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<div class="details">
+		<div class="service">
+			<span>{{ lang.free_yun }}</span>
+			<span>{{ lang.cash_on_delivery }}</span>
+			<span>{{ lang.returned_goods }}</span>
+		</div>
+		<div class="sale_price">
+			<div class="clear">
+				<span class="left">{{ lang.market_price }}：</span>
+				<span class="right">{{ currency_code }}{{ market_price }}</span>
+			</div>
+			<div class="clear" class="clear">
+				<span class="left">{{ lang.save_for_you }}{{ ( (market_price - price)/market_price*100)|number_format(0) }}%</span>
+				<span class="right">-{{ currency_code }}{{ market_price - price }}</span>
+			</div>
+			<div class="clear">
+				<span class="left">{{ lang.sales_price }}：</span>
+				<span class="right">{{ currency_code }}{{ price }}</span>
+			</div>
+			<div class="buy_now">
+				<button id="add" style="width:100%;">{{ lang.buy_now }}</button>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="time_wrapper">
+			<div class="sales">
+				<div>{{ lang.buy_numtext }}{{ sales }}{{ lang.piece }}</div><div>{{ lang.only_last }}{{ stock }}{{ lang.piece }}</div>
+			</div>
+			<div class="timeWrap" style="display:none;">
+				<span id='clock'>{{ lang.time_over }}</span>
+				<span id="timer">
+	                <span  id="h">10</span>
+                	<span class="">{{ lang.h }}</span>
+                    <span id="m">00</span>
+                    <span class="">{{ lang.m }}</span>
+                    <span id="s">00</span>
+                    <span class="">{{ lang.s }}</span>
+              	</span>
+			</div>
+		</div>
+		<div class="product_info">
+			<div class="title">{{ lang.detail_info }}<span></span></div>
+	        <div class="m-img">
+			    {{ content|raw }}
+			</div>
+	    </div>
+	</div>
+	<p style="position:fixed;bottom:5%;width:92%;max-width:640px;"><a class="top">TOP</a></p>
+</section>
+<section id="page-order">
+	<div class="title_choose">
+		<div class="back"></div>
+		<div class="conirm">{{ lang.choose_order }}</div>
+	</div>
+    {% include 'cmpt-guige.twig' %}
+</section>
+
+
+
+
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+

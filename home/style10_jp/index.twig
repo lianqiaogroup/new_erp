@@ -1,0 +1,59 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+{% include '/public/theme/google_remarketing_index.twig' %}
+{% include 'navigation.twig' %}
+{% include 'left.twig' %}
+<div class="container">
+    {{ index_focus|raw }}
+    <!--模块产品-->
+        <div class="" id="module_one" style="display: none;">
+            <div class="row sub-banner">
+                <div class="banner-iterm col-10-5 col-xs-10-10">
+                    <div class="pro_modular">
+                        <a href="">
+                            <img src="{{ THEME }}/image/bg.jpg">
+                            <h3>产品名称</h3>
+                            <p class="pro_buy">{{lang.buy_now}}<i class="material-icons next">navigate_next</i></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--首页产品-->
+        <div id="content" style="display: none;">
+            <div class="row sub-banner">
+                 
+            </div>
+            <div class="preload" data-error='{{ lang.no_more }}' style="text-align:center;font-size:12px;color:#666;line-height:2.4">{{ lang.load }}...</div>
+        </div>
+        <div id="module_dome" style="display: none;">
+            <div class="banner-iterm col-10-2-5 col-xs-10-10">
+                <div class="pro_modular">
+                    <a href="{url}">
+                        <img src="{thumb}">
+                        <h3>{title}</h3>
+                        <p class="pro_buy">{{lang.buy_now}}<i class="material-icons next">navigate_next</i></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+</div>
+    <!--分类 -->
+    <article class="navtypeview m-menu-footer none block-sm" style="margin-bottom: 20px;">
+        <ul id="category" class="nav-pills events-menus-nav">
+            
+                {% for c in category_title %}
+                    <li>
+                        <a class="vertical-view" href="./?category_id={{ c.id }}&show=1">{{ c.title }} <span class="menu-icon-box"><i class="material-icons next">navigate_next</i></span></a>
+                    </li>
+                {% endfor %}
+            
+        </ul>
+    </article>
+<script src="{{ THEME }}/script/index.js"></script>
+{{ footer|raw }}
+{% endblock %}
+{% block footer_js %}
+{% endblock %}
+

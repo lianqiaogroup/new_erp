@@ -1,0 +1,168 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<div class="header_fixed">
+	<div class="pic">
+		<img src="{{ thumb }}">
+	</div>
+	<div class="info">
+		<div class="title">{{ title }}</div>
+		<div class="price">
+			<a href="#form">{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+    		{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}</a>
+    	</div>
+		<div class="stars"><a href="#comment"></a></div>
+	</div>
+	<div class="buy_now">
+		<button>{{ lang.buy_now }}</button>
+	</div>
+</div>
+<div class="header">
+	<h1>{{ title }}</h1>
+	<a href="#comment">
+		<div class="comment_num">
+			<div>{{ (sales*0.7)|number_format('0','','') }} {{ lang.reviews }}</div>-
+			<div class="stars"></div>
+		</div>
+	</a>
+	<div class="img_wrap">
+		<div class="swiper-container main">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="swiper-container page">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="discount">{{ ((market_price-price)/market_price*100)|number_format(0) }}% {{ lang.off }}</div>
+	</div>
+</div>
+<div class="detail">
+	<div class="price">
+		{% if currency_prefix == 1 %}{{ currency_code }}<span>{{ price }}</span> {% endif %}
+		{% if currency_prefix == 0 %}<span>{{ price }}</span> {{ currency_code }}{% endif %}
+	</div>
+	<div class="market_price">
+		<del>
+			{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+        	{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+		</del>
+		<span>- {{ lang.save }} {% if currency_prefix == 1 %}{{ currency_code }}{{ market_price-price }}{% endif %}{% if currency_prefix == 0 %}{{ market_price-price }}{{ currency_code }}{% endif %}</span>
+	</div>
+	{% include 'cmpt-guige.twig' %}
+	<div class="service">
+		<div><span>{{ lang.condition }}:</span><span>{{ lang.new }}</span></div>
+		<div><span>{{ lang.Rating }}:</span><span>(96.5% {{ lang.positive }})</span></div>
+		<div><span>{{ lang.sell_tip }}:</span><span>{{ lang.free }}</span></div>
+	</div>
+	<div class="send">
+		 {{ lang.ship_to }} <b>{{ regions.region_name }}</b> <br>{{ lang.send_before }} 7-15 {{ lang.days }}
+	</div>
+	<div class="buy_now">
+		<button>{{ lang.buy_now }}</button>
+	</div>
+</div>
+<div class="product_info">
+	<h3 class="module_tt">{{ lang.pro_info }}</h3>
+	<div class="m-img" id="m-img">
+	    {{ content|raw }}
+	</div>
+</div>
+<div id="comment">
+	<h3 class="module_tt">{{lang.user_review  }}</h3>
+	<div class="star-wrap">
+		<div class="rating">
+			<span> 4.9 </span>
+			<div class="stars">
+				<span></span>
+    			<span></span>
+    			<span></span>
+    			<span></span>
+    			<span></span>
+			</div>
+		</div>
+		<div class="tip">
+			{{ lang.average }} {{ (sales*0.7)|number_format('0','','') }} {{ lang.ratings }}
+		</div>
+		<div class="rating_count">
+			<div>
+				<span>5{{ lang.stars }}</span><span class="bar"><span></span></span><span>({{ (sales*0.7*0.94)|number_format('0','','') }})</span>
+			</div>
+			<div>
+				<span>4{{ lang.stars }}</span><span class="bar"><span></span></span><span>({{ (sales*0.7*0.06)|number_format('0','','') }})</span>
+			</div>
+			<div>
+				<span>3{{ lang.stars }}</span><span class="bar"><span></span></span>
+			</div>
+			<div>
+				<span>2{{ lang.stars }}</span><span class="bar"><span></span></span>
+			</div>
+			<div>
+				<span>1{{ lang.star }}</span><span class="bar"><span></span></span>
+			</div>
+		</div>
+	</div>
+	<div class="comment_content">
+    {% for a in  comment %}
+        <div class="lab" data-group="{{ a.comment_id }}" data-id="0">
+        	<div>
+        		<span id="wi">{{ a.name }}</span>
+                {% if a.is_anonymous %}
+                    <span id="nm" class="nm">{{ lang.is_anonymous }}</span>
+                {% endif %}
+        	</div>
+        	<div class="star">
+        		<span></span>
+        		<span></span>
+        		<span></span>
+        		<span></span>
+        		{% if a.star == 5 %}<span></span>{% endif %}
+        	</div>
+            <p>{{ a.content }}</p>
+            <div class="msKeimgBox">
+                <ul>
+                    <li>
+                        {% for b in a.thumb %}
+                            <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+                        {% endfor %}                                        
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

@@ -1,0 +1,131 @@
+{% include '/public/theme/header_success.twig' %}
+{#  #}
+<div class="m-hd">
+    <div class="m-topBar">
+        {% if has_home %}
+            <a class="goback" href="/"></a>
+        {% else %}
+            <a class="goback" href="/{{ identity_tag}}"></a>
+        {% endif %}
+        <div class="title">{{ lang.order_detail }}</div>
+    </div>
+</div>
+<div class="explain">
+    <div class="imgbox">
+        <img src="/public/image/order_success.png" class="img_list">
+        <span>{{lang.order_success}}</span>
+        <span style="margin: 0px; display: none" id="unAuthLabel">({{ lang.order_un_auth }})</span>
+    </div>
+    <div>
+        {% if pay_method is  defined %}
+            <ul class="pay_list">
+                <li>
+                <span class="tips1">{{ lang.payment_method }} :</span>
+                <span class="tips2">{{ pay_method }}</span>
+                </li>
+                <li>
+                <span class="tips1">{{ lang.pay }} :</span>
+                <span class="tips2">
+                {% if new_price_format %}
+                    {{ new_price_format.symbol_left }}{{ new_price_format.total_format }}{{ new_price_format.symbol_right }}
+                {% else %}
+                    {% if currency_prefix == 1 %}
+                        {{ currency_code }}
+                        {% if regions.code == 'VNM' %}
+                            {{ total|number_format(0,'.',',') }}
+                        {% else %}
+                            {{ total }}
+                        {% endif %}
+                    {% endif %}
+                    {% if currency_prefix == 0 %}
+                        {% if regions.code == 'VNM' %}
+                            {{ total|number_format(0,'.',',') }}
+                        {% else %}
+                            {{ total }}
+                        {% endif %}
+                        {{ currency_code }}
+                    {% endif %}
+                {% endif %}
+                </span>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+    <p style="margin-bottom: 38px;" id="order_tips">{{ lang.order_submit_submit }}</p>
+    <div style="text-align: center;">
+        <a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" class= "kefu">{{ lang.service_online }}</a>
+        <a href="/order_quality.php?order={{key}}&order_no={{orderid}}" class="order_quality">{{lang.order_quality}}</a>
+    </div>
+</div>
+<div class="m-orderItem">
+    <div class="reminder_title"><i class="reminder_icon"></i>{{lang.repeat_title}}</div>
+    <div class="reminder">
+        {{ lang.buy_know|raw }}
+    </div>
+</div>
+<div class="timetips">
+    <ul>
+        <li><img src="/public/image/7day.png" alt="">{{ lang.returned_goods }}</li>
+        <li><img src="/public/image/huodao.png" alt="">{{ lang.cash_on_delivery }}</li>
+    </ul>
+</div>
+<script type="text/javascript">
+    if( window.location.search.split('verify=').length==2 ){
+        document.getElementById('unAuthLabel').style.display = 'inline';
+        document.getElementById('order_tips').innerHTML = '{{ lang.order_successfully }}';
+    };
+    if(!'{{pay_method}}'){
+        document.getElementById('order_tips').innerHTML = '{{lang.order_successfully}}';
+    };
+    
+</script>
+
+<!-- 成功页面统计1 -->
+<script src="/public/cache_script/bundle.v3.js"></script>
+
+{#  #}
+{% include '/public/theme/bi.twig' %}
+
+{# 坑爹的pop800客服系统 #}
+{% if service_contact_id != '' %}
+<script language="javascript" src="http://api.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=cn"></script>
+{% endif %}
+
+{# 自定义代码 #}
+<div style="display:none;">{% if la %} {{ la|raw }} {% endif %}</div>
+
+
+{# pt4test #}
+<input type="hidden" id="product_id4pt4test" value="{{ product_id }}">
+<input type="hidden" id="total4pt4test" value="{{ total }}">
+<div id="pt4test" style="display:none;"></div>
+
+<script type="text/javascript">
+
+    		//pt4test
+		    var product_id4pt4test=document.getElementById('product_id4pt4test').value,total4pt4test=document.getElementById('total4pt4test').value;		
+		    //'产品ID':{'offer_id':'10000','exchange_rate':0.2462}    
+		    var pt4test = 
+				{
+				'467688':{'oid':'72','er':0.2462},
+				'468016':{'oid':'63','er':0.2462},
+				'468380':{'oid':'87','er':0.2462},
+				'467680':{'oid':'91','er':0.7337},
+				'376080':{'oid':'92','er':0.7337},
+				'468030':{'oid':'95','er':0.7337},
+				'468022':{'oid':'96','er':0.7337},
+				'468014':{'oid':'98','er':0.7337}
+				};
+				if(undefined != pt4test[product_id4pt4test])
+				{
+					var total4pt4test2 = pt4test[product_id4pt4test]['er']*total4pt4test;
+					total4pt4test2 = total4pt4test2.toFixed(2);
+					
+					document.getElementById('pt4test').innerHTML=('<iframe src="http://tracking.nexusc.info/aff_l?offer_id='+pt4test[product_id4pt4test]['oid']+'&amount='+total4pt4test2+'&transaction_id=TRANSACTION_ID" scrolling="no" frameborder="0" width="1" height="1"></iframe>');
+				}
+    
+</script>
+
+</body>
+</html>
+

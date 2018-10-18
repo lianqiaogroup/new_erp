@@ -1,0 +1,305 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{{ THEME }}/css/swiper-3.4.0.min.css">
+
+
+<script src="/public/jquery-2.2.3.min.js"></script>
+<script language="javascript" type="text/javascript" src="{{ THEME }}/js/public.js"></script>
+<script src="{{ THEME }}/js/ie6PNG.js" type="text/javascript"></script>
+
+<!--/page-->
+<section id="page-index" class="container">
+    <header>
+        {% if logo %}
+        <a href="#" class="fl"><img src="{{ logo }}" alt="logoimage"></a>
+        {% endif %}
+        <h1>{{ title }}</h1>
+    </header>
+    <!--  -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom">
+            {% if photos %}
+                {% for p in photos %}
+                <span class="whiteicon"></span>
+                {% endfor %}
+            {% else %}
+                <span class="whiteicon"></span>
+            {% endif %}
+        </div>
+    </div>
+    <!--  -->
+    <ul class="info-list">
+        <li class="fst-row">
+            <div class="left">
+                <p class="gray">{{ currency_code }}{{ market_price }}</p>
+                <p class="red">{{ currency_code }}{{ price }} </p>
+            </div>
+            <div class="right">
+                <button class="btn-buy btn-addToCart" data-yahoo-js>我要買</button>
+            </div>
+            {{ yahoo_js|raw }}
+        </li>
+        <li>
+            <div class="row-title">{{ title }}</div>
+            <div class="row-content">
+                {% for o in  options %}
+                    {% for key,attr in o.attr %}
+                        <span class="gray">{{ attr.name|raw }}</span>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </li>
+    </ul>
+    <!--  -->
+    <div class="tabs mgt10">
+        <div class="hd">
+            <span class="active">說明</span>
+            <span>評論</span>
+            <span>退換需知</span>
+        </div>
+        <div class="bd">
+            <div class="tabs-content  active">
+                <div class="headrow cls mgb20" style="line-height: 20px;">
+                    <div class="iSells left">
+                        <span icon-type="s_fire-01" icon-pos="mar_auto"></span>
+                        <div><span class="num"> 7556 </span></div>
+                    </div>
+                    <div class="left" style="margin-left: 40px;">
+                        <span icon-type="reciprocal_clock" icon-pos="mar_auto"></span>
+                        <div class="blue">
+                            <span >剩餘 
+                                <span id="timer">
+                                    <span id="h">-</span>
+                                    <span class="colon">時</span>
+                                    <span id="m">-</span>
+                                    <span class="colon">分</span>
+                                    <span id="s">-</span>
+                                    <span class="colon">秒</span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    {{ content|raw }}
+                </div>
+            </div>
+
+            <div class="tabs-content">
+                {% for a in  comment %}
+                    <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="margin-bottom: 15px">
+                        <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+                            <span class="inm">
+                            <span id="wi">{{ a.name }}</span>
+                                    {% if a.is_anonymous %}
+                                        <span id="nm" class="nm">匿名用戶</span>
+                                    {% endif %}
+                        </span>&nbsp
+                            <span>
+                            評分：<span style="color: red;">{{ a.star }}</span>
+                        </span>
+                        </div>
+                        <P style="color: #666;padding: 5px;">{{ a.content }}</P>
+
+
+                        <div class="msKeimgBox">
+                            <ul>
+                                {% for b in a.thumb %}
+                                    <li>
+                                        <img src="{{ b.thumb }}" width="75" height="75" />
+                                    <span class="hidden">
+                                    <img src="{{ b.thumb }}" width="100%" height="auto" />
+                                    </span>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                            <div class="mskeTogBtn"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+<div  class="opt">
+    <div></div>
+</div>
+                <div class="mskeLayBg"></div>
+                <div class="mskelayBox">
+                    <div class="mske_html">
+
+                    </div>
+                    <img class="mskeClaose" src="{{ THEME }}/images/close.png" width="27" height="27" />
+                </div>
+                <div class="buyinfo_hd">在線留言</div>
+   <form id="big-i" name="form" action="#" method="post">
+    <div class="buyinfo_table">
+        <div class="closeBtn" style=""><img src=""></div>
+        <!-- <div class="buyinfo_hd">在線留言</div> -->
+        <hr class="seperator" >
+        <div class="buyinfo_table_box">
+            <table>
+                <tr>
+                    <td class="table_td"><span class="require">*</span>姓名:</td>
+                    <td class="table_cell"><input type="text" required="required" placeholder="請輸入姓名，如張三" class="mui-input-clear input01" name="name" maxlength="10"></td>
+                </tr>
+
+                <tr>
+                    <td class="table_td"><span class="require">*</span>手機:</td>
+                    <td class="table_cell"><input type="text" required="required" placeholder="請輸入手機號碼" class="input01" name="phone" maxlength="20"></td>
+                </tr>
+
+                <tr>
+                    <td class="table_td">滿意度:</td>
+                    <td class="table_cell">
+                        <script type="text/javascript">
+                            function rate(obj,oEvent){
+                                var imgSrc = '{{ THEME }}/images/star2.png';
+                                var imgSrc_2 = '{{ THEME }}/images/star.png';
+                                if(obj.rateFlag) return;
+                                var e = oEvent || window.event;
+                                var target = e.target || e.srcElement;
+                                var imgArray = obj.getElementsByTagName("img");
+                                for(var i=0;i<imgArray.length;i++){
+                                    imgArray[i]._num = i;
+                                    imgArray[i].onclick=function(){
+                                        if(obj.rateFlag) return;
+                                        //alert(this._num+1);
+                                        var inputid=this.parentNode.previousSibling
+                                        inputid.value=this._num+1;
+                                    }
+                                }
+                                if(target.tagName=="IMG"){
+                                    for(var j=0;j<imgArray.length;j++){
+                                        if(j<=target._num){
+                                            imgArray[j].src=imgSrc_2;
+                                        } else {
+                                            imgArray[j].src=imgSrc;
+                                        }
+                                        target.parentNode.onmouseout=function(){
+                                            var imgnum=parseInt(target.parentNode.previousSibling.value);
+                                            for(n=0;n<imgArray.length;n++){
+                                                imgArray[n].src=imgSrc;
+                                            }
+                                            for(n=0;n<imgnum;n++){
+                                                imgArray[n].src=imgSrc_2;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    return false;
+                                }
+                            }
+                        </script>
+                        <input type="hidden" value="0"><p onmouseover="rate(this,event)" id="img_1">
+                            <img src="{{ THEME }}/images/star2.png" title="很烂"><img src="{{ THEME }}/images/star2.png" title="一般"><img src="{{ THEME }}/images/star2.png" title="还好"><img src="{{ THEME }}/images/star2.png" title="较好"><img src="{{ THEME }}/images/star2.png" title="很好">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table_td">留言:</td>
+                    <td class="table_cell">
+                        <textarea placeholder="請輸入您的留言內容" name="content"  class="textarea_style"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="tj">
+                        <input id="btnAppraise" type="submit" name="Submit" class="input_btn01" value="提交評價" style="color:white">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
+
+
+            </div>
+            <div class="tabs-content">
+                <div>
+                    <span style="font-size:18px; color:#333333">【商品退換貨需知】</span>
+                    <br><br>
+                    <span style="font-size:15px; color:#333333">
+                        依消費者保護法之規定，線上購物消費者享有商品貨到日起七天(含例假日)猶豫期的權益。但猶豫期並非試用期，如您有退/換貨需求時，請保持商品本體、配件、贈品、保證書、原廠包裝及所有附隨文件或資料的完整性，切勿有任何缺漏或毀損。<br>
+                        如商品有瑕疵，請於24小時內拍照存證並立即與客服聯繫<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>，以便安排後續退換貨處理。<br><br>
+
+                        請注意：<br>
+                        (1) 原廠外盒、原廠包裝及其內容物、贈品等均屬於商品的一部分，消費者於猶豫期間主張退貨者，本公司將依照商品於退貨時之不完整程度(遺失、毀損或缺件等)，就商品價金之範圍收取回復原狀之合理費用(即俗稱之整新費)。<br><br>
+                        (2) 建議您使用外包裝（紙箱或包裝袋）將商品包好，切勿在原廠包裝或外盒上為任何書寫，以免造成損毀，影響您的退貨權益<br><br>
+                        (3) 根據行政院消費者保護處2015年1月1日起實施「通訊交易解除權合理例外情事適用準則」，如您購買的商品為：<br>
+                        ① 食品類商品經拆封之後(例如：易於腐敗、保存期限較短或解約時即將逾期)<br>
+                        ② 經拆封後之影音商品或電腦軟體、報紙、期刊、雜誌、經消費者拆封後之個人衛生用品(如內衣褲)、客製化給付商品、國際航空客運服務...等7類商品<br>
+                        以上，不再適用消保法7日解除權，如非商品本身瑕疵，恕不受理退(換)貨，敬請見諒。<br><br>
+                        (4) 非上述範圍之商品採用破壞包裝才能取出鑑賞或具另行聲明的商品，經拆封即無法回復原狀者，如非商品本身瑕疵，經辦理退貨本公司有權依商品毀損程度。收取回復原狀之合理費用(即俗稱之整新費)。
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="fd">
+            <button class="btn-buy btn-addToCart" data-yahoo-js>立即訂購</button>
+        </div>
+    </div>
+    <!--  -->
+    <div class="order-search" style="display: none;">
+        <div class="hd">訂單信息查詢</div>
+        <div class="bd">
+            <div class="input-group">
+                <p>
+                <label>查詢信息 </label>
+                <input type="text" placeholder="請輸入訂單姓名或手機號碼或E-mail">
+                </p>
+            </div>
+        </div>
+        <div class="fd">
+            <button class="btn-search">查詢</button>
+        </div>
+    </div>
+    <!-- 客服 -->
+    <div id="cmInfo">
+        <div style="position:relative">
+            <div id="cmInfoInside">
+                <div class="cmInfoText">
+                    <a href="http://api.pop800.com/chat/{{ service_contact_id }}?l=ct" target="_blank" style="color:#fff;">客服</a></div>
+            </div>
+        </div>
+    </div>
+    <!-- to top -->
+    <div id="div_toTop">Top</div>
+</section>
+<!-- 选 -->
+<section id="page-order" class="container">
+    {% include 'cmpt-guige.twig' %}
+</section>
+<!--/page-->
+{% if yahoo_js_trigger %}
+    <script type="text/javascript">
+        require(['jquery'], function($){
+            $('[data-yahoo-js]').click(function(){
+                try {
+                    {{ yahoo_js_trigger|raw }}
+                    console.log('click done');
+                    console.log(window.dotq);
+                }
+                catch(e){
+                    console.error('yahoo js code not working');
+                    console.log(yahooJs);
+                }
+            });
+        });
+    </script>
+{% endif %}
+<script src="{{ THEME }}/js/swiper-3.4.0.jquery.min.js"></script>
+
+<script src="{{ THEME }}/js/index.js"></script>
+<!--  -->
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+{% include '/public/theme/footer.twig' %}
+

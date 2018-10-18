@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="320" name="MobileOptimized" />
+    <meta content="telephone=no" name="format-detection" />
+	<title>{{ lang.sms2_title }}</title>
+	<!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+            document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        {% for i in fb_px %}
+        fbq('init', '{{ i }}');
+        {% endfor %}
+        fbq('track', "PageView");
+        fbq('track', "ViewContent");
+		{% if ref == 1 %}
+        fbq('track', 'Purchase', {value: "30", currency:"USD"});
+		{% endif %}
+    </script>
+    <!-- Facebook Pixel Code -->
+</head>
+<body>
+	<div id="app">
+		<sms
+			v-if="true"
+			ref="sms"
+			:product="product"
+			:token="token"
+			:order="order"
+			:mobile="mobile">
+		</sms>
+	</div>
+	<style type="text/css">
+		body, html {
+			background: #fff;
+			margin: 0px auto;
+			max-width: 375px;
+			height: 100%;
+			min-height: 100%;
+		}
+	</style>
+	<script type="text/javascript">
+		window.smsLang = {
+			title: '{{ lang.sms_title }}'
+			, message: '{{ lang.sms2_message }}'
+			, message2: '{{ lang.sms2_message2 }}'
+			, resend: '{{ lang.sms2_resend }}'
+			, submit: '{{ lang.sms2_submit }}'
+			, submiting: '{{ lang.sms2_submiting }}'
+			, error: '{{ lang.sms2_error }}'
+			, sending: '{{ lang.sms2_sending }}'
+		}
+		window.__GLOBAL__ = {
+			product_id: '{{ product_id }}'
+			, mobile: '{{ mobile }}'
+			, token: '{{ token }}'
+			, orderId: '{{ orderId }}'
+		}
+		console.log(__GLOBAL__)
+	</script>
+	<script type="text/javascript" src="public/javascript/vue.min.js"></script>
+	<script type="text/javascript" src="public/javascript/axios.min.js"></script>
+	<script type="text/javascript" src="./frontend/dist/page-sms.js?v={{timestamp}}"></script>
+</body>
+</html>

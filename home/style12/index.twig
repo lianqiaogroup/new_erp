@@ -1,0 +1,52 @@
+{% extends 'base.twig' %}
+{% block content %}
+{% include '/public/theme/google_remarketing_index.twig' %}
+{% include 'navigation.twig' %}
+{{ index_focus|raw }}
+<!--fenlei -->
+<div class="navtypeview">
+    <div id="category">
+        <div><a class="vertical-view check" href="/">HOME</a></div>
+        {% for c in category_title %}
+        <div>
+            {% if c.child %}
+                <a class="vertical-view parent_category" data-link="./?category_id={{ c.id }}&show=1">{{ c.title }}</a>
+                <div class="child_category">
+                    {% for cc in c.child %}
+                    <div><a href="./?category_id={{ cc.id }}&show=1">{{ cc.title }}</a></div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <a class="vertical-view" href="./?category_id={{ c.id }}&show=1">{{ c.title }}</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+    <div id="content" class="clearfix">
+    </div>
+    <div id="module_dome" style="display: none;">
+        <div class="col-6 items">
+            <a href="{url}">
+                <div class="thumbnail">
+                    <div class="tagWraper">
+                        <div class="imgthumb lazyload empty">
+                            <img src="{thumb}" alt="{title}">
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <h4 class="title">{title}</h4>
+                        <p>{shop_price}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{{ footer|raw }}
+<script src="{{ THEME }}/script/index.js"></script>
+<!-- 默认必须要执行$.init(),实际业务里一般不会在HTML文档里执行，通常是在业务页面代码的最后执行 -->
+<!--script>$.init()</script-->
+{% endblock %}
+{% block footer_js %}
+{% endblock %}

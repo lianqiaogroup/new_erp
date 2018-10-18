@@ -1,0 +1,170 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<div class="header">
+	<h1>{{ title }}</h1>
+	<div class="img_wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+</div>
+<div class="details">
+	<div class="tab_bar">
+		<ul>
+			<li class="active"><a href="javascript:;">{{ lang.order_info }}</a></li>
+			<li><a href="javascript:;">{{ lang.detail }}</a></li>
+		</ul>
+	</div>
+	<div class="tab">
+	<div class="buy_detail">
+		<div class="market_price">
+			<span>{{ lang.market_price }}</span>
+			<del class="right"><strong>
+				{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+            	{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+			</strong></del>
+		</div>
+		<div class="price">
+			<span>{{ lang.price }}</span>
+			<strong class="right">
+				{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+            	{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+            </strong>
+		</div>
+		<div class="attr" id="page-order" data-error="{{ lang.Th_titleattr }}">
+			<span class="show">{{ lang.choose_pro }}</span>
+			{% include './cmpt-guige.twig' %}
+		</div>
+		<div class="qty">
+			<span>{{ lang.num }}</span>
+			<div class="right">
+				<!--数量-->
+		        <div class="u-fornum">
+		            <div class="con">{{ lang.num }}:
+		                <div class="m-selnum dr">
+		                <div onclick="minnumber()" class="less z-dis">-</div>
+		                <div class="textWrap">
+		                    <div class="tt">&nbsp;<span>1</span></div>
+		                    <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+		                </div>
+		                <div onclick="addnumber()" class="more">+</div>
+		                </div>
+		            </div>
+		        </div>
+			</div>
+		</div>
+		<div>
+			<span>{{ lang.status }}</span>
+			<span class="right choose">{{ lang.select }}<span></span></span>
+		</div>
+		<div>
+			<span>{{ lang.send }}</span>
+			<span class="right send">{{ lang.deliver }}</span>
+		</div>
+
+		<div class="buy_now" data-cuckootag="confirm_arrtibute" data-event="postcheckGuige">
+			<button>{{ lang.next }} - &gt;&gt; </button>
+		</div>
+	</div>
+	<div class="pay_type">
+		<div class="tt">{{ lang.pay }}</div>
+		<div class="huo">{{ lang.cash_on_delivery }}</div>
+	</div>
+	</div>
+	<div class="m-img tab">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+         {% if regions.code == 'THA' and lang.after_sales %}
+        <div class="after_sale">
+            <div class="after_sale_title">{{ lang.after_sales }}</div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+	</div>
+</div>
+<div class="kefu"><a href="javascript:;" data-cuckootag="service" data-value="{{service_contact_id}}"></a></div>
+<div class="top"><a href="javascript:;"></a></div>
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

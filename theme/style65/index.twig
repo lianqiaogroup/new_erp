@@ -1,0 +1,201 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet">
+<!-- end header resource -->
+<div class="img_wrap">
+    <div class="swiper-container gallery-top">
+        <div class="swiper-wrapper">
+            {% if photos %}
+                {% for p in photos %}
+                    <div class="swiper-slide">
+                        <img src="{{ p.thumb }}" width="100%">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide">
+                    <img src="{{ thumb }}" width="100%">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="swiper-container gallery-thumbs">
+        <div class="swiper-wrapper" style="">
+        {% if photos %}
+            {% for p in photos %}
+                <div class="swiper-slide" style="background-image:url({{ p.thumb }})">
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide" style="background-image:url({{ thumb }})">
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+<section id="page-index">
+    <div class="header">
+        <h1>{{ title }}</h1>
+    </div>
+	<div class="details">
+		<div class="sales_wrap">
+			<div class="sales">
+				<div class="price">
+                    {% if currency_prefix == 1 %}
+				        {{ currency_code }}<ins>{{ price }}</ins>
+                    {% else %}
+                        <ins>{{ price }}</ins>{{ currency_code }}
+                    {% endif %}
+				</div>
+                <div class="green">
+                    <div>{{ lang.free_yun }}</div>
+                    <div>{{lang.nowoff}}{% if price != 0 and market_price != 0 %}{{ (((market_price-price)/market_price)*100.00)|number_format(0) }}{% endif %}% off</div>
+                </div>
+			</div>
+		</div>
+        <div class="tips_words"><span>{{lang.newpro}}</span><span>{{lang.hotpro}}</span></div>
+		<div class="buy_now">
+			<a href="#page-order">{{ lang.buy_now }}</a>
+		</div>
+	</div>
+	<div class="product_info">
+		<div class="m-img">
+            {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+    </div>
+</section>
+<section id="page-order">
+<input type="hidden" name="combo_id" value="">
+<input type="hidden" name="product_id" value="{{ product_id }}">
+    <!--套餐-->
+    <div class="tips padbor">
+        <p>{{ tips }}</p>
+    </div>
+    <div class="padbor" id="combo">
+        <label class="pro_title">{{ lang.pro_choose }} </label>
+        <div style="margin-bottom: 20px;">
+            <select name="combo_id" id="combo_id">
+             {% if combo %}
+                 {% for c in combo %}
+                     <option data-price="{{ c.price }}" value="{{ c.combo_id }}" data-single="{{ c.is_single_combo }}">{{ c.title|raw }}-{{ currency_code }} {{ c.price }}</option>
+                 {% endfor %}
+            {% else %}
+                <option data-price="{{ price }}" value="0" data-single="0">{{ title|raw }}</option>
+             {% endif %}
+            </select>
+        </div>
+    </div>
+	<!--套餐end-->
+		<!--属性开始-->
+        <div id="product_attr" class="padbor">
+            {% if combo %}
+                <!--循环套餐-->
+                {% for om in combo %}
+                    <section data-loopIndex="{{ om.combo_id }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+                    <!-- 循环产品 -->
+                    {% for ok in  om.goods %}
+                        {% if ok.options %}
+                        <div class="item">
+                            <div class="tc tc{{ ok.combo_id|raw }}" >
+                                <!-- 循环属性 -->
+                                {% for o in  ok.options %}
+                                    <div class="prodiv" data-prototype-group="{{ loop.index }}"  data-group="{{ o.attr_group_id }}" data-select="0">
+                                            <label class="pro_title">
+                                                {{ o.attr_group_title|raw }}
+                                            </label>
+                                            <div class="dxbox">
+                                                {% for key,attr in o.attr %}
+                                                    <label {% if attr.thumb %}class="attrimgs"{% endif %} attr-pro="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" attr_id="{{ attr.product_attr_id }}">
+                                                        {% if attr.thumb %}
+                                                        <img class="lazyload" src="" data-img="{{ attr.thumb }}" style="width: 100%; height: auto;">
+                                                        <br/>
+                                                        {% endif %}
+                                                        <span style="font-weight: normal;">{{ attr.name|raw }}</span>
+                                                    </label>
+                                                {% endfor %}
+                                            </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </section>
+                {% endfor %}
+            {% else %}
+                <section data-loopIndex="0">
+                <!--循环当前产品属性-->
+                {% for o in  options %}
+                    <div class="prodiv item" data-prototype-group="{{ loop.index }}">
+                        <label class="pro_title">{{ o.attr_group_title|raw }}</label>
+                        <div class="dxbox">
+                            {% for key,attr in o.attr %}
+                                {% if attr.thumb %}
+                                	<label class="attrimgs" attr-pro="{{ o.attr_group_id }}" attr_id="{{ attr.product_attr_id }}">
+                                		<img class="lazyload" src="" data-img="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>
+                                {% else %}
+                                	<label attr-pro="{{ o.attr_group_id }}" attr_id="{{ attr.product_attr_id }}">
+                                {% endif %}
+                                    
+                                    {{ attr.name|raw }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <div class="cls"></div>
+                    </div>
+                {% endfor %}
+                </section>
+            {% endif %}
+            <div id="attr_div"></div>
+            <!--数量-->
+            <div class="bdbox numdiv padbor">
+                <label class="bdxx">{{ lang.num }} :</label>
+                <div class="m-selnum dr">
+                    <div onclick="addnumber()" class="more">+</div>
+                    <div class="textWrap">
+                        <div class="tt">&nbsp;<span>1</span></div>
+                        <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                    </div>
+                    <div onclick="minnumber()" class="less z-dis">-</div>
+                </div>
+            </div>
+        </div>
+    <!--属性结束-->
+    <div class="submit">
+    	<button id="buynow" >{{ lang.confirm }}</button>
+    </div>
+</section>
+<div class="User_notes" style="line-height: 2em;padding: 4%;word-break: break-all;">
+    <h2 class="notes">{{ lang.user_notes }}</h2>
+    <div class="note_text">{{ lang.user_fb }}</div>
+    <div class="note_title">{{ lang.user_note1 }}</div>
+    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+    <div class="note_title">{{ lang.user_note2 }}</div>
+    <div class="note_text">{{ lang.user_note2_1 }}</div>
+    <div class="note_title">{{ lang.user_note3 }}</div>
+    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+    <div class="note_title">{{ lang.user_note4 }}</div>
+    <div class="note_text">{{ lang.user_note4_1 }}</div>
+    <div class="note_title">{{ lang.user_note4_2 }}</div>
+    <div class="note_title">{{ lang.user_note4_3 }}</div>
+    <div class="note_text">{{ lang.user_note4_4 }}</div>
+    <div class="service">
+        <div><i class="free"></i><span style="margin-right:10px">{{ lang.free_ship }}</span></div>
+        <div><i class="cash"></i><span style="margin-right:10px">{{ lang.cash_on_delivery }}</span></div>
+        <div><i class="days"></i><span style="margin-right:10px">{{ lang.returned_goods }}</span></div>
+    </div>
+</div>
+<footer>
+    <div style="background-color: #f8f8f8;">
+    <div class="in_title">{{ lang.order_inquiry }}</div>
+    <div style="margin-bottom: 15px;font-size: 12px;">{{ lang.inquiry_tip }}</div>
+    <div class="checkin">
+        <div class="inquiry"></div>
+        <input type="tel" name="inmob" placeholder="{{ lang.mobile_placeholder }}">
+    </div>
+    </div>
+</footer>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

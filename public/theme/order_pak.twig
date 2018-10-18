@@ -1,0 +1,129 @@
+<div class="flexbox">
+    <div class="flex regions">{{ regions.region_name }}</div>
+</div>
+<div class="flexbox">
+    <div class="flex tab_two">
+        <select name="city" required="required">
+            <option value="">{{ lang.city_pak }}</option>
+        </select>
+    </div>
+</div>
+<div class="table-row">
+    <select name="district" required="required">
+        <option value="">{{ lang.district_pak }}</option>
+    </select>
+</div>
+<div style="margin-bottom:4px;">{{ lang.city_eg }}</div>
+<div class="table-row">
+    {% if theme == 'style39'%}
+    <input type="text" name="address" placeholder="{{ lang.addr_pak }}">
+    {% else %}
+    <input type="text" required="required" name="address" placeholder="{{ lang.addr_pak }}">
+    {% endif %}
+</div>
+<div style="color:#aaa;margin-bottom:4px;">{{ lang.addr_eg }}</div>
+<div class="flexbox">
+    <div class="flex tab_two">
+        <input type="text" required="required" name="name" maxlength="50" placeholder="{{ lang.name }}">
+    </div>
+    <div class="flex tab_two">
+        <input type="number" name="postal" placeholder="{{ lang.postal }}" maxlength="20">
+    </div>
+</div>
+<div class="flexbox">
+    <div class="flex tab_two">
+        <input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+    </div>
+    <div class="flex tab_two">
+        <input type="email" name="email" placeholder="{{ lang.email }}">
+    </div>
+</div>
+<div class="flexbox">
+    <div class="flex tab_two">
+        <select name="send_time">
+            <option value="">Delivery time</option>
+            <option value="09:00-11:00">09:00-11:00</option>
+            <option value="13:00-15:00">13:00-15:00</option>
+            <option value="17:00-20:00">17:00-20:00</option>
+        </select>
+    </div>
+</div>
+<div class="table-row">
+    <input type="text" name="note" placeholder="{{ lang.note }}">
+    <input type="hidden" name="guest">
+</div>
+<div class="flexbox">
+    {% if payment_underline == 1 %}
+    <div class="flex tab_two tab_sele action" rel="0">
+        <i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+    {% endif %} {% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+    <div class="flex tab_two">
+        <div class="tab_sele">
+            <i class="icon"></i>{{ lang.order_onlinepay }}</div>
+    </div>
+    {% endif %}
+    <input name="payment_type" value="0" type="hidden">
+</div>
+<div class="table-row pay-type" style="display: none;">
+    <select id="pay-online">
+        {% if payment_online == 1 %}
+        <option value="1">{{ lang.yijifu }}</option>
+        {% endif %} {% if payment_paypal == 1 %}
+        <option value="2">paypal</option>
+        {% endif %} {% if payment_asiabill == 1 %}
+        <option value="3">Asiabill</option>
+        {% endif %}
+    </select>
+</div>
+<style>
+    select[name="state"],
+    select[name="city"],select[name="send_time"]{
+        height: 44px;
+        width: 100%;
+        font-size: 14px;
+        color: #666;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        text-indent: 16px;
+    }
+</style>
+<script type="text/javascript">
+    $('[name="city"]').change(function (event) {
+        var id = $(this).children().filter(':selected').attr('data-id');
+        loadCity(id);
+    });
+    function loadstate() {
+        $.post('/region.php', { 'region_id': {{ regions.region_id }} }, function(data) {
+            var data = JSON.parse(data);
+            data.map(function (item, index) {
+                $('[name="city"]').append('<option value="' + item.name + '" data-id="' + item.id_region + '">' + item.name + '</option>');
+            });
+            var id = $('[name="city"]').children().filter(':selected').attr('data-id');
+            loadCity(id);
+        });
+		}
+    function loadCity(id, callback) {
+        $.post('/region.php', { 'yn_region_id': id }, function (data) {
+            $('[name="district"]').children().not(":eq(0)").remove();
+            var data = JSON.parse(data);
+            data.map(function (item, index) {
+                $('[name="district"]').append('<option value="' + item.name + '">' + item.name + '</option>');
+            });
+        });
+    }
+    loadstate();
+    function changeguest(){
+        if($('[name="send_time"]').val() != ""){
+            var times = $('[name="note"]').val() + "  " + "Delivery time is " + $('[name="send_time"]').val();
+            $('[name="guest"]').val(times);
+        }else{
+            $('[name="guest"]').val($('[name="note"]').val() + $('[name="send_time"]').val());
+        }
+    }
+    $('[name="note"]').on('change',function(){
+        changeguest();
+    });
+    $('[name="send_time"]').on('change',function(){
+        changeguest();
+    })
+</script>

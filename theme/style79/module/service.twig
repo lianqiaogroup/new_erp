@@ -1,0 +1,11 @@
+{% set service_list = moduleParam.list|split("\n") %}
+<div class="module_service">
+    <div>{{ lang.service }}：</div>
+    <div>
+        <ul>
+            {% for item in service_list %}
+            	{% if item != "" %}<li>{{ item }}</li>{% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

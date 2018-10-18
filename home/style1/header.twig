@@ -1,0 +1,18 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=no" />
+<title>{{ info.title }}</title>
+<meta content="{{ info.seo_title}}" name="Keywords">
+<meta name="description" content="{{ info.seo_description }}" />
+<link rel="stylesheet" href="{{ THEME }}/plugin/frozen.css">
+<link rel="stylesheet" href="{{ THEME }}/style/style.css">
+<script src="{{ THEME }}/plugin/zepto.min.js"></script>
+<script src="{{ THEME }}/plugin/frozen.js"></script>
+{% if info.lang == 'KHM' %}
+	<style type="text/css">
+		body{
+			font-family:'Khmer OS','KunKhmer','Arial';
+		}
+	</style>
+{% endif %}
+{{ google_js|raw }}

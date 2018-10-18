@@ -1,0 +1,113 @@
+{% include '/public/theme/header_success.twig' %}
+{#  #}
+<div class="m-hd">
+    <div class="m-topBar">
+        {% if has_home %}
+            <a class="goback" href="/"></a>
+        {% else %}
+            <a class="goback" href="/{{ identity_tag}}"></a>
+        {% endif %}
+        <div class="title">{{ lang.order_detail }}</div>
+    </div>
+</div>
+<div class="explain" style="padding-top:0px;margin-top:0px;">
+    <div class="imgbox">
+        <img src="{{ THEME }}/images/ad.png" class="img_list" style="width:100%;height:200px;">
+        <span style="margin: 0px; display: none" id="unAuthLabel"></span>
+        <img src="theme/style35_ddn/images/wx.png" class="img_list" style="width:100px;height:100px;"> 
+    <a href="https://social-plugins.line.me/lineit/share?url=http://www.wcvcp.com/twxcq" target="_blank"><img src="theme/style35_ddn/images/line.png" class="img_list" style="width:110px;height:110px;"></a> 
+    <p style="font-size:12px;color:orange;">*長按識別二維碼</p>
+    </div>
+    <div>
+        {% if pay_method is  defined %}
+            <ul class="pay_list">
+                <li>
+                <span class="tips1">{{ lang.payment_method }} :</span>
+                <span class="tips2">{{ pay_method }}</span>
+                </li>
+                <li>
+                <span class="tips1">{{ lang.pay }} :</span>
+                <span class="tips2">
+                {% if new_price_format %}
+                    {{ new_price_format.symbol_left }}{{ new_price_format.total_format }}{{ new_price_format.symbol_right }}
+                {% else %}
+                    {% if currency_prefix == 1 %}
+                        {{ currency_code }}
+                        {% if regions.code == 'VNM' %}
+                            {{ total|number_format(0,'.',',') }}
+                        {% else %}
+                            {{ total }}
+                        {% endif %}
+                    {% endif %}
+                    {% if currency_prefix == 0 %}
+                        {% if regions.code == 'VNM' %}
+                            {{ total|number_format(0,'.',',') }}
+                        {% else %}
+                            {{ total }}
+                        {% endif %}
+                        {{ currency_code }}
+                    {% endif %}
+                {% endif %}
+                </span>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+    <p style="margin-bottom: 25px;" id="order_tips">{{ lang.order_submit_submit }}</p>
+    <div style="text-align: center;">
+    		<!--<a href="javascript:;" id= "wc_share" style="width:32%;display: inline-block;font-size: 12px;line-height: 19px;padding: 12px 0;border: 1px solid #A9A9A9;border-radius: 5px;">Wechat Share</a>
+        <a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" class= "kefu" style="width:32%;">{{ lang.service_online }}</a>
+        <a href="/order_quality.php?order={{key}}&order_no={{orderid}}" class="order_quality" style="width:32%;">{{lang.order_quality}}</a>
+        
+        <div id="wc_share_box" style="display:none;position: absolute; background: rgb(255, 255, 255); z-index: 10;width: 10%; height:auto;">
+<img src="{{ THEME }}/images/wx.png" class="img_list" style="width:100px;height:100px;">
+</div>-->
+			<a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" class= "kefu">{{ lang.service_online }}</a>
+        <a href="/order_quality.php?order={{key}}&order_no={{orderid}}" class="order_quality">{{lang.order_quality}}</a>
+    </div>
+</div>
+<div class="m-orderItem" style="margin-top:-25px;">
+    <div class="reminder_title"><i class="reminder_icon"></i>{{lang.repeat_title}}</div>
+    <div class="reminder">
+        {{ lang.buy_know|raw }}
+    </div>
+</div>
+<div class="timetips">
+    <ul>
+        <li><img src="/public/image/7day.png" alt="">{{ lang.returned_goods }}</li>
+        <li><img src="/public/image/huodao.png" alt="">{{ lang.cash_on_delivery }}</li>
+    </ul>
+</div>
+<script type="text/javascript">
+    if( window.location.search.split('verify=').length==2 ){
+        document.getElementById('unAuthLabel').style.display = 'inline';
+        document.getElementById('order_tips').innerHTML = '{{ lang.order_successfully }}';
+    };
+    if(!'{{pay_method}}'){
+        document.getElementById('order_tips').innerHTML = '{{lang.order_successfully}}';
+    };
+</script>
+
+<!-- 成功页面统计 -->
+<script src="/public/cache_script/bundle.v3.js"></script>
+
+{#  #}
+{% include '/public/theme/bi.twig' %}
+
+{# 坑爹的pop800客服系统 #}
+{% if service_contact_id != '' %}
+<script language="javascript" src="http://api.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=cn"></script>
+{% endif %}
+
+{# 自定义代码 #}
+<div style="display:none;">{% if la %} {{ la|raw }} {% endif %}</div>
+
+<script type="text/javascript">
+    $(function(){
+    	$('#wc_share').click(function(){$('#wc_share_box').toggle();});
+   	});
+</script>
+
+</body>
+</html>
+

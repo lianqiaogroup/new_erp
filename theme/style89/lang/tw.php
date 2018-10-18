@@ -1,0 +1,20 @@
+<?php
+$_LANG["salestime_last"]   =   "距離特賣結束還剩";
+$_LANG["order_now"]   =   "現在下單";
+$_LANG["delivery"]   =   "預計送到";
+$_LANG["rush_buy"]   =   "立即搶購";
+$_LANG["choose_attr_short"]   =   "選擇規格";
+$_LANG["product_fullname"]   =   "產品名稱";
+$_LANG["delivery_method"]   =   "配送方式";
+$_LANG["buyed_m"]   =   "分鐘之前購買";
+$_LANG["buyed_h"]   =   "小時前購買";
+$_LANG["name1"]   =   "張先生";
+$_LANG["name2"]   =   "李女士";
+$_LANG["name3"]   =   "王女士";
+$_LANG["name4"]   =   "趙先生";
+$_LANG["name5"]   =   "黃女士";
+$_LANG["name6"]   =   "楊女士";
+$_LANG["combo"]   =   "套餐";
+$_LANG["fill_form"]   =   "填寫信息";
+$_LANG["month"]   =   "月";
+$_LANG["day"]   =   "日";

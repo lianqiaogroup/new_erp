@@ -1,0 +1,38 @@
+{% if comment %}
+<div class="comment_box" style="display: none;">
+	<div class="scroll_tt" id="pinlun_tt">{{ lang.pingjia }}</div>
+    <div id="pinlun_content">
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="userScroll" style="height:250px; overflow: hidden;font-size:14px;">
+            	<div class="picList">
+                {% for a in  comment %}
+		            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7;padding-bottom:10px;">
+		                <div style="border-bottom: 1px dotted #ddd;padding: 5px;">
+		                    <span class="inm">
+		                    <span id="wi">{{ a.name }}</span>
+		                        {% if a.is_anonymous %}
+		                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+		                        {% endif %}
+		                </span>&nbsp;
+		                    <span>
+		                    {{ lang.score }}：<span style="color: red;">{{ a.star }}</span>
+		                </span>
+		                </div>
+		                <P style="color: #666;padding: 5px;">{{ a.content }}</P>
+		                <div class="msKeimgBox">
+		                    <ul>
+		                        <li>
+		                            {% for b in a.thumb %}
+		                                <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+		                            {% endfor %}                                        
+		                        </li>
+		                    </ul>
+		                </div>
+		            </div>
+		        {% endfor %}
+		        </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

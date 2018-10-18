@@ -1,0 +1,440 @@
+@wordcolor: #4f5562;
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	max-width: 640px;
+	margin: 0 auto;
+	padding-bottom:60px;
+}
+
+img {
+	width: 100%
+}
+
+button {
+	border: none;
+	outline: none;
+	background: none;
+}
+
+.swiper-pagination {
+	font-size: 14px;
+	color: #fff;
+	background-color: rgba(102, 178, 213, 0.5);
+	width: auto !important;
+	left: 2% !important;
+	bottom: 16px !important;
+	padding: 1% 4%;
+	border-radius: 4px;
+	box-shadow: 2px 2px 6px #888;
+}
+
+.swiper-slide {
+	font-size: 0;
+}
+.pinglun_tt{
+	margin:20px 0;
+	padding-bottom:10px;
+	color:#66b2d5;
+	border-bottom:1px solid #66b2d5;
+}
+.load_more{
+	text-align:center;
+	a{
+		padding:6px 12px;
+		border:1px solid #66b2d5;
+		font-size:13px;
+		border-radius:6px;
+		color:#66b2d5;
+	}
+}
+.time_sale {
+	position: absolute;
+	z-index: 9;
+	top: 0;
+	right: 15px;
+	filter: drop-shadow(-1px 1px 2px #666);
+	.txt {
+		display: block;
+		width: 25px;
+		padding: 3px 13px;
+		font-size: 12px;
+		text-align: center;
+		color: #fff;
+		background: #e21e48;
+	}
+	&:after {
+		content: '';
+		display: block;
+		border: solid 25px #e21e48;
+		border-top-width: 11px;
+		border-left-color: transparent;
+		border-right-color: transparent;
+		border-bottom-color: transparent;
+	}
+}
+
+#page-index {
+    padding: 2%;
+    padding-bottom:60px;
+}
+
+.detail {
+	color: @wordcolor;
+	text-align: center;
+	h1 {
+		font-size: 14px;
+		line-height: 50px;
+	}
+}
+
+.tagList {
+	>span {
+		font-size: 12px;
+		font-weight: 100;
+		vertical-align: top;
+	}
+	h3 {
+		display: inline-block;
+		font-size: 24px;
+		line-height: 24px;
+	}
+}
+
+.buyinfo_post {
+	border: 1px solid #e8e8e8;
+	height: 36px;
+	line-height: 36px;
+	border-radius: 6px;
+	margin: 6px 0;
+	font-size: 14px;
+}
+
+.item {
+	color: #a8aeb7;
+	text-align: left;
+	font-size: 12px;
+	line-height: 20px;
+	&.e_tag {
+		em {
+			color: #3095c4;
+		}
+	}
+}
+
+.tc li.item {
+	padding-bottom: 12px;
+	border-bottom: 1px solid #f0f0f0;
+	&:last-child {
+		border: none;
+	}
+}
+
+button.add,
+.inquiry {
+	background: #66b2d5;
+	color: #fff;
+	width: 76%;
+	border-radius: 12px;
+	font-size: 14px;
+	line-height: 36px;
+	margin: 8px 0;
+	border: 1px solid #66b2d5;
+}
+
+button#add {
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+
+button.inquiry {
+	margin-top: 0px;
+	margin-bottom: 10px;
+	background: #fff;
+	color: #66b2d5;
+}
+
+.ensure {
+	margin-bottom: 14px;
+	border: 1px solid #e8e8e8;
+	border-radius: 8px;
+	font-size: 0px;
+	li {
+		display: inline-block;
+		width: 33%;
+		font-size: 0px;
+		line-height: 40px;
+		span {
+			display: inline-block;
+			font-size: 12px;
+			padding-left: 20px;
+			background: url(../images/service.png) no-repeat left center;
+			background-size: 14px;
+		}
+	}
+}
+.bTop{
+	text-align:center;
+}
+.bTitle{margin-left:1em;}
+.pinlun {
+	float: right;
+	span {
+		color: #66b2d5;
+	}
+}
+.selecked span {
+	color: #fff;
+	background-color: #a8adb9;
+	border-bottom: none;
+	display: inline-block;
+	border-radius: 2px;
+	padding: 2px 12px;
+    line-height: 1;
+}
+
+.m-img {
+	img {
+		max-width: 100% !important;
+		height: auto !important;
+	}
+	video {
+		width: 100%;
+		height: auto;
+	}
+}
+
+.hidden {
+	display: none;
+}
+
+.aaa {
+	display: none;
+}
+
+//订单确认（选择属性弹出层）
+section#page-order {
+	color: @wordcolor;
+	padding-bottom: 46px;
+	background: #f8f8f8;
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	max-width: 640px;
+}
+
+.title {
+	padding: 16px 4%;
+	background: #fff;
+	.back {
+		float: left;
+		width: 8px;
+		height: 8px;
+		border-left: 1px solid #222;
+		border-bottom: 1px solid #222;
+		transform: rotate(45deg);
+		-webkit-transform: rotate(45deg);
+		margin: 3px -8px 0 0;
+	}
+	.conirm {
+		width: 100%;
+		text-align: center;
+		font-size: 16px;
+		line-height: 16px;
+	}
+}
+
+.dt-paramselect {
+	padding: 2%;
+	background: #f8f8f8;
+}
+
+.left.f-fl {
+	width: 100px;
+	img {
+		height: 100px;
+	}
+	position:absolute;
+	top:50%;
+	margin-top:-50px;
+}
+
+.right.f-fl {
+	margin-left: 116px;
+	float: left;
+	.con {
+		font-size: 12px;
+		line-height: 22px;
+	}
+}
+
+#attrimg {
+	width: 20%;
+	max-width: 150px;
+	min-width: 100px;
+}
+
+.info-con {
+	padding: 2%;
+	background: #fff;
+	position: relative;
+	min-height: 120px;
+}
+
+label.tab {
+	text-align: left;
+	display: block;
+	padding-left: 16px;
+	background: url(../images/uncheck.png) no-repeat left center;
+	background-size: 12px;
+}
+
+label.tab.tab-sel {
+	padding-left: 16px;
+	background: url(../images/check.png) no-repeat left center;
+	background-size: 12px;
+}
+
+.title_ac h5 {
+	padding: 8px 0;
+	text-align: center;
+}
+
+.tc {
+	background: #fff;
+	padding: 2%;
+}
+
+.u-format {
+	text-align: center;
+	color: @wordcolor;
+	background: #fff;
+	.tt {
+		display: inline-block;
+		margin-top: 10px;
+	}
+	.con {
+		font-size: 0;
+		background: #fff;
+		padding: 2%;
+		.tab {
+			display: inline-block;
+			font-size: 12px;
+			padding: 10px 4px;
+			min-width: 32px;
+			background: #f0f0f0;
+			margin: 10px 6px 0 0;
+			border-radius: 4px;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		.tab.tab-sel {
+			background: #66b2d5;
+			color: #fff;
+		}
+	}
+}
+
+.sku {
+	padding: 2%;
+	background: url(../images/check.png) no-repeat right center;
+	background-size: 12px;
+	margin-right: 2%;
+	font-size: 12px;
+	line-height: 36px;
+	.it {
+		display: inline-block;
+	}
+}
+
+.less,
+.more {
+	width: 32px;
+	height: 32px;
+	color: #222;
+	border: 1px solid #eee;
+	line-height: 32px;
+	text-align: center;
+	font-size: 28px;
+	font-family: monospace;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.textWrap {
+	font-size: 12px;
+	padding: 0 16px;
+	line-height: 32px;
+	vertical-align: middle;
+	display: inline-block;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+
+.u-fornum {
+	padding: 2%;
+	background: #fff;
+}
+
+.m-selnum {
+	font-size: 0;
+	display: inline-block;
+}
+
+.buy_now.submit button {
+	width: 100%;
+	height: 36px;
+	line-height: 36px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	color: #fff;
+	background: #66b2d5;
+}
+
+footer {
+	position: fixed;
+	display: flex;
+	bottom: 0;
+	width: 100%;
+	max-width: 640px;
+	display: none;
+	padding: 2% 0;
+	.kefu {
+		width: 6em;
+		font-size: 12px;
+		padding-top: 20px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		border: 1px solid #66b2d5;
+		border-radius: 6px;
+		margin-left: 2%;
+		background: #fff url(../images/kefu.png) no-repeat center 3px;
+		background-size: 16px;
+		color: #444;
+	}
+	.buy_now {
+		flex: 1;
+		text-align: center;
+		button#add {
+			margin: 0;
+			width: 96%;
+			border-radius: 6px;
+			height: 42px;
+			line-height: 40px;
+			box-sizing: border-box
+		}
+	}
+}

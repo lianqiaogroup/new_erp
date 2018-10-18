@@ -1,0 +1,221 @@
+{% include 'public/theme/header.twig' %}
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/style/checkout.css" />
+<!-- END header resource -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!--  -->
+<div class="g-bd">
+    <div class="m-hd">
+        <a class="goback" href="/{{ identity_tag}}"><img src="{{ THEME }}/images/returnback.png"></a>
+        <div>{{ lang.order_comfirmation }}</div>
+    </div>
+    <div id="order">
+        <div class="warp">
+            <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+                <input type="hidden" name="combo_id" value="">
+                <input type="hidden" name="token" value="{{ token }}">
+                <input type="hidden" id="act" name="act" value="getAttrPrice">
+                <input type="hidden" name="product_id" value="{{ product_id }}">
+                <input type="hidden" id="num" name="num" value="">
+                <input name="payment_type" value="0" type="hidden">
+                <!-- 套餐包含产品 -->
+                {% if combo %}
+                    <div class="m-goodItems">
+                        {% for om in combo %}
+                            {% for ok in om.goods %}
+                                <div class="proitem" data-comboId="{{ om.combo_id }}" style="display:none;">
+                                    <img src="{{ ok.thumb }}" class="forAttrImg">
+                                    <div class="product-info">
+                                        <div>{{ ok.title }}</div>
+                                        {% for o in ok.options %}
+                                        <div class="product-prototype">
+                                            <label>{{ o.attr_group_title }} : </label>
+                                            {% for key,attr in o.attr %}
+                                            <span attrimg="{{ attr.thumb }}" optionsKey data-id="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}-{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endfor %}
+                                        <div class="nums"><i>x</i><span rel="{{ ok.num }}" class="gdnum">{{ ok.num }}</span></div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="m-goodItems">
+                        <div class="proitem" data-comboId="0">
+                            <img src="{{ thumb }}" class="forAttrImg">
+                            <div class="product-info">
+                                <div>{{ title }}</div>
+                                {% for o in options %}
+                                <div class="product-prototype">
+                                    <label>{{ o.attr_group_title }} : </label>
+                                    {% for key,attr in o.attr %}
+                                    <span attrimg="{{ attr.thumb }}" optionsKey data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+                                <div class="nums"><i>x</i><span rel="1" class="gdnum">1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="address-input">
+                    <div class="line-a"><img src="{{ THEME }}/images/line.png"></div>
+                    <div class="buy-single-row">
+                        <div class="input-label">
+                            <img src="{{ THEME }}/images/men.png" >
+                        </div>
+                        <div class="cell">
+                            <input required="required" placeholder="{{ lang.name_placeholder }}" type="text" name="name" class="inputText">
+                        </div>
+                    </div>
+                    <div class="buy-single-row">
+                        <div class="input-label">
+                            <img src="{{ THEME }}/images/mob.png" >
+                        </div>
+                        <div class="cell">
+                            <input required="required" placeholder="{{ lang.mobile_placeholder }}" type="tel" name="mob" class="inputText">
+                        </div>
+                    </div>
+                    <div class="buy-single-row">
+                        <div class="input-label">
+                            <img src="{{ THEME }}/images/email.png" >
+                        </div>
+                        <div class="cell">
+                            <input placeholder="{{ lang.email_placeholder }}" error="{{ lang.test_email }}" type="email" name="email" class="inputText">
+                        </div>
+                    </div>
+                    <div class="buy-single-row">
+                        <div class="input-label">  
+                        </div>
+                        <div class="cell" id="province">
+                            <select class="sel_area" name="province">
+                                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                            </select>
+                            {% if regions.region_son and regions.code != 'TW'%}
+                                <select class="sel_city" name="city">
+                                    <option value="">{{ lang.province_choose }}</option>
+                                    {% for i in regions.region_son %}
+                                        <option value="{{ i.lang}}">{{ i.lang }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if regions.code == "TW" %}
+                    <div class="buy-single-row">
+                        <div class="input-label">  
+                        </div>
+                        <div class="cell">
+                            <select class="select" name="city" required="required">
+                                <option value="">{{lang.city}}</option>
+                            </select>
+                            <select class="select" name="district" required="required">
+                                <option value="">{{lang.district}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="buy-single-row">
+                        <div class="input-label">
+                            <img src="{{ THEME }}/images/dadr.png" >
+                        </div>
+                        <div class="cell">
+                            {% if regions.region_name == '澳门' %}
+                                <input required="required" type="text" name="address" placeholder="{{ lang.address_warming_macro }}" class="inputText">
+                            {% else %}
+                                <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="buy-single-row">
+                        <div class="input-label">
+                            <img src="{{ THEME }}/images/free.png" >
+                        </div>
+                        <div class="cell">
+                            <input type="text" name="postal"  class="inputText" placeholder="{{ lang.postal }}" error="{{ lang.test_postal }}">
+                        </div>
+                    </div>
+                    <div class="buy-single-row">
+                        <div class="input-label">
+                        </div>
+                        <div class="cell">
+                            <textarea placeholder="{{lang.note_placeholder}}" name="guest" class="text_area"></textarea>
+                        </div>
+                    </div>
+                    <div class="buy-single-row">
+                        <div class="input-label">
+                        </div>
+                        <div class="cell paytype">
+                            {% if payment_underline ==1 %}
+                                <label class="ifpay check" rel="0"><i></i>{{ lang.cash_on_delivery }}</label>
+                            {% endif %}
+                            {% if payment_online ==1 %}
+                                <label class="ifpay" rel="1"><i></i>{{ lang.yijifu }}</label>
+                            {% endif %}
+                            {% if payment_paypal == 1 %}
+                                <label class="ifpay" rel="2"><i></i>paypal</label>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="line-b"></div>
+                </div>
+                <!--  -->
+                <div class="warming">
+                    {{ lang.warming|raw }}
+                </div>
+                <footer class="m-orderFt">
+                    <div class="actualPrice">
+                        <label class="label">{{ lang.total }}:&nbsp;</label>
+                        <span class="value">
+                            {% if currency_prefix == 1 %}
+                            <span>{{ currency_code }}</span>
+                            <span id="price"></span>
+                            {% else %}
+                            <span id="price"></span>
+                            <span>{{ currency_code }}</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <button class="btnconfirm" type="submit" name="Submit" value="{{ lang.buy_now }}">{{ lang.buy_now }}</button>
+                    <input type="hidden" data-cuckootag="confirm_order">
+                </footer>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    loadstate();
+    $('[name="city"]').change(function(event) {
+        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        loadCity(id);
+    });
+    function loadstate(){
+        var region_id = '{{regions.region_id}}',regionCode = '{{regions.code}}';
+        if(regionCode == 'TW'){
+        $.post('/region.php', { 'region_id': region_id }, function(data) {
+            var data = JSON.parse(data);
+                data.map(function(item, index){
+                    $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+                });
+            var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        });
+        }
+    }
+    function loadCity(id, callback){
+        $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+            var districtFirst = $('[name="district"]').children().first();
+            $('[name="district"]').children().remove();
+            $('[name="district"]').append(districtFirst);
+            $('[name="district"]').val('');
+            var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        });
+    }
+</script>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/checkout.js"></script>
+{% include 'public/theme/footer.twig' %}

@@ -1,0 +1,180 @@
+<div class="flexbox">
+	<div class="flex regions">{{ regions.region_name }}</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="state" required="required">
+			<option value="">{{ lang.state }}</option>
+		</select>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="city" required="required">
+			<option value="">{{ lang.city }}</option>
+		</select>
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<select name="district" required="required">
+			<option value="">{{ lang.district }}</option>
+		</select>
+	</div>
+</div>
+<div class="table-row">
+	<p style="color:red; text-align:right">{{ lang.addr_warning }}</p>
+</div>
+<div class="table-row">
+	<input type="text" required="required" name="address" placeholder="{{ lang.addr }}">
+</div>
+<div class="table-row">
+    <input type="text" name="address2" placeholder="{{ lang.addr2 }}">
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="text" required="required" name="name" maxlength="50" placeholder="{{ lang.name }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="number" required="required" name="postal" placeholder="{{ lang.postal }}" maxlength="20">
+	</div>
+</div>
+<div class="flexbox">
+	<div class="flex tab_two">
+		<input type="tel" name="mob_backup" placeholder="{{ lang.phone_backup }}">
+	</div>
+	<div class="flex tab_two">
+		<input type="tel" required="required" name="mob" placeholder="{{ lang.phone }}">
+	</div>
+</div>
+<div class="table-row cardshow">
+	<input type="tel" name="id_card" placeholder="{{ lang.id_card }}">
+</div>
+<div class="cardshow" style="color:red; text-align:right">{{lang.id_cardtips}}</div>
+<div class="table-row">
+	<input type="email" name="email" placeholder="{{ lang.email }}">
+</div>
+<div class="flexbox">
+    <div class="flex tab_two">
+        <select name="send_time" required="required">
+            <option value=""> تفضل تختار وقت للتسليم</option>
+            <option value="10：00-12:00 "> 10：00-12:00</option>
+            <option value="13：00-16:00 "> 13：00-16:00</option>
+            <option value="17:00-19:00 "> 17:00-19:00</option>
+        </select>
+    </div>
+</div>
+<div class="table-row">
+	<input type="text" name="note" placeholder="{{ lang.note }}">
+</div>
+<div class="flexbox">
+	{% if payment_underline == 1 %}
+		<div class="flex tab_two tab_sele action" rel="0"><i class="icon"></i>{{ lang.cash_on_delivery }}</div>
+	{% endif %}
+	{% if payment_online == 1 or payment_paypal == 1 or payment_asiabill == 1 %}
+		<div class="flex tab_two">
+			<div class="tab_sele"><i class="icon"></i>{{ lang.order_onlinepay }}</div>
+		</div>
+	{% endif %}
+    <input type="hidden" name="guest">
+	<input name="payment_type" value="0" type="hidden">
+</div>
+<div class="table-row pay-type" style="display: none;">
+	<select id="pay-online">
+		{% if payment_online == 1 %}
+		<option value="1">{{ lang.yijifu }}</option>
+		{% endif %}
+		{% if payment_paypal == 1 %}
+		<option value="2">paypal</option>
+		{% endif %}
+		{% if payment_asiabill == 1 %}
+		<option value="3">Asiabill</option>
+		{% endif %}
+	</select>
+</div>
+<div class="table-row">
+    <p style="color:red; text-align:right">{{ lang.phone_warning }}</p>
+</div>
+<style>
+	select[name="state"], select[name="city"], select[name="send_time"] {
+	    height: 44px;
+	    width: 100%;
+	    font-size: 14px;
+	    color: #666;
+	    border: 1px solid #eee;
+	    border-radius: 4px;
+	    text-indent: 16px;
+	}
+	.cardshow{
+		display: none;
+	}
+</style>
+<script type="text/javascript">
+
++(function loadstate(){
+    $.post('/region.php', { 'region_id': {{ regions.region_id }} }, function(data) {
+        var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="state"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        var id = $('[name="state"]').children().filter(':selected').attr('data-id');
+    });
+})();
+
+
+$('[name="state"]').change(function(event) {
+    var id = $(this).children().filter(':selected').attr('data-id');
+    loadCity(id);
+});
+$('[name="city"]').change(function(event) {
+    var id = $(this).children().filter(':selected').attr('data-id') || 0;
+    loadDistrict(id);
+});
+
+function loadCity(id, callback){
+    $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+        $('[name="city"]').children().not(":eq(0)").remove();
+        $('[name="district"]').children().not(":eq(0)").remove();
+        var data = JSON.parse(data);
+        data.map(function(item, index){
+            $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+        });
+    });
+}
+function loadDistrict(id){
+    if( id==0 ){
+        try{
+            $('[name="district"]').children().not(":eq(0)").remove();
+        }catch(e){
+            
+        }
+        return false;
+    }
+    $.post('/region.php', { 'yn_region_id': id }, function(data) {
+        $('[name="district"]').children().not(":eq(0)").remove();
+        var data = JSON.parse(data);
+        if( data.length == 0 ){
+            var newInput = '<input name="district" value="" placeholder="{{ lang.district_input }}" />';
+            $('select[name="district"]').before(newInput);
+            $('select[name="district"]').remove();
+        }else{
+            var newInput = '<select name="district"></select>';
+            $('input[name="district"]').before(newInput);
+            $('input[name="district"]').remove();
+            data.map(function(item, index){
+                $('[name="district"]').append('<option value="'+item.name+'">'+item.name+'</option>');
+            });
+        }
+    });
+}
+
+function changeguest(){
+    $('[name="guest"]').val($('[name="send_time"]').val() + $('[name="note"]').val());
+}
+$('[name="note"]').on('change',function(){
+    changeguest();
+});
+$('[name="send_time"]').on('change',function(){
+    changeguest();
+})
+</script>

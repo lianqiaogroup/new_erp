@@ -1,0 +1,56 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<!-- end header resource -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		{% if photos %}
+			{% for p in photos %}
+				<div class="swiper-slide">
+					<img src="{{ p.thumb }}" width="100%">
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="swiper-slide">
+				<img src="{{ thumb }}" width="100%">
+			</div>
+		{% endif %}
+	</div>
+</div>
+{% include 'dom_title.twig' %}
+<div class="detail">
+	<div class="sales" id="sales">
+		{% include 'dom_limit.twig' %}
+		{% include 'dom_price.twig' %}
+		{% include 'cmpt-guige.twig' %}
+	</div>
+</div>
+{% include 'dom_service.twig'%}
+{% include 'dom_proinfo.twig' %}
+<div class="footer">
+	<div class="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);"></div>
+	<div class="buy_now">
+        <button data-cuckootag="confirm_arrtibute" data-event="postcheckGuige">{{ lang.buy_now }}</button>
+	</div>
+</div>
+{% if regions.code == 'Rp' %}
+<div style="padding:0 16px;font-size:14px;line-height:20px;padding-bottom:56px;">
+    <div>{{lang.return_goods_top}}</div>
+    <div>{{lang.return_goods_1}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_2}}</div>
+    <div>{{lang.return_goods_3}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_4}}</div>
+    <div>{{lang.return_goods_5}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_6}}</div>
+    <div>{{lang.return_goods_7}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_8}}</div>
+    <div>{{lang.return_goods_9}}</div>
+    <div style="margin-top:10px;">{{lang.return_goods_10}}</div>
+</div>
+{% endif %}
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}

@@ -1,0 +1,64 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}" width="100%">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+			{% endif %}
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<div class="sale">
+		<span>SALE</span>
+		<span>{{ lang.buy_before }}{{ sales }}{{ lang.buy_after }}</span>
+	</div>
+	<div class="title">
+		{{ title }}
+	</div>
+	<div class="price">
+		<del>
+			{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+        	{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+		</del>
+		<span class="discount">
+			{{ ((market_price-price)/market_price*100)|number_format(0) }}% off
+		</span>
+		<span class="sale_price">
+			{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+        	{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+		</span>
+	</div>
+	<div class="hot">
+		<span>{{ lang.boon }}</span>
+		<span>{{ lang.hot }}</span>
+	</div>
+</section>
+<section>
+	<div class="tip">
+		<span>{{ lang.send }}</span>
+	</div>
+	{% include './cmpt-guige.twig' %}
+</section>
+<footer>
+	<div class="buy_now"><button>{{ lang.buy_now }}</button></div>
+</footer>
+<div class="m-img">
+    {{ content|raw }}
+</div>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

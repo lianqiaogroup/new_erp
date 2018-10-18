@@ -1,0 +1,200 @@
+<style type="text/css">
+.myCustomImageHeight {
+  height:42px;
+}
+</style>
+{% if combo %}
+<div class="a-popover a-popover-secondary a-declarative" id="a-popover-combo" style="visibility: visible; display: none;width: 100%;max-width: 540px; min-height: 100%;">
+<div class="a-popover-wrapper" style="min-height: 100%;">
+<div class="a-popover-header-secondary">
+<div class="a-row">
+    <div class="a-span12 a-span-last a-column">
+        <a class="a-declarative close" href="javascript:void(0)">
+            <i class="a-icon a-icon-page-back"></i>
+            <h4>戻る</h4>
+        </a>
+    </div>
+</div>
+</div>
+<div class="a-color-alternate-background">
+<div class="a-popover-header-spacing"></div>
+<div class="a-container a-secondary-view-inner" id="a-popover-content-2">
+    <div class="a-section">
+        <div class="a-row">
+            <div class="a-column a-span12">
+                <h2 class="a-box-title">選んでください</h2>
+                <div class="a-section a-spacing-medium">
+                    <div id="style_name-list" class="a-vertical">
+                        <div class="a-box a-padding-none">
+                            <ul class="a-unordered-list a-nostyle a-box-list a-last">
+                                {% for om in combo %}
+                                <li class="a-align-center combo-li" data="{{ om.combo_id }}" cpirce="{{ om.price }}" single_c="{{om.is_single_combo}}">
+                                    <span class="a-list-item">
+                                        <span class="a-declarative">
+                                            <a href="javascript:void(0)" class="a-touch-link a-box a-touch-link-noborder a-touch-select">
+                                                <div class="a-box-inner">
+                                                    <i class="a-icon a-icon-touch-select"></i>
+                                                    <div class="a-row aw-twister-row">
+                                                        <h4>{{ om.title|raw }}</h4>
+                                                        <div id="dimSum_B072MGLVLJ" class="twister-dimsum">
+                                                        <span class="a-color-price">{{ om.price }}{{ currency_code }}</span><br>
+                                                        <span class="a-color-secondary">在庫 {{ stock }} 件。</span></div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </span>
+                                    </span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% for om in combo %}
+{% for ok in om.goods %}
+{% for o in ok.options %}
+<div class="a-popover a-popover-secondary a-declarative combo-{{ om.combo_id }}" id="a-popover-{{ om.combo_id }}-{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" style="visibility: visible; display: none; width: 100%;max-width: 540px; min-height: 100%;">
+<div class="a-popover-wrapper" style="min-height: 100%;">
+<div class="a-popover-header-secondary">
+<div class="a-row">
+    <div class="a-span12 a-span-last a-column">
+        <a class="a-declarative close" href="javascript:void(0)">
+            <i class="a-icon a-icon-page-back"></i>
+            <h4>戻る</h4>
+        </a>
+    </div>
+</div>
+</div>
+<div class="a-color-alternate-background">
+<div class="a-popover-header-spacing"></div>
+<div class="a-container a-secondary-view-inner" id="a-popover-content-2">
+    <div class="a-section">
+        <div class="a-row">
+            <div class="a-column a-span12">
+                <h2 class="a-box-title">選んでください {{ ok.title }}</h2>
+                <div class="a-section a-spacing-medium">
+                    <div id="style_name-list" class="a-box a-vertical">
+                        <div class="a-padding-none">
+                            <ul class="a-unordered-list a-nostyle a-box-list a-last">
+                                {% for key,attr in o.attr %}
+                                <li class="a-align-center goods-li" comboid="{{ om.combo_id }}" goods="{{ ok.combo_goods_id }}" groupid="{{ o.attr_group_id }}" attrid="{{ attr.product_attr_id }}">
+                                    <span class="a-list-item">
+                                        <span class="a-declarative">
+                                            <a href="javascript:void(0)" class="a-touch-link a-box a-touch-link-noborder a-touch-select">
+                                                <div class="a-box-inner">
+                                                    <i class="a-icon a-icon-touch-select"></i>
+                                                    {% if attr.thumb %}
+                                                        <div class="a-fixed-left-grid-inner" style="padding-left:4.2rem;overflow: hidden;">
+                                                            <div class="a-fixed-left-grid-col a-col-left" style="width:4.2rem;margin-left:-4.2rem;_margin-left:-21px;float:left;overflow: hidden;">
+                                                              <img alt="{{ attr.name|raw }}" src="{{ attr.thumb|raw }}" class="myCustomImageHeight" data-a-hires="{{ attr.thumb|raw }}">
+                                                            </div>
+                                                            <div class="a-fixed-left-grid-col a-col-right" style="padding-left:0%;*width:99.6%;float:left;">
+                                                              <h4 style="padding-left:8px;padding-bottom: 0;">{{ attr.name|raw }}</h4>
+                                                              <div id="dimSum_B0711XDGB9" class="twister-dimsum" style="padding-left:8px;"><span class="a-color-secondary">在庫 {{ stock }} 件。</span></div>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="a-row aw-twister-row">
+                                                            <h4>{{ attr.name|raw }}</h4>
+                                                            <div id="dimSum_B072MGLVLJ" class="twister-dimsum"><span class="a-color-secondary">在庫 {{ stock }} 件。</span></div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </a>
+                                        </span>
+                                    </span>
+                                </li>
+
+                                {% endfor %}
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% else %}
+{% for o in  options %}
+<div class="a-popover a-popover-secondary a-declarative" id="a-popover-{{ o.attr_group_id }}" style="visibility: visible; display: none; width: 100%;max-width: 540px; min-height: 100%;">
+<div class="a-popover-wrapper">
+<div class="a-popover-header-secondary">
+<div class="a-row">
+    <div class="a-span12 a-span-last a-column">
+        <a class="a-declarative close" href="javascript:void(0)">
+            <i class="a-icon a-icon-page-back"></i>
+            <h4>戻る</h4>
+        </a>
+    </div>
+</div>
+</div>
+<div class="a-color-alternate-background">
+<div class="a-popover-header-spacing"></div>
+<div class="a-container a-secondary-view-inner" id="a-popover-content-2">
+    <div class="a-section">
+        <div class="a-row">
+            <div class="a-column a-span12">
+                <h2 class="a-box-title">選んでください {{ o.attr_group_title }}</h2>
+                <div class="a-section a-spacing-medium">
+                    <div id="style_name-list" class="a-box a-vertical">
+                        <div class="a-padding-none">
+                            <ul class="a-unordered-list a-nostyle a-box-list a-last">
+                                {% for key,attr in o.attr %}
+                                <li class="a-align-center attr-key" parent="{{ o.attr_group_id }}">
+                                    <span class="a-list-item">
+                                        <span class="a-declarative" data-twister='{{ attr|json_encode|raw }}'>
+                                            <a href="javascript:void(0)" class="a-touch-link a-box a-touch-link-noborder a-touch-select">
+                                                <div class="a-box-inner">
+                                                    <i class="a-icon a-icon-touch-select a-active"></i>
+                                                    {% if attr.thumb %}
+                                                        <div class="a-fixed-left-grid-inner" style="padding-left:4.2rem;overflow: hidden;">
+                                                            <div class="a-fixed-left-grid-col a-col-left" style="width:4.2rem;margin-left:-4.2rem;_margin-left:-21px;float:left;overflow: hidden;">
+                                                              <img alt="{{ attr.name|raw }}" src="{{ attr.thumb|raw }}" class="myCustomImageHeight" data-a-hires="{{ attr.thumb|raw }}">
+                                                            </div>
+                                                            <div class="a-fixed-left-grid-col a-col-right" style="padding-left:0%;*width:99.6%;float:left;">
+                                                              <h4 style="padding-left:8px;padding-bottom: 0;">{{ attr.name|raw }}</h4>
+                                                              <div id="dimSum_B0711XDGB9" class="twister-dimsum" style="padding-left:8px;"><span class="a-color-secondary">在庫 {{ stock }} 件。</span></div>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="a-row aw-twister-row">
+                                                            <h4>{{ attr.name|raw }}</h4>
+                                                            <div id="dimSum_B072MGLVLJ" class="twister-dimsum"><span class="a-color-secondary">在庫 {{ stock }} 件。</span></div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </a>
+                                        </span>
+                                    </span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+{% endif %}

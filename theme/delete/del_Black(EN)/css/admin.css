@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+/*初始化代码*/
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+body{font:12px"宋体","Arial Narrow",HELVETICA;-webkit-text-size-adjust:100%;}
+a{color:#2d374b;text-decoration:none}
+a:hover{color:#cd0200;text-decoration:underline}
+em{font-style:normal}
+li{list-style:none}
+img{border:0;vertical-align:middle}
+table{border-collapse:collapse;border-spacing:0}
+p{word-wrap:break-word}
+
+/*样式代吗*/
+*{margin:0;padding:0px;}
+
+.top{width:100%;height:60px;margin:0 auto;text-align:center;color:#fff;font-size:35px;font-weight: bold;text-shadow: 0px 1px 1px #555;line-height:60px;min-width:1200px;background:url(../images/top_bj.png);}
+.head{width:100%;height:35px;margin:0 auto;background:#930;min-width:1200px;background:#880;}
+.p1{width:20%;height:35px;background:url(../images/dh_bj.png);float:left;text-align:center;line-height:35px;font-weight:bold;font-family:font-family:"宋体";font-size:14px;color:#FFFFFF;}
+.p1 span{text-align:center;line-height:35px;color:#FFF;}
+.p1 a{text-decoration:none;color:#999;}
+.p1 a:hover{color:#F00;}
+.p2{width:80%;height:35px;float:left;text-align:left;line-height:35px;font-weight:bold;font-family:"宋体";text-indent:15px;background:#999;}
+.main{width:100%;height:600px;margin:0 auto;min-width:1200px;}
+.footer{width:100%;height:60px;margin:0 auto;min-width:1200px;background:url(../images/top_bj.png);}
+.main_l{width:20%;float:left;height:600px;background:url(../images/main_l.png);}
+.cate{width:100%;height:50px;margin:15px auto;text-align:center;line-height:50px;font-size:20px;font-weight:bold;background:#FFFFFF;color:#CC6633;}
+.main_r{width:80%;height:600px;float:left;}
+.yhzx{width:100%;background:#999;}
+.yhzx ul li{width:100%;height:30px;margin:5px auto;background:#930;text-align:center;line-height:30px;font-size:14px;}
+.yhzx ul li a{color:#FFF;text-decoration:none;}
+.yhzx ul li a:hover{color:#0F0;}
+.bmzx{width:100%;background:#999;}
+.bmzx ul li{width:100%;height:30px;margin:5px auto;background:#930;text-align:center;line-height:30px;font-size:14px;}
+.bmzx ul li a{color:#FFF;text-decoration:none;}
+.bmzx ul li a:hover{color:#0F0;}
+
+.cxzx{width:100%;background:#999;}
+.cxzx ul li{width:100%;height:30px;margin:5px auto;background:#930;text-align:center;line-height:30px;font-size:14px;}
+.cxzx ul li a{color:#FFF;text-decoration:none;}
+.cxzx ul li a:hover{color:#0F0;}
+.dqyh{width:60%;height:50px;margin:5px auto;background:#FFFFFF;text-align:center;font-size:14px;font-weight:bold;line-height:25px;border:2px dashed #CC6633;}

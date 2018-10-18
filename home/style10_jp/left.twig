@@ -1,0 +1,11 @@
+<div class="panel-user"></div>
+<div class="panel panel-left panel-reveal" id="panelview">
+    <div class="slidebar">
+        <ul>
+            <li><a href="/">{{lang.home}}</a></li>
+            {% for c in category_title %}
+                <li><a href="./?category_id={{ c.id }}&show=1">{{ c.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

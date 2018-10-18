@@ -1,0 +1,27 @@
+.price.b_price {
+  float: left;
+  width: 46%;
+  padding: 12px 4% 12px 0;
+  height: 36px;
+}
+.price.b_price span {
+  display: block;
+  text-indent: 8%;
+  font-weight: bold;
+  line-height: 20px;
+}
+.price.b_price .pre_price {
+  font-size: 10px;
+}
+.b_price .top_price,
+.p_price .top_price {
+  font-size: 24px;
+  color: #222;
+}
+.b_price .pre_price,
+.p_price .pre_price {
+  font-size: 12px;
+  color: #666;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlMjdfMi9sZXNzL2RvbV9wcmljZS5sZXNzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUVBLE1BQU07RUFDRixXQUFBO0VBQ0EsVUFBQTtFQUNBLHVCQUFBO0VBQ0EsWUFBQTs7QUFKSixNQUFNLFFBS0w7RUFDQyxjQUFBO0VBQ0EsZUFBQTtFQUNHLGlCQUFBO0VBQ0EsaUJBQUE7O0FBVEwsTUFBTSxRQVdMO0VBQ0MsZUFBQTs7QUFHRixRQUNDO0FBRFEsUUFDUjtFQUNDLGVBQUE7RUFDQSxXQUFBOztBQUhGLFFBS0M7QUFMUSxRQUtSO0VBQ0MsZUFBQTtFQUNHLFdBQUEiLCJzb3VyY2VzQ29udGVudCI6WyJAYl9jb2xvciA6ICMyMjI7XG5AcGFkZGluZzo0JTtcbi5wcmljZS5iX3ByaWNle1xuICAgIGZsb2F0OmxlZnQ7XG4gICAgd2lkdGg6NDYlO1xuICAgIHBhZGRpbmc6MTJweCA0JSAxMnB4IDA7XG4gICAgaGVpZ2h0OiAzNnB4O1xuXHRzcGFue1xuXHRcdGRpc3BsYXk6YmxvY2s7XG5cdFx0dGV4dC1pbmRlbnQ6QHBhZGRpbmcqMjtcblx0ICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuXHQgICAgbGluZS1oZWlnaHQ6IDIwcHg7XG5cdH1cblx0LnByZV9wcmljZXtcblx0XHRmb250LXNpemU6IDEwcHg7XG5cdH1cbn1cbi5iX3ByaWNlLC5wX3ByaWNle1xuXHQudG9wX3ByaWNle1xuXHRcdGZvbnQtc2l6ZTogMjRweDtcblx0XHRjb2xvcjpAYl9jb2xvcjtcblx0fVxuXHQucHJlX3ByaWNle1xuXHRcdGZvbnQtc2l6ZTogMTJweDtcblx0ICAgIGNvbG9yOiM2NjY7XG5cdH1cbn0iXSwiZmlsZSI6InN0eWxlMjdfMi9sZXNzL2RvbV9wcmljZS5jc3MifQ== */

@@ -1,0 +1,15 @@
+<div class="ui-offcanvas">
+	<div class="boxer">
+		<h1>{{ lang.offcanvas_title }}</h1>
+		<ul class="ui-list menu">
+			{% for c in category %}
+			<li class="">
+				<a href="/cat/{{ c.cid }}" class="ui-arrowlink">{{ c.title }}</a>
+				{% for s in c.son %}
+	               <div class="menu-item-child"><a href="/cat/{{ s.cid }}">{{ s.title }}</a></div> <!--第二层-->
+	            {% endfor %}
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

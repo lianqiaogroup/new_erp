@@ -1,0 +1,150 @@
+{% include 'public/theme/header.twig' %}
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/style/checkout.min.css" />
+<!-- END header resource -->
+<div class="head">
+    <div class="back"></div>
+    <div class="conirm">{{ lang.addr }}</div>
+</div>
+<form id="form" name="form" action="order.php" method="post" onsubmit="return postcheck()">
+    <input type="hidden" name="combo_id" value="">
+    <input type="hidden" name="token" value="{{ token }}">
+    <input type="hidden" id="act" name="act" value="getAttrPrice">
+    <div class="pro_info">
+        <div class="tt">{{ lang.choose }}</div>
+    	<!-- 套餐－属性选择 -->
+        {% if combo %}
+            <!-- 循环套餐 -->
+            {% for om in combo %}
+                <section data-loopIndex="{{ loop.index }}" productid="{{ om.product_id }}" data-price='{{ om.price }}' combo_id='{{ om.combo_id }}' style="display: none;">
+                {% for ok in om.goods %}
+                    {% if ok.options %}
+                    <div class="single">
+                        <div class="img_wrap">
+                            <img src="{{ thumb }}">
+                        </div>
+                        <div class="tc tc{{ ok.combo_id|raw }}">
+                            <div class="title_ac"><h5>{{ ok.title|raw }}</h5></div>
+                            <div class="attr">
+                                {% for o in  ok.options %}
+                                <select name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" class="count_atrr">
+        		                    <option value="0">{{ o.attr_group_title|raw }}</option>
+        		                    {% for key,attr in o.attr %}
+        		                    <option value="{{ attr.product_attr_id }}" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">{{ attr.name|raw }}</option>
+        		                    {% endfor %}
+        	                	</select>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </section>
+            {% endfor %}
+        {% else %}
+        <!-- 单产品属性选择 -->
+            <section data-loopIndex="1">
+        		{% for o in  options %}
+        			<select class="count_atrr" data-group="" name="{{ o.attr_group_id }}">
+                        <option value="0">{{ o.attr_group_title|raw }}</option>
+                        {% for key,attr in o.attr %}
+                        <option value="{{ attr.product_attr_id }}" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">{{ attr.name|raw }}</option>
+                        {% endfor %}
+                	</select>
+                {% endfor %}
+            </section>
+        {% endif %}
+        <!--数量-->
+        <div class="u-fornum">
+            <div class="con">
+                <div class="m-selnum dr">
+                <span>{{ lang.num }}&nbsp;</span>
+                <div onclick="minnumber()" class="less z-dis">-</div>
+                <div class="textWrap">
+                    <div class="tt">1</div>
+                    <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                </div>
+                <div onclick="addnumber()" class="more">+</div>
+                </div>
+            </div>
+        </div>
+        <div class="address-title">{{ lang.fill_info }}</div>
+        <div class="address-input">
+            <div class="buy-single-row label-input">
+                    <div class="cell">
+                        <input required="required" placeholder="{{ lang.name }}" type="text" name="name" class="inputText">
+                    </div>
+            </div>
+            <div class="buy-single-row label-input">
+                    <div class="cell">
+                        <input required="required" placeholder="{{ lang.phone }}" type="number" name="mob" class="inputText">
+                    </div>
+            </div>
+            <div class="buy-single-row label-input">
+                    <div class="cell">
+                        <input placeholder="{{ lang.email }}" type="email" name="email" class="inputText">
+                    </div>
+            </div>
+            <div class="buy-single-row label-input">
+                <div class="cell" id="province">
+                    <select name="province">
+                        <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                    </select>
+                </div>
+                {% if regions.region_son %}
+                    <div class="cell" id="city">
+                    <!-- <select name="city">
+                        <option value="{{ regions.region_id }}" selected>{{ lang.select_city }}</option>
+                    </select> -->
+                        <select name="city">
+                            <option value="">{{ lang.province_choose }}</option>
+                            {% for i in regions.region_son %}
+                                <option value="{{ i.lang}}">{{ i.lang }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+                <div style="clear:both;"></div>
+            </div>
+            
+            <div class="buy-single-row label-input">
+                    <div class="cell">
+                        <input required="required" type="text" name="address" placeholder="{{ lang.address_full }}" class="inputText">
+                    </div>
+            </div>
+            <div class="buy-single-row label-input">
+                <label>
+                    <div class="cell">
+                        <input type="text" name="postal"  class="inputText" placeholder="{{lang.postal}}">
+                    </div>
+                </label>
+            </div>
+            <div class="buy-single-row label-input">
+                    <div class="cell"  style="height:41px;padding-top:4px;">
+                        <textarea placeholder="{{ lang.note }}" name="guest" class="text_area" rows="1"></textarea>
+                    </div>
+            </div>
+            <div class="buy-single-row label-input">
+                <div class="cell" style="border:none;display:inline-block;margin-left:-2%;">
+                    {% if payment_underline ==1 %}
+                        <input name="payment_type" value="0" id="0" type="radio"><label for="0" class="check">{{ lang.cash_on_delivery }}</label>
+                    {% endif %}
+                    {% if payment_online ==1 %}
+                        <input name="payment_type" value="1" id="1" type="radio"> <label for="1">{{ lang.yijifu }}</label>
+                    {% endif %}
+                    {% if payment_paypal == 1 %}
+                        <input name="payment_type" value="2" id="2" type="radio"> <label for="2">paypal</label>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="submit">
+        <div class="price">{{ lang.total }}：<span>{{ currency_code }}<span>{{ price }}</span></span></div>
+        <div class="buy_now">
+            <input type="submit" name="Submit" class="btn-style" value="{{ lang.submit_order }}">
+        </div>
+    </div>
+</form>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/checkout.js"></script>
+{% include 'public/theme/footer.twig' %}

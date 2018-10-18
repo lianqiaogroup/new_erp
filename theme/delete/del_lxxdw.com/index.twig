@@ -1,0 +1,180 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/styles.css" rel="stylesheet">
+<LINK href="{{ THEME }}/image/favicon.ico" type="image/x-icon" rel=icon>
+<link href="{{ THEME }}/css/singleActive.css" rel="stylesheet">
+<!--  -->
+<div class="wrap">
+
+    <div class="mod_bar" id="header_normal" style="background:#FF6F20; ">
+        <!--这里是标题-->
+        <div class="mod_bar_tit">{{ title }}</div>
+    </div>
+
+    <div class="mod_slider" id="loopImgDiv">
+        <div class="inner">
+            <div class="pic_list" id="loopImgUl">
+                <!--这里是后台上传的缩略图-->
+                <img src="{{ thumb }}" style="width:100%;">
+            </div>
+        </div>
+    </div>
+
+    <div class="dt-section" style="max-width: 640px;">
+        <div class="m-detailBaseInfo">
+            <div class="info" style="width: 100%;margin: 0 auto;">
+                <div class="line2" style="text-align: right;height: 92px;width: 100%;margin: 0 auto;font-size:8px; box-sizing: border-box; overflow: hidden;">
+                    <em class="retailPrice">{{ currency_code }}{{ price }}</em>
+                    <span style="margin-top:30px;">
+                        <label>{{ lang.market_price }}</label>
+                        <label>{{ currency_code }}{{ market_price }}</label>
+                    </span>
+                    <span style="width: 40px;">
+                        <label style="width: 40px;">{{ lang.discount }}</label>
+                        <label style="width: 40px;">{{ ((price/market_price)*10)|number_format(0) }}</label>
+                    </span>
+                    <span style="padding-right: 20px;">
+                        <label>{{ lang.save }}</label>
+                        <label>{{ currency_code }}{{ market_price - price }}</label>
+                    </span>
+                </div>
+
+                <div class="i-p-m buyinfo_post" style="text-align: left;width:100%;margin: 0 auto;">
+                    <span class="flag1" style="color:#9B968E;">已有{{sales}}{{ lang.buyed_num }}</span>
+                    <span class="timeWrap" style="font-size: 8px">{{ lang.last }}
+                    <span id="timer"><span id="h">-</span><span class="colon"  style="font-size: 8px"   >{{ lang.h }}</span><span id="m">-</span><span class="colon" style="font-size: 8px">{{ lang.m }}</span><span id="s">-</span><span class="colon" style="font-size: 8px">{{ lang.s }}</span></span>
+                    </span>
+                </div>
+            </div>
+            <div class="specSelect" style="cursor: pointer;">
+                <div class="m-listItem" id="val-sel" style="background:#FF6F20;">
+                    <div class="f-vc" >
+                        <div class="inner"><span class="it" style="font-weight:normal;color: white;">{{ lang.buy_now }}</span></div>
+                    </div>
+                    <i class=""></i>
+                </div>
+            </div>
+            <script>
+                document.getElementById('val-sel').onclick  = function () {
+                    window.location.href='/checkout.php'
+                }
+            </script>
+        </div>
+    </div>
+
+    <div class="bTop"><span class="bTitle bTitle1" style="text-align: left;"><h2>{{ lang.product_information }}</h2></span></div>
+    <div class="detail_info_wrap">
+        <div class="detail_list" id="detailCont">
+            <div class="detail_item p_desc" id="detail_tab1" style="padding:4px 4px;">
+                <div id="commDesc" class="detail_pc">
+                    <!-- 后台商品介绍 开始-->
+                    <div class="detail_con">
+                        {{ content|raw }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-info">
+                {{ content|raw }}
+            </div>
+            {% for p in photos %}
+                <div class="detail-img">
+                    <img src="{{ p.thumb}}">
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+    <div class="content_foot">
+        <article class="info-foot">
+
+            溫馨提示：支持貨到付款+免郵費+七天無理由退換貨！僅支持宅配，暫不支持超商取貨！收到貨有任何疑問請聯繫我們在線客服! 也可隨時聯繫:
+            <a href="javascript:void(0)">{{ service_email }}</a>
+            。同時請附上您的姓名及聯繫方式及訂單編號在郵件當中，以便我們能快速的給您及時處理，祝您購物愉快！！！
+        </article>
+    </div>
+</div>
+
+<div class="fixednav" style="background:#FF6F20; ">
+    <ul class="nav-list">
+        <li>
+            <a href="/checkout.php" class="conbtn">
+                <span>{{ lang.buy_now }}</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<script src="{{ THEME }}/js/jquery.js"></script>
+<script src="{{ THEME }}/js/time.lesser.js"></script>
+<script>
+    var interval = 1000;
+    function ShowCountDown(year,month,day,divname)
+    {
+        var now = new Date();
+        var endDate = new Date(year,month-1, day, now.getHours()+8);
+        var leftTime=endDate.getTime()-now.getTime();
+        var leftsecond = parseInt(leftTime/1000);
+        var day1=Math.floor(leftsecond/(60*60*24));
+        var hour=Math.floor((leftsecond-day1*24*60*60)/3600);
+        var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60);
+        var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60);
+        var cc = document.getElementById(divname);
+
+        cc.innerHTML ="<span id='h'>"+0+hour+"</span>"+"<span class='colon'  style='font-size: 8px'>小時</span>"+"<span id='m'>"+minute+"</span>"+"<span class='colon'  style='font-size: 8px'>分</span>"+"<span id='s'>"+second+"</span>"+"<span class='colon'  style='font-size: 8px'>秒</span>";
+    }
+    window.setInterval(function(){ShowCountDown(2018,4,20,'timer');}, interval);
+
+    $(function(){
+
+        function scollDown(id,time){
+            var liHeight=$("#"+id+" ul li").height();
+            var time=time||2500;
+            setInterval(function(){
+                $("#"+id+" ul").prepend($("#"+id+" ul li:last").css("height","0px").animate({
+                    height:liHeight+"px"
+                },"slow"));
+            },time);
+        }
+        scollDown("pingjia",3000);
+
+    });
+
+    //百分比
+    function percent(){
+        //获取时间点
+        var curhour= "{{ sales }}";
+        var base=0,range=0;
+        var percent   = document.getElementById("percentNum");
+        var progress  = document.getElementById("progress");
+        var soldNum  = document.getElementById("soldNum");
+        if(curhour<=1000){
+            base=70;range=5;
+        }else
+        if(curhour<=2000){
+            base=70;range=10;
+        }else
+        if(curhour<=4000){
+            base=70;range=15;
+        }else
+        if(curhour<=6000){
+            base=70;range=20;
+        }else
+        if(curhour<=8000){
+            base=70;range=25;
+        }else
+        if(curhour<10000){
+            base=70;range=28;
+        }
+        var opercent=Math.floor(range+base);
+        /*progress.style.width = percent.innerHTML = opercent+"%";*/
+    }
+
+    //页面加载
+    window.onload=function(){
+        percent();
+    }
+
+</script>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

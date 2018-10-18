@@ -1,0 +1,251 @@
+{% include 'public/theme/header.twig' %}
+<!-- resource -->
+<link type="image/x-icon" rel="icon" href="{{ THEME }}/image/favicon.ico" >
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<link type="text/css" rel="stylesheet" href="public/bootstrap/css/bootstrap.min.css" />
+<!--  -->
+<input type="hidden" id="_region" value="{{ regions.region_name }}">
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!-- END resource -->
+<div id="order">
+    <div class="warp">
+        <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost();">
+            <div class="nav-header">
+                <div class="header-left"><a href="index.php"><span class="">前ページに戻る</span></a> </div>
+                <h2 style="text-align:left;padding-left: 45%;">商品情報</h2>
+            </div>
+            <!--套餐-->
+            <div class="tips">
+                <p>{{ tips }}</p>
+            </div>
+            
+            <!--套餐-->
+            <div class="bdbox" id="combo">
+                <label class="bdxx"><em>*</em> 商品 </label>
+                <div class="dxbox red">
+                    {% if combo %}
+                         {% for c in combo %}
+                              <label class="combo" data-loopIndex="{{ loop.index }}" style="padding: 5px;""><input type="radio" name="combo_id" value="{{ c.combo_id }}" > {{ c.title|raw }}-{{ c.price }}  {{ currency_code }}</label>
+                             <br>
+                         {% endfor %}
+                         {% else %}
+                        <label style="padding: 5px;" class="combo" data-loopIndex="1">
+                             <input type="radio" name="combo_id" value="0"> {{ title|raw }}
+                        </label>
+                     {% endif %}
+                </div>
+            </div>
+            <!--套餐-->
+            <!--属性开始-->
+            <div id="product_attr">
+                {% if combo %}
+                    <!--循环套餐-->
+                    {% for om in  combo %}
+                        <section data-loopIndex="{{ loop.index }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+                        <!-- 循环产品 -->
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                            <div class="bdbox" comboproduc >
+                                <div class="tc tc{{ ok.combo_id|raw }}" >
+                                    <div class="title_ac" style="overflow: hidden;">
+                                        <h5><label for="" class="bdxx" ><em>*</em>{{ ok.title|raw }}</label></h5>
+                                    </div>
+                                    <!-- 循环属性 -->
+                                    {% for o in  ok.options %}
+                                        <li class="item" data-prototype-group="{{ loop.index }}">
+                                            <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                                <label class="bdxx">
+                                                    {{ o.attr_group_title|raw }}
+                                                </label>
+                                                <div class="dxbox red" style="padding-top: 5px;">
+                                                    {% for key,attr in o.attr %}
+                                                        <label style="display:inline-block; width: 45%;">
+                                                            {% if attr.thumb %}
+                                                            <img src="{{ attr.thumb }}"  style="width: 100%; height: auto;">
+                                                            <br/>
+                                                            {% endif %}
+                                                            <input type="radio"  name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}" style="vertical-align: top;">
+                                                            <span style="font-weight: normal;">{{ attr.name|raw }}</span>
+                                                        </label>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="cls"></div>
+                                        </li>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        </section>
+                    {% endfor %}
+                {% else %}
+                    <section data-loopIndex="1">
+                    <!--循环当前产品属性-->
+                    {% for o in  options %}
+                        <div class="bdbox" data-prototype-group="{{ loop.index }}">
+                            <label class="bdxx"><em>*</em>{{ o.attr_group_title|raw }}</label>
+                            <div class="dxbox red">
+                                {% for key,attr in o.attr %}
+                                    <label style="width:45%;display:inline-block;padding:5px;">
+                                        {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                        <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                        {{ attr.name|raw }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            <div class="cls"></div>
+                        </div>
+                    {% endfor %}
+                    </section>
+                {% endif %}
+                <input type="hidden" name="act" value="getAttrPrice">
+            </div>
+            <!--属性结束-->
+
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>個数</label><br>
+                <div class="input-group " style="width:100%;margin: 5px 0px;">
+                    <div style="width: 110px">
+                        <span class="input-group-btn"  style="float: left;width: 25%">
+                        <button  class="btn btn-default inc-btn" type="button" onClick="minnumber()">-</button>
+                        </span>
+                        <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onBlur="inputnumber();" style="float: left;width: 30%; text-align: center;height: 30px">
+                        <span class="input-group-btn"  style="float: left;">
+                        <button class="btn btn-default inc-btn" type="button" onClick="addnumber()">+</button>
+                        </span>
+                    </div>
+
+                </div>
+            
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>氏名</label>
+                <div class="textbox">
+                    姓:<input required="required" type="text" name="name" class="inputText" style="width: 30%"/>
+                    名:<input required="required" type="text" name="last-name" class="inputText" style="width: 30%">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>フリガナ</label>
+                <div class="textbox">
+                    セイ:<input required="required" type="text" id="sub_first_name" name="sub_first_name" style="width:30%;"> メイ:<input required="required" type="text" id="sub_last_name" name="sub_last_name" style="width:30%;">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>携帯番号</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="mob" class="inputText" placeholder="携帯番号"/>
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx" for="email"><em>*</em>イーメール</label>
+                <div class="textbox"><input required="required" name="email" placeholder="メール" maxlength="30" class="inputText" type="email">  </div>
+            </div>
+        
+            <div class="bdbox" style="opacity: 0;position: absolute;left: 1000px;">
+                <label class="bdxx"><em>*</em>{{ lang.address_full }}</label>
+                <div class="textbox" id="province">
+                      <select name="province">
+                          <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                      </select>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>都道府県</label>
+                <div class="textbox">
+                    <select id="address1">
+                        <option value="三重県">三重県</option><option value="京都府">京都府</option><option value="佐賀県">佐賀県</option><option value="兵庫県">兵庫県</option><option value="北海道">北海道</option><option value="千葉県">千葉県</option><option value="和歌山県">和歌山県</option><option value="埼玉県">埼玉県</option><option value="大分県">大分県</option><option value="大阪府">大阪府</option><option value="奈良県">奈良県</option><option value="宮城県">宮城県</option><option value="宮崎県">宮崎県</option><option value="富山県">富山県</option><option value="山口県">山口県</option><option value="山形県">山形県</option><option value="山梨県">山梨県</option><option value="岐阜県">岐阜県</option><option value="岡山県">岡山県</option><option value="岩手県">岩手県</option><option value="島根県">島根県</option><option value="広島県">広島県</option><option value="徳島県">徳島県</option><option value="愛媛県">愛媛県</option><option value="愛知県">愛知県</option><option value="新潟県">新潟県</option><option value="東京都">東京都</option><option value="栃木県">栃木県</option><option value="沖縄県">沖縄県</option><option value="滋賀県">滋賀県</option><option value="熊本県">熊本県</option><option value="石川県">石川県</option><option value="神奈川県">神奈川県</option><option value="福井県">福井県</option><option value="福岡県">福岡県</option><option value="福島県">福島県</option><option value="秋田県">秋田県</option><option value="群馬県">群馬県</option><option value="茨城県">茨城県</option><option value="長崎県">長崎県</option><option value="長野県">長野県</option><option value="青森県">青森県</option><option value="静岡県">静岡県</option><option value="香川県">香川県</option><option value="高知県">高知県</option><option value="鳥取県">鳥取県</option><option value="鹿児島県">鹿児島県</option>
+                    </select>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>市区郡</label>
+                <div class="textbox">
+                    <input type="text" id="address2" class="inputText" placeholder="(例) 品川区">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>町名・番地・建物名</label>
+                <div class="textbox">
+                    <input required="required" type="text" id="address3" placeholder="(例) 東品川4-12-3 ○○マンション 106号" class="inputText">
+                </div>
+            </div>
+            <input type="hidden" name="address" value="">
+
+            <div class="bdbox">
+                <label class="bdxx">郵便番号</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="postal"  class="inputText" placeholder="郵便番号">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>総額</label>
+                <div class="text3box">
+                    <input name="price" readonly style="width:80px;" value="{{ discount_price  }}"/> {{ currency_code }}  <span id="zfbyh"></span>
+                </div>
+            </div>
+            {% if payment_underline ==1 %}
+            <div class="bdbox">
+                <label class="bdxx"><em>*</em>支払い</label>
+                <div class="dxbox">
+                  <input name="payment_type" value="0" checked type="radio"> 代金引換
+                </div>
+            </div>
+            {% endif %}
+            {% if payment_ocean %}
+            <div class="bdbox">
+                    <label rel="4">
+                        <input name="payment_type" value="4" id="4" type="radio">
+                        <img src="/lib/ocean/image/card_1.gif">
+                        <img src="/lib/ocean/image/card_2.gif">
+                        <img src="/lib/ocean/image/card_3.gif">
+                    </label>
+            </div>
+            <div class="bdbox">
+            {{ ocean|raw }}
+            </div>
+            {% endif %}
+            
+            <div class="bdbox">
+                <label class="bdxx">ご意見</label>
+                <div class="text2box">
+                    <textarea name="guest" placeholder="{{ lang.remark }}"></textarea>
+                </div>
+            </div>
+            
+            <div class="subbox">
+                <input type="submit" name="Submit" class="btn-style" value="注文を確認する">
+            </div>
+            <div class="bdbox">
+                <div style="padding: 10px">
+                    <font color='red'>ヒント：戻ってくる理由はない！ ご不明な点がございましたら、オンラインカスタマーサービスまでご連絡いただくか、または <a href="mailto:"></a> までご連絡ください。 同時に、メッセージにあなたの名前と連絡先の情報と注文番号を添付してください。迅速にタイムリーな処理を提供できるように、私はあなたに幸せなショッピングをして欲しいです！</font>
+                </div>
+            </div>
+            <input type="hidden" name="token" value="{{ token }}">
+            <input type="hidden" name="product_id" value="{{ product_id }}">
+        </form>
+        <div style="clear:both;"></div>
+        <div style="clear:both;"></div>
+    </div>
+</div>
+<!-- js resource -->
+<script src="{{ THEME }}/js/checkout.js"></script>
+<script src="{{ THEME }}/js/not31.js"></script>
+<script>
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+</script>
+<!--  -->
+{% include 'public/theme/footer.twig' %}

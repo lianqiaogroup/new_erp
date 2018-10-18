@@ -1,0 +1,17 @@
+<div class="panel-user"></div>
+<div class="panel panel-left panel-reveal" id="panelview">
+    <div class="slidebar">
+        <div class="navbar">
+            <span class="glyphicon glyphicon-close" id="menuclose"><i class="micon material-icons close"></i></span>
+            <span class="glyphicon glyphicon-shopping-cart"><a href=""><i class="close miconmaterial-icons shopping_cart"></i></a></span>
+        </div>
+        <ul>
+            <li><a href="/">首页<i class="material-icons badge_next">navigate_next</i></a></li>
+            {% if article %}
+                {% for a in article %}
+                    <li><a href="/article/{{ a.article_id }}">{{ a.title }}<i class="material-icons badge_next">navigate_next</i></a></li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+</div>

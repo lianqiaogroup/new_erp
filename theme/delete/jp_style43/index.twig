@@ -1,0 +1,287 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet" type="text/css">
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<!-- end header resource -->
+
+<div id="a-page">
+    <nav class="header">
+        <div class="heatab a-row">
+            <div class="heacell">{{ title }}</div>
+            {% if has_home %}
+                <div class="goback"><a href="/"><i class="home"></i></a></div>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="main">
+        <div id="dpx-anywhere-atf_feature_div" class="a-color-secondary">
+            <div class="badge-wrapper">
+                <i class="a-icon a-icon-addon detail_badge detail_badge_sba">代金引換</i>
+                <i class="a-icon a-icon-addon detail_badge">７日間の無条件返品保証</i>
+            </div>
+            <div class="swiper-container" style="padding-bottom: 1rem!important;">
+                <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                {% if photos %}
+                    {% for p in photos %}
+                        <div class="swiper-slide">
+                            <img width="100%" src="{{ p.thumb }}">
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="swiper-slide">
+                        <img src="{{ thumb }}">
+                    </div>
+                {% endif %}
+                </div>
+                <div class="swiper-pagination swiper-pagination-custom" style="bottom: 0;">
+                    {% if photos %}
+                        {% for p in photos %}
+                        <span class="whiteicon"></span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="whiteicon"></span>
+                    {% endif %}
+                </div>
+            </div>
+            {% if combo %}
+                <div id="imageBlock_feature_div">
+                    {% for c in combo %}
+                        {% if loop.index == 1 %}
+                            <div class="a-button a-spacing-medium" id="a-combo">
+                                <i class="a-icon a-icon-supplemental"></i>
+                                <div class="a-button-text">
+                                    <strong>{{ c.title|raw }}</strong>
+                                </div>
+                            </div>
+                            {% for ok in c.goods %}
+                            {% for o in ok.options %}
+                                <div class="a-button a-spacing-medium" optionskey combo="{{ c.combo_id }}" goods="{{ ok.combo_goods_id }}" groupid="{{ o.attr_group_id }}">
+                                        <div class="a-button-text">
+                                            <div class="a-row">
+                                                <i class="a-icon a-icon-supplemental"></i>
+                                                <div class=" a-column a-span9">
+                                                    {{ o.attr_group_title }}<br>
+                                                    <strong class="comboattr"></strong>
+                                                </div>
+                                                <div class="a-column a-span3 a-text-right a-span-last">
+                                                    <div class="a-box a-box-thumbnail imgattr">
+                                                        
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                            {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% for ok in c.goods %}
+                            {% for o in ok.options %}
+                                    <div class="a-button a-spacing-medium" optionskey combo="{{ c.combo_id }}" goods="{{ ok.combo_goods_id }}" groupid="{{ o.attr_group_id }}" style="display: none;">
+                                        <div class="a-button-text">
+                                            <div class="a-row">
+                                                <i class="a-icon a-icon-supplemental"></i>
+                                                <div class=" a-column a-span9">
+                                                    {{ o.attr_group_title }}<br>
+                                                    <strong class="comboattr"></strong>
+                                                </div>
+                                                <div class="a-column a-span3 a-text-right a-span-last">
+                                                    <div class="a-box a-box-thumbnail imgattr">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+            {% if options %}
+            <div id="imageBlock_feature_div">
+                {% for o in options %}
+                    <div class="a-button a-spacing-medium attr-group" data-view="{{ o.attr_group_id }}" combo="0">
+                        <div class="a-button-text">
+                            <div class="a-row">
+                                <i class="a-icon a-icon-supplemental"></i>
+                                <div class=" a-column a-span9">
+                                    {{ o.attr_group_title }}<br>
+                                    <strong class="attr-{{ o.attr_group_id }}"></strong>
+                                </div>
+                                <div class="a-column a-span3 a-text-right a-span-last">
+                                    <div class="a-box a-box-thumbnail imgattr">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+                {% endif %}
+            {% endif %}
+            <div class="a-row a-spacing-medium">
+                <table id="price" class="a-normal a-align-top">
+                <tbody><tr>
+                <td class="a-span1 a-color-secondary a-size-medium a-text-right a-nowrap">
+                <span class="a-size-base">価格:</span>
+                </td>
+                <td><span id="priceblock_ourprice" class="a-size-medium a-color-price">
+                {% if combo %}
+                    {% for c in combo %}
+                        {% if loop.index == 1 %}
+                        {{ c.price }}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {{ price }}
+                {% endif %}
+                </span><span class="a-color-price">{{ currency_code }}（税込）</span>
+                </td>
+                </tr>
+                <tr>
+                <td class="a-span1 a-text-right a-nowrap"></td>
+                <td><span style="color: #0066c0;">送料無料</span></td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+
+            <div id="mobileQuantity_feature_div" data-feature-name="mobileQuantity" data-template-name="mobileQuantity" class="a-section a-spacing-none feature t-prnt t-full">
+                <div id="mobileQuantitySelection" class="a-section a-spacing-base button-stack-quantityButtonSpacing">
+                <div class="a-row a-spacing-base">
+                <div class="a-column a-span12 a-text-left">
+                <span class="a-dropdown-container a-hide-native" id="quantity"><span tabindex="-1" class="a-button a-button-dropdown a-button-small" id="a-autoid-0" style="min-width: 0.1%;"><span class="a-button-inner"><span class="a-button-text a-declarative" data-action="a-dropdown-button" role="button" tabindex="0" aria-hidden="true" id="a-autoid-0-announce" aria-pressed="false"><span class="a-dropdown-label">数量:</span><span class="a-dropdown-prompt" id="qtynum">1</span></span><i class="a-icon a-icon-dropdown"></i></span></span></span>
+                </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="buybox a-button a-button-primary">
+                <span class="a-button-inner">
+                <span class="a-button-text a-text-center" aria-hidden="true" id="a-autoid-1-announce">
+                ご購入の手続きへ
+                </span>
+                </span>
+            </div>
+            
+            <input type="hidden" name="product_id" value="{{ product_id }}">
+            <input type="hidden" id="act" name="act" value="getAttrPrice">
+            <input type="hidden" name="num" value="1">
+            {% if combo %}
+                {% for c in combo %}
+                    {% if loop.index == 1 %}
+                    <input type="hidden" name="combo" value="{{ c.combo_id }}">
+                    <input type="hidden" name="price" value="{{ c.price }}">
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <input type="hidden" name="combo" value="0">
+                <input type="hidden" name="price" value="{{ price }}">
+            {% endif %}
+            <br>
+        
+        <div id="aboutThisItem_feature_div">
+            <h2 class="a-box-title">この商品について</h2>
+            <div id="aboutThisItem_boxGroup">
+            <div class="a-box a-spacing-none a-feature a-first">
+            <div class="a-box-inner">
+                <div class="a-row">
+                    <div id="descriptionSeeLessContainer" class="a-row">
+                        <i class="a-icon a-icon-extender-collapse"></i>
+                        <a id="descriptionSeeLess" href="#" data-action="a-expander-toggle" class="a-expander-closer a-declarative">もっと少なく読む</a>
+                    </div>
+                    <h3>この商品について</h3>
+                    <div id="productDescription" class="a-row a-spacing-small">
+                        <p>{{ title }}</p> 
+                    </div>
+                    <div id="descriptionSeeMoreContent" style="display: none;"><i class="a-icon a-icon-extender-expand"></i>もっと読む</div>
+                    <div id="productDescription_fullView">
+                        <h3>詳細</h3>
+                        <div class="aplus">
+                            {{ content|raw }}
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        {% if comment %}
+        <div id="feature_div">
+            <h2 class="a-box-title">カスタマーレビュー</h2>
+            <div class="a-box-group">
+                <div class="a-box">
+                    <div class="a-box-inner">
+                        <div class="inner">
+                        <div class="reviewsSummary">
+                            <span class="a-size-medium totalReviewCount a-text-bold">{{ (sales*0.777)|number_format(0,',','') }} 件のカスタマーレビュー</span>
+                            <div class="a-icon-row a-spacing-micro">
+                                <i  class="a-icon a-icon-star a-star-4-5 averageStarRating"></i><br>
+                                <span class="a-text-beside-button averageStarRatingText">5つ星のうち4.7</span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="mostHelpfulReviewsFeature">
+                            <h3 class="a-spacing-mini mostHelpfulReviewsTitle">トップレビュー</h3>
+                            {% for a in comment %}
+                            <div class="a-section">
+                                <i class="a-icon a-icon-star-small a-star-small-{{ a.star }} review-rating"></i><span class="a-letter-space"></span>
+                                <span class="a-size-base reviewText">{{ a.content }}</span>
+                            <div class="a-row reviewByLine">
+                                <span class="a-size-base a-color-secondary review-byline">
+                                    <span class="a-color-secondary">投稿者</span>
+                                    <span class="a-letter-space"></span>
+                                    {% if a.is_anonymous==1 %}
+                                    <a>匿名ユーザー</a>
+                                    {% else %}
+                                    <a>{{ a.name }}</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        </div>
+    </div>
+    <div class="fixedbtn">
+        <div class="buybox a-button a-button-primary">
+                <span class="a-button-inner">
+                <span class="a-button-text a-text-center" aria-hidden="true" id="a-autoid-1-announce">
+                ご購入の手続きへ
+                </span>
+                </span>
+        </div>
+    </div>
+</div>
+{% include 'attr.twig' %}
+<div class="a-dropdown a-dropdown-common a-declarative qty-box" style="z-index: 299; visibility: visible; width: auto; display: none; top: 66.7px; left: 93.5px; opacity: 1;">
+    <div class="a-popover-wrapper">
+        <div class="a-popover-header a-declarative">
+            <h4 id="a-popover-header-2" class="a-popover-header-content">数量:</h4>
+            <button data-action="a-popover-close" class="a-button-close a-declarative" aria-label="Close"><i class="a-icon a-icon-close"></i></button>
+        </div>
+        <div class="a-popover-inner a-declarative  a-lgtbox-vertical-scroll" style="height: 494.4px; overflow-y: auto;">
+            <ul class="a-nostyle a-list-link" id="qty">
+                <li class="a-dropdown-item">
+                    <a class="a-dropdown-link a-active qty-a">1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="a-popover-lgtbox" class="a-declarative" data-action="a-popover-floating-close" style="z-index: 297; opacity: 0.75; display: none;"></div>
+<div style="height: 4.8rem;"></div>
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

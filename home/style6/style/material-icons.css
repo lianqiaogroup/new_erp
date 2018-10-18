@@ -1,0 +1,95 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(MaterialIcons-Regular.woff2) format('woff2'),
+       url(MaterialIcons-Regular.woff) format('woff'),
+       url(MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+/* svg图标 */
+.menu {
+  background-image: url('../images/menu.svg');
+}
+.shopping_cart {
+  background-image: url('../images/shoppingcart.svg');
+}
+.flower {
+  background-image: url('../images/flower.svg');
+}
+.back {
+  background-image: url('../images/back.svg');
+}
+.close,
+.textclose {
+  background-image: url('../images/close.svg');
+}
+.home {
+  background-image: url('../images/home.svg');
+}
+.allpro {
+  background-image: url('../images/allpro.svg');
+}
+.alloder {
+  background-image: url('../images/alloder.svg');
+}
+.problem {
+  background-image: url('../images/problem.svg');
+}
+.services {
+  background-image: url('../images/services.svg');
+}
+.state-ing {
+  background-image: url('../images/state-ing.svg');
+}
+.verified_user {
+  background-image: url('../images/verified_user.svg');
+}
+.pay_cash {
+  background-image: url('../images/pay_cash.svg');
+}
+.add {
+  background-image: url('../images/add.svg');
+}
+.sure {
+  background-image: url('../images/sure.svg');
+}
+.back {
+  background-image: url('../images/back.svg');
+}
+.down {
+  background-image: url('../images/down.svg');
+}
+.gavel {
+  background-image: url('../images/gavel.svg');
+}
+.addressicon {
+  background-image: url('../images/addressicon.svg');
+}

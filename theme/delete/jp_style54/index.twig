@@ -1,0 +1,157 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<!-- end header resource -->
+<div class="viewItemV2-main-page" style="display: block;">
+	{% if has_home %}
+	<div id="mw-hdr"><a href="/" class="im"></a></div>
+	{% endif %}
+	<div id="viewItemV2Cont">
+		<div id="viParent">
+			<div id="itemDetails" class="">
+				<div id="viImgGalWrapper">
+					<div id="imgScroller">
+						<ul>
+							{% if photos %}
+								{% for item in photos %}
+									<li>
+										<div class="imgContTbl">
+											<div class="imgContTcl">
+												<img class="imgGal" src="{{ item.thumb }}">
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							{% else %}
+								<li>
+									<div class="imgContTbl">
+										<div class="imgContTcl">
+											<img class="imgGal" src="{{ thumb }}">
+										</div>
+									</div>
+								</li>
+							{% endif %}
+						</ul>
+						<div id="indicatorParent"><div class="imgGlryIdr"><span class="pageState">1</span></div></div>
+					</div>
+				</div>
+				<div id="viDescContainer">
+					<div id="viHiLiteParent">
+						<h1 id="itemHeader" class="it-ttl">{{ title }}</h1>
+						<div id="itemSubHeader">
+							免除郵便料金,７日間の無条件返品保証
+						</div>
+						<div id="viPriceParent">
+							<div id="mskuPrice" class="price">
+								<div itemprop="price">
+									<span class="msku-price msku-pad-rgt5"><span id="price">{{ price }}</span>{{ currency_code }}<span style="font-size: 14px;">（税込）</span></span><del class="msku-price msku-convprice">{{ market_price }}{{ currency_code }}</del>
+								</div>
+							</div>
+							<span content="" itemprop="priceCurrency"></span>
+						</div>
+						<div class="viWhy2BuyParent">
+						</div>
+					</div>
+					<div id="msku-menu-ctr">
+						<div class="msku-ctr" id="msku_list">
+							<div class="msku-flt-clr">
+							</div>
+							{% if combo %}
+								<div class="trait-ctr">
+									<div class="trait-label-wrp">
+										<label title="Color">セット商品</label>
+									</div>
+									<div class="trait-mnu-wrp">
+										<select class="trait-mnu" id="combo">
+											{% for c in combo %}
+												<option value="{{ c.combo_id }}" data-single="{{ c.is_single_combo }}">{{ c.title }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								{% for c in combo %}
+									{% if loop.index == 1 %}
+										<input type="hidden" name="combo_id" value="{{ c.combo_id }}">	
+									{% endif %}
+									{% for ok in c.goods %}
+										{% for o in ok.options %}
+											<div class="trait-ctr goods" combo_id="{{ c.combo_id }}" goods_id="{{ ok.combo_goods_id }}" group_id="{{ o.attr_group_id }}" style="display: none;">
+												<div class="trait-label-wrp">
+													<label title="Color">{{ ok.title|raw }}</label>
+												</div>
+												<div class="trait-mnu-wrp">
+													<select class="trait-mnu">
+														{% for key,attr in o.attr %}
+															<option value="{{ attr.product_attr_id }}">{{ attr.name|raw }}</option>
+														{% endfor %}
+													</select>
+												</div>
+											</div>
+										{% endfor %}
+									{% endfor %}
+								{% endfor %}
+								
+							{% else %}
+								
+								{% for a in options %}
+								<div class="trait-ctr">
+									<div class="trait-label-wrp">
+										<label title="Color">{{ a.attr_group_title }}</label>
+									</div>
+									<div class="trait-mnu-wrp">
+										<select class="trait-mnu" for="{{ a.attr_group_id }}">
+											{% for key,attr in a.attr %}
+												<option value="{{  attr.product_attr_id }}">{{ attr.name|raw }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								{% endfor %}
+								<input type="hidden" name="combo_id" value="0">
+								
+							{% endif %}
+							<div class="trait-ctr count_num">
+								<div class="trait-label-wrp">
+									<label title="Color">数量</label>
+								</div>
+								<div class="trait-num">
+									<span onclick="minnumber()">-</span><input onchange="inputnumber()" type="tel" id="num" name="num" value="1"><span onclick="addnumber()">+</span>
+								</div>
+							</div>
+							<div class="msku-flt-clr">
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="act" id="act" value="getAttrPrice">
+					<input type="hidden" name="product_id" value="{{ product_id }}">
+
+					<div class="txn-btn-wrp">
+						<a id="buyItNowBtn" href="javascript:void(0);" class="btn inline_nav_link tracking primary buyItNowBtn">{{ lang.buy_now }} </a>
+						<div class="viewInCartSec">
+							<a id="viewInCartBtn" href="/order_quality.php" class="btn inline_nav_link tracking primary">{{ lang.order_inquiry }}</a>
+						</div>
+					</div>
+					<div id="viDetailsParent" class="container vi_details">
+						<div id="viSpecificsParent" class="divideSec">
+							<div id="viSpecificsCont" class="tracking">
+								{{ content|raw }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pageSec">
+				<div id="toplink" class="toptxt tracking" _sp="p2056116.m2696.l4319">
+					<span class="topImg"></span><b class="heading">Top</b>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

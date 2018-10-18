@@ -1,0 +1,22 @@
+<div class="m-detailBaseInfo">
+    <div class="info">
+        <div class="line2" style="text-align: right;">
+            <div class="retailPrice">
+                <span class="small_price" style="position: relative;top: -3px;">{{ new_price_format.symbol_left }}</span>
+                <span>{{ new_price_format.price_format }}</span>
+                <span class="small_price" style="position: relative;top: -3px;">{{ new_price_format.symbol_right }}</span>
+                <span style="font-size: 12px;color:#91949F;float: right;margin-top: 2px;font-weight: 100 ">
+                    <i class="this_i"></i>
+                    {{ lang.last }}{{ stock }}{{ lang.lastL }}</span></div>
+            <div class="market_price_onr">
+                <span>{{ lang.market_price }}</span>
+                <del>
+                    {{ new_price_format.symbol_left }}
+                    {{ new_price_format.market_price_format }}
+                    {{ new_price_format.symbol_right }}
+                </del>
+            </div>
+        </div>
+        <div class="stat">{{ lang.Th_free }}{{ lang.Th_time1 }}<span id="timer"></span>{{ lang.Th_time2 }}</div>
+    </div>
+</div>

@@ -1,0 +1,210 @@
+html,body{
+    font-family: "微软雅黑";
+    width: 100%;
+    max-width: 540px;
+    height: 100%;
+    margin: auto;
+}
+#POP800_PANEL_DIV{
+    display: none !important;
+}
+input::-webkit-input-placeholder {
+	color: #A9A9A9;
+}
+input::-moz-placeholder {
+	color: #A9A9A9;
+}
+input::-ms-input-placeholder {
+	color: #A9A9A9;
+}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {
+	-webkit-appearance: none !important;
+	margin: 0;
+}
+input[type="number"] {
+	-moz-appearance:textfield;
+}
+input:focus,textarea:focus {
+	outline:none;
+	border:1px solid #aaa;
+}
+.flex{
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: -moz-flex;
+    justify-content: space-between;
+    .item{
+        flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        -moz-flex: 1;
+    }
+}
+.g-bd{
+    width: 100%;
+    min-height: 100%;
+    background-color: #fef5f6;
+    padding-bottom: 20px;
+    .m-hd{
+        color: #282828;
+        font-size: 16px;
+        height: 40px;
+        line-height: 40px;
+        margin-bottom: 10px;
+        .goback{
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            display: block;
+            float: left;
+            margin-left: 4px;
+            img{
+                margin-top: 4px;
+            }
+        }
+        div{
+            text-align: center;
+        }
+    }
+}
+
+#order{
+    padding-left: 4%;
+    padding-right: 4%;
+    .proitem{
+        background: #F0F0F0;
+        margin-bottom: 10px;
+        padding: 10px;
+        position: relative;
+        .flex;
+        img{
+            width: 70px;
+            height: 70px;
+        }
+        .product-info{
+            .item;
+            margin-left: 10px;
+            font-size: 13px;
+            position: relative;
+            .nums{
+                position: absolute;
+                right: 10px;
+                bottom: 1px;
+                .gdnum{
+                    margin-left: 3px;
+                }
+            }
+        }
+        .product-prototype{
+            margin-top: 10px;
+            label{
+                color: #a9a9a9;
+            }
+        }
+    }
+    .line-a{
+        text-align: right;
+        background: url('../images/line-b.png');
+        background-repeat: repeat-x;
+        background-position: center;
+    }
+    .line-b{
+        height: 8px;
+        background: url('../images/line-b.png');
+        transform: rotate(180deg);
+        background-repeat: repeat-x;
+        background-position: center;
+    }
+    .buy-single-row{
+        .flex;
+        border-bottom: 1px solid #F0D5D6;
+        .input-label{
+            width: 38px;
+            height: 38px;
+            line-height: 38px;
+            text-align: center;
+        }
+        .cell{
+            .item;
+            input[type="text"],input[type="tel"],input[type="email"]{
+                border:none;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                height: 38px;
+                line-height: 38px;
+                background: transparent;
+                font-size: 14px;
+            }
+            .sel_area,.select{
+                background: transparent;
+                border: none;
+                height: 38px;
+            }
+            .text_area{
+                background: transparent;
+                border: none;
+                width: 100%;
+                height: 38px;
+                line-height: 38px;
+                font-size: 14px;
+            }
+        }
+        .paytype{
+            label{
+                line-height: 38px;
+                margin-right: 5px;
+                font-size: 13px;
+                i{
+                    display: inline-block;
+                    width: 15px;
+                    height: 15px;
+                    background: url('../images/pay.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    vertical-align: middle;
+                    margin-right: 5px;
+                }
+            }
+            label.check{
+                i{
+                    background: url('../images/payk.png');
+                }
+            }
+        }
+    }
+}
+.warming{
+    font-size: 12px;
+    background: transparent;
+    padding: 15px 30px 25px 30px;
+    line-height: 18px;
+    a{
+        color: #B4282D;
+    }
+}
+.m-orderFt{
+    text-align: center;
+    .value{
+        font-size: 18px;
+        color: #C60B19;
+        font-weight: 600;
+    }
+    .btnconfirm{
+        border: none;
+        color: #fff;
+        background: url('../images/china_33.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        width: 152px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 16px;
+        text-align: center;
+        margin: auto;
+        margin-top: 15px;
+    }
+}

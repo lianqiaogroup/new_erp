@@ -1,0 +1,16 @@
+<footer class="footer b_footer">
+    <ul>
+        <li class="price_lost">
+            <span>{{ lang.last }}<span>{{ stock }}</span>{{lang.company}}</span>
+            
+        </li>
+        <li class="buy_now">
+            {% if modulesParam.countdown.options.open == '1' %}
+            <span id="times"></span>
+            {% endif %}
+            <button data-cuckootag="buy_now" class="add w-button w-button-block">{{ lang.qiang }}</button>
+            <span class="net"></span>
+        </li>
+    </ul>
+    <div style="clear:both;"></div>
+</footer>

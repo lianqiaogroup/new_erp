@@ -1,0 +1,46 @@
+{% include 'public/theme/header.twig' %}
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/style/checkout.css" />
+<!-- END header resource -->
+<div class="panel_small">
+    {% include 'mob_checkout.twig' %}
+</div>
+<div class="panel_large">
+    {% include 'pc_checkout.twig' %}
+</div>
+
+
+<!-- footer resource -->
+{% include 'footer.twig' %}
+<script src="{{ THEME }}/js/checkout.js"></script>
+{% include 'public/theme/footer.twig' %}
+<script>
+	loadstate();
+    $('[name="city"]').change(function(event) {
+	    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+	    loadCity(id);
+	});
+	function loadstate(){
+	    var region_id = '{{regions.region_id}}',regionCode = '{{regions.code}}';
+	    if(regionCode == 'TW'){
+	    $.post('/region.php', { 'region_id': region_id }, function(data) {
+	        var data = JSON.parse(data);
+	            data.map(function(item, index){
+	                $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+	            });
+	        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+	    });
+		}
+	}
+	function loadCity(id, callback){
+	    $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+	    	var districtFirst = $('[name="district"]').children().first();
+	        $('[name="district"]').children().remove();
+	        $('[name="district"]').append(districtFirst);
+	        $('[name="district"]').val('');
+	        var data = JSON.parse(data);
+	        data.map(function(item, index){
+	            $('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+	        });
+	    });
+	}
+</script>

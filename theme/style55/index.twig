@@ -1,0 +1,334 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet">
+<!-- end header resource -->
+<section id="page-index">
+	<div class="img_wrap">
+        <i id="flag">{{lang.time_promotion}}</i>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+            <div class="swiper-pagination" style="color:#fff;"></div>
+		</div>
+	</div>
+    <div class="header">
+        <h1><span class="green">{{ lang.free_yun }}</span>{{ title }}</h1>
+        <div class="tips_sales">
+            <span class="sales_num">{{ lang.sold }}{{ sales }}{{ lang.piece }}</span>
+            <span>{{ lang.ku }}{{ stock }}{{ lang.kunum }}</span>
+        </div>
+    </div>
+	<div class="details">
+		<div class="sales_wrap">
+			<div class="sales">
+                <div class="sales_info">
+                    {% if currency_prefix == 1 %}
+                        <del>{{ currency_code }}{{ market_price }}</del>
+                    {% else %}
+                        <del>{{ market_price }}{{ currency_code }}</del>
+                    {% endif %}
+                </div>
+				<div class="price">
+                    {% if currency_prefix == 1 %}
+					    {{ currency_code }}<ins>{{ price }}</ins>
+                    {% else %}
+                        <ins>{{ price }}</ins>{{ currency_code }}
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+        <div class="time_wrapper">
+            <div class="timeWrap">
+                <span id='clock'>{{ lang.countdown }}</span>
+                <span id="timer">
+                    <span  id="h">10</span>
+                    <span class="">:</span>
+                    <span id="m">00</span>
+                    <span class="">:</span>
+                    <span id="s">00</span>
+                </span>
+                <span>{{ lang.countdown2 }}</span>
+            </div>
+        </div>
+		<div class="buy_now">
+			<a href="#page-order">{{ lang.buy_now }}</a>
+		</div>
+	</div>
+	<div class="product_info">
+		<h2 class="pro_attr">{{ lang.pro_attr }}</h2>
+		<div class="m-img">
+            {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+    </div>
+</section>
+<section id="page-order">
+	<h1>{{ lang.order_info }}</h1>
+    <input id="region_code" value="{{regions.code}}" type="hidden">
+    <input id="identity_tag" value="{{identity_tag}}" type="hidden">
+	<form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+		<input type="hidden" name="combo_id" value="">
+        <input type="hidden" name="token" value="{{ token }}">
+        <input type="hidden" id="act" name="act" value="getAttrPrice">
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+        <!--套餐-->
+        <div class="tips padbor">
+            <p>{{ tips }}</p>
+        </div>
+        <div class="padbor" id="combo">
+            <label class="pro_title">{{ lang.pro_choose }} </label>
+            <div class="">
+                <select name="combo_id" id="combo_id">
+                 {% if combo %}
+                     {% for c in combo %}
+                         <option data-price="{{ c.price }}" value="{{ c.combo_id }}" data-single="{{ c.is_single_combo }}">{{ c.title|raw }}-{{ currency_code }} {{ c.price }}</option>
+                     {% endfor %}
+                {% else %}
+                    <option data-price="{{ price }}" value="0" data-single="0">{{ title|raw }}</option>
+                 {% endif %}
+                </select>
+            </div>
+        </div>
+		<!--套餐end-->
+		<!--属性开始-->
+        <div id="product_attr" class="padbor">
+            {% if combo %}
+                <!--循环套餐-->
+                {% for om in combo %}
+                    <section data-loopIndex="{{ om.combo_id }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+                    <!-- 循环产品 -->
+                    {% for ok in  om.goods %}
+                        {% if ok.options %}
+                        <div class="item">
+                            <div class="tc tc{{ ok.combo_id|raw }}">
+                                <!-- 循环属性 -->
+                                {% for o in  ok.options %}
+                                    <div class="prodiv" data-prototype-group="{{ loop.index }}" data-group="{{ o.attr_group_id }}" data-select="0">
+                                            <label class="pro_title">
+                                                {{ o.attr_group_title|raw }}
+                                            </label>
+                                            <div class="dxbox">
+                                                {% for key,attr in o.attr %}
+                                                    <label {% if attr.thumb %}class="attrimgs"{% endif %} attr-pro="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" attr_id="{{ attr.product_attr_id }}">
+                                                        {% if attr.thumb %}
+                                                        <img class="lazyload" src="" data-img="{{ attr.thumb }}" style="width: 100%; height: auto;">
+                                                        <br/>
+                                                        {% endif %}
+                                                        <span style="font-weight: normal;">{{ attr.name|raw }}</span>
+                                                    </label>
+                                                {% endfor %}
+                                            </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </section>
+                {% endfor %}
+            {% else %}
+                <section data-loopIndex="0">
+                <!--循环当前产品属性-->
+                {% for o in  options %}
+                    <div class="prodiv" data-prototype-group="{{ loop.index }}">
+                        <label class="pro_title">{{ o.attr_group_title|raw }}</label>
+                        <div class="dxbox">
+                            {% for key,attr in o.attr %}
+                                {% if attr.thumb %}
+                                	<label class="attrimgs" attr-pro="{{ o.attr_group_id }}" attr_id="{{ attr.product_attr_id }}">
+                                		<img class="lazyload" src="" data-img="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>
+                                {% else %}
+                                	<label attr-pro="{{ o.attr_group_id }}" attr_id="{{ attr.product_attr_id }}">
+                                {% endif %}
+                                    
+                                    {{ attr.name|raw }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <div class="cls"></div>
+                    </div>
+                {% endfor %}
+                </section>
+            {% endif %}
+            <div id="attr_div"></div>
+        </div>
+        <!--属性结束-->
+
+        <div class="bdbox numdiv padbor">
+	        <label class="bdxx">{{ lang.num }} :</label>
+	        <div class="m-selnum dr">
+                <div onclick="minnumber()" class="less z-dis">-</div>
+                <div class="textWrap">
+                    <div class="tt">&nbsp;<span>1</span></div>
+                    <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                </div>
+                <div onclick="addnumber()" class="more">+</div>
+            </div>
+	    </div>
+        <div class="adstitle">{{lang.full_user_info}}</div>
+        <div class="hr"></div>
+	    <div class="bdbox">
+            <label class="bdxx">{{ lang.name }} :</label>
+            <div class="textbox">
+                <input required="required" type="text" name="name" class="inputText" placeholder="{{ lang.input_name }}" />
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.mobile }} :</label>
+            <div class="textbox">
+                <input required="required" type="text" name="mob" class="inputText" placeholder="{{ lang.input_phone }}" />
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.province }} :</label>
+            <div class="textbox" id="province">
+                <select name="province" style="width: 50%;">
+                    <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.city }} :</label>
+            <div class="textbox">
+                <select name="city" required="required">
+                    <option value="">{{ lang.city }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.district }} :</label>
+            <div class="textbox">
+                <select name="district" required="required">
+                    <option value="">{{ lang.district }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.address_full }} :</label>
+            <div class="textbox">
+            <input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx" for="email">E-mail :</label>
+            <div class="textbox"><input required="required" name="email" placeholder="{{ lang.email_use }}" class="inputText" type="email">  </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.note }} :</label>
+            <div class="text2box">
+                <textarea name="guest" rows="1" class="inputText" placeholder="{{ lang.order_remark }}"></textarea>
+            </div>
+        </div>
+		<div class="bdbox" style="flex-wrap:wrap;">
+            <label class="bdxx">{{ lang.paymethod }} :</label>
+            <div class="dxbox">
+                <label for="payment_type">
+                    <input name="payment_type" value="0" type="radio">
+                    <span class="huo">{{ lang.cash_on_delivery }}</span>
+                </label>
+            </div>
+        </div>
+        <div class="bdbox">
+            <label class="bdxx">{{ lang.money }}</label>
+            <div class="text3box">
+            {% if combo %}
+                {% for a in combo %}
+                    {% if loop.index == 1 %}
+                        {{ currency_code }}<input name="price" readonly style="width:80px;" value="{{ a.price  }}"/>
+
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {{ currency_code }}<input name="price" readonly style="width:80px;" value="{{ discount_price  }}"/>
+            {% endif %}
+            </div>
+        </div>
+        <div class="submit">
+            <button type="submit" name="Submit" >{{ lang.confirm }}</button>
+            <input type="hidden" data-cuckootag="confirm_order">
+        </div>
+        <footer>
+            <div class="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</div>
+            <div data-cuckootag="service" data-value="{{ service_contact_id }}">{{lang.service_online}}</div>
+        </footer>
+	</form>
+
+    <div class="service">
+        <span style="margin-right:5px">{{ lang.free_ship }}</span>
+        <span style="margin-right:5px">/</span>
+        <span style="margin-right:5px">{{ lang.cash_on_delivery }}</span>
+        <span style="margin-right:5px">/</span>
+        <span style="margin-right:5px">{{ lang.returned_goods }}</span>
+    </div>
+</section>
+
+<div class="User_notes" style="color:#ccc;line-height: 2em;padding: 3%;word-break: break-all;">
+    <h2 class="notes">{{ lang.user_notes }}</h2>
+    <div class="note_text">{{ lang.user_fb }}</div>
+    <div class="note_title">{{ lang.user_note1 }}</div>
+    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+    <div class="note_title">{{ lang.user_note2 }}</div>
+    <div class="note_text">{{ lang.user_note2_1 }}</div>
+    <div class="note_title">{{ lang.user_note3 }}</div>
+    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+    <div class="note_title">{{ lang.user_note4 }}</div>
+    <div class="note_text">{{ lang.user_note4_1 }}</div>
+    <div class="note_title">{{ lang.user_note4_2 }}</div>
+    <div class="note_title">{{ lang.user_note4_3 }}</div>
+    <div class="note_text">{{ lang.user_note4_4 }}</div>
+</div>
+<!-- footer resource -->
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+<script>
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+</script>
+<script type="text/javascript">
+    $('[name="city"]').change(function(event) {
+        var id = $(this).children().filter(':selected').attr('data-id');
+        loadCity(id);
+    });
+    function loadstate(){
+        $.post('/region.php', { 'region_id': {{ regions.region_id }} }, function(data) {
+            var data = JSON.parse(data);
+                data.map(function(item, index){
+                    $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+                });
+            var id = $('[name="city"]').children().filter(':selected').attr('data-id');
+            id && loadCity(id);
+        });
+    }
+    function loadCity(id, callback){
+        $.post('/region.php', { 'yn_region_id': id }, function(data) {
+            $('[name="district"]').children().not(":eq(0)").remove();
+            var data = JSON.parse(data);
+                data.map(function(item, index){
+                    $('[name="district"]').append('<option value="'+item.name+'">'+item.name+'</option>');
+                });
+        });
+    }
+    loadstate();
+</script>
+{% include 'public/theme/footer.twig' %}
+

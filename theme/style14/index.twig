@@ -1,0 +1,33 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{ THEME }}/css/styles.css">
+<link rel="stylesheet" type="text/css" href="{{ THEME }}/style/pc.css">
+<style type="text/css">
+	#POP800_PANEL_DIV{display: none;}
+</style>
+<div class="screen-small" data-error="{{ lang.Th_titleattr }}">
+	{% include 'mobile.twig' %}
+	<input type="hidden" name="product_id" value="{{ product_id }}">
+</div>
+<div class="screen-large" data-error="{{ lang.Th_titleattr }}">
+	{% include 'pc.twig' %}
+	<input type="hidden" name="product_id" value="{{ product_id }}">
+</div>
+<br>
+<br>
+<br>
+<script src="{{ THEME }}/js/index.js"></script>
+<script>
+	require(['jquery'], function($){
+		var gid = document.getElementById.bind(document);
+		document.getElementById = function(o){
+			if(window.innerWidth <= 600){
+				return $(".screen-small #" + o)[0] || gid(o);
+			}else{
+				return $(".screen-large #" + o)[0] || gid(o);
+			}
+		};
+	})
+</script>
+{% include 'public/theme/footer.twig' %}

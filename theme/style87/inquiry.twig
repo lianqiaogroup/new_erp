@@ -1,0 +1,134 @@
+<style>
+#POP800_INIT_DIV{display: none}
+#POP800_PANEL_DIV{display: none}
+#POP800_LEAVEWORD_DIV{display: none}
+</style><!-- resource -->
+<!-- end header resource -->
+<style type="text/css">
+@media screen and (min-width:999px) {
+	body{
+		max-width:100% !important;
+	}
+	input#erp_no{border: none;}
+}
+@media screen and (max-width:1000px) {
+	footer,header{
+		display:none;
+	}
+}
+</style>
+<div class="panel_large">
+	<link rel="stylesheet" type="text/css" href="{{ THEME }}/style/inquiry.css">
+	{% include 'header.twig' %}
+	<div class="content" style="display: none;">
+		<div class="header">
+			<h2 class="title">{{ lang.order_inquiry }}</h2>
+			<p>{{ lang.inquiry_tip }}</p>
+		</div>
+		<div class="from">
+			<input class="inquiry_mob" type="text" name="mob" placeholder="{{ lang.mobile_placeholder }}">
+			<button id="go" errormag="{{ lang.mobile_placeholder }}">{{ lang.query }}</button>
+		</div>
+		<div id="inquiry_list" class="flexbox" data_time="{{ lang.order_time }}" data_num="{{ lang.order_noumber }}" data_sea="{{ lang.order_viewdetails }}" data_null="{{ lang.order_null }}">
+		</div>
+		<div class="nextpage" mob="" allp="" error="{{ lang.next_null  }}" style="display: none;">{{ lang.next_page }}</div>
+	</div>
+	<div id="model" style="display: none;">
+		<div class="item">
+			<div class="flexbox" style="margin-bottom: 10px;">
+				<div class="time flex"><div class="deviate1">{erp_no}</div></div>
+				<div class="states flex"><div class="deviate2">{state}</div></div>
+			</div>
+			<div class="flexbox" style="margin-bottom: 10px;">
+				<div class="pro_thumb"><img src="{thumb}"></div>
+				<div class="flex pro_title">
+					<h3>{title}</h3>
+					<div class="attrs">{attr}</div>
+					<span class="number">{{lang.in_quantity}}</span>
+				</div>
+			</div>
+			<div class="flexbox pro_item">
+				<div class="flex text_left"><span>{{lang.in_goodsnum}}</span></div>
+				<div class="btn_div">
+					<button rel="{order_id}" orderno="{order_no}" class="order_details">{{lang.order_viewdetails}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="details" style="display: none;">
+	    <div class="header">
+	        <h2 class="title">{{ lang.inquiry_details }}</h2>
+	        <p>{{ lang.inquiry_tip }}</p>
+	    </div>
+		<div class="explain left">
+			<div class="item_title">{{ lang.addr }}</div>
+			<div class="item">
+				<div class="clear" style="margin-bottom:4px;"><span id="name" class="left"></span><span class="right"><span id="mobile"></span>,<span id="email"></span></span></div>
+				<div><span id="address"></span></div>
+				<div><span id="postal"></span></div>
+			</div>
+			<div class="item_title">{{ lang.notes }}</div>
+			<div class="item">
+				<div id="note"></div>
+			</div>
+			<div class="wrap">
+				<div class="item_title">{{ lang.order_no }}</div>
+				<input type="text" class="item" id="erp_no" value="" readonly="readonly">
+<!-- 				<div class="item" id="erp_no">
+				</div> -->
+			</div><div class="wrap">
+				<div class="item_title">{{ lang.order_time }}</div>
+				<div class="item" id="add_time">
+				</div>
+			</div>
+		</div>
+		<div class="this_box right">
+			<div class="item_title flexbox">
+	            <span>{{ lang.pic }}</span>
+	            <span>{{ lang.info }}</span>
+	            <span>{{lang.attr_num}}</span>
+	        </div>
+		    <div class="m-orderItem" id="goods">
+		    </div>
+	        <!-- 套餐包含产品 -->
+	        <div class="m-goodItems" id="showComboProduct_content">
+	        </div>
+	        <!-- 套餐包含产品 -->
+	        <div class="list_cost clear">
+	        	<div class="row clear">
+	        		<div class="left">{{ lang.total }}</div>
+		            <div class="left">
+		                <span id="payment_amount"></span>               
+		            </div>
+	        	</div>
+		        <div class="row clear">
+	        		<div class="left">{{ lang.payment_method }}</div>
+		            <div class="left">{{ lang.cash_on_delivery }}</div>
+	        	</div>
+	        </div>
+		    <div class="fixed_right">
+				{% if service_contact_id %}
+				<a href="javascript:;" onclick="P8.startGroupChat({{ service_contact_id }},1);" class="kefu">{{ lang.connect }}</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% include 'footer.twig' %}
+	<div id="loading"><img src="/public/image/loading.png"></div>
+
+	{% include 'public/theme/bi.twig' %}
+</div>
+<div class="panel_small">
+	{% include 'mob_inquiry.twig' %}
+</div>
+<!-- footer resource -->
+<script src="/public/javascript/inquiry.js"></script>
+
+<script src="{{ THEME }}/js/inquiry.js"></script>
+<style>
+#POP800_INIT_DIV{display: none !important;}
+#POP800_PANEL_DIV{display: none !important;}
+#POP800_LEAVEWORD_DIV{display: none !important;}
+</style>
+{% include 'public/theme/footer.twig' %}
+

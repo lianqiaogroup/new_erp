@@ -1,0 +1,21 @@
+# Created by .ignore support plugin (hsz.mobi)
+/log/
+/upload/
+/.idea/
+/config/web.php
+vendor/bin/
+/admin/ini.php
+/lib/ini.php
+/node_modules/
+/theme/node_modules/
+/admin/node_modules/
+mkstoshop.sublime-project
+/sms.php
+/sms_t.php
+/get-sms.php
+nbproject
+.vscode/settings.json
+/frontend/develop/
+/frontend/cache/
+stoshop.sublime-project
+stoshop.sublime-workspace

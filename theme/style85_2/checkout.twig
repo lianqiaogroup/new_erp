@@ -1,0 +1,110 @@
+
+<input type="hidden" name="region_id" value="{{ regions.region_id }}">
+<div class="address-input">
+    <div class="address-title">
+        <span style='font-size:16px;'>{{ lang.addr }}</span>
+        <span class="kefu">{{ lang.customer }}</span>
+        <div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}">{{ lang.service_online }}</div>
+    </div>
+    <div class="double-row" style="font-size:14px;font-weight:900">
+        {{lang.customer_contact}}
+    </div>
+    <div class="buy-single-row">
+        <div class="cell">
+            <input required="required" placeholder="{{ lang.name_placeholder }}" type="text" name="name">
+        </div>
+    </div>
+    <div class="buy-single-row">
+        <div class="cell">
+            <input required="required" placeholder="{{ lang.phone }}" type="number" name="mob">
+        </div>
+    </div>
+    <div class="buy-single-row">
+        <div class="cell">
+            <input placeholder="{{ lang.email_address }}" type="email" name="email">
+        </div>
+    </div>
+    <div class="double-row">
+        <div class="cell">
+            <select name="province">
+                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+            </select>
+        </div>
+
+            <!-- <div class="cell">
+                <select name="city">
+                    <option value="">{{ lang.province_choose }}</option>
+                    {% for i in regions.region_son %}
+                        <option value="{{ i.lang}}">{{ i.lang }}</option>
+                    {% endfor %}
+                </select>
+            </div> -->
+
+    </div>
+
+
+    <div class="buy-single-row">
+        <div class="cell">
+            <select required name="state">
+                <option value="">{{lang.state}}</option>
+            </select>
+        </div>
+    </div>
+     <div class="buy-single-row">
+        <div class="cell">
+            <select required name="city" >
+                <option value="">{{lang.city}}</option>
+            </select>
+        </div>
+    </div>
+     <div class="buy-single-row">
+        <div class="cell">
+            <select required name="district">
+                <option value="">{{lang.district}}</option>
+            </select>
+        </div>
+    </div>  
+    <div class="buy-single-row">
+        <div class="cell">
+            <select required name="postal">
+                <option value="">{{lang.postal_long}}</option>
+            </select>
+            <!-- <input required  type="text" name="postal" placeholder="{{ lang.postal_long }}"  data-error="{{ lang.postal_error }}"> -->
+        </div>
+    </div>  
+    <div class="buy-single-row">
+        <div class="cell">
+            <input required  type="text" name="address" placeholder="{{ lang.full_address }}">
+        </div>
+    </div>
+    
+    <!-- <div class="buy-single-row">
+        <div class="cell">
+            <input type="text"
+             onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" 
+             onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+             name="postal" placeholder="{{ lang.postal_long }}" data-error="{{ lang.postal_error }}"
+            >
+        </div>
+    </div> -->
+    <div class="buy-single-row">
+        <div class="cell">
+            <textarea placeholder="{{ lang.remark }}" name="guest" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="buy-single-row payment">
+        <div class="cell">
+            {% if payment_underline ==1 %}
+                <input name="payment_type" value="0" id="0" type="radio"><label for="0" class="check">{{ lang.cash_on_delivery }}</label>
+            {% endif %}
+            {% if payment_online ==1 %}
+                <input name="payment_type" value="1" id="1" type="radio"> <label for="1">{{ lang.yijifu }}</label>
+            {% endif %}
+            {% if payment_paypal == 1 %}
+                <input name="payment_type" value="2" id="2" type="radio"> <label for="2">paypal</label>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+

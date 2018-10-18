@@ -1,0 +1,259 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/index.css" type="text/css" rel="stylesheet" />
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+
+<!--/page-->
+<section id="page-index" class="container" data-error="{{ lang.Th_titleattr }}">
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-fraction"></div>
+    </div>
+    <!--  -->
+    <div class="detial">
+        <div class="buyinfo_post">
+            <span class="sold">{{ sales }}</span>{{ lang.buyed_count }},{{ lang.pro_last }}<span class="left">{{ stock }}</span>{{ lang.piece }}
+            <span class="timeWrap">
+                <span>{{ lang.time_over }}</span>
+                <span id="timer">
+                    <span  id="h">10</span>
+                    <span class="">{{ lang.h }}</span>
+                    <span id="m">00</span>
+                    <span class="">{{ lang.m }}</span>
+                    <span id="s">00</span>
+                    <span class="">{{ lang.s }}</span>
+                </span>
+            </span>
+        </div>
+        <h1>{{ title }}</h1>
+        <div class="tagList">
+            <h3 class="top_price">
+                {% if currency_prefix == 1 %}{{ currency_code }}{{price}}<span class="pre_price">{{ currency_code }}{{ market_price }}</span>{% endif %}
+                {% if currency_prefix == 0 %}{{price}}{{ currency_code }}<span class="pre_price">{{ market_price }}{{ currency_code }}</span>{% endif %}
+            </h3>
+            <div>
+                <span class="item">{{ lang.for_sell }}</span>
+                <span class="discount">{{ ((price/market_price)*10)|number_format(0) }}{{ lang.favorable }}</span>                
+            </div>
+        </div>
+        
+        <div class="ensure">
+            <ul class="j_product_info">
+                <li class="j_product_icon">{{ lang.returned_goods }}</li>
+                <li class="j_product_icon">{{ lang.free_ship }}</li>
+                <li class="j_product_icon">{{ lang.cash_on_delivery }}</li>
+            </ul>
+            <div style="clear:both"></div>
+        </div>
+    </div>  
+    <div class="specSelect">
+        <div class="option_detail">
+                <input type="hidden" name="orderid" id="orderid" value="">
+                <input type="hidden" name="product_id" value="{{ product_id }}">
+                <input type="hidden" name="act" id="act" value="getAttrPrice">
+                <!--  -->
+                <!--产品目录-->
+                    {% if combo %}
+                        <div class="u-format" id="comb" data-price="">
+                             <div class="package">
+                            {% for c in combo %}
+                                <div class="tab {%if loop.index == 1%}tab-sel{%endif%}" data_comb="{{ loop.index0 }}" data-price="{{ c.price }}" single_c="{{c.is_single_combo}}" data-loopindex="{{ loop.index }}">
+                                    <input type="hidden" name="combo_id" value="{{ c.combo_id }}" {%if loop.index == 1%}checked="chekced"{%endif%} />
+                                    <span>{{ c.title|raw }}</span>
+                                    {% if currency_prefix == 1 %}<span class="combo-price"> {{ currency_code }}{{ c.price }}</span>{% endif %}
+                                    {% if currency_prefix == 0 %}<span class="combo-price"> {{ c.price }}{{ currency_code }}</span>{% endif %}
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="u-format" id="comb" data-price="" style="display: none;">
+                            <div class="tt">{{ lang.product }}</div>
+                            <div class="package">
+                                <div class="tab tab-sel" data_comb="1" data-price="{{ price }}" data-loopindex="1">
+                                    <input type="hidden" name="combo_id" value="0" checked="chekced" />
+                                    <span>{{ title }} {{ currency_code }}{{ price }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <p>{{ tips }}</p>
+                    <div id="val-sel" class="arrow_con" data-cuckootag="buy_now" data-event="showArrtibuteLayer">
+                        <div class="arrow_d up">{{ lang.choose_attr }}</div>
+                        <div class="right"></div>
+                    </div>
+                    <!--套餐产品属性-->
+
+                    <div class="shade"></div>
+                    <div class="attr_contant">
+                        <div class="info-con">
+                            <div class="left f-fl">
+                                <!--产品属性图-->
+                                <img id="attrimg" src="{{ thumb }}">
+                            </div>
+                            <div class="right f-fl">
+                                <div class="con" style="">
+                                    <p class="sku">
+                                        <span class="it" style="line-height: 21px;">{{ title }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="hide_attr">
+                                
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                        {% if combo %}
+                            {% for om in  combo %}
+                                <section data-loopIndex="{{ loop.index }}" class="options_attr {% if loop.index==1 %}action{% endif %}">
+                                {% for ok in  om.goods %}
+                                    {% if ok.options %}
+                                        {% for o in  ok.options %}
+                                        <div class="u-format count_atrr" data-select="0" data-goodid="{{ ok.combo_goods_id }}" data-group="{{ o.attr_group_id }}">
+                                            <div class="title_tips">{{ ok.title|raw }}</div>
+                                            <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                            <div class="con">
+                                                {% for key,attr in o.attr %}
+                                                <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                                    <span>{{ attr.name|raw }}</span>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            </div>
+                                            {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </section>
+                            {% endfor %}
+                        {% else %}
+                        <!--单产品属性-->
+                        <section data-loopIndex="1" class="action">
+                            {% for o in  options %}
+                            <div class="u-format count_atrr" data-select="0" data-group="{{ o.attr_group_id }}">
+                                <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                <div class="con">
+                                    {% for key,attr in o.attr %}
+                                        <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                            <span>{{ attr.name|raw }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </section>
+                        {% endif %}
+                        <div class="quantity">
+                            <h4>{{ lang.num }} : </h4>
+                            <div class="m-selnum dr">
+                                <div onclick="minnumber()" class="less z-dis"> - </div>
+                                <div class="textWrap">
+                                    <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                                </div>
+                                <div onclick="addnumber()" class="more"> + </div>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                <!--套餐产品属性end-->
+                <input type="hidden" name="heavn" class="attr_id" value="">
+                <input type="hidden" name="attrnum" value="2">
+        </div>
+    </div> 
+    <!--  -->
+    <footer class="footer">
+        <ul>
+            <li class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"></li>
+            <li class="price_lost"data-cuckootag="check_order" data-value="{{ identity_tag }}">
+                {{ lang.order_inquiry }}
+            </li>
+            <li id="buy_now" class="buy_now" data-cuckootag="buy_now" data-event="showArrtibuteLayer">
+                <button class="w-button w-button-block">{{ lang.buy_now }}</button>
+            </li>
+        </ul>
+        <div style="clear:both;"></div>
+    </footer>
+    <!--  -->
+</section>
+{% if comment  %}
+<section id="review" class="container">
+    <div class="review_jump">
+        <div id="review_area" class="arrow_con">
+            <div class="arrow_r down">{{ (sales*0.777)|number_format(0,',','') }}{{ lang.comment_count }}</div>
+            <div class="right"></div>
+        </div>
+    </div>
+    <div class="review_info">
+        <div style="padding: 8px;background: white">
+            <div class="picMarquee-top">
+                <div class="bd" data-fn="commentScroll" id="mq" style="overflow: hidden">
+                    <ul class="picList" id="mq1">
+                        {% for a in comment %}
+                            {% if loop.index == 1 %}
+                            <li star_li data-groud="{{ a.comment_id }}" rel="{{ a.star }}" style="margin-bottom: 8px;height: auto;">
+                                <div style="margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                                <div class="msKeimgBox">
+                                    <ul>{% for b in a.thumb %}
+                                            <li>
+                                                <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                            </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                    <div class="mskeTogBtn" style="display:none;"></div>
+                                </div>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<section id="detail" class="container">
+    <div class="jump">
+        <div id="detail_link" class="arrow_con">
+            <div class="arrow"><div>{{ lang.pro_description }}</div></div>
+            <div class="line"></div>
+        </div>
+    </div>
+    <!--  -->
+    <div class="product_info">
+        {% include 'detail_link.twig' %}
+    </div>
+</section>
+<br>
+<br>
+<br>
+<!--/page-->
+<!-- <script src="{{ THEME }}/js/swiper-3.4.0.jquery.min.js"></script> -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+<!-- <script language="javascript" type="text/javascript" src="{{ THEME }}/js/public.js"></script> -->
+<script type="text/javascript">
+    function ShowCountDown(year,month,day,divname){
+        var now = new Date();
+        var endDate = new Date(year,month-1, day, now.getHours()+8);
+        var leftTime=endDate.getTime()-now.getTime();
+        var leftsecond = parseInt(leftTime/1000);
+        var day1=Math.floor(leftsecond/(60*60*24));
+        var hour=Math.floor((leftsecond-day1*24*60*60)/3600);
+        var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60);
+        var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60);
+        var cc = document.getElementById(divname);
+        cc.innerHTML ="<span id='h'>"+0+hour+"</span>"+"<span class=''>{{ lang.h }}</span>"+"<span id='m'>"+minute+"</span>"+"<span class=''>{{ lang.m }}</span>"+"<span id='s'>"+second+"</span>"+"<span class=''>{{ lang.s }}</span>";
+    }
+</script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

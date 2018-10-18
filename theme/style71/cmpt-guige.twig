@@ -1,0 +1,111 @@
+<div id="ui-paramselect">
+    <div class="dt-paramselect">
+        <form id="form" name="form" method="post" action="order.php" onsubmit="return postcheckGuige()">
+            <input type="hidden" name="orderid" id="orderid" value="">
+            <input type="hidden" name="product_id" value="{{ product_id }}">
+            <input type="hidden" name="act" id="act" value="getAttrPrice">
+            <!--  -->
+            <p class="tips">{{ tips }}</p>
+
+            <!-- 套餐选择 -->
+            <div class="u-format" id="comb" data-price="">
+                <div class="package">
+                {% if combo %}
+                    {% for c in combo %}
+                    <label class="tab {%if loop.index == 1%}tab-sel{%endif%}" rel="1" data-price="{{ c.price }}" data-loopIndex="{{ loop.index }}" data-single="{{ c.is_single_combo }}">
+                        <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="{{ c.combo_id }}" {%if loop.index == 1%}checked="chekced"{%endif%} />
+                        <span>{{ c.title|raw }}</span>
+                        <span>{{ currency_code }}&nbsp;{{ c.price }}</span>
+                        <span class="dot"></span>
+                    </label>
+
+                    {% endfor %}
+                {% else %}
+                    <label class="tab tab-sel" rel="1" data-price="{{ price }}" data-loopIndex="1" data-single="0">
+                        <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="0" checked="chekced" />
+                        <span>
+                            {{ title }} 
+                        </span>
+                        <span>{{ currency_code }}&nbsp;{{ price }}</span>
+                        <span class="dot"></span>
+                    </label>
+                {% endif %}
+                </div>
+            </div>
+            <!-- 套餐选择 end -->
+
+            <!-- 套餐－属性选择 -->
+            {% if combo %}
+                <!-- 循环套餐 -->
+                {% for om in combo %}
+                    <section data-loopIndex="{{ loop.index }}" productid="{{ om.product_id }}" style="display: none;">
+                        <div class="divide"></div>
+                    {% for ok in om.goods %}
+                        {% if ok.options %}
+                            <div class="tc tc{{ ok.combo_id|raw }}"><div class="title_ac"><h5>{{ ok.title|raw }}</h5></div>
+                                {% for o in  ok.options %}
+                                    <li class="item protoLayer">
+                                        <div class="u-format count_atrr" data-group="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" data-select="0">
+                                            <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                            <div class="con">
+                                                <!-- 属性值 -->
+                                                {% for key,attr in o.attr %}
+                                                    <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                                        <span>{{ attr.name|raw }}</span>
+                                                        <i class="u-icon u-spec-sel"></i>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="cls"></div>
+                                    </li>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="divide"></div>
+                    </section>
+                {% endfor %}
+            {% else %}
+            <!-- 单产品属性选择 -->
+                <section data-loopIndex="1">
+                <div class="divide"></div>
+                {% for o in  options %}
+                    <li class="item protoLayer">
+                        <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                            <div class="tt">{{ o.attr_group_title|raw }}</div>
+                            <div class="con">
+                                {% for key,attr in o.attr %}
+                                    <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                        <span>{{ attr.name|raw }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                <div class="divide"></div>
+                </section>
+            {% endif %}
+
+            <!--数量-->
+            <div class="u-fornum">
+                <div class="con">
+                    <div class="m-selnum dr">
+                    <span>{{ lang.num }}&nbsp;</span>
+                    <div onclick="minnumber()" class="less">-</div>
+                    <div class="textWrap">
+                        <div class="tt">1</div>
+                        <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                    </div>
+                    <div onclick="addnumber()" class="more">+</div>
+                    </div>
+                </div>
+            </div>
+            <!--产品的所有属性-->
+            <input type="hidden" name="heavn" class="attr_id" value="">
+            <input type="hidden" name="attrnum" value="2">
+        </form>
+    </div>
+</div>
+<!--  -->

@@ -1,0 +1,18 @@
+.pricebox .price {
+  text-align: center;
+  font-size: 15px;
+  padding: 20px;
+}
+.pricebox .price del {
+  color: #A2A2A2;
+  line-height: 15px;
+}
+.pricebox .price div {
+  color: #4CAF50;
+}
+.pricebox .price div span {
+  font-size: 30px;
+  line-height: 52px;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlNjkvbGVzcy9kb21fcHJpY2UubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxTQUNDO0VBQ0Msa0JBQUE7RUFDQSxlQUFBO0VBQ0EsYUFBQTs7QUFKRixTQUNDLE9BSUM7RUFDQyxjQUFBO0VBQ0EsaUJBQUE7O0FBUEgsU0FDQyxPQVFDO0VBQ0MsY0FBQTs7QUFWSCxTQUNDLE9BUUMsSUFFQztFQUNDLGVBQUE7RUFDQSxpQkFBQSIsInNvdXJjZXNDb250ZW50IjpbIi5wcmljZWJveHtcclxuXHQucHJpY2V7XHJcblx0XHR0ZXh0LWFsaWduOmNlbnRlcjtcclxuXHRcdGZvbnQtc2l6ZToxNXB4O1xyXG5cdFx0cGFkZGluZzoyMHB4O1xyXG5cdFx0ZGVse1xyXG5cdFx0XHRjb2xvcjojQTJBMkEyO1xyXG5cdFx0XHRsaW5lLWhlaWdodDoxNXB4O1xyXG5cdFx0fVxyXG5cdFx0ZGl2e1xyXG5cdFx0XHRjb2xvcjojNENBRjUwO1xyXG5cdFx0XHRzcGFue1xyXG5cdFx0XHRcdGZvbnQtc2l6ZTozMHB4O1xyXG5cdFx0XHRcdGxpbmUtaGVpZ2h0OjUycHg7XHJcblx0XHRcdH1cclxuXHRcdH1cclxuXHR9XHJcbn0iXSwiZmlsZSI6InN0eWxlNjkvbGVzcy9kb21fcHJpY2UuY3NzIn0= */

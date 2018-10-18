@@ -1,0 +1,427 @@
+{% include '/public/theme/header_lightning.v3.twig' %}
+<link rel="stylesheet" href="{{ THEME }}/style/index.css">
+<!--  -->
+<input id="region_code" value="{{ regions.code }}"  data-id='{{ regions.region_id }}' type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<input id="theme" value="{{ theme }}" type="hidden">
+<!--  -->
+<section id="page-index">
+    <div class="header">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="img_wrap">
+        <h2>{{ lang.product_img }}</h2>
+        <div class="swiper-container">
+            <div class="swiper-wrapper" style="height:340px;">
+                 {% if video.video_url %}
+                <div class="swiper-slide">
+                    <video width="100%" poster="{{ video.cover_url }}" id="video" preload="false" src="{{ video.video_url }}" controls="controls"
+                     x5-playsinline="" playsinline="" webkit-playsinline="">
+                </div>
+                {% endif %}
+                 {% if photos %}
+                        {% for p in photos %}
+                        <div class="swiper-slide"><img class="lazyload" src="{{ p.thumb }}" width="100%"></div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+    {#  #}
+    <div class="dom-sales">
+        <h2>{{ lang.time_limit }}</h2>
+        <div class="sales_wrap">
+            <div class="sales">
+                <div class="price">
+                    {% if currency_prefix == 1 %}{{ currency_code }}<ins>{{ price }}</ins>{% else %}<ins>{{ price }}</ins>{{ currency_code }}{% endif %}
+                </div>
+                <div class="sales_info">
+                    <div>
+                        <del>{{ market_price }}</del>
+                    </div>
+                    <div class="sales_num">
+                        {{ sales }}{{ lang.piece }}{{ lang.sold }}
+                    </div>
+                </div>
+            </div>
+            {% if modulesParam.countdown.options.open =='1' %}
+                <div class="time_wrapper">
+                    <div class="timeWrap">
+                        <span id='clock'>{{ modulesParam.countdown.options.label }}</span>
+                        <span
+                            id="timer"
+                            data-fn="module_countdown_core"
+                            data-value="{{ modulesParam.countdown.options.end_timer }}"
+                            data-step="{{ modulesParam.countdown.options.time_step }}">
+                            <span id="h">-</span>
+                            <span class="colon">:</span>
+                            <span id="m">-</span>
+                            <span class="colon">:</span>
+                            <span id="s">-</span>
+                            <span class="colon"></span>
+                        </span>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {#  #}
+    <div class="module_title">
+        <h1>{{ title }}</h1>
+    </div>
+    {#  #}
+    {% set serviceList = modulesParam.service.options.list|split(',') %}
+    <div class="service-tips">
+        <div class="service">
+            {% for item in serviceList %}
+                <span>{{ item }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {#  #}
+    {% if modulesParam.comment.options.open =='1' %}
+        <div class="moduel_details">
+            <div class="buy_now">
+                <div><a href="#comment">{{ lang.user_comment }}（{{ (sales*0.7)|number_format(0) }}）</a></div>
+                <a href="#page-order">{{ lang.buy_now }}</a>
+            </div>
+        </div>
+    {% endif %}
+    <div class="product_info">
+        <h2>{{ lang.pro_attr }}</h2>
+        
+{#  #}
+<div id="ceontentTemplate" style="display:none;">
+{{ content|replace({
+    '<img class="" src=': '<img class="lazyload" src="public/image/spinner2.gif" data-img=',
+    '<img src=': '<img class="lazyload" src="public/image/spinner2.gif" data-img=',
+}) }}
+</div>
+<div class="m-img"></div>
+{#  #}
+
+    </div>
+</section>
+<section id="page-order" data-error="{{ lang.Th_titleattr }}">
+    <h2>{{ lang.order_info }}</h2>
+    <div class="order_title"><h1>{{ title }}</h1></div>
+    <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+        <!-- <input type="hidden" name="combo_id" value=""> -->
+        <input type="hidden" name="token" value="{{ token }}">
+        <input type="hidden" id="act" name="act" value="getAttrPrice">
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+        <!--套餐-->
+        <div class="tips">
+            <p>{{ tips }}</p>
+        </div>
+        <div class="bdbox" id="combo">
+            <label class="bdxx"><em>*</em> {{ lang.pro_choose }} </label>
+            <div class="dxbox red">
+                {% if combo %}
+                    {% for c in combo %}
+                    <label
+                        class="combo {%if loop.index == 1%}tab-sel{%endif%}"
+                        style="padding: 5px;"
+                        data-comboId="{{c.combo_id}}"
+                        data-loopIndex="{{loop.index}}"
+                        data-multiple="{{c.is_single_combo}}"
+                        data-price="{{ c.price }}">
+                        <input type="radio" name="combo_id" value="{{ c.combo_id }}" {%if loop.index == 1%}checked="chekced"{%endif%}>
+                        {{ c.title|raw }}-{% if currency_prefix == 1 %}{{ currency_code }} {{c.price}}{% else %}{{c.price}} {{ currency_code }}{% endif %}
+                    </label>
+                    <br>
+                    {% endfor %}
+                {% else %}
+                    <label
+                        class="combo tab-sel"
+                        data-comboId="0"
+                        data-loopIndex="1"
+                        data-price="{{ price }}"
+                        data-multiple="0">
+                        <input type="radio" name="combo_id" value="0" checked="chekced">
+                        {{ title|raw }}
+                    </label>
+                {% endif %}
+            </div>
+        </div>
+        <!--套餐end-->
+        <!--属性开始-->
+        <div id="product_attr">
+            {% if combo %}
+                <!--循环套餐-->
+                {% for om in  combo %}
+                    <section data-loopIndex="{{ loop.index }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+                    <!-- 循环产品 -->
+                    {% for ok in  om.goods %}
+                        {% if ok.options %}
+                        <div class="item">
+                            <div class="tc tc{{ ok.combo_id|raw }}" comboproduct>
+                                <!-- 循环属性 -->
+                                <div style="font-weight: bold;font-size: 12px;border-bottom: 1px dashed #ddd;padding: 10px;">{{ ok.title }}</div>
+                                {% for o in  ok.options %}
+                                    <div class="bdbox" data-prototype-group="{{ loop.index }}"  data-group="{{ o.attr_group_id }}" data-select="0">    
+                                            <label class="bdxx">
+                                                <em>*</em>
+                                                {{ o.attr_group_title|raw }}
+                                            </label>
+                                            <div class="dxbox" datattr>
+                                                {% for key,attr in o.attr %}
+
+                                                    <label class="attrs">
+                                                        {% if attr.thumb %}
+                                                        <img class="thumbimg lazyload" src="" data-img="{{ attr.thumb }}">
+                                                        <br/>
+                                                        {% endif %}
+                                                        <input type="radio"  name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}" style="vertical-align: top;">
+                                                        <span style="font-weight: normal;">{{ attr.name|raw }}</span>
+                                                    </label>
+
+                                                {% endfor %}
+                                            </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </section>
+                {% endfor %}
+            {% else %}
+                <section data-loopIndex="1">
+                <!--循环当前产品属性-->
+                {% for o in  options %}
+                    <div class="bdbox" data-prototype-group="{{ loop.index }}">
+                        <label class="bdxx">
+                            <em>*</em>
+                            {{ o.attr_group_title|raw }}
+                        </label>
+                        <div class="dxbox" datattr>
+                            {% for key,attr in o.attr %}
+                                {% if attr.thumb %}
+                                    <label style="width:30%" class="attrs">
+                                        <img class="thumbimg lazyload" src="" data-img="{{ attr.thumb }}"> <br>
+                                {% else %}
+                                    <label class="attrs">
+                                {% endif %}
+                                    <input type="radio" id="iin" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                    <span>{{ attr.name|raw }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <div class="cls"></div>
+                    </div>
+                {% endfor %}
+                </section>
+            {% endif %}
+            <input type="hidden" name="act" value="getAttrPrice">
+        </div>
+        <!--属性结束-->
+
+        {% if regions.code == 'THA' %}
+            {% include 'checkout_tha.twig' %}
+        {% elseif regions.code == 'MOP' %}
+            {% include 'checkout_mop.twig' %}
+        {% else %}
+            {% include 'checkout.twig' %}
+        {% endif %}
+        <div class="submit">
+            <button type="submit" name="Submit_form" style="visibility:hidden">{{ lang.confirm }}</button>
+        </div>
+    </form>
+    <div class="new_order"><h1>{{ lang.new_order }}</h1>
+        <div style="background: white">
+            <div class="picMarquee-top">
+                <div class="bd" data-fn="commentScroll" style="height:250px; overflow: hidden;font-size:14px;">
+                    <ul class="picList">
+                        <li>
+                            <span>{{ lang.zhang }}**（095***3590）</span>
+                            <span style="float:right;">4{{ lang.before }}</span>
+                            <br>
+                            <span>{{ title }}</span>
+                        </li>
+                        <li>
+                            <span>{{ lang.wang }}**（098***4865）</span>
+                            <span style="float:right;">8{{ lang.before }}</span>
+                            <br>
+                            <span>{{ title }}</span>
+                        </li>
+                        <li>
+                            <span>{{ lang.lin }}**（092***3291）</span>
+                            <span style="float:right;">2{{ lang.before }}</span>
+                            <br>
+                            <span>{{ title }}</span>
+                        </li>
+                        <li>
+                            <span>{{ lang.zhao }}**（091***6851）</span>
+                            <span style="float:right;">10{{ lang.before }}</span>
+                            <br>
+                            <span>{{ title }}</span>
+                        </li>
+                        <li>
+                            <span>{{ lang.zheng }}**（092***6851）</span>
+                            <span style="float:right;">3{{ lang.before }}</span>
+                            <br>
+                            <span>{{ title }}</span>
+                        </li>
+                        <li>
+                            <span>{{ lang.liu }}**（093***3943）</span>
+                            <span style="float:right;">1{{ lang.before }}</span>
+                            <br>
+                            <span>{{ title }}</span>
+                        </li>
+                        <li>
+                            <span>{{ lang.li }}**（096***3943）</span>
+                            <span style="float:right;">1{{ lang.before }}</span>
+                            <br>
+                            <span>{{ title }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if modulesParam.comment.options.open =='1' %}
+        <div class="comment-layer" id="comment">
+            <h2>{{ lang.user_comment }}</h2>
+            <div class="picMarquee-top">
+                <div class="bd" data-fn="commentScroll" style="height: 300px; overflow: hidden">
+                    <ul class="picList">
+                        {% for a in comment %}
+                            {% if loop.index <= 100 %}
+                            <li data-groud="{{ a.comment_id }}" style="margin-bottom: 8px;height: auto;">
+                                {% if a.is_anonymous==1 %}
+                                    <span style="color: red;font-size: 14px">{{ lang.anonymous }}</span>
+                                {% else %}
+                                    <span style="color: red;font-size: 14px">{{ a.name }}</span>
+                                {% endif %}
+                                &nbsp;<span style="font-size: 14px;">{{ lang.Satisfaction }}：<span style="color: red;">{{ a.star }}</span></span>
+                                <div style="border-top:1px dotted #d0d6d6;margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                                <div class="msKeimgBox">
+                                    <ul>
+                                        {% for b in a.thumb %}
+                                            <li>
+                                                <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    {% endif %}
+</section>
+<div class="like_wrap">
+    <div class="like_shadow" act-close></div>
+    <div class="like">
+        <div class="close" act-close> × </div>
+        <div class="content">1{{ sales }}{{ lang.like }}</div>
+    </div>
+</div>
+{% if regions.code != 'THA' %}
+<div class="User_notes" style="margin-top: 10px;color:#ccc;line-height: 2em;padding: 3%;">
+    <h2 class="notes">{{ lang.user_notes }}</h2>
+    <div class="note_text">{{ lang.user_fb }}</div>
+    <div class="note_title">{{ lang.user_note1 }}</div>
+    <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+    <div class="note_title">{{ lang.user_note2 }}</div>
+    <div class="note_text">{{ lang.user_note2_1 }}</div>
+    <div class="note_title">{{ lang.user_note3 }}</div>
+    <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+    <div class="note_title">{{ lang.user_note4 }}</div>
+    <div class="note_text">{{ lang.user_note4_1 }}</div>
+    <div class="note_title">{{ lang.user_note4_2 }}</div>
+    <div class="note_title">{{ lang.user_note4_3 }}</div>
+    <div class="note_text">{{ lang.user_note4_4 }}</div>
+</div>
+{% endif %}
+
+{% if regions.code == 'THA' and lang.after_sales %}
+<div class="after_sale">
+    <div class="after_sale_title">{{ lang.after_sales }}</div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+        </div>
+    </div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+        </div>
+    </div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+        </div>
+    </div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+<footer>
+    <div command-click="handleScrollTop">top</div>
+    <div class="inquiry">
+        <a href="javascript:;" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</a>
+    </div>
+    <div class="buy_now">
+        <a href="javascript:void(0)" onclick="checkattrs()">{{ lang.order_now }}</a>
+        <a href="#form" style="display:none" data-cuckootag="confirm_order">{{ lang.order_now }}</a>
+    </div>
+    <div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"></div>
+</footer>
+<!-- footer resource -->
+{% set pageSign = "index" %}
+{% include 'public/theme/footer_lightning.v3.twig' %}

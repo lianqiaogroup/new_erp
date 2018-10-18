@@ -1,0 +1,261 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<div class="header">
+	<div class="title">{{ title }}</div>
+	<div class="comment_count">
+		<span class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</span>
+		<span class="count">{{ lang.comment }}{{ (sales*0.7)|number_format(0,'','') }}{{ lang.piece }}{{ lang.comments }}</span>
+	</div>
+</div>
+<div class="price">
+	<div class="price_wrap">
+		<span>
+            {% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+            {% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+        </span>
+		<del>
+            {% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+            {% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+        </del>
+	</div>
+	<div>{{ lang.stock }}</div>
+</div>
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		{% if photos %}
+			{% for p in photos %}
+				<div class="swiper-slide">
+					<img src="{{ p.thumb }}" width="100%">
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="swiper-slide">
+				<img src="{{ thumb }}" width="100%">
+			</div>
+		{% endif %}
+	</div>
+</div>
+<div class="timeWrap">
+	<span>{{ lang.still }}</span>
+	<span id="timer">
+        <span  id="h">10</span>
+    	<span class="">:</span>
+        <span id="m">00</span>
+        <span class="">:</span>
+        <span id="s">00</span>
+  	</span>
+	<span id='clock'>{{ lang.end }}</span>
+</div>
+<div>
+	{% include './cmpt-guige.twig' %}
+</div>
+<div class="product_info">
+	<div class="title">{{ lang.detail }}</div>
+    <div class="m-img">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+         {% if regions.code == 'THA' and lang.after_sales %}
+        <div class="after_sale_title">{{ lang.after_sales }}</div>
+        <div class="after_sale">
+        
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+                </div>
+            </div>
+            <div class="after_sale_content">
+                <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+                </div>
+                <div>
+                    <span class="after_sale_circle"></span>
+                    <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="title show">{{ lang.promise }}</div>
+    <div class="service">
+        <div>{{ lang.free_yun }}</div>
+        <div>{{ lang.returned_goods }}</div>
+        <div>{{ lang.cash_on_delivery }}</div>
+        <div>{{ lang.guarantee }}</div>
+    </div>
+	<div class="title">{{ lang.pro_comment }}</div>
+    <div class="pinlun_content" id="pinlun_content">
+    	<div class="star-wrap">
+    		<div class="left">
+    			<div class="stars">
+    				<span></span>
+	    			<span></span>
+	    			<span></span>
+	    			<span></span>
+	    			<span></span>
+    			</div>
+	    		<div class="score">
+	    			<span> 4.9 </span>{{ lang.total_score }}
+	    		</div>
+    		</div>
+    		<div class="right">
+    			<div>
+    				<span>5{{ lang.stars }}</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>4{{ lang.stars }}</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>3{{ lang.stars }}</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>2{{ lang.stars }}</span><span class="bar"><span></span></span>
+    			</div>
+    			<div>
+    				<span>1{{ lang.star }}</span><span class="bar"><span></span></span>
+    			</div>
+    		</div>
+    	</div>
+    	{% if comment %}
+    	<button class="comment_button">{{ lang.publish }}</button>
+        {% for a in  comment %}
+            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7">
+                <div>
+                	<div>
+                		<span id="wi">{{ a.name }}</span>
+                        {% if a.is_anonymous %}
+                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+                        {% endif %}
+                	</div>
+                	<div class="stars">
+                		<span></span>
+                		<span></span>
+                		<span></span>
+                		<span></span>
+                		{% if a.star == 5 %}<span></span>{% endif %}
+                	</div>
+                </div>
+                <P style="color: #666;margin-top:10px;">{{ a.content }}</P>
+
+                <div class="msKeimgBox">
+                    <ul>
+                        <li>
+                            {% for b in a.thumb %}
+                                <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+                            {% endfor %}                                        
+                        </li>
+                        <li>
+                            {% for b in a.thumb %}
+                                <span class="hidden">
+                                    <img src="{{ b.thumb }}" width="100%" height="auto" />
+                                </span>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+<footer>
+	<button class="buy_now" data-cuckootag="buy_now" data-event="postcheckGuige">{{ lang.buy_now }}</button>
+</footer>
+<form id="add_comment" name="form" action="#" method="post">
+	<div class="wrap">
+		<div class="close"></div>
+		<div class="title">{{ lang.publish }}</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.name }}:</span>
+			<input type="text" name="name" class="right" required="required">
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.phone }}:</span>
+			<input type="text" name="phone" class="right" required="required">
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.satisfy }}:</span>
+			<span class="right">
+				<span class="star"></span>
+				<span class="star"></span>
+				<span class="star"></span>
+				<span class="star"></span>
+				<span class="star"></span>
+			</span>
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.comment }}{{ lang.en_comment }}:</span>
+			<input type="text_area" name="message" class="right" required="required">
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.upload }}:</span>
+			<input type="file" name="file" class="right">
+		</div>
+		<div class="submit">
+			<input type="submit" name="submit" value="{{ lang.submit }}">
+		</div>
+	</div>
+</form>
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

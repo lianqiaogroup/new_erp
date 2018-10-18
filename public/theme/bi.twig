@@ -1,0 +1,315 @@
+{# 雅虎的代码 #}
+{% if google_etc.yahoo_id !='' %}
+<script type="application/javascript">(function(w,d,t,r,u){w[u]=w[u]||[];w[u].push({'projectId':'10000','properties':{'pixelId': '{{ google_etc.yahoo_id }}' }});var s=d.createElement(t);s.src=r;s.async=true;s.onload=s.onreadystatechange=function(){var y,rs=this.readyState,c=w[u];if(rs&&rs!="complete"&&rs!="loaded"){return}try{y=YAHOO.ywa.I13N.fireBeacon;w[u]=[];w[u].push=function(p){y([p])};y(c)}catch(e){}};var scr=d.getElementsByTagName(t)[0],par=scr.parentNode;par.insertBefore(s,scr)})(window,document,"script","https://s.yimg.com/wi/ytc.js","dotq");</script>
+{% endif %}
+{# 谷歌再营销的代码 #}
+<script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="true"></script>
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-115899410-1', 'auto');
+	ga('require', 'ec');
+	ga('set', 'currencyCode', '{{currency}}');
+
+	{# for google department #}
+	ga('create', '{{ google_analytics_id }}', 'auto', 'googleDepartment');
+	ga('googleDepartment.require', 'ec');
+	ga('googleDepartment.set', 'currencyCode', '{{currency}}');
+
+
+	// 
+	{% if pageSign=='index' %}
+	
+		ga('ec:addImpression', {  'id': '{{ product_id }}', 'name': '{{ title }}', 'price': '{{ price }}',  'list': '{{ domain }}',  'position': 1 });
+		ga('ec:addProduct', {'id': '{{ product_id }}', 'name': '{{ title }}', 'price': '{{ price }}', 'position': 1 });
+		ga('ec:setAction', 'click', { list: '{{domain}}' });
+		ga('ec:setAction', 'detail');
+		{##}
+		ga('googleDepartment.ec:addImpression', {  'id': '{{ product_id }}', 'name': '{{ title }}', 'price': '{{ price }}',  'list': '{{ domain }}',  'position': 1 });
+		ga('googleDepartment.ec:addProduct', {'id': '{{ product_id }}', 'name': '{{ title }}', 'price': '{{ price }}', 'position': 1 });
+		ga('googleDepartment.ec:setAction', 'click', { list: '{{domain}}' });
+		ga('googleDepartment.ec:setAction', 'detail');
+		//Product page tag 谷歌再营销统计代码
+		window.criteo_q = window.criteo_q || [];
+		window.criteo_q.push(
+		        { event: "setAccount", account: 47524 },
+		        { event: "setHashedEmail", email: "" },
+		        { event: "setSiteType", type: "m" },
+		        { event: "viewItem", item: "{{ regions.code }}{{ erp_number }}" }
+		);
+	{% endif %}
+
+	ga(function (tracker) {
+		var originalSendHitTask = tracker.get('sendHitTask');
+		tracker.set('sendHitTask', function (model) {
+			var payLoad = model.get('hitPayload');
+			originalSendHitTask(model);
+			var gifRequest = new XMLHttpRequest();
+			var gifPath = "http://{{domain}}/__ua.gif";
+			gifRequest.open('GET', gifPath + '?' + payLoad);
+			gifRequest.send();
+		});
+	});
+
+	+(function(){
+		function setCookie(name,value,time){
+			var strsec = getsec(time);
+			var exp = new Date();
+			exp.setTime(exp.getTime() + strsec*1);
+			document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+		}
+		function getsec(str){
+			var str1=str.substring(1,str.length)*1;
+			var str2=str.substring(0,1);
+			if (str2=="s"){
+				return str1*1000;
+			}else if (str2=="h"){
+				return str1*60*60*1000;
+			}else if (str2=="d"){
+				return str1*24*60*60*1000;
+			}
+		}
+		var hasUrlParam = (function checkUTM(){
+			var params = [];
+			var url = window.location.href;
+				url.split('utm_source').length > 1 && params.push('utm_source');
+				url.split('utm_medium').length > 1 && params.push('utm_medium');
+				url.split('utm_campaign').length > 1 && params.push('utm_campaign');
+			return params.length>=3;
+		})();
+		var hasCookie = document.cookie.split(';').filter(function(x){
+			var key = x.split('=')[0].replace(' ','');
+			var value = x.split('=')[1];
+			return key=='_utm';
+		}).length>=1;
+		if( hasUrlParam==false && hasCookie==false ){
+			ga('set', 'campaignSource', '{{domain}}/{{identity_tag}}');
+			ga('set', 'campaignMedium', '{{product_id}}');
+			ga('set', 'campaignName', 'none');
+			setCookie('_utm','{{product_id}}','d365');
+			return;
+		}
+		if( hasUrlParam==true && hasCookie==false ){
+			setCookie('_utm','{{product_id}}','d365');
+			return;
+		}
+	})();
+
+	ga('send', 'pageview');
+	ga('googleDepartment.send', 'pageview');
+
+	{% if pageSign=='checkout' %}
+	// Basket page tag 
+	function getParamName(name){
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+	window.criteo_q = window.criteo_q || [];
+	window.criteo_q.push(     
+	        { event: "setAccount", account: 47524 },
+	        { event: "setHashedEmail", email: "" },
+	        { event: "setSiteType", type: "m" }
+	    );
+	var g_combo_id = getParamName('combo_id');
+	var g_count = getParamName('count') ? getParamName('count') : $('input[name="num"]').val();
+	if(g_combo_id){
+	    if(g_combo_id != 0){
+	        var g_cgoods =  {{ combo|json_encode|raw }};
+	        var g_product_id = [];
+	        for(var i in g_cgoods){
+	            if(!g_cgoods.hasOwnProperty(i)) continue;
+	            if(g_cgoods[i].combo_id == g_combo_id){
+	                var a = 0;
+	                for(var s in g_cgoods[i].goods){
+	                    a ++;
+	                    var p_num = parseInt(g_count*g_cgoods[i].goods[s].num);
+	                    if(a==1){
+	                        g_product_id.push({id: '{{ regions.code }}'+g_cgoods[i].goods[s].erp_id, price: g_cgoods[i].price, quantity: p_num});
+	                    }else{
+	                        g_product_id.push({id: '{{ regions.code }}'+g_cgoods[i].goods[s].erp_id, price: 0, quantity: p_num});
+	                    }
+	                }
+	            }
+	        }
+	        window.criteo_q.push({ event: "viewBasket", item:g_product_id });
+	    }else{
+	        window.criteo_q.push({ event: "viewBasket", item:[{id:"{{ regions.code }}{{erp_number}}", price: "{{price}}", quantity: g_count}] });
+	    }
+	}else{
+		window.criteo_q.push({ event: "viewBasket", item:[] });
+	} 
+
+	{% endif %}
+
+	{% if pageSign=='success' %}
+		//Sales page tag 谷歌再营销统计代码
+		window.criteo_q = window.criteo_q || [];
+		window.criteo_q.push( 
+		        { event: "setAccount", account: 47524 },
+		        { event: "setHashedEmail", email: "" },
+		        { event: "setSiteType", type: "m" }
+		    );
+		    {% if c_p != null %}
+		        var g_cgood =  {{ c_p|json_encode|raw }};
+		        var p_price = '{{ c_p_price }}';
+		        var num = parseInt({{num}});
+		        var g_product_id = [];
+		        var a = 0;
+		        for(var i in g_cgood){
+		            if(!g_cgood.hasOwnProperty(i)) continue;
+                    a ++;
+                    if(a==1){
+                        g_product_id.push({id: '{{ regions_code }}'+g_cgood[i].erp_id, price: p_price, quantity: g_cgood[i].num*num});
+                    }else{
+                        g_product_id.push({id: '{{ regions_code }}'+g_cgood[i].p_id, price: 0, quantity: g_cgood[i].num*num});
+                    }
+		        }
+		        window.criteo_q.push({ event: "trackTransaction",id: "{{orderid}}", item:g_product_id });
+	    {% else %}
+	        window.criteo_q.push({ event: "trackTransaction", id: "{{orderid}}", item:[{id:'{{regions_code}}{{erp_number}}', price: '{{price}}', quantity: '{{num}}'}] });
+	    {% endif %}
+	{% endif %}
+
+
+	{% if pageSign=='success' and has_referer == 1 %}
+	try{
+		var ga_products = {{ ga|raw }};
+		ga_products.map(function(row){
+			ga('ec:addProduct', {
+				'id': row.id,
+				'name': row.name,
+				'variant': row.variant,
+				'price': row.price,
+				'quantity': row.quantity
+			});
+			ga('googleDepartment.ec:addProduct', {               
+				'id': row.id,
+				'name': row.name,
+				'variant': row.variant,
+				'price': row.price,
+				'quantity': row.quantity
+			});
+		});
+		ga('ec:setAction', 'purchase', {
+			'id': '{{orderid}}'
+			, 'revenue': '{{total}}'
+			, 'shipping': '0'
+			, 'option': '{{pay_method}}'
+		});
+		ga('send', {
+			hitType: 'event'
+			, eventCategory: 'Checkout'
+			, eventAction: 'Order Paid Success'
+			, eventLabel: '{{pay_method}}&{{orderid}}&{{total}}'
+			, nonInteraction: true
+		});
+		ga('googleDepartment.ec:setAction', 'purchase', {
+			'id': '{{orderid}}'
+			, 'revenue': '{{total}}'
+			, 'shipping': '0'
+			, 'option': '{{pay_method}}'
+		});
+		ga('googleDepartment.send', {
+			hitType: 'event'
+			, eventCategory: 'Checkout'
+			, eventAction: 'Order Paid Success'
+			, eventLabel: '{{pay_method}}&{{orderid}}&{{total}}'
+			, nonInteraction: true
+		});
+
+	}catch(e){
+		console.error(e);
+	}
+
+	{% endif %}
+
+
+	//
+	var ga_btn_event_locked = false;
+	// confirm request locker
+	var ga_order_event_locker = false;
+	// 谷歌按钮事件
+	function ga_btn_event(label, callback){
+		// tag
+		var done = false;
+
+		if (label=='order') {
+			if(ga_order_event_locker==true) {
+				return false;
+			} else {
+				ga_order_event_locker = true;
+			}
+		}
+
+		// 
+		ga('send', {
+			hitType: 'event'
+			, eventCategory: '{{ domain }}'
+			, eventAction: '{{ product_id }}'
+			, eventLabel: label
+			, nonInteraction: true
+			, hitCallback: function(){
+				if( done == false ){
+					clearTimeout(timeoutID);
+					if (label=='order' ){
+						ga_order_event_locker = false;
+					}
+					callback();
+				}
+			}
+		});
+		ga('googleDepartment.send', {
+			hitType: 'event'
+			, eventCategory: '{{ domain }}'
+			, eventAction: '{{ product_id }}'
+			, eventLabel: label
+			, nonInteraction: true
+		});
+
+		// coutner
+		var timeoutID = setTimeout(function(){
+			if( !done==true ){
+				done = true;
+				if (label=='order' ){
+					ga_order_event_locker = false;
+				}
+				callback();
+			}
+		}, 1000);
+		return true;
+	}
+	//
+	(function scrollevent(){
+		window.ga_page = 1;
+		var hasParam = window.location.href.split("?")>1;
+		var uri = window.location.pathname + window.location.search;
+		function ga_scroll(){
+			var vh = parseInt(window.screen.height);
+			var top = parseInt(window.scrollY)+vh;
+			var page = parseInt(top/vh);
+			if( page>ga_page ){
+				ga('send', {   
+					hitType: 'pageview',
+					title: '{{title}}',
+					location: window.location.href+(hasParam?'&':'?')+'ga_page='+ga_page,
+					page: uri+(hasParam?'&':'?')+'ga_page='+ga_page
+				});
+				ga_page = page;
+			}
+		}
+		window.addEventListener('scroll', function(){
+			ga_scroll();
+		})
+	})();
+</script>
+{% if domain == 'www.stoubgn.com' and identity_tag == 'ZZXX' %}
+<script type='text/javascript' src='http://www.zxccc.net/am-mcs-web/resources/js/ms/entrance.js?tenantId=2018022601006951'></script>
+{% endif %}
+{% if domain == 'www.vmojk.com' and identity_tag == 'taiguoHN965' %}
+<script type='text/javascript' src='http://www.zxccc.net/am-mcs-web/resources/js/ms/entrance.js?tenantId=2018022601006951'></script>
+{% endif %}
+<style>#iconDivMain {width: 82px !important; left: auto !important; right: 10px !important; }</style>

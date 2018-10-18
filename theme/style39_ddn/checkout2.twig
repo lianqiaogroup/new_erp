@@ -1,0 +1,182 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/images/favicon.ico" type="image/x-icon" rel=icon>
+<link href="{{ THEME }}/css/cart.css" type="text/css" rel="stylesheet"/>
+<!--  -->
+{# <input id="region_code" value="{{regions.code}}" type="hidden"> #}
+<input id="identity_tag" value="{{identity_tag}}" type="hidden">
+<input id="region_code" data-id='{{ regions.region_id }}' value="{{regions.code}}" type="hidden">
+<!--  -->
+<div class="g-bd">
+    <div class="m-hd">
+        <div class="m-topBar">
+            <a class="goback" href="/{{ identity_tag}}"></a>
+            <div style="width: 100%;"><div class="title">{{ lang.order_comfirmation }}</div></div>
+        </div>
+    </div>
+    <!--  -->
+    <div id="order">
+        <div class="warp">
+            <form id="form" name="form" action="order.php" method="post" onsubmit="return prepost()">
+                <!--  -->
+                <input type="hidden" name="combo_id" value="">
+                <input type="hidden" name="token" value="{{ token }}">
+                <input type="hidden" id="act" name="act" value="getAttrPrice">
+                <input type="hidden" name="product_id" value="{{ product_id }}">
+                <input type="hidden" name="vercode" value="">
+                <input type="hidden" name="orderId" value="">
+                <input id="noaddress" value="{{lang.no_address}}" type="hidden">
+                <input id="theme" value="{{theme}}" type="hidden">
+                <!-- 勾选的属性 -->
+                <section class="selectedPrototype">
+                {% if combo %}
+                    {% for om in  combo %}
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                                {% for o in  ok.options %}
+                                    <input type="hidden" name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="">
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    {% for o in  options %}
+                        <input type="hidden" name="attr[{{ o.attr_group_id }}]" value="">
+                    {% endfor %}
+                {% endif %}
+                </section>
+                <!--  -->
+                <div class="m-goodItems">
+                    <ul class="m-list m-attrs">
+                        <li class="item">
+                            <div class="m-goodItem">
+                                <div class="imgWrap">
+                                    <img src="{{ thumb }}">
+                                </div>
+                                <!--选中的产品-->
+                                <div class="cnt" style="line-height:20px;">
+                                    <span style="color: black;font-size: 16px; line-height:20px;">{{ title }} <br/> </span>
+                                    <span style="font-size: 16px;" class="red">{{ currency_code }} <combprice></combprice></span>
+                                    <br>
+                                    {% if combo %}
+                                        <!--  -->
+                                    {% else %}
+                                        {% for o in options %}
+                                            <span style="font-size:12px;" optionsGroup data-id="{{ o.attr_group_id }}">
+                                            {% for key,attr in o.attr %}
+                                                <span style="display:none; font-size:14px" class="red" data-id="{{ key }}">{{ attr.name|raw }}</span>
+                                            {% endfor %}
+                                            </span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item" style="margin: 10px 0px; padding-bottom:5px;display: none;">
+                            <div class="u-format">
+                                <div class="tt">{{ lang.num }}</div>
+                                <div class="con">
+                                    <div class="m-selnum dr">
+                                        <div class="less z-dis" onclick="minnumber()"></div>
+                                        <div class="textWrap">
+                                            <input id="mun" onblur="inputnumber();" name="num" type="text" value="">
+                                        </div>
+                                        <div class="more" onclick="addnumber()"></div>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 套餐包含产品 -->
+                {% if combo %}
+                    <div class="m-goodItems" style="margin-bottom: 10px;">
+                        <ul id="selectedProducts">
+                            {% for om in  combo %}
+                                {% for ok in  om.goods %}
+                                    <li data-comboId="{{ om.combo_id }}" data-single="{{ om.is_single_combo }}" style="display:none;">
+                                        <img src="{{ ok.thumb }}" class="forAttrImg">
+                                        <div class="product-info">
+                                            <div>{{ ok.title }}</div>
+                                            <div class="product-prototype">
+                                                {% for o in  ok.options %}
+                                                    {% for key,attr in o.attr %}
+                                                    <span attrImg="{{ attr.thumb }}" optionsKey data-optionsGroup="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                                <!-- <span class="price">{{ currency_code }}{{ ok.price }}</span> -->
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <!-- 套餐包含产品 -->
+                <div class="u-icon u-address-bg"></div>
+                {# {% if regions.code=='MYS' %}
+                    {% include 'form_malaysia.twig' %}
+                {% else %} #}
+                    {% include 'form.twig' %}
+                {# {% endif %} #}
+                <div style="padding: 15px; background: #fff;font-size: 14px;color: #666;text-align: left;margin-top: 10px; margin-bottom: 20px;">
+                    {{ lang.warming|raw }}
+                     <div style="font-size:14px;font-weight:900;color:#000;">
+                    {{lang.customer_contact}}
+                    </div>
+                </div>
+               
+                <!--  -->
+                <script>
+                var quotes=new Array("{{ title }}");
+                </script>
+                <div id="fahuo">
+                </div>
+                <!--  -->
+                <footer class="m-orderFt">
+                    <div class="actualPrice">
+                        <label class="label">{{ lang.total }}:&nbsp;</label>
+                        <span class="value">
+                            <span id="price"></span>
+                            <input type="hidden" name="zfbprice" value="20889">
+                            <input type="hidden" name="price" value="" readonly="" class="value" style="width:80px;border: none;text-align: center;">{{ lang.yuan }}<span id="zfbyh"></span>
+                        </span>
+                    </div>
+                    <button class="btn w-button" type="submit" name="Submit">{{ lang.buy_now }}</button>
+                    <input type="hidden" data-cuckootag="confirm_order">
+                </footer>
+            </form>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+<!--  -->
+<script type="text/javascript">
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+    window.SMSlang = {
+        'MYS':{
+            'title':"{{lang.title}}",
+            'sendto':"{{lang.sendto}}",
+            'take':"{{lang.take}}",
+            'if_no':"{{lang.if_no}}",
+            'click':"{{lang.click}}",
+            'resend':"{{lang.resend}}",
+            'wait':"{{lang.wait}}",
+            'wait_before':"{{lang.wait_before}}"
+        }
+    }
+</script>
+<script type="text/javascript" src="{{ THEME }}/js/checkout.js"></script>
+{% include '/public/theme/footer.twig' %}

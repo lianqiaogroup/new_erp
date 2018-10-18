@@ -1,0 +1,22 @@
+<!-- resource -->
+<!-- end header resource -->
+<div class="panel_large">
+	
+	<link href="{{ THEME }}/style/success.css" rel="stylesheet">
+	{% include 'header.twig' %}
+	<div class="explain">
+		<h2 class="title">{{ lang.order_detail }}</h2>
+		<div class="link_detail">3{{ lang.location }}</div>
+		<div><a href="/order_quality.php?order={{key}}&order_no={{orderid}}" class="order_quality">{{lang.order_quality}}</a></div>
+	</div>
+
+	{% include 'footer.twig' %}
+</div>
+
+<div class="panel_small">
+	{% include '/public/theme/success.twig' %}
+</div>
+<!-- footer resource -->
+
+
+<script src="{{ THEME }}/js/success.js"></script>

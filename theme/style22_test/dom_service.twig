@@ -1,0 +1,6 @@
+{% set serviceList = modulesParam.service.options.list|split(',') %}
+<ul class="module_service">
+	{% for item in serviceList %}
+    <li class="item"><i></i><span>{{ item }}</span></li>
+	{% endfor %}
+</ul>

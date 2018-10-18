@@ -1,0 +1,214 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section id="page-index">
+	<div class="img-wrap">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% if photos %}
+					{% for p in photos %}
+						<div class="swiper-slide">
+							<img src="{{ p.thumb }}" width="100%">
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="swiper-slide">
+						<img src="{{ thumb }}" width="100%">
+					</div>
+				{% endif %}
+			</div>
+			<div class="swiper-button-prev swiper-button-black"></div>
+    		<div class="swiper-button-next swiper-button-black"></div>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<div class="detail">
+		<div class="title">{{ title }}</div>
+		<div class="price">
+			{{ currency_code }}{{ price }}<del>{{ currency_code }}{{ market_price }}</del>
+		</div>
+		<div class="promise">
+			<ul>
+				<li>{{ lang.discount }}{{ ((market_price-price)/market_price*100)|number_format(0) }}%{{ lang.en_discount }}</li>
+				<li>{{ lang.save }}{{ currency_code }}{{ market_price-price }}</li>
+				<li>{{ lang.cash_on_delivery }}</li>
+				<li>{{ lang.send }}（<strong>{{ lang.free }}</strong>*）</li>
+				<li>{{ lang.promise }}</li>
+			</ul>
+		</div>
+
+		<div class="product_info" data-error="{{ lang.Th_titleattr }}">
+			<div class="title show">{{ lang.choose }}</div>
+			{% include './cmpt-guige.twig' %}
+
+			<div class="title">{{ lang.detail }}</div>
+	        <div class="m-img">
+                {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+                 {% if regions.code == 'THA'  and lang.after_sales %}
+                <div class="after_sale">
+                    <div class="after_sale_title">{{ lang.after_sales }}</div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+                        </div>
+                    </div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+                        </div>
+                    </div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+                        </div>
+                    </div>
+                    <div class="after_sale_content">
+                        <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+                        </div>
+                        <div>
+                            <span class="after_sale_circle"></span>
+                            <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+	        </div>
+	        {% if comment %}
+			<div class="title">{{ lang.comment }}</div>
+	        <div class="pinlun_content" id="pinlun_content">
+		        {% for a in  comment %}
+		            <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7">
+		                <div>
+		                	<div>
+		                		<span id="wi">{{ a.name }}</span>
+		                        {% if a.is_anonymous %}
+		                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+		                        {% endif %}
+		                	</div>
+		                	<div class="stars">
+		                		<span></span>
+		                		<span></span>
+		                		<span></span>
+		                		<span></span>
+		                		{% if a.star == 5 %}<span></span>{% endif %}
+		                	</div>
+		                </div>
+		                <P style="color: #666;margin-top:10px;">{{ a.content }}</P>
+
+		                <div class="msKeimgBox">
+		                    <ul>
+	                            <li>
+	                                {% for b in a.thumb %}
+	                                    <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+	                                {% endfor %}                                        
+	                            </li>
+	                            <li>
+	                                {% for b in a.thumb %}
+	                                    <span class="hidden">
+	                                        <img src="{{ b.thumb }}" width="100%" height="auto" />
+	                                    </span>
+	                                {% endfor %}
+	                            </li>
+		                    </ul>
+		                </div>
+		            </div>
+		        {% endfor %}
+	        	<div><button class="comment_button">{{ lang.publish }}</button></div>
+		    </div>
+		    {% endif %}
+	    </div>
+	</div>
+	<div class="top"><a></a></div>
+	<footer>
+		<div class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"></div>
+		<div class="buy_now" data-cuckootag="buy_now" data-event="postcheckGuige">
+			<button>{{ lang.buy_now }}</button>
+		</div>
+		<div class="order_inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}"></div>
+	</footer>
+	<form id="add_comment" name="form" action="#" method="post">
+		<div class="wrap">
+			<div class="close"></div>
+			<div class="title">{{ lang.publish }}</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.name }}:</span>
+				<input type="text" name="name" class="right" required="required">
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.phone }}:</span>
+				<input type="text" name="phone" class="right" required="required">
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.satisfy }}:</span>
+				<span class="right">
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+				</span>
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.comment }}:</span>
+				<input type="text_area" name="message" class="right" required="required">
+			</div>
+			<div class="item">
+				<span class="item_tt">{{ lang.upload }}:</span>
+				<input type="file" name="file" class="right">
+			</div>
+			<div class="submit">
+				<input type="submit" name="submit" value="{{ lang.submit }}">
+			</div>
+		</div>
+	</form>
+</section>
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

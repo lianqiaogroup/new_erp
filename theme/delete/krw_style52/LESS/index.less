@@ -1,0 +1,151 @@
+@import 'guide.less';
+html{
+	background:#f1f1f1;
+}
+h1,h5{
+	margin:0;
+	padding:0;
+}
+body{
+	width:92%;
+	max-width:640px;
+	margin:0 auto;
+	padding:4%;
+	background:#fff;
+}
+img{
+	width:100%;
+	vertical-align:top;
+}
+button{
+	background:none;
+	border:none;
+	outline:none;
+}
+.swiper-pagination{
+	background:#5f6cb2;
+    color:#fff;
+    left:auto !important;
+    right:0;
+    width:auto !important;
+    padding:0 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 24px;
+}
+.sale{
+	display:-webkit-flex;
+	display:flex;
+	justify-content: space-between;
+	align-items:center;
+	height:48px;
+	font-size:13px;
+	>span{
+		&:first-child{
+			background:#f43a4a;
+			color:#fff;
+			padding:0 6px;
+		}
+		&:last-child{
+			position:relative;
+			font-weight:bold;
+			color:#648bce;
+			&:after{
+				content:'';
+				display:block;
+				width:100%;
+				height:6px;
+				bottom:0;
+				left:0;
+				background:#e1ebfd;
+				margin:-6px 0 0 -4px;
+				padding-left:8px;
+			}
+		}
+	}
+}
+.title{
+	font-size:14px;
+}
+.price{
+	font-size:13px;
+	padding:14px 0;
+	.discount{
+		background:#f43a4a;
+		color:#fff;
+		line-height:20px;
+		display:inline-block;
+		padding:0 6px;
+		position:relative;
+		margin:0 20px 0 12px;
+		&:after{
+			content:'';
+			height:0;
+			border:10px solid #fff;
+			border-left:10px solid #f43a4a;
+		    position:absolute;
+		    top:0;
+		    right:-20px;
+		}
+	}
+	.sale_price{
+		font-size:18px;
+		color:#ff2061;
+	}
+}
+.hot{
+	width:260px;
+	height:66px;
+	line-height:66px;
+	background:url(../images/hot.png) no-repeat;
+	background-size:100% 100%;
+	span{
+		color:#fff;
+		font-weight:bold;
+		padding-left:4px;
+		&:first-child{
+			display:inline-block;
+			font-size:26px;
+			-webkit-transform:rotate(-12deg);
+			transform:rotate(-12deg);
+		}
+		&:last-child{
+			vertical-align:top;
+		}
+	}
+}
+div.tip{
+	font-size:12px;
+	color:#fff;
+	text-align:center;
+	padding:16px 0;
+	span{
+		background:#707070;
+		padding:2px 8px;
+	}
+}
+footer{
+	height:40px;
+	.buy_now{
+    	max-width: 640px;
+	}
+	button{
+		color:#fff;
+		background:#f43a4a;
+		width:100%;
+		line-height:40px;
+		height:40px;
+	}
+	.fixed{
+		position:fixed;
+		bottom:10px;
+	    width: 92%;
+	}
+}
+.m-img{
+	margin-top:16px;
+	video{
+		width:100%;
+		height:auto;
+	}
+}

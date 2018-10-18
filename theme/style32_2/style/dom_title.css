@@ -1,0 +1,12 @@
+.module_title {
+  background: #fff;
+  margin: 0 2.5%;
+}
+.module_title h1 {
+  color: #666;
+  font-size: 16px;
+  line-height: 32px;
+  padding: 2%;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlMzJfMi9sZXNzL2RvbV90aXRsZS5sZXNzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0MsZ0JBQUE7RUFDQSxjQUFBOztBQUZELGFBR0M7RUFDQyxXQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsV0FBQSIsInNvdXJjZXNDb250ZW50IjpbIi5tb2R1bGVfdGl0bGUge1xuXHRiYWNrZ3JvdW5kOiNmZmY7XG5cdG1hcmdpbjowIDIuNSU7XG5cdGgxe1xuXHRcdGNvbG9yOiM2NjY7XG5cdFx0Zm9udC1zaXplOjE2cHg7XG5cdFx0bGluZS1oZWlnaHQ6MzJweDtcblx0XHRwYWRkaW5nOjIlO1xuXHR9XG59Il0sImZpbGUiOiJzdHlsZTMyXzIvbGVzcy9kb21fdGl0bGUuY3NzIn0= */

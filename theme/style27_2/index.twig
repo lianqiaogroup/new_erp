@@ -1,0 +1,154 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet" type="text/css">
+<link href="{{ THEME }}/style/index.css?v=2" rel="stylesheet">
+<!-- end header resource -->
+<section id="page-index">
+    <input id="region_code" value="{{ regions.code }}" type="hidden">
+	<div class="swiper-container">
+		<div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+			{% if photos %}
+				{% for p in photos %}
+				<div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+			{% endif %}
+		</div>
+		<div class="swiper-pagination swiper-pagination-fraction"></div>
+	</div>
+	<div class="message">
+        <input type="hidden" id="marquee" value="{{ lang.marquee }}">
+		<div id="fahuo">
+			<span>{{ lang.looking_1 }}{{ sales }}{{ lang.looking_2 }}</span>
+		</div>
+		<div id="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"></div>
+	</div>
+	{#  #}
+	<div style="position: relative;">
+		<div class="price b_price">
+			<span class="top_price">{% if currency_prefix == 1 %}{{ currency_code }}{{price}}{% else %}{{price}}{{ currency_code }}{% endif %}</span>
+			<span class="pre_price">{{lang.market_price}}{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price}}{% else %}{{market_price}}{{ currency_code }}{% endif %}</span>
+		</div>
+		{% if modulesParam.countdown.options.open == '1' %}
+		<div class="timeWrap b_timeWrap">
+			<span id='clock'>{{ modulesParam.countdown.options.label }}</span>
+			<span id="timer"
+				data-fn="module_countdown_core"
+				data-value="{{ modulesParam.countdown.options.end_timer }}"
+				data-step="{{ modulesParam.countdown.options.time_step }}">
+				<span id="h">-</span>
+				<span class="">:</span>
+				<span id="m">-</span>
+				<span class="">:</span>
+				<span id="s">-</span>
+			</span>
+		</div>
+		{% endif %}
+		<div style="clear:both"></div>
+	</div>
+	{% if modulesParam.flashsale.options.open == '1' %}
+	<div class="module_container">
+		<span class="module_process" data-value='{{ sales }}'>
+			<span data-value='{{ stock }}'></span>
+		</span>
+	</div>
+	{% endif %}
+	<div class="module_container">
+		<h1 class="product_title">{{ title }}</h1>
+	</div>
+	<div class="module_container">
+		<ul class="module_tags">
+		{% set tags = tags|split(',') %}
+		{% for tag in tags %}
+			<li>{{ tag }}</li>
+		{% endfor %}
+		</ul>
+	</div>
+	<div class="module_container arrival_time">
+		{{ lang.arride1 }}<span id="arrival_days"></span>{{ lang.arride2 }}
+	</div>
+	<div class="inqcom">
+		<div class="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}"><a href="javascript:;">{{lang.order_inquiry}}</a></div>
+		{% if modulesParam.comment.options.open == '1' %}
+		<div class="com_pinlun">
+			<a href="#detial-appraise">{{lang.com_pinlun}}</a>
+		</div>
+		{% endif %}
+	</div>
+
+	{% set serviceList = modulesParam.service.options.list|split(',') %}
+	<div class="module_service">
+		<ul>
+			{% for item in serviceList %}
+				<li>{{ item }}</li>
+			{% endfor %}
+		</ul>
+		<div class="right"></div>
+		<div class="service_detail">
+			<h3>{{ lang.tips }}</h3>
+			<p>{{ lang.warming|raw }}</p>
+		</div>
+		<div style="clear:both"></div>
+	</div>
+	{#  #}
+	<div class="product_info">
+		<div class="m-img">
+			<div class="render_content">
+        		{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+			</div>
+			<p class="top"><a></a></p>
+		</div>
+	</div>
+	{% if modulesParam.comment.options.open == '1' %}
+	<div class="detail-block" id="detial-appraise">
+		<h4>{{ lang.new_pinlun }}</h4>
+		<div id="mq" data-fn="commentScroll">
+			<div>
+				{% for a in  comment %}
+					{% if loop.index <=100 %}
+					<div class="appr-title mqc">
+						{% if a.is_anonymous %}
+							<span style="color:red; margin:0px 3px">{{ lang.anonymous }}</span>
+						{% else %}
+							<span style="color:red; margin:0px 3px">{{ a.name }}</span>
+						{% endif %}
+						<span>满意度：<font color="red">★★★★★</font></span><br/>
+					</div>
+					<div class="mqc">
+						<p><span style="font-family:宋体">{{ a.content }}</span><span style="font-family:宋体"></span></p>
+					</div>
+					<div class="msKeimgBox">
+						<ul>
+							{% for b in a.thumb %}
+								<li>
+									<img src="{{ b.thumb }}" width="75" height="75" />
+								</li>
+							{% endfor %}
+							<div style="clear:both;"></div>
+						</ul>
+						<div class="mskeTogBtn"></div>
+					</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		<div class="mskeLayBg"></div>
+		<div class="mskelayBox">
+			<div class="mske_html">
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% include 'dom_footer.twig' %}
+</section>
+<section id="page-order" class="black container">
+	{% include 'cmpt-guige.twig' %}
+	<input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+
+
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

@@ -1,0 +1,18 @@
+{% if moduleParam.showItem %}
+{% set className = moduleParam.showItem %}
+{% else %}
+{% set className = 'comment' %} 
+{% endif %}
+<div class="product_info class-{{className}}">
+    <div class="left">
+        <h1>{{ title }}</h1>
+        <div class="price">
+            {% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+            {% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+        </div>
+        {% set tags = tags|split(',') %}
+        {% for tag in tags %}
+            <a href="javascript:;" class="make">{{ tag }}</a>
+        {% endfor %}
+    </div>
+</div>

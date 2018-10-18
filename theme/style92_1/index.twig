@@ -1,0 +1,151 @@
+{% include 'public/theme/header.twig' %}
+{% include 'public/theme/header_index.twig' %}
+{%  if regions.region_id == 28  %}
+    <link rel="stylesheet" type="text/css" href="{{ THEME }}/style/font.css">
+{%  endif  %}
+<!-- <link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet"> -->
+<!-- <link href="{{ THEME }}/style/index.css?v=f7e8dfb0bd" type="text/css" rel="stylesheet" /> -->
+{# <link href="{{ THEME }}/dist/css/index.css?v=f7e8dfb0bd" type="text/css" rel="stylesheet" /> #}
+<link href="{{ THEME }}/dist/css/index-9c0bf9fc6e.css" type="text/css" rel="stylesheet" />
+<!--/page-->
+<section id="page-index" class="container">
+    {% if has_home %}
+    <header>
+        <a href="/" class="goback">
+            <img src="{{ THEME }}/images/detail-back.png" alt="">
+            <span>{{ lang.go_home }}</span>
+        </a>
+    </header>
+    {% endif %}
+    <div class="swiper-container" style="background: white">
+        <div class="swiper-wrapper">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination mun_banner"></div>
+    </div>
+    <div class="product_title">{{ title }}</div>
+    {% if modulesParam.comment.options.open == '1' %}
+        <div class="module_comment">
+            <div class="comment_score">★★★★★<span>{{ lang.Th_score }}</span></div>
+            <div class="comment_viewall">{{ lang.user_evaluation }}</div>
+        </div>
+    {% endif %}
+    {% include 'dom_baseinfo.twig' %}
+    <div class="specSelect">
+        <div class="m-listItem" id="val-sel" data-cuckootag="buy_now">
+            <div class="f-vc">
+                <div class="inner">
+                    <span class="it">{{ lang.Th_attr }}</span>
+                    <span class="taocan"></span>
+                </div>
+            </div>
+            <i class="icon u-icon u-address-right"></i>
+        </div>
+    </div>
+    {% if modulesParam.service.options.list != '' %}
+        {% include 'dom_service.twig' %}
+    {% endif %}
+    {% include 'dom_buybtn.twig' %}
+    <div class="product-info" id="bTop">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+    {% if modulesParam.comment.options.open == '1' %}
+        {% if comment %}
+            {% include 'dom_comment.twig' %}
+        {% endif %}
+    {% endif %}
+    <div class="slideButton">
+        {% if has_home %}
+            <i class="home" onclick="gohome()"></i>
+        {% endif %}
+        {% if service_contact_id %}
+            <i class="kefu" data-cuckootag="service" data-value="{{ service_contact_id }}"></i>
+        {% endif %}
+        <i class="m-goToTop" style="display: inline;"></i>
+    </div>
+    
+</section>
+ {% if regions.code == 'THA' and lang.after_sales %}
+<div class="after_sale">
+    <div class="after_sale_title">{{ lang.after_sales }}</div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales1 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales1_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales1_2 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales1_3 }}</span>
+        </div>
+    </div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales2 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_2 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_3 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_4 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_5 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales2_6 }}</span>
+        </div>
+    </div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales3 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales3_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales3_2 }}</span>
+        </div>
+    </div>
+    <div class="after_sale_content">
+        <div class="after_sale_first">{{ lang.after_sales4 }}</div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales4_1 }}</span>
+        </div>
+        <div>
+            <span class="after_sale_circle"></span>
+            <span class="after_sale_circle_right">{{ lang.after_sales4_2 }}</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+<section id="page-order" class="container" style="display:none;" data-error="{{ lang.Th_titleattr }}">
+    {% include 'cmpt-guige.twig' %}
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+<!--/page-->
+<!-- <script src="{{ THEME }}/js/index.js?v=183461b446"></script> -->
+<script src="{{ THEME }}/dist/js/index.js?v=183461b446"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none !important; }</style>
+{% include '/public/theme/footer.twig' %}

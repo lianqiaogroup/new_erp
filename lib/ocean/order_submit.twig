@@ -1,0 +1,214 @@
+        <script type="text/javascript" src="/lib/ocean/luhm_check.js"></script>
+        <style>
+        	label[for="card_number"] span, label[for="card_month"] span, label[for="card_secureCode"] span{
+        		width:100%!important;
+        		text-align: left!important;
+        	}
+        	#ocean-div{
+        		padding: 31px 17px!important;
+        	}
+        	#card_number{
+        		width:100%!important;
+        		
+        	}
+        	#opcse-encrypted-form label input, #card_year, #card_month, #card_secureCode, #card_number{
+        		background-color:#fff!important
+        	}
+        </style>
+        <div id="ocean-div">
+            <link href="/lib/ocean/oceanstyle.css" type="text/css" rel="stylesheet"/>
+            <label for="card_number">
+                <span>{{ CardNumber }}</span>
+                <input align="right" type="text" id="card_number" value="" maxlength="19" size="20" autocomplete="off" opcse-name="card_number" onchange='checkBankNo(this)' onkeydown="onlyNum()" autocomplete="off" error='{{ right_card_number }}'/>
+            </label>
+            <br>
+
+            <div style="width:100%; color:#585757;">
+                <span style="display:inline-block;width: 100%;  font-weight: 700;">{{ Expiration }}</span>
+                <select placeholder="MM" value="" id="card_month" opcse-name="card_month">
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>/
+                <select placeholder="YYYY" value="" id="card_year" opcse-name="card_year">
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                </select>
+            </div>
+            <br>
+
+            <label for="card_secureCode">
+                <span>{{ CVC }}</span>
+                <input type="password" placeholder='XXX' align="right" type="text" id="card_secureCode" value="" size="3" maxlength="3" autocomplete="off" opcse-name="card_secureCode" onchange='checkSecureCode(this)' onkeydown="onlyNum()"/>
+            </label>
+            <br>
+            <a href="javascript:;" class="shooDoc">{{ CVCLINK }}</a>
+            <div style="color: red;">
+              ※{{ safe }}
+            </div>
+            <input type="hidden" value="{{ Please_check_your_card_message }}" id="error">
+            <input type="hidden" value="{{ key }}" id="code">
+        <!-- opcse -->
+        <script type="text/javascript" src="/lib/ocean/opcse.js"></script>
+       </div>
+        <div class="docLayer">
+            <div>
+                <img src="/lib/ocean/image/cvvlink.jpg" alt="">
+            </div>
+            <p>{{ CVC_safe_intro }}</p>
+            <p>{{ CVCintro }}</p>
+            <p>{{ CVC_file_in }}</p>
+            <span class="closeBtn">X</span>
+        </div>
+        <style>
+            .docLayer {
+                display: none;
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                z-index: 999;
+                width: 100%;
+                max-width: 750px;
+                margin: 0 auto;
+                background-color: #fff;
+                box-sizing: border-box;
+                padding: 20px;
+            }
+            .docLayer img {
+                width: 100%;
+            }
+            .docLayer p {
+                margin: 20px 0px;
+            }
+            .docLayer .closeBtn {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                background-color: rgba(0,0,0,0.5);
+                border-radius: 25px;
+                width: 25px;
+                height: 25px;
+                color: #fff;
+                text-align: center;
+                line-height: 25px;
+                z-index: 99999;
+            }
+        </style>
+        
+       <script>
+        var modelOptYear = $('#card_year').html();
+        var modelOptMonth = $('#card_month').html();
+        
+        // console.log(modelOptMonth);
+        initDate();
+		var modelOtpMonthVal = $('#card_month').val();
+        $('#card_year').change(function(e){
+            var date=new Date;
+            var year=date.getFullYear(); 
+            obj = e.currentTarget;
+            
+            var index = obj.selectedIndex;
+            var value = obj.options[index].value;
+            if(year!=value){
+              $('#card_month').html(modelOptMonth);
+              //console.log(modelOtpMonthVal);
+              $('#card_month').val(modelOtpMonthVal);
+            }else{
+              initDate();
+              modelOtpMonthVal = $('#card_month option:selected').text();
+              //console.log(modelOtpMonthVal);
+            }
+        });
+        $('#card_month').change(function(e){
+        	modelOtpMonthVal = $('#card_month option:selected').text();
+        	//console.log(modelOtpMonthVal);
+        });
+
+       	function initDate(){
+          var date=new Date;
+          var year=date.getFullYear(); 
+          var month=date.getMonth()+1;
+          if(month<10){
+            $('#card_month').val('0'+month);
+          }else{
+            $('#card_month').val(month);
+          }
+          
+          $('#card_year').val(year);
+          if(month>1){
+            for (i=1;i<month;++i) {
+              if(month<10){
+                $('#card_month option[value=0'+i+']').remove();
+              }else{
+                $('#card_month option[value='+i+']').remove();
+              }
+              
+            }
+          }
+          if(year-2017>1){
+            for (i=2017;i<year;++i) {
+              $('#card_year option[value='+i+']').remove();
+            }
+          }
+        }
+       
+        function onlyNum() 
+        { 
+            if(!((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=96&&event.keyCode<=105)||(event.keyCode==8))) 
+            {
+                event.returnValue=false; 
+            }
+            
+        } 
+        function checkSecureCode(obj){
+            var value = $(obj).val();
+            var valueLen = value.toString().length;
+            if(isNaN(value)){
+                $(obj).val('');
+                alert('{{ only_num }}');
+            }else if(valueLen<3||valueLen>4){
+                $(obj).val('');
+                alert('{{ right_safe_code }}');
+            }
+        }
+        function checkBankNo(obj){
+            var value = $(obj).val();
+            if(isNaN(value)){
+                $(obj).val('');
+                $(obj).attr('placeholder','{{ only_num }}');
+                alert('{{ only_num }}');
+            }else if(!luhmCheck(value)){
+              $(obj).val('');
+               $(obj).attr('placeholder','{{ right_card_number }}');
+            }
+        }
+        $('.shooDoc').click(function(event) {
+            /* Act on the event */
+            $('.docLayer').show();
+        });
+        $('.closeBtn').click(function(event) {
+            /* Act on the event */
+            $('.docLayer').hide();
+        });
+       </script>

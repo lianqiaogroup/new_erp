@@ -1,0 +1,241 @@
+{% include 'public/theme/header.twig' %}
+<!-- resource -->
+<link type="image/x-icon" rel="icon" href="{{ THEME }}/image/favicon.ico" >
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/style.css" />
+<link type="text/css" rel="stylesheet" href="{{ THEME }}/css/styles.css" />
+<link type="text/css" rel="stylesheet" href="public/bootstrap/css/bootstrap.min.css" />
+<!--  -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!-- END resource -->
+<div id="order">
+    <div class="warp">
+        <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost();">
+            <div class="nav-header">
+                <div class="header-left"><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-menu-left" style="color: black;font-weight:600;font-size:16px;"></span></a> </div>
+                <h2>確認訂單</h2>
+            </div>
+
+            <div class="nav_top_one">
+                <div class="nav_top_left">
+
+                    <img class="small_o" src="{{ thumb }}" alt="">
+
+                </div>
+                <div class="nav_top_right">
+                    <div class="right_one">{{ title }}</div>
+                    <div class="right_two">
+                        <div class="bdbox">
+                            <label class="bdxx" style="width: 40px;text-align: left">{{ lang.num }}</label>
+                            <div class="input-group" id="read_inp" style="width: 110px;margin: 5px 0px;">
+                                <span class="input-group-btn" >
+                                     <p  class="less" type="button" onClick="minnumber()">-</p>
+                                </span>
+                                <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onBlur="inputnumber();" style="text-align: center;height:26px;border-left: 0;border-right:0;width: 40px;color:#555;">
+                                    <span class="input-group-btn">
+                                    <p class="more" type="button" onClick="addnumber()">+</p>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="bdbox-one">
+                            <div class="num_done">
+                                ×<span>1</span>
+                            </div>
+                            <div class="text3box">
+                                {% if currency_prefix ==1 %} {{ currency_code }}{% endif %}<span>{{ discount_price  }}</span>
+                                <input name="price" readonly type="hidden" style="width:50px;" value="{{ discount_price  }}"/> {% if currency_prefix ==0 %} <span style="float: left">{{ currency_code }}</span> {% endif %}  <span id="zfbyh"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--套餐-->
+            <div class="_state">
+                <div class="bdbox" id="combo">
+                    <label class="bdxx">{{ lang.product }}：</label>
+                    <div class="dxbox red">
+                         {% if combo %}
+                             {% for c in combo %}
+                                  <label><input type="radio" data-loopIndex="{{ loop.index }}" name="combo_id" value="{{ c.combo_id }}" class="combo"> {{ c.title|raw }}<div class="checked_mark"></div></label>
+                             {% endfor %}
+
+                             {% else %}
+                                 <label><input type="radio" name="combo_id" value="0" data-loopIndex="1"> {{ title|raw }}<div class="checked_mark"></div></label>
+                         {% endif %}
+                    </div>
+                </div>
+            
+            <!--套餐-->
+             <!--属性开始-->
+            <div id="product_attr">
+                {% if combo %}
+                    <!--循环套餐-->
+                    {% for om in  combo %}
+                        <section data-loopIndex="{{ loop.index }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+                        <!-- 循环产品 -->
+                        {% for ok in  om.goods %}
+                            {% if ok.options %}
+                            <div class="bdbox" comboproduc>
+                                <div class="tc tc{{ ok.combo_id|raw }}" >
+                                    <div class="title_ac"><h5><label for="" class="bdxx" ><em>*</em>{{ ok.title|raw }}</label></h5></div>
+                                    <!-- 循环属性 -->
+                                    {% for o in  ok.options %}
+                                        <li class="item" data-prototype-group="{{ loop.index }}">
+                                            <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                                <label class="bdxx">
+                                                    {{ o.attr_group_title|raw }}
+                                                </label>
+                                                <div class="dxbox red" id="dxbox" style="padding-top: 5px;">
+                                                    {% for key,attr in o.attr %}
+                                                        <label style="display:inline-block; width: 45%;">
+                                                            {% if attr.thumb %}
+                                                            <img src="{{ attr.thumb }}"  style="width: 100%; height: auto;">
+                                                            <br/>
+                                                            {% endif %}
+                                                            <div class="checked_mark"></div>
+                                                            <input type="radio" name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}" style="vertical-align: top;">
+                                                            <span style="font-weight: normal;">{{ attr.name|raw }}</span>
+                                                        </label>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="cls"></div>
+                                        </li>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        </section>
+                    {% endfor %}
+                {% else %}
+                    <section data-loopIndex="1">
+                    <!--循环当前产品属性-->
+                    {% for o in  options %}
+                        <div class="bdbox u-format count_atrr" data-prototype-group="{{ loop.index }}">
+                            <li class="item">
+                                <label class="bdxx"><em>*</em>{{ o.attr_group_title|raw }}</label>
+                                <div class="dxbox red" id="dxbox" >
+                                    {% for key,attr in o.attr %}
+                                        <label style="width:45%;display:inline-block;">
+                                            {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                            <div class="checked_mark"></div>
+                                            <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                            {{ attr.name|raw }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                            <div class="cls"></div>
+                        </div>
+                    {% endfor %}
+                    </section>
+                {% endif %}
+                <input type="hidden" name="act" value="getAttrPrice">
+                <input type="hidden" name="product_id" value="{{ product_id }}">
+            </div>
+              <!--属性结束-->
+
+            </div>
+            <div class="bdbox">
+                <div class="read_h"><p>收件人詳情</p></div>
+                <label class="bdxx"><em class=""></em>{{ lang.name }}:</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="name" class="inputText" placeholder="填寫收件人姓名"/>
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"><em></em>{{ lang.mobile }}:</label>
+                <div class="textbox">
+                    <input required="required" type="text" name="mob" class="inputText" placeholder="{{ lang.mobile_placeholder }}"/>
+                </div>
+            </div>
+            
+            <div class="bdbox">
+                <label class="bdxx" for="email"><em></em>E-mail：</label>
+                <div class="textbox"><input name="email" placeholder="{{ lang.email_use }}" maxlength="30" class="inputText" type="email">  </div>
+            </div>
+        
+            <div class="bdbox">
+                <label class="bdxx"><em></em>地址：</label>
+                <div class="textbox" id="province">
+                    <select name="province" style="background: transparent;width:32%;height: 30px;">
+                        <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                    </select>
+                    {% if regions.region_son %}
+                        <select class="info_sel" name="city" style="background: transparent;width: auto;height: 30px;">
+                            {% for i in regions.region_son %}
+                                <option value="{{ i.lang}}">{{ i.lang }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"></label>
+                <div class="textbox">
+                <input required="required" type="text" name="address" placeholder="填寫詳細地址" class="inputText">
+                </div>
+            </div>
+            <div class="bdbox">
+                <label class="bdxx"> {{ lang.postal }}：</label>
+                <div class="textbox">
+                    <input type="text" name="postal"  class="inputText">
+                </div>
+            </div>
+
+            <div class="bdbox">
+                <label class="bdxx">{{ lang.note }}：</label>
+                <div class="text2box">
+                    <textarea name="guest" placeholder="{{ lang.order_remark }}"></textarea>
+                </div>
+            </div>
+
+            <div class="bdbox">
+                <label class="bdxx"><em></em>付款：</label>
+                <div class="dxbox" id="img_pay">
+                        {% if payment_online ==1 %}
+                            <input name="payment_type" value="1" type="radio" id="pt1" checked> <label for="pt1">{{ lang.yijifu }}</label>
+                        {% endif %}
+                        {% if payment_paypal == 1 %}
+                            <label for="pt2"><img src="/public/image/p_paypal.jpg"></label><input name="payment_type" value="2" type="radio" id="pt2" checked> 
+                        {% endif %}
+                        {% if payment_underline ==1 %}
+                            <input name="payment_type" value="0" type="radio" id="pt3" checked> <label for="pt3"><img src="/theme/style19/image/haver_pay.png">{{ lang.cash_on_delivery }}</label>
+                        {% endif %}
+                </div>
+            </div>
+            <div class="bdbox">
+                <div style="padding: 10px;font-size:12px;">
+                    <font color='red'>{{ lang.warming|raw }}</font>
+                </div>
+            </div>
+            <input type="hidden" name="token" value="{{ token }}">
+          
+            <div class="footer">
+                <div class="goods_num">
+                    共<span style="float:none;">1</span>件商品
+                </div>
+                <div class="subbox" >
+                    <input type="submit" name="Submit" class="btn-style" style="font-size:16px" value="提交訂單">
+                </div>
+                <div class="money_total">
+                    <div class="text3box" style="">
+
+                        {% if currency_prefix ==1 %} <a>{{ currency_code }}</a>{% endif %}<input name="price" readonly value="{{ discount_price  }}"/> {% if currency_prefix ==0 %}
+                        <span style="line-height: 35px;float: right;color: #fc5f8d;">{{ currency_code }}</span> {% endif %}  <span id="zfbyh"></span>
+                    </div>
+                </div>
+                <span>合計：</span>
+            </div>
+        </form>
+        <div style="clear:both;"></div>
+        <div style="clear:both;"></div>
+    </div>
+</div>
+<!-- js resource -->
+<script src="{{ THEME }}/js/checkout.js"></script>
+<!--  -->
+{% include 'public/theme/footer.twig' %}

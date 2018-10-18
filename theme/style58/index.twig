@@ -1,0 +1,192 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<div class="img_wrap">
+    <input id="region_code" value="{{ regions.code }}" type="hidden">
+	<div class="degree">TOP SALER</div>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="swiper-pagination"></div>
+</div>
+<div class="title"><h1>{{ title }}</h1></div>
+		
+<div class="sale">
+	<div>
+		<div>
+			<img src="{{ THEME }}/images/clock.png" width="30">
+		</div>
+		<div class="timeWrap">
+			<span id="timer">
+	            <span  id="h">10</span>
+	        	<span class="">:</span>
+	            <span id="m">00</span>
+	            <span class="">:</span>
+	            <span id="s">00</span>
+	            <span class=""></span>
+	      	</span>
+		</div>
+	</div>
+	<div>
+		<div class="icon">
+		    <span class="">
+		       <svg class="icon-fire" width="16px" height="20px" viewBox="0 0 16 20" style="fill:#FF2552" xmlns="http://www.w3.org/2000/svg">
+		          <g transform="translate(-837.000000, -1062.000000)">
+		           <path d="M852.085731,1071.15481 C851.545444,1069.85394 850.448948,1068.79523 849.077615,1068.24984 C848.196426,1067.89931 847.494302,1067.53191 846.931796,1066.87838 C846.080906,1065.88966 845.552264,1064.44097 845.552264,1063.08937 C845.552264,1062.48872 845.067705,1062 844.471928,1062 C844.303794,1062 844.141245,1062.03874 843.988795,1062.11514 C841.923894,1063.14854 840.177676,1064.76655 838.938949,1066.79414 C837.670517,1068.87033 837,1071.27958 837,1073.76167 C837,1073.85066 837.001307,1073.93942 837.003208,1074.02807 L837.002139,1074.06074 C837.001069,1074.09294 837,1074.12526 837,1074.1577 C837,1074.56918 837.03327,1074.98637 837.098504,1075.39774 C837.388431,1077.22071 838.322021,1078.89148 839.727338,1080.10204 C841.148101,1081.32592 842.964662,1082 844.842299,1082 C844.886857,1082 844.932128,1081.99964 844.976925,1081.99881 C846.995841,1081.96495 848.905441,1081.15648 850.353652,1079.72217 C851.802101,1078.28786 852.628988,1076.38622 852.681864,1074.36778 C852.710976,1073.2575 852.510403,1072.17645 852.085731,1071.15481 Z M841.003911,1077.98594 C840.971591,1077.7824 840.955075,1077.57565 840.955075,1077.37115 C840.955075,1077.32588 840.963987,1077.28869 840.972661,1077.26124 C840.974681,1077.23593 840.977889,1077.21383 840.980741,1077.19553 C840.981929,1077.18769 840.983355,1077.17985 840.98383,1077.1751 C840.98383,1074.7321 842.356232,1072.46675 844.480069,1071.40376 C844.556116,1071.36574 844.63953,1071.34649 844.72829,1071.34649 C845.014296,1071.34649 845.320502,1071.56441 845.320502,1071.89283 C845.320502,1072.61278 845.552563,1073.31217 845.941232,1073.76382 C846.205019,1074.07026 846.485916,1074.26038 846.943145,1074.44217 C847.622217,1074.71238 848.165593,1075.23746 848.433776,1075.88278 C848.643498,1076.3879 848.742596,1076.92367 848.7281,1077.47536 C848.698275,1078.61059 848.159652,1079.63663 847.337161,1080.33305 C846.673537,1080.89496 845.825261,1081.2424 844.908901,1081.25785 L844.842241,1081.25832 C843.857795,1081.25832 842.954742,1080.89686 842.266759,1080.29015 C841.611214,1079.71196 841.151014,1078.91122 841.003911,1077.98594 M851.493994,1074.33665 C851.449079,1076.04722 850.747074,1077.66012 849.517259,1078.87793 C848.902589,1079.48666 848.190247,1079.96267 847.417781,1080.29014 C846.729916,1080.89685 845.826745,1081.25831 844.842299,1081.25831 L844.775639,1081.25783 C843.859278,1081.24251 843.011003,1080.89495 842.347378,1080.33304 C840.235067,1079.48642 838.649021,1077.58728 838.271284,1075.21106 C838.215675,1074.86125 838.186682,1074.50692 838.186682,1074.1577 C838.186682,1074.13893 838.185969,1074.12027 838.186564,1074.10162 L838.185256,1074.04149 L838.185256,1074.01785 L838.185256,1073.76167 C838.185256,1069.31817 840.607576,1065.21487 844.366057,1063.25667 C844.404793,1064.84699 845.020889,1066.47973 846.031238,1067.65358 C846.794199,1068.53988 847.735156,1068.99462 848.638327,1069.35394 C849.713792,1069.78158 850.570385,1070.60419 850.988403,1071.61074 C851.348673,1072.47731 851.51859,1073.39438 851.493994,1074.33665"></path>
+		          </g>
+		       </svg>
+		    </span>
+		</div>
+		<div>{{ lang.hot }}!</div>
+	</div>
+	<div>
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<div>
+			{{ (sales*0.7)|number_format(0) }} {{ lang.Rating }}
+		</div>
+	</div>
+</div>
+<div class="bought">
+	<div class="left">
+		<del>
+			{% if currency_prefix == 1 %}{{ currency_code }}{{ market_price }}{% endif %}
+        	{% if currency_prefix == 0 %}{{ market_price }}{{ currency_code }}{% endif %}
+		</del>
+		<div>
+			{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+    		{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}
+		</div>
+	</div>
+	<div class="right">
+		<div>{{ sales|number_format(0) }}+ {{ lang.bought }}</div>
+		<div>{{ lang.left }} {{ stock }}</div>
+	</div>
+</div>
+<div class="attr" data-error="{{ lang.Th_titleattr }}">
+	{% include 'cmpt-guige.twig' %}
+</div>
+
+<div class="ship query" data-cuckootag="check_order" data-value="{{ identity_tag }}">
+	{{ lang.order_inquiry }}
+</div>
+<div class="service">
+	<div class="detail_tt">{{ lang.service }}</div>
+	<div class="point">
+		<div>{{ lang.free_yun }}</div>
+		<div>{{ lang.cash_on_delivery }}</div>
+		<div>{{ lang.returned_goods }}</div>
+	</div>
+</div>
+<div class="product_info">
+	<div class="detail_tt">{{ lang.details }}</div>
+	<div class="m-img">
+	    {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+	</div>
+</div>
+{% if comment %}
+<div class="comment">
+	<div class="detail_tt">{{ lang.user_comment }}</div>
+	<div class="pinlun_content" id="pinlun_content">	
+	    {% for a in  comment %}
+	        <div class="lab" data-group="{{ a.comment_id }}" data-id="0" style="color:#a8aeb7">
+	            <div>
+	            	<div>
+	            		<span id="wi">{{ a.name }}</span>
+	                    {% if a.is_anonymous %}
+	                        <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                    {% endif %}
+	            	</div>
+	            	<div class="stars">
+	            		<span></span>
+	            		<span></span>
+	            		<span></span>
+	            		<span></span>
+	            		{% if a.star == 5 %}<span></span>{% endif %}
+	            	</div>
+	            </div>
+	            <P style="color: #666;margin-top:4px;word-break:break-all;">{{ a.content }}</P>
+
+	            <div class="msKeimgBox">
+	                <ul>
+	                    <li>
+	                        {% for b in a.thumb %}
+	                            <img src="{{ b.thumb }}" style="width: 75px !important;vertical-align:bottom;margin-right:5px;" />
+	                        {% endfor %}                                        
+	                    </li>
+	                </ul>
+	            </div>
+	        </div>
+	    {% endfor %}
+		<div><button class="comment_button">{{ lang.add_comment }}</button></div>
+	</div>
+</div>
+{% endif %}
+
+<footer>
+	<div class="buy_now" data-cuckootag="confirm_arrtibute" data-event="postcheckGuige">
+		<button>{{ lang.buy }}!</button>
+	</div>
+	<div class="ship">
+		{{ lang.ship_before }} 7-15 {{ lang.ship_after }}
+	</div>
+</footer>
+<form id="add_comment" name="form" action="#" method="post">
+	<div class="wrap">
+		<div class="close"></div>
+		<div class="title">{{ lang.publish }}</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.name }}:</span>
+			<input type="text" name="name" class="right" required="required">
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.phone }}:</span>
+			<input type="text" name="phone" class="right" required="required">
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.satisfy }}:</span>
+			<span class="right">
+				<span class="star"></span>
+				<span class="star"></span>
+				<span class="star"></span>
+				<span class="star"></span>
+				<span class="star"></span>
+			</span>
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.comment }}:</span>
+			<input type="text_area" name="message" class="right" required="required">
+		</div>
+		<div class="item">
+			<span class="item_tt">{{ lang.upload }}:</span>
+			<input type="file" name="file" class="right">
+		</div>
+		<div class="submit">
+			<input type="submit" name="submit" value="{{ lang.submit }}">
+		</div>
+	</div>
+</form>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

@@ -1,0 +1,247 @@
+{% include '/public/theme/header_lightning.v3.twig' %}
+<link href="{{ THEME }}/style/index.css" type="text/css" rel="stylesheet" />
+<!--/page-->
+<script language="javascript" src="http://api.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=cn"></script>
+<section id="page-index" class="container">
+    <header>
+        <span class="i-p-m buyinfo_post">
+            <span class="timeWrap">{{ lang.time_over }}
+                <span id="timer"><span id="h">-</span><span class="colon">:</span><span id="m">-</span><span class="colon">:</span><span id="s">-</span><span class="colon"></span></span>
+            </span>
+        </span>
+        <span class="jindu"><div class="jindu1"></div><div class="jindu2"></div></span>
+    </header>
+    <!--  -->
+    <div class="swiper-container" style="background: white">
+        <div class="swiper-wrapper">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom mun_banner" style="bottom:16px;background: rgba(255, 255, 255, 0.5);padding:2px 4px;width: 46px;height:20px;line-height:1.5;left: 16px;font-size: 14px;font-weight: bold;">
+            {% if photos %}
+                {% for p in photos %}
+                <span class="whiteicon"></span>
+                {% endfor %}
+            {% else %}
+                <span class="whiteicon"></span>
+            {% endif %}
+        </div>
+       <div class="content_litle" onclick="javascript:document.getElementById('bTop').scrollIntoView()"><div style="padding-top: 3px;float: left;margin-left: 5px"><img src="{{ THEME }}/images/eyes@2x.png" style="width:14px;height: 14px;" alt=""></div><div style="line-height: 20px;font-weight: bold;">{{ lang.description }}</div></div>
+    </div>
+    <!--  -->
+    <div class="dt-section">
+        <div class="m-detailBaseInfo">
+            <div class="info">
+                <div class="line2" style="text-align: right;">
+                    <div class="retailPrice">
+                        {% if currency_prefix == 1 %}<span class="small_price" style="position: relative;top: -3px;">{{ currency_code }}</span><span>{{ price }}</span>{% endif %}
+                        {% if currency_prefix == 0 %}<span>{{ price }}</span><span class="small_price" style="position: relative;top: -3px;">{{ currency_code }}</span>{% endif %}
+                        <span style="font-size: 12px;color:#979AA4;float: right;margin-top: 0px;font-weight: 100 ">
+                            <i class="this_i"></i>
+                            {{ lang.last }}{{ stock }}件</span></div>
+                    <div class="market_price_onr">
+                        <span>{{ lang.market_price }}</span>
+                         {% if currency_prefix == 1 %}<del>{{ currency_code }}{{ market_price }}</del>{% endif %}
+                         {% if currency_prefix == 0 %}<del>{{ market_price }}{{ currency_code }}</del>{% endif %}
+                    </div>
+                </div>
+                <div class="stat">{{ lang.predict }}</div>
+                <div class="tagList"></div>
+                <div class="com">
+                    <h2>{{ title }}</h2>
+                    <div class="star">★★★★★<span>{{ lang.Th_score }}</span></div>
+                </div>
+                <div class="tagList"></div>
+            </div>
+            <div class="specSelect">
+                <div class="m-listItem" id="val-sel">
+                    <div class="f-vc">
+                        <div class="inner"><span class="it" style="font-weight:normal;color: #979AA4;font-size: 14px">{{ lang.product_attr }}</span><span class="taocan"></span></div>
+                    </div>
+                    <i class="icon u-icon u-address-right"></i>
+                </div>
+            </div>
+            <div class="tagList" style="width: 95%;margin: 0 auto;margin-left: 0px"></div>
+
+        </div>
+        <ul class="m-servicePolicy">
+            <li class="item"><i class="shop_re" style="height:18px;width:18px;background: url('{{ THEME }}/images/free@2x.png')no-repeat left;background-size: 14px;"></i><span>{{ lang.free_yun }}</span></li>
+            <li class="item"><i style="height:18px;width:18px;background: url('{{ THEME }}/images/ap@2x.png')no-repeat left;background-size: 14px;"></i><span>{{ lang.cash_on_delivery }}</span></li>
+            <li class="item"><i style="height:18px;width:18px;background: url('{{ THEME }}/images/7day@2x.png')no-repeat left;background-size: 14px;"></i><span>{{ lang.day_appreciate }}</span></li>
+        </ul>
+
+    </div>
+    <div class="product-info" id="bTop">
+
+{#  #}
+<div id="ceontentTemplate" style="display:none;">
+{{ content|replace({
+    '<img class="" src=': '<img class="lazyload" src="public/image/spinner2.gif" data-img=',
+    '<img src=': '<img class="lazyload" src="public/image/spinner2.gif" data-img=',
+}) }}
+</div>
+<div class="m-img"></div>
+{#  #}
+
+
+
+    </div>
+    {% if comment  %}
+    <div class="biao"> <h3>{{ lang.Th_evaluate }}</h3></div>
+    <div style="padding: 8px;background: white">
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="commentScroll" style="height: 300px; overflow: hidden">
+                <ul class="picList">
+                    {% for a in comment %}
+                        <li data-groud="{{ a.comment_id }}" style="margin-bottom: 8px;height: auto;">
+                            {% if a.is_anonymous==1 %}
+                                <span style="color: red;font-size: 14px">{{ lang.Th_anonymous }}</span>
+                            {% else %}
+                                <span style="color: red;font-size: 14px">{{ a.name }}</span>
+                            {% endif %}
+                            &nbsp;<span style="font-size: 14px;">{{ lang.Th_satisfied }}：<span style="color: red;">{{ a.star }}</span></span>
+                            <div style="border-top:1px dotted #d0d6d6;margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                            <div class="msKeimgBox">
+                                <ul>{% for b in a.thumb %}
+                                        <li>
+                                            <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div class="buyinfo_hd">{{ lang.note_online }}</div>
+
+        <form id="big-i" name="form" action="#" method="post">
+            <div class="buyinfo_table">
+                <div class="closeBtn"></div>
+                <div class="zaix">{{ lang.Th_note }}</div>
+                <div class="buyinfo_table_box">
+                    <table>
+                        <tr>
+                            <td class="table_td"><span class="require"></span>{{ lang.name }}:</td>
+                            <td class="table_cell"><input type="text" required="required" placeholder="{{ lang.name_placeholder }}" class="mui-input-clear input01" name="name" maxlength="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="table_td"><span class="require"></span>{{ lang.mobile }}:</td>
+                            <td class="table_cell"><input type="text" required="required" placeholder="{{ lang.mobile_placeholder }}" class="input01" name="phone" maxlength="20"></td>
+                        </tr>
+                        <tr>
+                            <td class="table_td">{{ lang.Th_satisfied }}:</td>
+                            <td class="table_cell">
+                                <script type="text/javascript">
+                                    function rate(obj,oEvent){
+                                        var imgSrc = '{{ THEME }}/images/star2.png';
+                                        var imgSrc_2 = '{{ THEME }}/images/star.png';
+                                        if(obj.rateFlag) return;
+                                        var e = oEvent || window.event;
+                                        var target = e.target || e.srcElement;
+                                        var imgArray = obj.getElementsByTagName("img");
+                                        for(var i=0;i<imgArray.length;i++){
+                                            imgArray[i]._num = i;
+                                            imgArray[i].onclick=function(){
+                                                if(obj.rateFlag) return;
+                                                //alert(this._num+1);
+                                                var inputid=this.parentNode.previousSibling
+                                                inputid.value=this._num+1;
+                                            }
+                                        }
+                                        if(target.tagName=="IMG"){
+                                            for(var j=0;j<imgArray.length;j++){
+                                                if(j<=target._num){
+                                                    imgArray[j].src=imgSrc_2;
+                                                } else {
+                                                    imgArray[j].src=imgSrc;
+                                                }
+                                                target.parentNode.onmouseout=function(){
+                                                    var imgnum=parseInt(target.parentNode.previousSibling.value);
+                                                    for(n=0;n<imgArray.length;n++){
+                                                        imgArray[n].src=imgSrc;
+                                                    }
+                                                    for(n=0;n<imgnum;n++){
+                                                        imgArray[n].src=imgSrc_2;
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            return false;
+                                        }
+                                    }
+                                </script>
+                                <input type="hidden" value="0"><p onmouseover="rate(this,event)" id="img_1">
+                                    <img src="{{ THEME }}/images/star2.png" title="很烂"><img src="{{ THEME }}/images/star2.png" title="一般"><img src="{{ THEME }}/images/star2.png" title="还好"><img src="{{ THEME }}/images/star2.png" title="较好"><img src="{{ THEME }}/images/star2.png" title="很好">
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="table_td">{{ lang.note }}:</td>
+                            <td class="table_cell">
+                                <textarea placeholder="{{ lang.note_placeholder }}" name="content"  class="textarea_style"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tj">
+                                <input id="btnAppraise" type="submit" name="Submit" class="input_btn01" value="{{ lang.post_pinlun }}" style="color:white">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+	<div class="User_notes" style="margin-top: 10px">
+        <h2 class="notes">{{ lang.user_notes }}</h2>
+        <div class="note_text">{{ lang.user_fb }}</div>
+        <div class="note_title">{{ lang.user_note1 }}</div>
+        <div class="note_text">{{ lang.user_note_adr }}{{ regions.region_name }}。</div>
+        <div class="note_title">{{ lang.user_note2 }}</div>
+        <div class="note_text">{{ lang.user_note2_1 }}</div>
+        <div class="note_title">{{ lang.user_note3 }}</div>
+        <div class="note_text">{{ lang.user_note3_1 }}<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>{{ lang.user_note3_2 }}</div>
+        <div class="note_title">{{ lang.user_note4 }}</div>
+        <div class="note_text">{{ lang.user_note4_1 }}</div>
+        <div class="note_title">{{ lang.user_note4_2 }}</div>
+        <div class="note_title">{{ lang.user_note4_3 }}</div>
+        <div class="note_text">{{ lang.user_note4_4 }}</div>
+    </div>
+    <!--  -->
+    <footer class="footer">
+        <a href="javascript:;" class="left" data-cuckootag="service" data-value="{{service_contact_id}}">
+            <i style="display:inline-block;width:30px;height:30px;background: url('{{ THEME }}/images/service@2x.png') no-repeat center;background-size: 20px;"></i>
+            <p style="font-size: 8px;margin-top: -9px; margin-left: -16px; color: #252B41;font-weight: 600;text-align: center;">{{ lang.kefu_online }}</p>
+        </a>
+        <div class="right">
+            <div class="m-table">
+                <div class="tr">
+                    <div class="td">
+                        <a href="javascript:void(0);" class="w-button w-button-block" data-cuckootag="buy_now" data-event="showArrtibuteLayer">{{ lang.buy_now }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--  -->
+</section>
+
+<section id="page-order" class="container" data-error="{{ lang.Th_titleattr }}">
+    {% include 'cmpt-guige.twig' %}
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+<i class="m-goToTop" style="display: inline;"></i>
+<!--/page-->
+{% set pageSign = "index" %}
+{% include '/public/theme/footer_lightning.v3.twig' %}

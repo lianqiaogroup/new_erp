@@ -1,0 +1,74 @@
+<div class="bdbox">
+	<input type="hidden" name="region_id" value="{{ regions.region_id }}">
+	<label class="bdxx"><em>*</em>{{ lang.name }}</label>
+	<div class="textbox">
+		<input required="required" type="text" name="name" class="inputText" placeholder="{{ lang.input_name }}" />
+	</div>
+</div>
+<div class="bdbox">
+	<label class="bdxx"><em>*</em>{{ lang.mobile }}</label>
+	<div class="textbox">
+		<input required="required" type="text" name="mob" class="inputText" placeholder="{{ lang.input_phone }}" />
+	</div>
+</div>  
+<div class="bdbox">
+	<label class="bdxx"><em>*</em>{{ lang.province }}</label>           
+	<div class="textbox" id="province">
+		<select name="province">
+			<option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+		</select>
+	</div>          
+</div>
+<div class="bdbox">
+	<label class="bdxx" for="postal"><em>*</em>{{ lang.postal_long }}</label>
+	<div class="textbox">
+		<input type="text" name="postal" class="inputText" placeholder="{{ lang.postal_long }}" data-error="{{ lang.postal_error }}">
+	</div>
+</div>
+<div class="bdbox">
+	<label class="bdxx" for="district"><em>*</em>{{ lang.district }}</label>
+	<div class="textbox">
+		<input type="text" name="district" class="inputText" placeholder="{{ lang.district }}">
+	</div>
+</div>
+<div class="bdbox">
+	<label class="bdxx" for="city"><em>*</em>{{ lang.city }}</label>
+	<div class="textbox">
+		<input type="text" name="city" class="inputText" placeholder="{{ lang.city }}">
+	</div>
+</div>
+<div class="bdbox">
+	<label class="bdxx" for="state"><em>*</em>{{ lang.state }}</label>
+	<div class="textbox">
+		<input type="text" name="state" class="inputText" placeholder="{{ lang.state }}">
+	</div>
+</div>
+<div class="bdbox">
+	<label class="bdxx"><em>*</em>{{ lang.address_full }}</label>
+	<div class="textbox">
+	<input required="required" type="text" name="address" placeholder="{{ lang.address_warming }}" class="inputText">
+	</div>
+</div>
+<div class="bdbox">
+	<label class="bdxx" for="email"><em></em>E-mail</label>
+	<div class="textbox"><input  name="email" placeholder="{{ lang.email_use }}" maxlength="30" class="inputText" type="email">  </div>
+</div>
+<div class="bdbox">
+	<label class="bdxx">{{ lang.note }}</label>
+	<div class="text2box">
+		<textarea name="guest" rows="1" placeholder="{{ lang.order_remark }}"></textarea>
+	</div>
+</div>
+<div class="bdbox" style="flex-wrap:wrap;">
+	<label class="bdxx"><em>*</em>{{ lang.cash_style }}</label>
+	<div class="dxbox">
+		<label for="payment_type">
+			<input name="payment_type" value="0" type="radio">
+			<span class="huo">{{ lang.cash_on_delivery }}</span>
+		</label>
+	</div>
+    <div class="huo_info">{{ lang.half_pre }}{{ regions.region_name }}{{ lang.half_next }}</div>
+    {% if regions.code == 'THA' %}
+    <div style="font-weight:900;">{{lang.customer_contact}}</div>
+    {% endif %}
+</div>

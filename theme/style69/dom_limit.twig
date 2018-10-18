@@ -1,0 +1,19 @@
+<div class="limit">
+	{% if regions.region_id == 4 %}
+		<span>
+			{{ lang.discount }} <span>{{ ((market_price-price)/market_price*10)|number_format(0) }} {{ lang.discount_after }}</span>
+		</span>
+	{% else %}
+		<span>{{ lang.discount }} <span>{{ ((market_price-price)/market_price*100)|number_format(0) }}% {{ lang.discount_after }}</span></span>
+	{% endif %}
+	<div class="timeWrap">
+		<span id='clock'>{{ lang.end }}:</span>
+		<span id="timer">
+            <span  id="h">10</span>
+        	<span class="">:</span>
+            <span id="m">00</span>
+            <span class="">:</span>
+            <span id="s">00</span>
+      	</span>
+	</div>
+</div>

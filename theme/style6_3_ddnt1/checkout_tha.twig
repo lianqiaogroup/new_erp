@@ -1,0 +1,155 @@
+<input type="hidden" name="province" value="{{ regions.region_id }}">
+<div class="address-input">
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{ lang.name }}</div>
+        </div>
+        <div class="cell">
+            <input required="required" type="text" name="name" class="inputText">
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{ lang.mobile }}</div>
+        </div>
+        <div class="cell">
+            <input required="required" type="text" name="mob" class="inputText">
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.email }}</div>
+        </div>
+        <div class="cell">
+            <input placeholder="{{ lang.email_placeholder }}" type="email" name="email" class="inputText">
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{ lang.postal }}</div>
+        </div>
+        <div class="cell">
+            <input required="required" type="text" name="postal" class="inputText">
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"><span class="req_red">*</span>{{ lang.address_full }}</div>
+        </div>
+        <div class="cell">
+            <input type="hidden" required="required" name="city" error="รหัสไปรษณีย์ ผิด!" value >
+            <select name="district" required class="tha_district" data-error="ตำบล อำเภอ">
+                <option>ตำบล อำเภอ</option>
+            </select>
+            <select class="regions" data-error="จังหวัด">
+                <option>จังหวัด</option>
+            </select>
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed"></div>
+        </div>
+        <div class="cell">
+            <input required="required" type="text" name="address" placeholder="{{ lang.addr }}" class="inputText">
+        </div>
+    </div>
+
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+        <div class="cell fixed"><span class="req_red">*</span>{{ lang.paymethod }}</div>
+        </div>
+        <div class="cell">
+            {% if payment_online ==1 %}
+                <label>  <input name="payment_type" value="1"  type="radio">  <img src="/public/image/card_2.gif"/><img src="/public/image/card_3.gif"/><img src="/public/image/card_1.gif"/> </label>
+            {% endif %}
+            {% if payment_paypal == 1 %}
+                <label> <input name="payment_type" value="2"  type="radio"> &nbsp;&nbsp; <img src="/public/image/p_paypal.jpg">  </label>
+            {% endif %}
+            {% if payment_asiabill ==1 %}
+                <label> <input name="payment_type" value="3"  type="radio"> &nbsp;&nbsp;<img src="/public/image/card_2.gif"/><img src="/public/image/card_3.gif"/><img src="/public/image/card_1.gif"/>  </label>
+            {% endif %}
+            {% if payment_underline ==1 %}
+                <label> <input name="payment_type" value="0"  type="radio"> &nbsp;&nbsp; {{ lang.cash_on_delivery }} </label>
+            {% endif %}
+        </div>
+    </div>
+    <div class="buy-single-row label-input">
+        <div class="input-label">
+            <div class="cell fixed">{{ lang.note }}</div>
+        </div>
+        <div class="cell" style="line-height: 18px;">
+            <textarea placeholder="{{ lang.order_remark }}" name="guest" class="text_area" rows="1" maxlength="500" style="padding-top:17px;"></textarea>
+        </div>
+    </div>
+</div>
+<div style="padding: 10px; background-color: #fff; text-align: right;">
+    <div class="line">
+        <span>จำนวน</span>
+        <span data-render="count">1</span>
+        <span>ชิ้น</span>
+        <span></span>
+        <span>รวม :</span>
+        <span class="price">
+            <span class="red">{{ currency_code }}</span>
+            <span class="red" id="price">{{ price }}</span>
+        </span>     
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+    // 泰国选择市区
+    // 用语判断是否正在请求
+    window.ajaxLocked = false;
+    var $postal = $('[name="postal"]');
+    var $regions = $('.regions');
+
+        $postal.change(function(){
+            var id = $(this).val();
+            window.ajaxLocked = true;
+            $.ajax({
+                url: 'region.php',
+                type: 'post',
+                data: { 'postName': id },
+                dataType: 'json',
+                success: function(ret) {
+                    if(ret){
+                        if(ret.length != 0){
+                            $regions.html('').append('<option>'+ret[0].parent_name+'</option>');
+                            var option = "";
+                            for (var i in ret) {
+                                option += '<option value="'+ret[i].name+'" data-city="'+ret[i].parent_name+'">'+ret[i].name+'</option>';
+                                $('input[name="city"]').val(ret[0].parent_name);
+                            }
+                            $(".tha_district").html('').append(option);
+                            ajaxLocked = false;
+                        }else{
+                            alert('รหัสไปรษณีย์ ผิด!');
+                            $postal.val('');
+                            $('.tha_district').html('');
+                            $('.regions').html('');
+                            $('input[name="city"]').val('');
+                            ajaxLocked = true;
+                        }
+                    }else{
+                        alert('รหัสไปรษณีย์ ผิด!');
+                        $postal.val('');
+                        $('.tha_district').html('');
+                        $regions.html('');
+                        $('input[name="city"]').val('');
+                        ajaxLocked = true;
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                }
+            });
+        });
+    $('.tha_district').change(function(event) {
+        var city = $(this).children(':selected').attr('data-city');
+        if( city != "" ){
+            $regions.html('').append('<option>'+city+'</option>');
+            $('input[name="city"]').val(city);
+        }
+    });
+    });
+</script>

@@ -1,0 +1,184 @@
+{% include '/public/theme/header_lightning.v3.twig' %}
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<script language="javascript" src="http://api.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=cn"></script>
+<!-- end header resource -->
+{% if category %}
+    <div class="ui-offcanvas {{ category }}">
+        <div class="boxer">
+            <!-- <h1>{{ lang.offcanvas_title }}</h1> -->
+            <ul class="ui-list menu">
+                <li><a href="/" class="ui-arrowlink">{{lang.home_page}}</a></li>
+                {% for c in category %}
+                <li><a href="./?category_id={{ c.id }}" class="ui-arrowlink">{{ c.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}
+<section id="main">
+	{% if has_home %}
+	<header>
+	    <i class="ui-icon-scan1"><img src="{{ THEME }}/images/maue.png" height="20px" style="margin-top: 12px;position: absolute;width:auto" alt=""></i>
+	    {% if logo %}
+	        <img src="{{ logo }}">
+	    {% endif %}
+	</header>
+	{% endif %}
+	<div class="product_title">
+		{{ title }}
+	</div>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if video.video_url %}
+			<div class="swiper-slide">
+				<video width="100%" poster="{{ video.cover_url }}" id="video" preload="false" src="{{ video.video_url }}" controls="controls"
+				 x5-playsinline="" playsinline="" webkit-playsinline="">
+			</div>
+			{% endif %} {% if photos %} {% for p in photos %}
+			<div class="swiper-slide">
+				<img src="{{ p.thumb }}" width="100%">
+			</div>
+			{% endfor %} {% endif %} {% if video.video_url is empty and photos is empty %}
+			<div class="swiper-slide">
+				<img src="{{ thumb }}" width="100%">
+			</div>
+			{% endif %}
+		</div>
+		<!-- <div class="swiper-pagination"></div> -->
+	</div>
+	<div class="product_info">
+		<div class="sales">
+			<div class="price">
+				{{ lang.activity_price }}：
+				<span>
+					{% if currency_prefix == 1 %}{{ currency_code }}{{ price }}{% endif %}
+	        		{% if currency_prefix == 0 %}{{ price }}{{ currency_code }}{% endif %}/{{ lang.piece }}</span>
+			</div>
+			<div class="discount">
+				<div>{{ lang.discount }}：<span class="number {{regions.code}}">
+					{% if regions.code == 'TW' %}
+					{{ (price/market_price*10)|number_format(1) }}
+					{% else %}
+					{{ ((market_price-price)/market_price*100)|number_format(0) }}%
+					{% endif %}
+					</span>{{ lang.discount_prefix }}</div>
+				<div class="right">
+					<span>{{ lang.for_sell2 }}</span>
+					<span>{{ lang.for_sell }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="deliver">
+			{{ lang.style_send }}：<span>{{ lang.cash_on_delivery }}</span>
+		</div>
+	</div>
+
+	<div class="product_detail">
+		<div class="tab_bar">
+			<ul>
+				<li class="active">{{ lang.pro_intro }}</li>
+			</ul>
+		</div>
+{#  #}
+<div id="ceontentTemplate" style="display:none;">
+{{ content|replace({
+	'<img class="" src=': '<img class="lazyload" src="public/image/spinner2.gif" data-img=',
+	'<img src=': '<img class="lazyload" src="public/image/spinner2.gif" data-img=',
+}) }}
+</div>
+<div class="m-img"></div>
+{#  #}
+		<section id="page-order" data-error="{{ lang.Th_titleattr }}">
+			{% include 'cmpt-guige.twig' %}
+		<!--  -->
+		</section>
+		<div class="module_new_order">
+			<div class="module_title">{{ lang.new_order }}</div>
+		    <div class="module_content">
+		        <div class="picMarquee-top">
+		            <div class="bd" data-fn="commentScroll" style="height:250px; overflow: hidden;font-size:14px;">
+		                <ul class="picList">
+		                    <li>
+		                        <span>{{ lang.zhang }}**（095***3590）</span>
+		                        <span style="float:right;">4{{ lang.before }}</span>
+		                        <br>
+		                        <span>{{ title }}</span>
+		                    </li>
+		                    <li>
+		                        <span>{{ lang.wang }}**（098***4865）</span>
+		                        <span style="float:right;">8{{ lang.before }}</span>
+		                        <br>
+		                        <span>{{ title }}</span>
+		                    </li>
+		                    <li>
+		                        <span>{{ lang.li }}**（092***3291）</span>
+		                        <span style="float:right;">2{{ lang.before }}</span>
+		                        <br>
+		                        <span>{{ title }}</span>
+		                    </li>
+		                    <li>
+		                        <span>{{ lang.zhao }}**（091***6851）</span>
+		                        <span style="float:right;">10{{ lang.before }}</span>
+		                        <br>
+		                        <span>{{ title }}</span>
+		                    </li>
+		                    <li>
+		                        <span>{{ lang.zheng }}**（092***6851）</span>
+		                        <span style="float:right;">3{{ lang.before }}</span>
+		                        <br>
+		                        <span>{{ title }}</span>
+		                    </li>
+		                    <li>
+		                        <span>{{ lang.liu }}**（093***3943）</span>
+		                        <span style="float:right;">1{{ lang.before }}</span>
+		                        <br>
+		                        <span>{{ title }}</span>
+		                    </li>
+		                    <li>
+		                        <span>{{ lang.li }}**（096***3943）</span>
+		                        <span style="float:right;">1{{ lang.before }}</span>
+		                        <br>
+		                        <span>{{ title }}</span>
+		                    </li>
+		                </ul>
+		            </div>
+		        </div>
+		    </div>    
+		</div>
+		<div class="module_service">
+			<span>{{ lang.free_yun }}</span>
+			<span>{{ lang.cash_on_delivery }}</span>
+			<span>{{ lang.returned_goods }}</span>
+		</div>
+	</div>
+	<div class="module_check_order">
+		<div class="prompt">{{ lang.inquiry_tip }}</div>
+		<div class="from">
+			<input class="inquiry_mob" type="text" placeholder="{{ lang.mobile_placeholder }}">
+			<button id="go" data-event="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}" errormag="{{ lang.mobile_placeholder }}">{{lang.order_inquiry}}</button>
+		</div>
+		<div class="buy_tips">
+			<div style="text-align: center;line-height: 16px;margin-bottom: 10px;"><i class="reminder"></i><span>{{lang.repeat_title}}</span></div>
+			<p>{{ lang.warming|raw }}</p>
+		</div>
+	</div>
+	<div class="module_sidebar">
+		<div class="top"></div>
+	</div>
+	{% if article %}	
+		<footer class="ui-footer ui-footer-stable ui-border-t text-center">
+		    <ul class="ui-row">
+		        {% for a in article %}
+		        <li class="ui-col ui-col-50">
+		            <a href="/article/{{ a.article_id }}">{{ a.title }}</a>
+		        </li>
+		        {% endfor %}
+
+		    </ul>
+		</footer>
+	{% endif %}
+	{{ google_js|raw }}
+</section>
+<!-- footer resource -->
+{% include 'public/theme/footer_lightning.v3.twig' %}
+

@@ -1,0 +1,202 @@
+{#
+<div style="margin-bottom: 60px;" id="ui-paramselect">
+        <div class="dt-paramselect">
+            <form id="form" name="form" method="post" action="order.php" onsubmit="return postcheck()">
+                <input type="hidden" name="orderid" id="orderid" value="">
+                <input type="hidden" name="act" id="act" value="getAttrPrice">
+                <!--  -->
+                <div class="info-con" style="padding-top:15px;">
+                    <div class="left f-fl">
+                        <!--产品属性图-->
+                        <img id="attrimg" src="{{ thumb }}">
+                    </div>
+                    <div class="right f-fl">
+                        <div class="con" style="padding-top:5px;">
+                            <p class="price">
+                                <span>價　　格：</span><span class="money">NT$ <span currentprice>0</span></span>
+                            </p>
+                            <p class="sku">
+                                <span style="display: inline-block;">產品名稱：</span>
+                                <span class="it" style="line-height: 21px;">{{ title }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--产品目录-->
+                <div class="u-format" id="comb" data-price="">
+                    <br>
+                    <div class="tt"><em>*</em>產品</div>
+                    <div class="package">
+                    {% if combo %}
+                        {% for c in combo %}
+                        <div class="tab" rel="1" data-price="{{ c.price }}">
+                            <input type="hidden" name="combo_id" value="{{ c.combo_id }}" />
+                            <span>{{ c.title|raw }} NT${{ c.price }}<i class="u-icon u-spec-sel"></i></span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="tab tab-sel" rel="1">
+                            <input type="hidden" name="combo_id" value="0" checked="chekced" />
+                            <span>
+                                {{ title }} NT${{ price }}
+                                <i class="u-icon u-spec-sel"></i>
+                            </span>
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+                <!--产品属性-->
+                {% for o in  options %}
+                <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                    <div class="tt"><em>*</em>{{ o.attr_group_title|raw }}</div>
+                    <div class="con">
+                        {% for key,attr in o.attr %}
+                        <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                            <span>{{ attr.name|raw }}</span>
+                            <i class="u-icon u-spec-sel"></i>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+
+
+                <!--产品的所有属性-->
+                <input type="hidden" name="heavn" class="attr_id" value="">
+                <input type="hidden" name="attrnum" value="2">
+                <!--数量-->
+                <div class="u-fornum">
+                    <div class="tt"><em>*</em>數量</div>
+                    <div class="con">
+                        <div class="m-selnum dr">
+                        <div onclick="minnumber()" class="less z-dis"></div>
+                        <div class="textWrap">
+                            <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                        </div>
+                        <div onclick="addnumber()" class="more"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PROTOTYPE -->
+                <footer class="m-orderFt">
+                    <div style="float: left;" class="detailback"><i class="u-icon u-detail-back"></i></div>
+                    <button class="btn w-button" id="linkto">確定</button>
+                    <div class="actualPrice">
+                        <label class="label">金額:&nbsp;</label>
+                        <input type="hidden" name="zfbprice" value="22788">
+                        <input type="hidden" name="price" value="22788">
+                        <span id="price" class="value">{{ price }}</span><span class="decimal">圓</span>
+                    </div>
+                </footer>
+            </form>
+        </div>
+        
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            // 初始化选择
+            $("#comb .tab").eq(0).addClass('tab-sel').find('input').attr("checked", 'true');
+            $('#comb').attr('data-price', $("#comb .tab-sel").attr('data-price'));
+            $('[currentprice]').html($("#comb .tab-sel").attr('data-price'));
+            // 选择产品
+            $("#comb .tab").click(function(event) {
+                /* Act on the event */
+                $(this).addClass('tab-sel').siblings().removeClass('tab-sel');
+                $(this).find('input').attr("checked", 'true');
+                $(this).siblings().find('input').attr("checked", false);
+                $('#comb').attr('data-price', $(this).attr('data-price'));
+                $('[currentprice]').html($(this).attr('data-price'));
+                refresh_price();
+            });
+
+            $('.u-format.count_atrr').each(function(){
+                var obj = $(this).find('.tab');
+                    obj.eq(0).addClass('tab-sel');
+                var id = obj.attr('data-id');
+                $(this).attr('data-select', id);
+            });
+
+            // 选择事件
+            $('.u-format.count_atrr').on('click', '.tab', function(){
+                var self = $(this);
+                var id = self.attr('data-id');
+                self.addClass('tab-sel').siblings().removeClass('tab-sel');
+                self.parents('.u-format.count_atrr').attr('data-select', id);
+                var src = self.attr('data-img');
+                if( src ){ $('#attrimg').attr('src', src); }
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        function addnumber(){
+            $('#num').val(parseInt($('#num').val())+1);
+            refresh_price(); 
+        }
+
+        function minnumber(){
+            if($('#num').val() > 1){
+                $('#num').val(parseInt($('#num').val())-1);
+                refresh_price();
+            }
+        }
+
+        function inputnumber(){
+            var number=parseInt($('#num').val());
+            if(isNaN(number)||number < 1){
+                $('#num').val('1');
+                refresh_price();
+            }else if(number > 1){
+                $('#num').val(number);
+            }
+            refresh_price();
+        }
+
+        // 刷新价格
+        function refresh_price() {
+            $.ajax({
+                url: 'checkout.php?',
+                type: 'post',
+                data: $('#comb input[checked=checked], #act, input[name=\'num\']'),
+                dataType: 'json',
+                success: function(json) {
+                   if(json.ret)
+                   {
+                        $("#price").html(json.total);
+                      $("input[name='price']").val(json.total);
+                   }
+                   else{
+                       alert(json.msg)
+                   }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                }
+            });
+        }
+
+        // 提交表单
+        function postcheck() {
+            /* Act on the event */
+            var prototype = [];
+            $('.u-format.count_atrr').each(function(){
+                var groupId = $(this).attr('data-group');
+                var prototypeId = $(this).attr('data-select');
+                if( parseInt(prototypeId)>0 ){
+                    prototype.push(groupId+"-"+prototypeId);
+                }
+            });
+            if( prototype.length == 0 ){
+                alert('11');
+                return false;
+            }
+            // 数量
+            var count = parseInt($('input#num').val());
+
+            var comb_id = $("#comb .tab-sel").find('input').val();            
+            // 跳转
+            window.location.href="checkout.php?proto="+prototype.join('|')+"&count="+count+"&comb_id="+comb_id;
+            return false;
+        }
+
+</script>#}

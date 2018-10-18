@@ -1,0 +1,55 @@
+<div class="comment_index" id="comment_index">
+    <div class="comment_title">
+        {% if  moduleParam.count %}
+            {% set commentLen = moduleParam.count %}
+        {% else %}
+            {% set commentLen = comment|length %}
+        {% endif %}
+        <h3>{{ lang.user_comment }}(<span>{{ commentLen }}+</span>)</h3>
+        <span></span>
+    </div>
+    <div style="background: white;padding:0.2rem 0">
+        <div class="picMarquee-top">
+            {% if comment %}
+            <div class="bd" data-fn="commentScroll" id="mq" style="overflow: hidden;height:300px;">
+                <ul class="picList" id="mq1">
+                    {% for a in comment|reverse %}
+                        {% if loop.index <= 10 %}
+                        <li star_li data-groud="{{ a.comment_id }}" rel="{{ a.star }}" style="border-bottom:1px solid #eee;height: auto;">
+                            {% if a.is_anonymous==1 %}
+                                <div class="name">{{ lang.anonymous }}</div>
+                            {% else %}
+                                <div class="name">{{ a.name }}</div>
+                            {% endif %}
+                            <div class="comment_time">{{ a.add_time }}</div>
+                            <div style="margin-top:.24rem;color:#444;padding-right:.4rem;line-height:.53333rem">{{ a.content }}</div>
+                            <div class="msKeimgBox">
+                                <ul>
+                                    {% for b in a.thumb %}
+                                        <li>
+                                            <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                                <div class="mskeTogBtn" style="display:none;"></div>
+                            </div>
+                        </li>
+                        {% endif %}
+                    {% endfor %}                  
+                </ul>
+            </div>
+            {% else %}
+            <div class="no_comment">
+                <div>暫無評論</div>
+                <div class="buyinfo_hd">+{{ lang.add_comment }}</div>
+            </div>
+            {% endif %}
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,251 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/images/favicon.ico" type="image/x-icon" rel=icon>
+<link href="{{ THEME }}/css/cart.css" type="text/css" rel="stylesheet"/>
+<!--  -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!--  -->
+<div class="g-bd">
+    <div class="m-hd">
+        <div class="m-topBar">
+            <a class="goback" href="/{{ identity_tag}}"></a>
+            <div style="width: 100%;"><div class="title">{{ lang.order_confirm }}</div></div>
+        </div>
+    </div>
+    <!--  -->
+    <div id="order">
+        <div class="warp">
+            <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+                <!--  -->
+                <input type="hidden" name="combo_id" value="">
+                <input type="hidden" name="token" value="{{ token }}">
+                <input type="hidden" id="act" name="act" value="getAttrPrice">
+                <input type="hidden" name="product_id" value="{{ product_id }}">
+                <!--套餐-->
+                <div class="m-goodItems">
+                    <ul class="m-list m-attrs">
+                        <div class="m-goodItem">
+                            <div class="imgWrap">
+                                <img src="{{ thumb }}">
+                            </div>
+                                <!--选中的套餐-->
+                                <div class="cnt">
+                                    {% if combo %}
+                                        {% for c in combo %}
+                                            <div class="combosid_{{ c.combo_id }}" style="display: none">
+                                            <span data_id="{{ c.combo_id }}" style="color:#464646;font-size: 16px;">{{ c.title|raw }}</span><br>
+                                            {% for g in c.goods %}
+                                                <span optionsGroup goodid="{{g.combo_goods_id}}">{{ g.title }}</span>
+                                                {% if g.options %}
+                                                    {% for o in g.options %}
+                                                        {% for key,attr in o.attr %}
+                                                            <span style="display: none;" optionsKey goodid="{{g.combo_goods_id}}" group="{{ o.attr_group_id }}" attrid="{{attr.product_attr_id}}">{{ o.attr_group_title|raw }}:{{ attr.name|raw }}</span>
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                <br>
+                                            {% endfor %}
+                                            </div>
+                                        {% endfor %}
+
+                                    {% else %}
+                                        <span style="color:#464646;font-size: 16px;">{{ title }}</span>
+                                    {% endif %}
+                                    
+                                    <!--非套餐属性开始-->
+                                    {% for o in  options %}
+                                    <div class="con" optionsGroup style="color: #464646;font-size: 14px;" data-id="{{ o.attr_group_id }}">
+                                        {% for key,attr in o.attr %}
+                                            <span optionsKey data-id="{{ attr.product_attr_id }}" style="display: none;">{{ attr.name|raw }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% endfor %}
+                                     <!--属性结束-->
+                                     <div style="color: #e91917;font-weight: bold;">
+                                        {% if currency_prefix == 1 %}{{ currency_code }}<combprice></combprice>{% endif %}
+                                        {% if currency_prefix == 0 %}<combprice></combprice>{{ currency_code }}{% endif %}<span class="product_numtext"></span>
+                                        </div>
+                                     <input id="mun" type="hidden" name="num" type="text" value="">
+                                </div>
+                            </div>
+                        <div style="clear: both;"></div>
+                    </ul>
+                </div>
+<!--                 <p style="font-size:14px;line-height:42px;text-indent:2em;color:#474747;">{{ tips }}</p> -->                
+                <div class="address-input">
+                    <div class="address-title">
+                        <span style='font-size:16px;'>{{ lang.addr }}</span>
+                        <span class="kefu">{{ lang.customer }}</span>
+                        <div class="kefu" onclick="P8.startGroupChat({{ service_contact_id }},1);">{{ lang.service_online }}</div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input required="required" placeholder="{{ lang.name_placeholder }}" type="text" name="name" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input required="required" placeholder="{{ lang.phone }}" type="number" name="mob" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input placeholder="{{ lang.email_address }}" error="{{ lang.test_email }}" type="email" name="email" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell" id="province">
+                            <select name="province">
+                                <option value="{{ regions.region_id }}" selected> {{ regions.region_name }}</option>
+                            </select>
+                        </div>
+                        {% if regions.region_son and regions.code != "TW" %}
+                            <div class="cell" id="city">
+                            <!-- <select name="city">
+                                <option value="{{ regions.region_id }}" selected>{{ lang.select_city }}</option>
+                            </select> -->
+                                <select name="city">
+                                    <option value="">{{ lang.province_choose }}</option>
+                                    {% for i in regions.region_son %}
+                                        <option value="{{ i.lang}}">{{ i.lang }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                        <div style="clear:both;"></div>
+                    </div>
+                    {% if regions.code == "TW" %}
+                    <div class="buy-single-row label-input">
+                        <div class="cell select" style="margin-right:4%;">
+                            <select name="city" required="required">
+                                <option value="">{{lang.city}}</option>
+                            </select>
+                        </div>
+                        <div class="cell select">
+                            <select name="district" required="required">
+                                <option value="">{{lang.district}}</option>
+                            </select>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                    {% endif %}
+                    <div class="buy-single-row label-input">
+                            <div class="cell">
+                                <input required="required" type="text" name="address" placeholder="{{ lang.full_address }}" class="inputText">
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <label>
+                            <div class="cell">
+                                <input type="text" name="postal" class="inputText" placeholder="{{ lang.postal_long }}" error="{{ lang.test_postal }}">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="buy-single-row label-input">
+                            <div class="cell"  style="height:41px;padding-top:4px;">
+                                <textarea placeholder="{{ lang.remark }}" name="guest" class="text_area" rows="1"></textarea>
+                            </div>
+                    </div>
+                    <div class="buy-single-row label-input">
+                        <div class="cell" style="border:none;display:inline-block;margin-left:-2%;">
+                            {% if payment_underline ==1 %}
+                                <input name="payment_type" value="0" id="0" type="radio"><label for="0" class="check">{{ lang.cash_on_delivery }}</label>
+                            {% endif %}
+                            {% if payment_online ==1 %}
+                                <input name="payment_type" value="1" id="1" type="radio"> <label for="1">{{ lang.yijifu }}</label>
+                            {% endif %}
+                            {% if payment_paypal == 1 %}
+                                <input name="payment_type" value="2" id="2" type="radio"> <label for="2">paypal</label>
+                            {% endif %}
+                        </div>
+                        <div class="service">
+                            <span style="color:red">*</span>{{ lang.free_ship_short }}
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div style="padding: 15px; background: #fff;font-size: 14px;color: #666;text-align: left;">
+                    {{ lang.warming|raw }}
+                </div>
+                <footer class="m-orderFt">
+                    <div class="actualPrice">
+                        <label class="label">{{ lang.total_price }}:</label>
+                        <span class="value">
+                            <span id="price"></span>
+                            <input type="hidden" name="zfbprice" value="20889">
+                            <input type="hidden" name="price" value="" readonly="" class="value" style="width:80px;border: none;text-align: center;">{{ lang.yuan }}<span id="zfbyh"></span>
+                        </span>
+                    </div>
+                    <button class="btn w-button" type="submit" name="Submit" value="{{ lang.buy_now }}" >{{ lang.Order }}</button>
+                    <input type="hidden" data-cuckootag="confirm_order">
+                </footer>
+
+                <!--  -->
+                <script>
+                var quotes=new Array("{{ title }}");
+                </script>
+                <div id="fahuo" style="padding: 0 15px 20px 15px;color: #666;text-align: left;margin-top: 15px;font-size: 12px; margin-bottom: 60px;">
+                </div>
+                <!--  -->
+            </form>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+<!--  -->
+<script type="text/javascript" src="{{ THEME }}/js/checkout.js"></script>
+<script type="text/javascript">
+    var marquee = new Array(
+        "<p><span>[{{ lang.latest_buy }}]：</span>{{ lang.zhang }}**（095***6831）{{ lang.zai }}1{{ lang.buy_time }}"+quotes[Math.floor((Math.random()*quotes.length))]+" <font color='#FF0000'>√</font></p>",
+        "<p><span>[{{ lang.latest_buy }}]：</span>{{ lang.li }}**（093***1685）{{ lang.zai }}3{{ lang.buy_time }}"+quotes[Math.floor((Math.random()*quotes.length))]+" <font color='#FF0000'>√</font></p>",
+        "<p><span>[{{ lang.latest_buy }}]：</span>{{ lang.zhao }}**（091***8603）{{ lang.zai }}5{{ lang.buy_time }}"+quotes[Math.floor((Math.random()*quotes.length))]+" <font color='#FF0000'>√</font></p>",
+        "<p><span>[{{ lang.latest_buy }}]：</span>{{ lang.liu }}**（093***3943）{{ lang.zai }}2{{ lang.buy_time }}"+quotes[Math.floor((Math.random()*quotes.length))]+" <font color='#FF0000'>√</font></p>",
+        "<p><span>[{{ lang.latest_buy }}]：</span>{{ lang.zhang }}**（098***5500）{{ lang.zai }}4{{ lang.buy_time }}"+quotes[Math.floor((Math.random()*quotes.length))]+" <font color='#FF0000'>√</font></p>",
+        "<p><span>[{{ lang.latest_buy }}]：</span>{{ lang.wang }}**（092***0214）{{ lang.zai }}6{{ lang.buy_time }}"+quotes[Math.floor((Math.random()*quotes.length))]+" <font color='#FF0000'>√</font></p>"
+    );
+    var wfgdaa = 0;
+    var wfgdbb = 1;
+    function marqueeL(){
+        if(wfgdaa>(marquee.length-1))
+        wfgdaa = 0;
+        if(wfgdbb>(marquee.length-1))
+        wfgdaa = 0;
+        wfgdbb = wfgdaa +1;
+        var marHTML = marquee[wfgdaa]+marquee[wfgdbb];
+        document.getElementById("fahuo").innerHTML = marHTML;
+        wfgdaa +=1;
+        wfgdbb +=1;
+    }
+    window.setInterval("marqueeL()", 3000);
+    loadstate();
+    $('[name="city"]').change(function(event) {
+        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        loadCity(id);
+    });
+    function loadstate(){
+        var region_id = '{{regions.region_id}}',regionCode = '{{regions.code}}';
+        if(regionCode == 'TW'){
+        $.post('/region.php', { 'region_id': region_id }, function(data) {
+            var data = JSON.parse(data);
+                data.map(function(item, index){
+                    $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+                });
+            var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+        });
+        }
+    }
+    function loadCity(id, callback){
+        $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+            var districtFirst = $('[name="district"]').children().first();
+            $('[name="district"]').children().remove();
+            $('[name="district"]').append(districtFirst);
+            $('[name="district"]').val('');
+            var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        });
+    }
+</script>
+{% include '/public/theme/footer.twig' %}

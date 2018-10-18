@@ -1,0 +1,24 @@
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        {% if index_focus %}
+            {% for c in index_focus %}
+            <div class="swiper-slide">
+                <a href="/{{ c.type }}">
+                    <img src="{{ c.thumb }}" style="width: 100%;">
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide">
+                <a href="javascript:;">
+                    <img src="/theme/index/theme1/image/banner-preview.png" style="width: 100%;">
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    <div class="swiper-pagination swiper-pagination-custom">
+        {% for c in index_focus %}
+            <span class="whiteicon"></span>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,81 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+{% include '/public/theme/google_remarketing_index.twig' %}
+{% include 'navigation.twig' %}
+{% include 'left.twig' %}
+{{ index_focus|raw }}
+<!--fenlei -->
+<div class="navtypeview" style="margin-bottom: 20px;">
+    <div class="category_tip">產品分類</div>
+    <div id="category" class="swiper-container" style="height: 52px;">
+        <div class="swiper-wrapper">
+            {% for c in category_title %}
+            <div class="swiper-slide">
+                <a class="vertical-view" href="./?category_id={{ c.id }}&show=1"><img src="{{ THEME }}/image/icon_a.png">{{ c.title }}</a>
+            </div>
+            {% endfor %}
+            <div class="swiper-scrollbar"></div>
+        </div>
+    </div>
+</div>
+<div class="module_timer">
+    <div class="timer flexbox font14" style="padding: 10px 0;">
+        <div class="fitem"><i class="material-icons access_time">access_time</i><strong>限時搶</strong></div>
+        <div class=""><span class="t_left">倒計時</span><span class="t_right" id="h"></span></div>
+        <div class="fitem text-right"><span class="tips">超值特賣</span></div>
+    </div>
+    <div class="hot_products">
+        <div class="hot_title">熱賣產品</div>
+        <ul>
+            <li class="flexbox hot_item">
+                <div class="thumb"><a><img src="{{ THEME }}/image/test-product.jpg"></a></div>
+                <div class="fitem ">
+                    <h3 class="pro_title">產品標題</h3>
+                    <div class="hr_Speed"><div class="hr_line" style="width: 72%"></div></div>
+                    <div class="flexbox" style="margin-bottom: 10px;"><div class="textsin">已搶購</div><div class="textsin text-right">剩餘</div></div>
+                    <div class="flexbox">
+                        <div><strong>價格</strong><del>原價</del></div>
+                        <div class="fitem text-right"><a href="" class="hot_btn">立即搶購</a></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--模块产品-->
+    <div class="" id="module_one">
+        <div class="pro_modular">
+            <img src="{{ THEME }}/image/bg.jpg">
+            <a href="aman" class="pro_buy">{{lang.buy_now}}</a>
+        </div>
+    </div>
+<!--首页产品-->
+    <div id="content" style="display: none;">
+        <div class="row wcolor">
+             
+        </div>
+    </div>
+    <div id="module_dome" style="display: none;">
+        <div class="col-sm-6 col-md-6 col-xs-6 col-lg-6 items">
+            <a href="{url}">
+                <div class="thumbnail">
+                    <div class="tagWraper">
+                        <div class="imgthumb lazyload empty">
+                            <img src="{thumb}" alt="{title}">
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <h4 class="title">{title}</h4>
+                        <p>{shop_price}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+<script src="{{ THEME }}/script/index.js"></script>
+{{ footer|raw }}
+{% endblock %}
+{% block footer_js %}
+{% endblock %}
+

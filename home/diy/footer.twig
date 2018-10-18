@@ -1,0 +1,18 @@
+<footer class="class-{{css}}">
+	{% if article %}
+	<div class="article">
+	    <ul>
+	        {% for a in article %}
+	        <li class="ui-col ui-col-50">
+	            <a href="/article/{{ a.article_id }}">{{ a.title }}</a>
+	        </li>
+	        {% endfor %}
+	    </ul>
+	</div>
+	{% endif %}
+	<div class="mail">
+		service@ouoho.com
+	</div>
+</footer>
+</body>
+</html>

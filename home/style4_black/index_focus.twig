@@ -1,0 +1,15 @@
+{% if index_focus %}
+<div class="ui-slider">
+    <ul class="ui-slider-content" style="width: 300%">
+        
+            {% for c in index_focus %}
+            <li class="current">
+                <a href="/{{ c.type }}">
+                    <img src="{{ c.thumb }}">
+                </a>
+            </li>
+            {% endfor %}
+        
+    </ul>
+</div>
+{% endif %}

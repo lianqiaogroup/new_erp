@@ -1,0 +1,249 @@
+html{
+	background:#f1f1f1;
+}
+body{
+	background:url(../images/body_bg.png);//bopu
+	max-width:640px;
+	margin:0 auto;
+}
+input,textarea,select{
+	border:none;
+	outline:none;
+	background:inherit;
+}
+input[type='radio']{
+	width:auto !important;
+	height:auto !important;
+	opacity:0;
+}
+button{
+	border:none;
+	background:none;
+}
+select{
+	-moz-appearance: none;
+    -webkit-appearance:none;
+            appearance:none;
+    background:url(../images/bg.png) no-repeat right -216px;
+	background-size:18px;
+}
+a{
+	color:#b4282d;
+}
+::-webkit-input-placeholder{
+	color:#666;
+}
+::input-placeholder{
+	color:#666;
+}
+#POP800_PANEL_DIV{
+	display:none;
+}
+.title{
+	padding:16px 4%;
+	background:#fff;
+	.back{
+		float:left;
+		width:8px;
+		height:8px;
+		border-left:2px solid #222;
+		border-bottom:2px solid #222;
+		transform:rotate(45deg);
+		-webkit-transform:rotate(45deg);
+		margin:3px -8px 0 0;
+	}
+	.conirm{
+		width:100%;
+		text-align:center;
+		font-size:16px;
+		line-height:16px;
+		color:#282828;
+	}
+}
+.warp{
+	padding:4%;
+}
+.m-goodItem{
+	position:relative;
+	min-height:110px;
+	background:#fff;
+	border:2px solid;
+}
+.imgWrap{
+    display: inline;
+    margin: 0 16px 0 0;
+	img{
+		width:70px;
+		height:70px;
+		vertical-align:top;
+	}
+}
+.cnt{
+	line-height:22px;
+	font-size:12px;
+	.confirm{
+		font-size:14px;
+		line-height:36px;
+	}
+	span[attrid]{
+	    display:block;
+	    padding: 0 8px;
+	    line-height: 20px;
+	    border-radius: 2px;
+	    span{
+	    	color:#a9a9a9;
+	    }
+	}
+}
+.product_numtext{
+	display:block;
+    text-align:right;
+    color:#a9a9a9;
+}
+.price{
+	height:42px;
+	font-size:14px;
+	display:-webkit-flex;
+	display:flex;
+	justify-content: space-between;
+	align-items:center;
+	border: 2px solid;
+    border-top: none;
+    background: #fff;
+    padding: 0 4%;
+    margin-bottom:10px;
+	.left{
+		span{
+			font-weight:bold;
+			color:#FF8EAC;
+		}
+	}
+	.kefu{
+		font-size:12px;
+		background:#5396E6 url(../images/bg.png) no-repeat 10px -174px;
+		background-size:16px;
+		line-height:12px;
+		padding:6px 10px 6px 28px;
+		color:#fff;
+		border-radius:24px;
+	}
+}
+.buy-single-row{
+	border-bottom:1px solid;
+	&:last-child{
+		border:none;
+		line-height:40px;
+	}
+	#province{
+		padding-left:6%;
+		display:inline-block;
+		width:90%;
+	}
+	input,select,textarea{
+		width:100%;
+		height:40px;
+		text-indent: 2em;
+		font-size:14px;
+		padding:0 3%;
+		line-height:40px;
+	}
+	select{
+		width:90%;
+		margin-left:2%;
+		text-indent:0;
+	}
+}
+input[name='name']{
+	background:url(../images/bg.png) no-repeat 3% 12px;
+	background-size:18px;
+}
+input[name='postal']{
+	background:url(../images/bg.png) no-repeat 3% -112px;
+	background-size:19px;
+}
+input[name='mob']{
+	background:url(../images/bg.png) no-repeat 3% -18px;
+	background-size:18px;
+}
+input[name='email']{
+	background:url(../images/bg.png) no-repeat 3% -46px;
+	background-size:18px;
+}
+input[name='address']{
+	background:url(../images/bg.png) no-repeat 3% -76px;
+	background-size:18px;
+}
+.cell label{
+	padding-left:24px;
+	background:url(../images/bg.png) no-repeat 4px -170px;
+	background-size:18px;
+}
+.cell label.check{
+	background:url(../images/bg.png) no-repeat 4px -141px;
+	background-size:18px;
+}
+footer.m-orderFt{
+	text-align:center;
+	position:relative;
+}
+button.btn{
+	background-color:#ff5656;
+	color:#fff;
+	width:98%;
+	height:40px;
+	position: absolute;
+    left: 0;
+    border: 2px solid #ff5656;
+    bottom: 6px;
+
+}
+.shadow{
+	width: 96%;
+    height: 40px;
+    background: #fff;
+    border: 2px solid;
+    margin-left: 8px;
+}
+#city{
+    display: inline-block;
+    width: 45%;
+}
+.single{
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    display: flex;
+    align-items: center;
+    padding:2%;
+    margin-bottom:10px;
+    background:#f0f8fa;
+    &:last-child{
+    	margin-bottom:0;
+    	border-bottom:none;
+    }
+}
+.right{
+    flex: 1;
+    margin-right: 4%;
+}
+.right_bottom {
+    display: flex;
+    justify-content: space-between;
+}
+.attr {
+    display: inline-block;
+    vertical-align: top;
+}
+.pro_price{
+	vertical-align:bottom;
+}
+.address-input{
+	background:#f9d841;
+	border:2px solid;
+	border-top:none;
+}
+.input_title{
+	background:#fff;
+	border-bottom:2px solid;
+	line-height: 36px;
+    text-indent: 10px;
+}

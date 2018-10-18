@@ -1,0 +1,253 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/css/style.css" type="text/css" rel="stylesheet" />
+<link href="{{ THEME }}/css/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!--/page-->
+<section id="page-index" class="container">
+    <!--  -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+    </div>
+    <!--  -->
+    <ul class="m-servicePolicy">
+        <li class="item"><span>免郵費</span></li>
+        <li class="item"><span>貨到付款</span></li>
+        <li class="item"><span>七天鉴赏期</span></li>
+    </ul>
+    <div class="dt-section">
+        <div class="m-detailBaseInfo">
+            <div class="info">
+                <div class="line2" style="text-align: right;height: 45px;">
+                    <span>
+                        <label>原價</label>
+                        <label>{{ currency_code }}{{ market_price }}</label>
+                    </span>
+                    <span style="width: 40px;">
+                        <label style="width: 40px;">折扣</label>
+                        <label style="width: 40px;">
+                        {{ ((price/market_price)*10)|number_format(0) }}
+                        </label>
+                    </span>
+                    <span>
+                        <label>節省</label>
+                        <label>{{ currency_code }}{{ market_price - price }}</label>
+                    </span>
+                    <div class="tagList">
+                        <div class="wrap">
+                            <li class="item"><span>特價</span></li>
+                            <li class="item"><span>促銷</span></li>
+                        </div>
+                    </div>
+                </div>
+                <div class="this_title_reader">
+                    <h2>{{ title }}</h2>
+                    <em class="retailPrice">{{ currency_code }}{{ price }}</em>
+                </div>
+                <div class="i-p-b" style="text-align: left;">
+                    <span class="soldPart">已搶購<span id="soldNum">{{ sales }}</span>件</span>
+                    <span class="flag1">限時搶購</span>
+                </div>
+                <div class="i-p-m buyinfo_post" style="text-align: left;">
+                    <span class="percentBar" data-value='{{ sales }}'>
+                      <span id="progress"></span>
+                     </span>
+                    <span id="percentNum"></span>
+
+                    <span class="timeWrap">距結束
+                    <span id="timer"><span id="h">-</span><span class="colon">時</span><span id="m">-</span><span class="colon">分</span><span id="s">-</span><span class="colon">秒</span></span>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="specSelect">
+        <div class="m-listItem" id="val-sel">
+            <div class="f-vc">
+                <div class="inner"><span class="it" style="font-weight:normal;">請選擇規格數量</span></div>
+            </div>
+            <i class="icon u-icon u-address-right"></i>
+        </div>
+    </div>
+    <div style="height: 10px;background: white;width: 100%"></div>
+    <div class="bTop"><span class="bTitle bTitle1">圖文詳情</span><div class="line"></div></div>
+    <!--  -->
+    <div class="product-info">
+        {{ content|raw }}
+    </div>
+    {% if comment  %}
+    <div class="biao"> <h3>用戶評價</h3></div>
+    <div style="padding: 8px;background: white">
+        <div class="picMarquee-top">
+            <div class="bd" data-fn="commentScroll" style="height: 300px; overflow: hidden">
+                <ul class="picList">
+                    {% for a in comment %}
+                        <li data-groud="{{ a.comment_id }}" style="margin-bottom: 8px;height: auto;">
+                            {% if a.is_anonymous==1 %}
+                                <span style="color: red;font-size: 14px">匿名用戶</span>
+                            {% else %}
+                                <span style="color: red;font-size: 14px">{{ a.name }}</span>
+                            {% endif %}
+                            &nbsp;<span style="font-size: 14px;">滿意度：<span style="color: red;">{{ a.star }}</span></span>
+                            <div style="border-top:1px dotted #d0d6d6;margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                            <div class="msKeimgBox">
+                                <ul>{% for b in a.thumb %}
+                                        <li>
+                                            <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div class="buyinfo_hd">{{ lang.note_online }}</div>
+
+        <form id="big-i" name="form" action="#" method="post">
+            <div class="buyinfo_table">
+                <div class="closeBtn" style=""></div>
+                <div class="zaix">在線留言</div>
+                <div class="buyinfo_table_box">
+                    <table>
+                        <tr>
+                            <td class="table_td"><span class="require"></span>姓名:</td>
+                            <td class="table_cell"><input type="text" required="required" placeholder="請輸入姓名，如張三" class="mui-input-clear input01" name="name" maxlength="10"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="table_td"><span class="require"></span>手機:</td>
+                            <td class="table_cell"><input type="text" required="required" placeholder="請輸入手機號碼" class="input01" name="phone" maxlength="20"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="table_td">滿意度:</td>
+                            <td class="table_cell">
+                                <script type="text/javascript">
+                                    function rate(obj,oEvent){
+                                        var imgSrc = '{{ THEME }}/images/star2.png';
+                                        var imgSrc_2 = '{{ THEME }}/images/star.png';
+                                        if(obj.rateFlag) return;
+                                        var e = oEvent || window.event;
+                                        var target = e.target || e.srcElement;
+                                        var imgArray = obj.getElementsByTagName("img");
+                                        for(var i=0;i<imgArray.length;i++){
+                                            imgArray[i]._num = i;
+                                            imgArray[i].onclick=function(){
+                                                if(obj.rateFlag) return;
+                                                //alert(this._num+1);
+                                                var inputid=this.parentNode.previousSibling
+                                                inputid.value=this._num+1;
+                                            }
+                                        }
+                                        if(target.tagName=="IMG"){
+                                            for(var j=0;j<imgArray.length;j++){
+                                                if(j<=target._num){
+                                                    imgArray[j].src=imgSrc_2;
+                                                } else {
+                                                    imgArray[j].src=imgSrc;
+                                                }
+                                                target.parentNode.onmouseout=function(){
+                                                    var imgnum=parseInt(target.parentNode.previousSibling.value);
+                                                    for(n=0;n<imgArray.length;n++){
+                                                        imgArray[n].src=imgSrc;
+                                                    }
+                                                    for(n=0;n<imgnum;n++){
+                                                        imgArray[n].src=imgSrc_2;
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            return false;
+                                        }
+                                    }
+                                </script>
+                                <input type="hidden" value="0"><p onmouseover="rate(this,event)" id="img_1">
+                                    <img src="{{ THEME }}/images/star2.png" title="很烂"><img src="{{ THEME }}/images/star2.png" title="一般"><img src="{{ THEME }}/images/star2.png" title="还好"><img src="{{ THEME }}/images/star2.png" title="较好"><img src="{{ THEME }}/images/star2.png" title="很好">
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="table_td">留言:</td>
+                            <td class="table_cell">
+                                <textarea placeholder="請輸入您的留言內容" name="content"  class="textarea_style"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tj">
+                                <input id="btnAppraise" type="submit" name="Submit" class="input_btn01" value="提交評價" style="color:white">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="User_notes" style="margin-top: 10px">
+        <h2 class="notes">用戶須知</h2>
+        <div class="note_text">本產品的實際使用效果根據個人情況決定，不保證每位用戶都能享受到所宣傳的效果。若有疑問請諮詢在綫客服或通過電子郵箱聯絡我們，本公司享有最終解釋權。</div>
+        <div class="note_title">·關於發貨方式</div>
+        <div class="note_text">配送範圍全{{ regions.region_name }}。</div>
+        <div class="note_title">·關於配送時間</div>
+        <div class="note_text">下單成功之後，我們會按照下單先後順序進行配貨，配貨週期為3個工作日左右，一般到達時間為7個工作日左右。</div>
+        <div class="note_title">·如何申請退換貨</div>
+        <div class="note_text">1.由於質量原因產生的退換貨：至收到商品之日起7天內，向售後服務中心發送郵件至<a href="mailto:{{ service_email }}" style="text-decoration:none;outline:0;color: #b4282d">{{ service_email }}</a>，客服會在收到郵件后的1-3個工作日內受理您的請求，退換貨所產生的運費由我方承擔。</div>
+        <div class="note_title">2.退換貨流程:</div>
+        <div class="note_text">確認收貨—申請退換貨—客服審核通過—用戶寄回商品—倉庫簽收驗貨—退換貨審核—退款/換貨；</div>
+        <div class="note_title">退換貨請註明：訂單號、姓名、電話。</div>
+        <div class="note_title">·如何取消訂單</div>
+        <div class="note_text">取消訂單需要向售後服務中心發送郵件并注明相关原因，邮件内容应註明您的訂單號、姓名、電話。</div>
+    </div>
+    <!--  -->
+    <footer class="footer">
+        <a href="javascript:;" class="left" onclick="P8.startGroupChat({{ service_contact_id }},1);">聯繫客服</a>
+        <div class="right" style="margin-right: 8px;">
+            <div class="m-table">
+                    <a href="javascript:void(0);" id="val-selbtn" class="w-button w-button-block btn-addToCart" data-yahoo-js>{{ lang.buy_now }}</a>
+                {{ yahoo_js|raw }}
+                {% if yahoo_js_trigger %}
+                    <script type="text/javascript">
+                        require(['jquery'], function($){
+                            $('[data-yahoo-js]').click(function(){
+                                try {
+                                    {{ yahoo_js_trigger|raw }}
+                                    console.log('click done');
+                                    console.log(window.dotq);
+                                }
+                                catch(e){
+                                    console.error('yahoo js code not working');
+                                    console.log(yahooJs);
+                                }
+                            });
+                        });
+                    </script>
+                {% endif %}
+            </div>
+        </div>
+    </footer>
+    <!--  -->
+</section>
+<section id="page-order" class="container">
+    {% include 'cmpt-guige.twig' %}
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+<i class="m-goToTop" style="display: inline;"></i>
+<!--/page-->
+<script src="{{ THEME }}/js/index.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<!--  -->
+{% include '/public/theme/footer.twig' %}

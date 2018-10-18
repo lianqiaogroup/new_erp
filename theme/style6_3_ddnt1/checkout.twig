@@ -1,0 +1,207 @@
+{% include 'public/theme/header.twig' %}
+<!--  -->
+<link href="{{ THEME }}/image/favicon.ico" type="image/x-icon" rel=icon>
+<link href="{{ THEME }}/css/cart.css" type="text/css" rel="stylesheet"/>
+<!--  -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!--  -->
+<div class="g-bd">
+    <div class="m-hd" style="background: #fff;">
+        <div class="m-topBar">
+            <a class="goback" href="/{{ identity_tag }}"></a>
+            <div style="width: 100%;"><div class="title">{{ lang.receg_titel }}</div></div>
+        </div>
+    </div>
+    <!--  -->
+    <div id="order" data-error='{{ lang.Th_titleattr }}'>
+        <div class="warp">
+            <input type="hidden" value="{{identity_tag}}" id="identity_tag">
+            <form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+                <!--  -->
+                <input type="hidden" name="token" value="{{ token }}">
+                <input type="hidden" id="act" name="act" value="getAttrPrice">
+                <input type="hidden" name="product_id" value="{{ product_id }}">
+                <input type="hidden" name="vercode" value="">
+                <input type="hidden" name="orderId" value="">
+                <!--套餐-->
+                <div class="m-goodItems">
+                    {% if combo %}
+                        <ul class="m-list m-attrs" style="margin-bottom: 10px; background:#fff">
+                            <li class="item u-format" style="padding: 7px 0px;">
+                                <div class="tt">{{ lang.package }}</div>
+                                <div class="con" style="font-size:14px;" id="comb">
+                                    {% if combo %}
+                                        {% for c in combo %}
+                                        <p style="padding: 5px 0px;">
+                                        <label single_c="{{c.is_single_combo}}">
+                                            <input type="radio" name="combo_id" value="{{ c.combo_id }}" data-loopIndex="{{ loop.index }}" {%if loop.index == 1%}checked="chekced"{%endif%}>
+                                            {{ c.title|raw }}
+                                            {{ currency_code }}{{ c.price }}
+                                        </label>
+                                        </p>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>
+                                        <label single_c="0">
+                                            <input type="radio" name="combo_id" value="0" checked="chekced">
+                                            {{ title|raw }}
+                                            {{ currency_code }}{{ price }}
+                                        </label>
+                                        </p>
+                                    {% endif %}
+                                </div>
+                                <div class="cls"></div>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <div class="store-goods">
+                            <div class="i-img"><img src="{{ thumb }}"></div>
+                            <div class="goods-info">
+                                <h5>{{ title }}</h5>
+                                <p></p>
+                            </div>  
+                            <div class="price-num">
+                                <span class="price" style="color: red;">{{ currency_code }} <combprice></combprice></span>
+                                <span id="goodsNum" data-id="1888" data-prom="0.00"></span>
+                            </div>
+                            <input type="radio" style="opacity:0" name="combo_id" value="0" checked="chekced" data-loopIndex="1">
+                        </div>
+                    {% endif %}
+                    <!-- 修改套餐属性切换 -->
+                    {% if combo %}
+                        <!--产品套餐属性-->
+                        {% for om in  combo %}
+                            <section data-loopIndex="{{ loop.index }}" style="display: {% if loop.index==1 %} block; {% else %} none; {% endif %}">
+                            {% for ok in  om.goods %}
+                                <ul class="m-list m-attrs" style="margin-bottom: 10px;" comboproduc >
+                                        {% if ok.options %}
+                                            <div class="tc tc{{ ok.combo_id|raw }}">
+                                                <li class="item u-format" style="overflow: hidden; border-bottom: solid 1px #ddd; margin-bottom: 5px;">
+                                                    <div class="tt">
+                                                        {{ lang.product }}: {{ ok.title|raw }}
+                                                        {#
+                                                        *{{ ok.num|raw }}{{ currency_code }}{{ ok.price|raw }}
+                                                         <img src="{{ ok.thumb }}" width="80" height="80">
+                                                         #}
+                                                    </div>
+                                                </li>
+                                            {% for o in  ok.options %}
+                                            <li class="item protoLayer">
+                                                <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                                    <div class="tt" style="font-size:14px;">{{ o.attr_group_title|raw }}: </div>
+                                                    <div class="con" style="width: auto; ">
+                                                        {% for key,attr in o.attr %}
+                                                        <label style="max-width: 90px;display:inline-block;padding:5px;background: #eee">
+                                                            <input type="radio" name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}">
+                                                            {% if attr.thumb %}<img src="{{ attr.thumb }}" width="80" height="80">{% endif %}
+                                                            <p><span>{{ attr.name|raw }}</span></p>
+                                                        </label>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="cls"></div>
+                                            </li>
+                                            {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                </ul>
+                            {% endfor %}
+                            </section>
+                        {% endfor %}
+                    {% else %}
+                        <!--产品属性-->
+                        <section data-loopIndex="1">
+                            <ul class="m-list m-attrs" style="margin-bottom: 10px;">
+                                {% for o in  options %}
+                                <li class="item protoLayer">
+                                    <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                                        <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                        <div class="con">
+                                            {% for key,attr in o.attr %}
+                                                <label style="max-width:32%;display:inline-block;padding:5px;background: #eee">
+                                                    {% if attr.thumb %} <img src="{{ attr.thumb }}" style="width: 100%; height: auto;"> <br>{% endif %}
+                                                    <input type="radio" id="iin" style="" name="attr[{{ o.attr_group_id }}]" value="{{  attr.product_attr_id }}" class="radioAttr">
+                                                    {{ attr.name|raw }}
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="cls"></div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </section>
+                    {% endif %}
+                    <ul class="m-list m-attrs" style="margin-bottom: 10px;">
+                        <li class="item" style="margin: 10px 0px; padding-bottom:5px;">
+                            <div class="u-format">
+                                <div class="tt">{{ lang.num }}</div>
+                                <div class="con">
+                                    <div class="m-selnum dr">
+                                        <div class="less z-dis" data-quality="min"></div>
+                                        <div class="textWrap">
+                                            <input id="mun" name="num" type="number" value="1" min="1" max="100" data-quality="value" oninput="if(value>100)value=100">
+                                        </div>
+                                        <div class="more" data-quality="add"></div>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="u-icon u-address-bg"></div>
+                {# form start #}
+                {% if regions.code == "THA" %}
+                    {% include 'checkout_tha.twig' %}
+                {% endif %}
+                {% if regions.code == "TW" %}
+                    {% include 'checkout_tw.twig' %}
+
+                {% endif %}
+                {# form end #}
+                <!--  -->
+                <div style="text-align: center; margin: 10px 0px;">
+                    <button class="btnBuy" type="submit" name="Submit" style="display:none">{{ lang.Order }}</button>
+                    <input type="hidden" data-cuckootag="confirm_order">
+                    <div class="imitatebtn" onclick="checkattrs()" style="line-height:41px;" data-wating-text="{{ lang.order_submiting }}">
+                        {{ lang.order_sure }}
+                    </div>
+                </div>
+                <!--  -->
+                <div style="padding: 15px; background: #fff;font-size: 14px;color: #666;text-align: left;margin-top: 10px; margin-bottom: 20px;">
+                    {{ lang.warming|raw }}
+                {% if regions.code == 'THA' %}
+                    <div style="font-weight:900;">{{lang.customer_contact}}</div>
+                {% endif %}
+                </div>
+            </form>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+<!--  -->
+<script type="text/javascript" src="{{ THEME }}/js/checkout.js"></script>
+<style>#POP800_INIT_DIV, #POP800_PANEL_DIV, #POP800_LEAVEWORD_DIV { display: none; }</style>
+<script>
+    window.repeatlang = {
+        title:"{{lang.repeat_title}}",
+        prompt:"{{lang.repeat_prompt}}",
+        prompt_out:"{{lang.repeat_prompt_out}}",
+        confirm_order:"{{lang.repeat_confirm_order}}",
+        query_details:"{{lang.repeat_query_details}}",
+        time_d:"{{lang.time_d}}",
+        time_h:"{{lang.time_h}}",
+        time_m:"{{lang.time_m}}",
+        time_just:"{{lang.time_just}}"
+    }
+
+    //  fb确认下单事件
+    $(document).on('click', '[data-cuckootag="confirm_order"]', function(){
+        fbq('track', 'Purchase', {
+            tags: '259j',
+        })
+    });
+</script>
+{% include 'public/theme/footer.twig' %}

@@ -1,0 +1,135 @@
+<div id="ui-paramselect">
+    <div class="dt-paramselect">
+        <form id="form" name="form" method="post" onsubmit="return false">
+            <input type="hidden" name="orderid" id="orderid" value="">
+            <input type="hidden" name="product_id" value="{{ product_id }}">
+            <input type="hidden" name="act" id="act" value="getAttrPrice">
+            <!--  -->
+            <div class="info-con">
+                <div class="left f-fl">
+                    <!--产品属性图-->
+                    <img id="attrimg" src="{{ thumb }}">
+                </div>
+                <div class="right f-fl">
+                    <div class="con" style="padding-top:5px;">
+                        <p class="price">
+                            <span>{{ lang.price }}：</span><span class="money">{{ currency_code }} <span currentprice>0</span></span>
+                        </p>
+                        <p class="sku">
+                            <span style="display: inline-block;">已選擇:</span>
+                            <span class="it" style="line-height: 21px;"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="tips">{{ tips }}</p>
+
+            <!-- 套餐选择 -->
+            <div class="u-format" id="comb" data-price="">
+                <br>
+                <div class="tt">產品</div>
+                <div class="package">
+                {% if combo %}
+                    {% for c in combo %}
+                    <label class="tab {%if loop.index == 1%}tab-sel{%endif%}" rel="1" data-price="{{ c.price }}" data-loopIndex="{{ loop.index }}" data-single="{{ c.is_single_combo }}">
+                        <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="{{ c.combo_id }}" {%if loop.index == 1%}checked="chekced"{%endif%} />
+                        <span>{{ c.title|raw }} {{ currency_code }}{{ c.price }}</span>
+                    </label>
+
+                    {% endfor %}
+                {% else %}
+                    <label class="tab tab-sel" rel="1" data-price="{{ price }}" data-loopIndex="1" data-single="0">
+                        <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="0" checked="chekced" />
+                        <span>
+                            {{ title }} {{ currency_code }}{{ price }}
+                        </span>
+                    </label>
+                {% endif %}
+                </div>
+            </div>
+            <!-- 套餐选择 end -->
+
+            <!-- 套餐－属性选择 -->
+            {% if combo %}
+                <!-- 循环套餐 -->
+                {% for om in combo %}
+                    <section data-loopIndex="{{ loop.index }}" productid="{{ om.product_id }}" style="display: none;">
+                    {% for ok in om.goods %}
+                        {% if ok.options %}
+                            <div class="tc tc{{ ok.combo_id|raw }}"><div class="title_ac"><h5>{{ ok.title|raw }}</h5></div>
+                                {% for o in  ok.options %}
+                                    <li class="item protoLayer">
+                                        <div class="u-format count_atrr" data-group="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" data-select="0">
+                                            <div class="tt">{{ o.attr_group_title|raw }}</div>
+                                            <div class="con">
+                                                <!-- 属性值 -->
+                                                {% for key,attr in o.attr %}
+                                                    <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                                        <span>{{ attr.name|raw }}</span>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="cls"></div>
+                                    </li>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </section>
+                {% endfor %}
+            {% else %}
+            <!-- 单产品属性选择 -->
+                <section data-loopIndex="1">
+                {% for o in  options %}
+                    <li class="item protoLayer">
+                        <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                            <div class="tt">{{ o.attr_group_title|raw }}</div>
+                            <div class="con">
+                                {% for key,attr in o.attr %}
+                                    <div class="tab" data-id="{{ attr.product_attr_id }}" data-img="{{ attr.thumb }}">
+                                        <span>{{ attr.name|raw }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="cls"></div>
+                    </li>
+                {% endfor %}
+                </section>
+            {% endif %}
+            <!--产品的所有属性-->
+            <input type="hidden" name="heavn" class="attr_id" value="">
+            <input type="hidden" name="attrnum" value="2">
+            <!--数量-->
+            <div class="u-fornum">
+                <div class="tt">{{ lang.num }}</div>
+                <div class="con">
+                    <div class="m-selnum dr">
+                    <div onclick="minnumber()" class="less z-dis"></div>
+                    <div class="textWrap">
+                        <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+                    </div>
+                    <div onclick="addnumber()" class="more"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PROTOTYPE -->
+            <footer>
+                <a href="javascript:;" class="detailback">{{ lang.back }}</a>
+                <div id="inquiry" data-cuckootag="check_order" data-value="{{ identity_tag }}">{{ lang.order_inquiry }}</div>
+                <div class="td">
+                    <button
+                        class="btn w-button"
+                        data-cuckootag="confirm_arrtibute"
+                        data-event="postcheckGuige">
+                        {{ lang.confirm }}
+                    </button>
+                </div>
+            </footer>
+        </form>
+    </div>
+</div>
+<!--  -->
+<!--script src="{{ THEME }}/js/guige.js"></script-->

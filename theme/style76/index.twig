@@ -1,0 +1,187 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet">
+<link href="{{ THEME }}/style/index.min.css" rel="stylesheet">
+<!-- end header resource -->
+<div class="viewItemV2-main-page" style="display: block;">
+	{% if has_home %}
+	<div class="header-fixed">
+		<header class="header">
+			<div class="header-container">
+				<nav class="navbar" id="header">
+					<div class="header-left clearfix">
+					    <span class="glyphicon glyphicon-menu none block-sm"><a class="classify" href="/" id="menu"><i class="material-icons"></i></a></span>
+					    <h1 class="h_logo"><a href="/"><img src="{{ logo }}" class="logo"></a></h1>
+					</div> 
+				</nav>
+			</div>
+		</header>
+	</div>
+	{% endif %}
+	<article>
+        <div class="usp-header">
+            <ul>
+                <li class="usp-content-1">{{lang.returned_goods}}</li>
+                <li class="usp-content-2">{{lang.cash_}}</li>
+                <li class="usp-content-3">{{lang.free_}}</li>
+            </ul>
+        </div>
+    </article>
+    <div id="itemHeader">
+    	<h1 class="it-ttl">{{ title }}</h1>
+    	<div class="it_ttr"><span id="price">{{ price }}</span>{{ currency_code }}<span style="font-size: 14px;">（税込）</span><del class="msku-price msku-convprice">{{ market_price }}{{ currency_code }}</del></div>
+    </div>
+	<div id="viImgGalWrapper">
+		<div class="swiper-container gallery-top">
+	        <div class="swiper-wrapper">
+	            {% if photos %}
+					{% for p in photos %}
+	                     <div class="swiper-slide">
+	                        <img src="{{ p.thumb }}">
+	                     </div>
+	                {% endfor %}
+	            {% else %}
+	                <div class="swiper-slide">
+	                    <img src="{{ thumb }}">
+	                </div>
+	            {% endif %}
+	        </div>
+	    </div>
+	    <div class="swiper-container gallery-thumbs">
+	        <div class="swiper-wrapper" style="">
+	        {% if photos %}
+	            {% for p in photos %}
+	                <div class="swiper-slide" style="background-image:url({{ p.thumb }})">
+	                </div>
+	            {% endfor %}
+	        {% else %}
+	            <div class="swiper-slide" style="background-image:url({{ thumb }})">
+	            </div>
+	        {% endif %}
+	        </div>
+	    </div>
+	</div>
+	<div id="viewItemV2Cont">
+		<div id="viParent">
+			<div id="itemDetails" class="">
+				<div id="viDescContainer">
+					<div id="msku-menu-ctr">
+						<div class="msku-ctr" id="msku_list">
+							<div class="msku-flt-clr">
+							</div>
+							{% if combo %}
+								<div class="trait-ctr">
+									<div class="trait-label-wrp">
+										<label title="Color">セット商品</label>
+									</div>
+									<div class="trait-mnu-wrp">
+										<select class="trait-mnu" id="combo">
+											{% for c in combo %}
+												<option value="{{ c.combo_id }}" data-single="{{ c.is_single_combo }}">{{ c.title }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								{% for c in combo %}
+									{% if loop.index == 1 %}
+										<input type="hidden" name="combo_id" value="{{ c.combo_id }}">	
+									{% endif %}
+									{% for ok in c.goods %}
+										{% for o in ok.options %}
+											<div class="trait-ctr goods" combo_id="{{ c.combo_id }}" goods_id="{{ ok.combo_goods_id }}" group_id="{{ o.attr_group_id }}" style="display: none;">
+												<div class="trait-label-wrp">
+													<label title="Color">{{ o.attr_group_title|raw }}</label>
+												</div>
+												<div class="trait-mnu-attr">
+													<ul class="attr_mnu">
+														{% for key,attr in o.attr %}
+															{% if attr.thumb %}
+																<li class="attr_itemimg {%if loop.index == 1%}sel_attr{% endif %}" value="{{ attr.product_attr_id }}"><img src="{{ attr.thumb }}" alt="{{ attr.name|raw }}"></li>
+															{% else %}
+																<li class="attr_item {%if loop.index == 1%}sel_attr{% endif %}" value="{{ attr.product_attr_id }}">{{ attr.name|raw }}</li>
+															{% endif %}
+														{% endfor %}
+													</ul>
+												</div>
+											</div>
+										{% endfor %}
+									{% endfor %}
+								{% endfor %}
+								
+							{% else %}
+								
+								{% for a in options %}
+								<div class="trait-ctr">
+									<div class="trait-label-wrp">
+										<label title="Color">{{ a.attr_group_title }}</label>
+									</div>
+									<div class="trait-mnu-attr">
+										<ul class="attr_mnu" for="{{ a.attr_group_id }}">
+											{% for key,attr in a.attr %}
+
+												{% if attr.thumb %}
+													<li class="attr_itemimg {%if loop.index == 1%}sel_attr{% endif %}" value="{{  attr.product_attr_id }}"><img src="{{ attr.thumb }}" alt="{{ attr.name|raw }}"></li>
+												{% else %}
+													<li class="attr_item {%if loop.index == 1%}sel_attr{% endif %}" value="{{  attr.product_attr_id }}">{{ attr.name|raw }}</li>
+												{% endif %}
+
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+								{% endfor %}
+								<input type="hidden" name="combo_id" value="0">
+								
+							{% endif %}
+							<div class="trait-ctr u-fornum">
+								<div class="trait-label-wrp">
+									<label title="Color">数量</label>
+								</div>
+								<div class="trait-num">
+									<span onclick="minnumber()">-</span><input onchange="inputnumber()" type="tel" id="num" name="num" value="1"><span onclick="addnumber()">+</span>
+								</div>
+							</div>
+							<div class="msku-flt-clr">
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="act" id="act" value="getAttrPrice">
+					<input type="hidden" name="product_id" value="{{ product_id }}">
+
+					<div class="txn-btn-wrp">
+						<a id="buyItNowBtn" href="javascript:void(0);" class="btn inline_nav_link tracking primary buyItNowBtn">{{ lang.buy_now }} </a>
+						<div class="viewInCartSec">
+							<a id="viewInCartBtn" data-cuckootag="check_order" data-value="{{ identity_tag }}" class="btn inline_nav_link tracking primary">{{ lang.order_inquiry }}</a>
+						</div>
+					</div>
+					<div id="viHiLiteParent">
+						<div id="itemSubHeader">
+							免除郵便料金,７日間の無条件返品保証
+						</div>
+					</div>
+				</div>
+				<div id="viDetailsParent" class="container vi_details">
+					<div id="viSpecificsParent" class="divideSec">
+						<div id="viSpecificsCont" class="tracking">
+							{{ content|raw }}
+						</div>
+					</div>
+					<div class="pageSec">
+						<div id="toplink" class="toptxt tracking" _sp="p2056116.m2696.l4319">
+							<span class="topImg"></span><b class="heading">{{lang.goTop}}</b>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<!-- footer resource -->
+<script type="text/javascript">
+	var w = parseInt($('body').width()) +parseInt(80) + "px";
+    $('#viImgGalWrapper').css({'height':w});
+</script>
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

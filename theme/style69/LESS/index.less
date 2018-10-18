@@ -1,0 +1,116 @@
+html{
+	background:#f1f1f1;
+}
+body{
+	width:100%;
+	max-width:640px;
+	margin:0 auto;
+	background:#fff;
+    color:#383838;
+    word-wrap: break-word;
+}
+img{
+	vertical-align:top;
+}
+video{
+	width:100%;
+	height:auto;
+}
+button{
+	border:none;
+	background:none;
+	outline:none;
+}
+h1,h3,h5{
+	margin:0;
+	padding:0;
+}
+.swiper-container{
+	width:80%;
+	padding:18px 0;
+}
+@import 'dom_title.less';
+@import 'dom_limit.less';
+@import 'dom_price.less';
+@import 'guide.less';
+@import 'dom_service.less';
+@import 'dom_proinfo.less';
+.detail{
+	padding:0 13px;
+	.sales{
+		border:2px solid #659DF2;
+		border-radius:3px;
+		padding:20px 0;
+	}
+}
+.footer{
+	position:fixed;
+	display:-webkit-flex;
+	display:flex;
+	padding:8px 0;
+	width:100%;
+	max-width:640px;
+	bottom:0;
+    background: rgba(255,255,255,0.7);
+	.buy_now{
+		margin:0 13px 0 8px;
+		flex:1;
+		button{
+			color:#fff;
+			background:#4CAF50;
+			height:40px;
+			width:100%;
+			border-radius:3px;
+		}
+	}
+	.kefu{
+		width:38px;
+		height:36px;
+		margin-left:13px;
+		border:2px solid #4CAF50;
+		border-radius:3px;
+		background:url(../images/kefu.png) no-repeat center;
+		background-size:20px;
+	}
+}
+
+
+.after_sale{
+    padding:20px 15px;
+    font-size:12px;
+    font-family: Thonburi;
+    border: solid 1px #659DF2;
+    margin: 10px 16px;
+    padding-top:0;
+   
+}
+.after_sale_title{
+    margin-bottom:20px;
+    font-size:14px;
+    color:#444A59 ;
+    border-bottom: 1px solid #659DF2;
+    line-height: 46px;
+}
+.after_sale .after_sale_first{
+    color:#666;
+    margin-top:25px;
+}
+.after_sale_content div{
+    line-height: 17px;
+    color:#999;
+    margin-bottom:10px;
+}
+.after_sale_circle{
+    border:1px solid #999;
+    background:#999;
+    display: inline-block;
+    width:5px;
+    height:5px;
+    border-radius: 50%;
+    margin-right:10px;
+}
+.after_sale_circle_right{
+    display: inline-block;
+    width: calc(~'100% - 21px');
+    vertical-align: top;
+}

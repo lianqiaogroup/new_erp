@@ -1,0 +1,122 @@
+{% include '/public/theme/bi.twig' %}
+<script type="text/javascript">
+$(function(){
+    // 立即购买
+    $('[data-cuckootag="buy_now"]').click(function(event) {
+        var eventName = $(this).attr('data-event') || '';
+        var callback = typeof(window[eventName])=="function" ? window[eventName] : new Function();
+        if( typeof(ga_btn_event)!="undefined" ){
+            ga_btn_event && ga_btn_event('buy_now', callback);
+        }else{
+            callback();
+        }
+    });
+    $('[data-cuckootag="confirm_arrtibute"]').click(function(event) {
+        // 确认属性
+        event.preventDefault();
+        var eventName = $(this).attr('data-event') || '';
+        var callback = typeof(window[eventName])=="function" ? window[eventName] : new Function();
+        if( typeof(ga_btn_event)!="undefined" ){
+            ga_btn_event('confirm', callback);
+        }else{
+            callback();
+        }
+    });
+    var confirm_order_locker = false;
+    $('[data-cuckootag="confirm_order"]').click(function(event) {
+
+
+
+        var self = this;
+        clearTimeout(confirm_order_locker);
+        confirm_order_locker = setTimeout(function(){
+            if( $(self).attr('href')!='' && $(self).attr('href')!=undefined ){
+                var scrollTag = $(self).attr('href');
+                if( parseInt(window.scrollY)+parseInt($(window).height())==$(document).height() ){
+                }else{
+                    if( parseInt(window.scrollY) < parseInt($(scrollTag).offset().top) ){
+                        $(window).scrollTop(parseInt($(scrollTag).offset().top))
+                        return false;
+                    }
+                }
+            }
+            // 确认订单
+            if( typeof(ga_btn_event)!="undefined" ){
+                if( ga_btn_event_locked==false ){
+                    ga_btn_event_locked=true;
+                    ga_btn_event && ga_btn_event('order', function(){
+
+                        $('#form').find('[type="submit"]').trigger('click');
+                        ga_btn_event_locked=false;
+                    });
+                    return false;
+                }else{
+                    ga_btn_event_locked = false;
+                    return true;
+                }
+            }
+        }, 200);
+    });
+    $('[data-cuckootag="check_order"]').click(function(event) {
+        // 查询订单
+        event.preventDefault();
+        var eventName = $(this).attr('data-event') || '';
+        var eventValue = $(this).attr('data-value') || '';
+        var callback = typeof(window[eventName])=="function" ? window[eventName] : window.widget.goto_checkOrder;
+        if( typeof(ga_btn_event)!="undefined" ){
+            ga_btn_event('order_search', function(){
+                callback({ identity_tag: eventValue })
+            });
+        }else{
+            callback({ identity_tag: eventValue });
+        }
+    })
+    $('[data-cuckootag="service"]').click(function(event) {
+        // 客服
+        event.preventDefault();
+        var service_id = $(this).attr('data-value') || '';
+        if( service_id=='' ) return;
+        if( typeof(ga_btn_event)!="undefined" ){
+            ga_btn_event('online_cs', function(){
+                widget.handleActiceService(service_id)
+            });
+        }else{
+            widget.handleActiceService(service_id);
+        }
+    });
+});
+</script>
+{% if embedStatScript %}
+<script type="text/javascript">
+    {% include '/public/javascript/tongji.min.js' %}
+    window.addEventListener('load', function(){ window.submitData({{ embedStatScript|raw }}); });
+</script>
+{% endif %}
+<!-- 客服系统 -->
+{% if theme == 'style60' %}
+	<script language="javascript" src="http://api1.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=en"></script>
+{% else %}
+	<script language="javascript" src="http://api.pop800.com/800.js?n={{ service_contact_id }}&s=01&p=l&l=cn"></script>
+{% endif %}
+<script type="text/javascript">
+{% if is_open_sms!='' %}
+	window.smsAuth = {{ is_open_sms }} == 1 ? true : false;
+{% endif %}
+{% if theme == 'style83' %}
+    window.smsAuth = false;
+{% endif %}
+</script>
+<script type="text/javascript">
+	{% include '/public/javascript.v2/lazyload.js' %}
+</script>
+{# {% include '/public/theme/google_analytics_basic.twig' %} #}
+{# {% include '/public/theme/google_marketing.twig' %} #}
+{% if la %}
+    <!-- 51 la -->
+    <div style="display:none;">
+        {{ la|raw }}
+    </div>
+{% endif %}
+
+<input type="hidden" id="product_md_ddn0918" value="{{ product_md_ddn }}" />
+</body></html>

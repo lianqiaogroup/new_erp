@@ -1,0 +1,368 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<input id="region_code" value="{{ regions.code }}" type="hidden">
+<input id="identity_tag" value="{{ identity_tag }}" type="hidden">
+<!--  -->
+<section id="page-index" data-error="{{ lang.Th_titleattr }}">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% if photos %}
+				{% for p in photos %}
+					<div class="swiper-slide">
+						<img src="{{ p.thumb }}" width="100%">
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="swiper-slide">
+					<img src="{{ thumb }}" width="100%">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="price">
+		<div class="left">
+			<span class="sale_price">{% if currency_prefix == 1 %}{{ currency_code }}{{price}}{% else %}{{price}}{{ currency_code }}{% endif %}</span>
+			<span class="market_price">{{ lang.market_price }}：<del>{% if currency_prefix == 1 %}{{ currency_code }}{{market_price}}{% else %}{{market_price}}{{ currency_code }}{% endif %}</del></span>
+		</div>
+		<div class="right">
+			<span class="tag">{{ lang.time_limit }}</span>
+			<div class="timeWrap">
+				<span id="timer">
+					<span  id="h">10</span>
+					<span class="">:</span>
+					<span id="m">00</span>
+					<span class="">:</span>
+					<span id="s">00</span>
+					<span class=""></span>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="detail">
+		<div class="title">{{ title }}</div>
+		<div class="service">
+			<span>{{ lang.cash_on_delivery }}</span>
+			<span>{{ lang.free_ship }}</span>
+			<span>{{ lang.returned_goods }}</span>
+		</div>
+	</div>
+</section>
+
+<form id="form" name="form" action="order.php" method="post" onSubmit="return prepost()">
+	<div class="choose_pro">
+		<div class="title">
+			{{ lang.choose_pro }}
+		</div>
+		<div class="product dxbox">
+			{% if combo %}
+			{% for c in combo %}
+				<label data-price='{{ c.price }}' single_c="{{c.is_single_combo}}" {%if loop.index == 1%}class="tab-sel"{%endif%}><input type="radio" data-loopIndex="{{ loop.index }}" name="combo_id" value="{{ c.combo_id }}" class="combo" {%if loop.index == 1%}checked="chekced"{%endif%}> {{ c.title|raw }}<span>&nbsp;{% if currency_prefix == 1 %}{{ currency_code }}{{c.price}}{% else %}{{c.price}}{{ currency_code }}{% endif %}</span></label>
+			{% endfor %}
+			{% else %}
+				<label data-price='{{ price }}' single_c="0" class="tab-sel"><input type="radio" name="combo_id" value="0" checked="chekced" data-loopIndex="1"> {{ title|raw }}<span>&nbsp;{% if currency_prefix == 1 %}{{ currency_code }}{{price}}{% else %}{{price}}{{ currency_code }}{% endif %}</span></label>
+			{% endif %}
+		</div>
+	</div>
+	<div class="attr">
+		<div class="title">
+			{{ lang.choose_attr }}
+		</div>
+		<div class="attr_num">
+			<!--属性开始-->
+	        <div id="product_attr">
+	            {% if combo %}
+	                <!--循环套餐-->
+	                {% for om in  combo %}
+	                    <section data-loopIndex="{{ loop.index }}" style="display: {% if loop.index != 1 %}none{% else %}block{% endif %}">
+	                    <!-- 循环产品 -->
+	                    {% for ok in  om.goods %}
+	                        {% if ok.options %}
+	                        <div class="bdbox">
+	                            <div class="tc tc{{ ok.combo_id|raw }}" >
+	                                <div class="title_ac"><h5><label for="" class="bdxx" ><em>*</em>{{ ok.title|raw }}</label></h5></div>
+	                                <!-- 循环属性 -->
+	                                {% for o in  ok.options %}
+	                                    <li class="item" data-prototype-group="{{ loop.index }}">
+	                                        <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+	                                            <label class="bdxx">
+	                                                {{ o.attr_group_title|raw }}
+	                                            </label>
+	                                            <div class="dxbox" datattr>
+	                                                {% for key,attr in o.attr %}													
+	                                                    <label style="display:inline-block;">
+	                                                        {% if attr.thumb %}
+	                                                        <span class="hasimg" style="background:url({{ attr.thumb }});background-size:100% 100%"><span>{{ attr.name|raw }}</span></span>
+	                                                        {% else %}
+	                                                        <span class="noimg">{{ attr.name|raw }}</span>
+	                                                        {% endif %}
+	                                                        <input type="radio" name="attr[{{ ok.combo_goods_id }}-{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}" style="vertical-align: top;">
+	                                                    </label>
+	                                                {% endfor %}
+	                                            </div>
+	                                        </div>
+	                                    </li>
+	                                {% endfor %}
+	                            </div>
+	                        </div>
+	                        {% endif %}
+	                    {% endfor %}
+	                    </section>
+	                {% endfor %}
+	            {% else %}
+	                <section data-loopIndex="1">
+	                <!--循环当前产品属性-->
+	                {% for o in  options %}
+	                    <div class="bdbox u-format count_atrr" data-prototype-group="{{ loop.index }}">
+	                        <li class="item">
+	                            <label class="bdxx">{{ o.attr_group_title|raw }}</label>
+	                            <div class="dxbox" datattr>
+	                                {% for key,attr in o.attr %}
+	                                    <label style="display:inline-block;">
+	                                        {% if attr.thumb %}
+	                                        	<span class="hasimg" style="background:url({{ attr.thumb }});background-size:100% 100%"><span>{{ attr.name|raw }}</span></span>
+                                        	{% else %}
+                                               	<span class="noimg">{{ attr.name|raw }}</span>
+	                                        {% endif %}
+	                                        <input type="radio" name="attr[{{ o.attr_group_id }}]" value="{{ attr.product_attr_id }}" class="radioAttr" />
+	                                    </label>
+	                                {% endfor %}
+	                            </div>
+	                        </li>
+	                    </div>
+	                {% endfor %}
+	                </section>
+	            {% endif %}
+	            <input type="hidden" name="act" value="getAttrPrice">
+	            <input type="hidden" name="product_id" value="{{ product_id }}">
+	        </div>
+	        <!--属性结束-->
+	        <!--数量-->
+	        <div class="u-fornum">
+	        	<span>{{ lang.num }}&nbsp;</span>
+	            <div class="con">
+	                <div class="m-selnum dr">
+	                
+	                <div onclick="minnumber()" class="less">-</div>
+	                <div class="textWrap">
+	                    <div class="tt">1</div>
+	                    <input type="hidden" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+	                </div>
+	                <div onclick="addnumber()" class="more">+</div>
+	                </div>
+	            </div>
+	        </div>
+		</div>
+	</div>
+	<div class="product_info">
+		<div class="title">
+			<span class="info tab-sel"><span>{{ lang.pro_detail }}</span></span>
+			<span class="order_query" data-cuckootag="check_order" data-value="{{ identity_tag }}"><span>{{ lang.order_inquiry }}</span></span>			
+			<span class="pinglun"><span>{{ lang.user_comment }}</span></span>
+		</div>
+        <div class="m-img product-img">
+        	{{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+        <div class="pinlun_content">
+        	<ul id="pinlun_content">
+	        {% for a in comment %}
+	        	{%if loop.index <= 6 %}
+	            <li class="lab cover" data-group="{{ a.comment_id }}" data-id="0">
+	            	<div class="item-wrap {%if a.thumb%}has_img{%endif%}">
+	                <div class="msKeimgBox">
+	                	<div class="item-img box">
+	                		{% for b in a.thumb %}
+	                			{%if loop.index == 1%}
+	                				<img src="{{ b.thumb }}">
+	                			{%endif%}
+	                		{% endfor %}
+	                	</div>
+	                    <div class="mskeTogBtn"></div>
+	                    <div style="clear:both;"></div>
+	                </div>
+	                <div class="main-com" style="padding: 5px;">
+	                    <div class="inm">
+	                        {% if a.is_anonymous %}
+	                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                        {%else%}
+	                        	<span id="wi">{{ a.name }}</span>
+	                        {% endif %}
+		                </div>
+	                    <div>
+	                    	<span class="iconStar rate{{a.star}}"></span>
+	                	</div>
+	                	<P style="color: #666;padding: 5px;word-wrap: break-word;">{{ a.content }}</P>
+	                </div>
+	                </div>
+	            </li>
+	            {% else %}
+	            <li class="lab cover" data-group="{{ a.comment_id }}" datashowid data-id="0" style="display: none;">
+	            	<div class="item-wrap {%if a.thumb%}has_img{%endif%}">
+	                <div class="msKeimgBox">
+	                	<div class="item-img box">
+	                		{% for b in a.thumb %}
+	                			{%if loop.index == 1%}
+	                				<img src="{{ b.thumb }}">
+	                			{%endif%}
+	                		{% endfor %}
+	                	</div>
+	                    <div class="mskeTogBtn"></div>
+	                    <div style="clear:both;"></div>
+	                </div>
+	                <div class="main-com" style="padding: 5px;">
+	                    <div class="inm">
+	                        {% if a.is_anonymous %}
+	                            <span id="nm" class="nm">{{ lang.anonymous }}</span>
+	                        {%else%}
+	                        	<span id="wi">{{ a.name }}</span>
+	                        {% endif %}
+		                </div>
+	                    <div>
+	                    	<span class="iconStar rate{{a.star}}"></span>
+	                	</div>
+	                	<P style="color: #666;padding: 5px;word-wrap: break-word;">{{ a.content }}</P>
+	                </div>
+	                </div>
+	            </li>
+	            {%endif%}
+	        {% endfor %}
+	        </ul>
+	        <div id="loadMore" class="loadMore">查看更多</div>
+	    </div>
+    </div>
+	{% include 'checkout.twig' %}
+</form>
+<div class="layer_com">
+	<div class="big_com">
+		<div class="close-btn">×</div>
+		<div class="layer-main"></div>
+	</div>
+</div>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script type="text/javascript">
+	//瀑布流
+var fall=document.getElementById("pinlun_content");
+$('.product_info .pinglun').on('click',function(){
+    $('.pinlun_content').show();
+    change();
+    $('.User_notes').hide();
+    $('.m-img').hide();
+})
+function change(){
+    var lis=fall.getElementsByTagName("li");
+    var lis_W=lis[0].offsetWidth;
+    var windowCW = document.getElementById("pinlun_content").offsetWidth;
+    var n = Math.floor(windowCW/lis_W); 
+
+    var center = (windowCW - n*lis_W-(n-1)*10)/2;
+    var arrH = []; 
+    for(var i=0;i<lis.length;i++){
+        var j=i%n;
+        if (arrH.length==n) {  
+            var min = findMin(arrH);
+            lis[i].style.left = min*(lis_W) +"px";  
+            lis[i].style.top = arrH[min]+10 + "px";
+            arrH[min] += lis[i].offsetHeight + 10;            
+        }else{
+            arrH[j] = lis[i].offsetHeight;        
+            lis[i].style.left = lis_W*j+j + "px";
+            lis[i].style.top = 0;
+        }
+
+        var k=0;
+        for(var b=0;b<arrH.length;b++){
+            k=Math.max(arrH[k],arrH[b])==arrH[k] ? k : b;
+        } 
+        fall.style.height= arrH[k]+'px';
+    }
+
+    function findMin(arr) {
+        var m = 0;
+        for (var i = 0; i < arr.length; i++) {
+            m = Math.min(arr[m], arr[i]) == arr[m] ? m : i;
+        }
+        return m;
+    }
+}
+window.onload=function(){
+	if(fall.length){
+		change();
+	}
+}
+window.onresize=function(){
+	if(fall.length){
+	    change();
+	}
+}
+//点击查看图片大图
+$(document).ready(function(){
+    $(".cover").click(function(){
+        var that = $(this).clone();
+        $('.layer-main').html('').append(that);
+        $('.layer_com').show();
+        $('body').addClass('overflow');
+    });
+    $(".close-btn").click(function(){
+        $('.layer_com').hide();
+        $('body').removeClass('overflow');
+    });
+    $(".cover").hover(function() {
+        $(this).animate({opacity:0.8});
+    }, function() {
+        $(this).animate({opacity:1});
+    });
+    $('#loadMore').click(function(){
+    	var dom = $('li[datashowid]').length;
+    	if(parseInt(dom) > 6){
+    		for(var l = 0 ; l < 6;l++){
+    			$('li[datashowid]').eq(l).show();
+    		}
+    		for(var l = 0 ; l < 6;l++){
+    			$('li[datashowid]').eq(0).removeAttr('datashowid');
+    		}
+    	}else{
+    		if(parseInt(dom) != 0){
+	    		for(var l = 0 ; l < dom;l++){
+	    			$('li[datashowid]').eq(l).show();
+	    		}
+	    		$('#loadMore').hide();
+    		}
+    	}
+    	change();
+    })
+});
+loadstate();
+$('[name="city"]').change(function(event) {
+    var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+    loadCity(id);
+});
+function loadstate(){
+    var region_id = '{{regions.region_id}}',regionCode = '{{regions.code}}';
+    if(regionCode == 'TW'){
+    $.post('/region.php', { 'region_id': region_id }, function(data) {
+        var data = JSON.parse(data);
+            data.map(function(item, index){
+                $('[name="city"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+            });
+        var id = $(this).find("option").not(function () { return !this.selected }).attr('data-id') * 1;
+    });
+	}
+}
+function loadCity(id, callback){
+    $.post('/region.php', { 'yn_region_id': id }, function(data, textStatus, xhr) {
+    	var districtFirst = $('[name="district"]').children().first();
+        $('[name="district"]').children().remove();
+        $('[name="district"]').append(districtFirst);
+        $('[name="district"]').val('');
+        var data = JSON.parse(data);
+        data.map(function(item, index){
+            $('[name="district"]').append('<option value="'+item.name+'" data-id="'+item.id_region+'">'+item.name+'</option>');
+        });
+    });
+}
+</script>
+{% include 'public/theme/footer.twig' %}
+

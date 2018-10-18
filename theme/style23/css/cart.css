@@ -1,0 +1,150 @@
+    /*初始化*/
+*{box-sizing: border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;text-size-adjust:100%;}
+body{background: #f4f4f4; -webkit-tap-highlight-color: rgba(0,0,0,0);width: 100%;max-width: 540px;margin: auto !important;}
+blockquote, body, button, caption, dd, div, dl, dt, fieldset, figure, form, h1, h2, h3, h4, h5, h6, hr, html, input, legend, li, menu, ol, p, pre, table, td, textarea, th, ul{margin: 0;padding: 0;outline:0;}
+body, button, input, keygen, legend, select, textarea{outline: 0;color: #333;line-height: 1.5;font-family: "微软雅黑";}
+a, a:hover{text-decoration: none;outline: 0;color: #b4282d;}
+li{list-style:none;}
+/*确认页面*/
+.m-goodItems{background-color: #fff;margin:8px 0;border-top: 1px solid #ebebeb;border-bottom: 1px solid #ebebeb;}
+.m-list>.item{border-bottom: 1px solid rgba(0,0,0,.15)}
+.m-list>.item:last-child{border-bottom: 0;}
+.m-goodItem{background-color: #fff;padding: 15px;}
+.m-goodItem .imgWrap{float: left;margin-right: 15px;overflow: hidden;background-color: #f4f4f4;position: relative;}
+.m-goodItem .imgWrap img{display: block;width: 80px;}
+.m-goodItem .cnt{overflow: hidden;position: relative;font-size: 12px;color:#c9c9c9;}
+.product_numtext{color: #787878;font-size: 12px;line-height: 14px;float:right;}
+.m-goodItem .cnt .line1 .name, .m-goodItem .cnt .line2{white-space: nowrap;text-overflow: ellipsis;}
+.m-goodItem .cnt .line1{line-height: 18px;font-size: 14px;margin-bottom: 3px;overflow: hidden;}
+.m-goodItem .cnt .line1 .name{float: left;max-width: 13em;overflow: hidden;}
+.m-goodItem .cnt .line1 .num{float: right;}
+.m-goodItem .cnt .line2{font-size: 12px;line-height: 18px;margin-bottom: 15px;color: #666;overflow: hidden;}
+.m-goodItem .cnt .line3{font-size: 14px;line-height: 18px;}
+
+.m-orderConfirmBill, .m-orderConfirmCoupon{margin-bottom: 10px;}
+.m-listWithListItem{background-color: #fff;}
+.m-listWithListItem li{padding-left: 15px;}
+.m-listWithListItem li .m-listItem{position: relative;}
+.m-listItem{position: relative;display: block;width: 100%;padding-right: 40px;height: 55px;}
+.f-vc{position: relative;top: 50%;transform:translateY(-50%);}
+.m-orderConfirmCoupon .selectCoupon{zoom:1;color: #666;font-size: 14px;}
+.m-orderConfirmCoupon .selectCoupon .left{float: left;}
+.m-orderConfirmCoupon .selectCoupon .right{float: right;}
+.m-listItem .icon{position: absolute;top: 0;right: 5px;bottom: 0;margin: auto;}
+.u-address-right{background-image: url(../images/right.png);background-size: 100% 100%;}
+.m-orderConfirmBillDetail:after, .m-orderConfirmCoupon .selectCoupon:after{display: block;clear: both;visibility: hidden;height: 0;overflow:hidden;content: ".";}
+.m-listItem-noArrow{padding-right: 0;}
+.m-orderConfirmBillDetail{zoom:1;padding: 10px 15px 10px 0;line-height: 18px;font-size: 14px;color: #333;}
+.m-orderConfirmBillDetail .left{float: left;}
+.m-orderConfirmBillDetail .right{float: right;}
+.m-listWithListItem li .m-listItem:after{content: "";position: absolute;background-color: #d9d9d9;bottom: 0;left: 0;width: 100%;height: 1px;opacity: .5}
+.m-orderConfirmBill li:last-child .m-listItem:after{display: none}
+.m-orderConfirmBillDetail .tag{position: relative;display: inline-block;height: 25px;padding: 0 10px;margin-right: 20px;line-height: 20px;background-color: #fff;color: #f48f18;border-radius: 4px;border:1px solid rgba(244,143,24,.2);font-size: 12px;}
+.m-orderConfirmBillDetail .tag:before{content: " ";position: absolute;right: -7px;top: 0;bottom: 0;margin: auto;display: block;width: 7px;height: 10px;background-image: url(../images/TagArrow.png);background-repeat: no-repeat;background-size: 100%;}
+.buy-single-row{background-color: #fff;color: #999;}
+.address-input{padding: 0 10px;background: #fff;}
+.address-input .label-input{padding: 0 15px;line-height:41px;border-radius:2px;outline:0;padding:3px 0;margin-bottom:8px;}
+.address-input .label-input:last-child{margin-bottom:0}
+.cell{flex: 1;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;max-width: 100%;display: block;position: relative; font-size: 14px;color: #464646;    border: 1px solid rgba(217, 217, 217,0.6);border-radius: 8px;}
+.buy-single-row .inputText{width: 100%;color: #666;font-size: 14px;border: none;border-radius: 2px;line-height: 18px;text-indent:14px;}
+.seperator{border: 1px solid #F5F5F5;width: 100%;margin: 0;height: 0;}
+.m-orderFt{width: 100%;max-width: 540px;background-color: #fff;text-align:center;}
+.m-orderFt .actualPrice{line-height: 45px;font-size: 16px;}
+.m-orderFt .actualPrice .label{color: #464646;}
+.m-orderFt .actualPrice .value{color: #f32c2a;font-size: 16px;}
+.m-orderFt .actualPrice .value{font-weight: 600;}
+.m-orderFt .btn{width:94%;height: 45px;line-height: 45px;}
+.w-button, .w-button:focus, .w-button:visited{display: inline-block;vertical-align: middle;;text-align: center;font-size: 16px;color: #fff;border:none;background-color: #f22928;overflow: hidden;}
+.m-lowStocksAlert .lowStocksList .lowStocksItem:after, .m-orderFt:after{display: block;clear: both;visibility: hidden;content: ".";}
+.pay-icon{vertical-align: middle;margin-top: -5px;}
+.text_area{width: 100%;border: none;font-size: 14px;text-indent:14px;}
+
+/*order*/
+.u-icon-detail-kefu{width: 30px;height: 30px;background-image: url(../images/detail-kefu.png);margin-right: 10px;}
+.m-hd{line-height: 22px;}
+.m-topBar{position: relative;padding: 0 10px;display: flex;background-color: #fff;border-bottom: 1px solid gainsboro;}
+.goback{display: block;float: left; height: 30px;width: 30px;background-image: url(../images/detail-back.png);background-repeat: no-repeat;background-size: 100% 100%;margin-top: 8px;}
+.title{width: 200px;font-size: 16px;text-align: center; padding: 12px 0px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin: auto;}
+.goindex{display: block;float: right; height: 25px;width: 25px;background-image: url(../images/house.png);background-repeat: no-repeat;background-size: 100% 100%;margin-top: 10px;}
+.m-orderList{background-color: #f4f4f4;position: relative;}
+.m-orderItem{margin-top: 10px;padding-left: 15px;background-color: #fff;font-size: 16px;}
+.first{margin-top: 0;}
+.m-orderItem .row-1, .m-orderItem .row-2, .m-orderItem .row-3{position: relative;overflow: hidden;}
+.m-orderItem .row-2, .m-orderItem .row-3{border-top: 1px solid rgba(0,0,0,0.05)}
+.m-orderItem .orderId, .m-orderItem .remainTime{display: inline-block;height: 45px;line-height: 45px;margin-right: 15px;font-size: 14px;}
+.f-fr{float: right;}
+.f-fl{float: left;}
+.m-orderItem .row-2{padding: 10px 0;}
+.m-orderItem .goodImg{position: relative;width: 80px;height: 80px;background-color: #f4f4f4;}
+
+.m-orderItem .goodInfo{margin-left: 10px;}
+@media screen and (max-width: 330px){
+    .m-orderItem .goodInfo{margin-left: 10px;width: 200px;}
+}
+.m-orderItem .goodName{width: 200px;overflow: hidden;font-size: 16px;}
+.m-orderItem .goodNum{color: #666;font-size: 12px;}
+.m-orderItem .goodStatus{font-size: 14px;position: absolute;right: 10px;top:36px;}
+.m-orderItem .row-3{height: 55px;}
+.m-orderItem .cost{display: inline-block;height: 55px;line-height: 55px;}
+.retailPrice{color: #b4282d;}
+.row-1{padding: 10px 0;}
+#POP800_INIT_DIV{display: none}
+#POP800_PANEL_DIV{display: none}
+#POP800_LEAVEWORD_DIV{display: none}
+.tips{color: #999;width: 80px;display: inline-block;}
+.tips_orderid{color: #999;display: inline-block;margin-right: 10px;}
+.red{color: #b4282d;font-size: 18px;}
+.tipred{display: inline-block;width: 80px;}
+a.kefu{color: #333;background-color: #fff;border:1px solid #d7d7d7;border-radius: 4px;padding: 5px 25px;}
+.w-tips{padding: 10px;background-color: #fff;}
+.w-tips a:link,.w-tips a:visited,.w-tips  a:hover,.w-tips  a:active{background-color: #f4f4f4;border:1px solid #f4f4f4;color: #333;}
+.timetips{margin: 10px;}
+.old_price{vertical-align:baseline;color: #999;font-size: 14px;text-decoration:line-through;}
+
+
+.address-title{
+	padding:14px 0 10px;
+	position: relative;
+	font-size:0;
+}
+.address-title span.kefu{
+	font-size:13px;
+	color:#787878;
+}
+.address-title div.kefu{
+	padding:2px 2% 2px 15px;
+	border-radius:4px;
+	background:#e91917 url(../images/addr.png) no-repeat 2px center;
+	background-size:12px;
+	font-size: 12px;
+	color:#fff;
+	position: absolute;
+    top: 14px;
+    right: 0;
+}
+#province select,#city select,.select select{
+	border: none;
+    width: 100%;
+    -webkit-appearance: none;
+    text-indent:14px;
+    background:url(../images/arrow_down.png) no-repeat 95% center;
+    background-size:14px;
+}
+#province,#city{width:48%;float:left;}
+.select{width:48%;float:left;}
+#city{float:right;}
+input[name='payment_type']{
+	opacity:0;
+}
+.cell label{padding-left: 20px;
+	background:url(../images/uncheck.png) no-repeat 0 center;
+	background-size:18px;
+}
+.cell label.check{
+	background:url(../images/check.png) no-repeat 0 center;
+	background-size:18px;
+}
+.buy-single-row .service{
+	float:right;
+	color:#474747;
+}

@@ -1,0 +1,105 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css" >
+<!-- end header resource -->
+<section id="page-index" class="container">
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 354px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            {% if photos %}
+                {% for p in photos %}
+                <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+                {% endfor %}
+            {% else %}
+                <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+            {% endif %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-fraction"></div>
+    </div>
+    <div class="message">
+    	<div id="fahuo">
+    		<span>有{{ sales }}名用戶也在瀏覽該產品</span>
+    	</div>
+    	<div id="kefu" data-cuckootag="service"  data-value="{{ service_contact_id }}"></div>
+    </div>
+    <!--  -->
+    <div class="detial">
+        <div class="buyinfo_post">
+        	<div class="price o_price">
+                 {% if currency_prefix == 1 %}<span class="top_price">{{ currency_code }}{{price}}</span>
+                <span class="pre_price">{{ lang.market_price }}&nbsp;{{ currency_code }}{{ market_price }}</span>{% endif %}
+                 {% if currency_prefix == 0 %}<span class="top_price">{{price}}{{ currency_code }}</span>
+                <span class="pre_price">{{ lang.market_price }}&nbsp;{{ market_price }}{{ currency_code }}</span>{% endif %}
+        	</div>
+        	<div class="timeWrap o_timeWrap">
+        		<span id='clock'>{{ lang.time_over }}</span>
+        		<span id="timer">
+                   <span  id="h">10</span>
+                    <span class="">:</span>
+                    <span id="m">00</span>
+                    <span class="">:</span>
+                    <span id="s">00</span>
+              </span>
+              <span class="process" data-value='{{ sales }}'>
+              	<span data-value='{{ stock }}'></span>
+              </span>
+        	</div>
+        	<div class=" o_triangle"></div>
+            <div style="clear:both"></div>
+        </div>
+        <h1 class=" o_title">{{ title }}</h1>
+        <div class="ensure">
+            <ul class="j_product_info">
+                <li class="j_product_icon o_ensure">優選精品</li>
+                <li class="j_product_icon o_ensure">限時特惠</li>
+            </ul>
+            <div style="clear:both"></div>
+        </div>
+        <div class="arrival_time">
+        	現在下單預計日送達
+        </div>
+        <div class="service o_service">
+        	<ul>
+        		<li>免郵配送</li>
+        		<li>七天鑒賞期</li>
+        		<li>貨到付款</li>
+        	</ul>
+        	<div class="right"></div>
+	        <div class="service_detail">
+	        	<h3>溫馨提示</h3>
+	        	<p>{{ lang.warming|raw }}</p>
+	        </div>
+        	<div style="clear:both"></div>
+        </div>
+    </div>  
+    <!--  -->
+    <div class="product_info">
+        <div class="m-img product-img">
+            {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+        <p class="top"><a></a></p>
+    </div>
+</section>
+<section id="page-order" class="orange container" data-error="{{ lang.Th_titleattr }}">
+    {% include 'cmpt-guige.twig' %}
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+</section>
+
+<footer class="footer o_footer">
+    <ul>
+        <li class="price_lost">
+        	<span>僅剩<span>{{ stock }}</span>件</span>
+            
+        </li>
+        <li class="buy_now" data-cuckootag="buy_now" data-event="showAttributeLayer">
+            <button id="add" class="w-button w-button-block">馬上搶</button>
+            <span></span>
+        </li>
+    </ul>
+    <div style="clear:both;"></div>
+</footer>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+<script src="{{ THEME }}/js/guige.js"></script>
+{% include 'public/theme/footer.twig' %}
+

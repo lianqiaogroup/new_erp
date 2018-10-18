@@ -1,0 +1,148 @@
+@color:#282828;
+.berore-dotted{
+	content:'';
+	width:6px;
+	height:6px;
+	display:inline-block;
+	border-radius:6px;
+	background:@color;
+	margin:0 4px;
+}
+section[data-loopindex]{
+	padding:0 4%;
+	.tc{
+		border-bottom:1px solid #e5e5e5;
+		&:last-child{
+			border:none;
+		}
+	}
+}
+#comb{
+	padding:4%;
+	.tt{
+		font-size:16px;
+		font-weight:bold;
+		height:40px;
+		line-height:40px;
+		color:#757575;
+		background:url(../images/border.png) repeat-x 0 bottom;
+		background-size:12px;
+		margin-bottom:10px;
+	}
+}
+.package{
+	font-size:0;
+	margin:20px 0;
+	color:#757575;
+	.tab{
+		font-size:14px;
+		padding:14px 4%;
+		display:inline-block;
+		text-align:center;
+		border:1px solid #ccc;
+		margin:0 8px 8px 0;
+		position:relative;
+	}
+	.tab-sel{
+		border:2px solid #b4282d;
+	}
+}
+.title_ac{
+	margin:10px 0 0 0;
+	&:before{
+		.berore-dotted;
+	}
+	h5{
+		display:inline-block;
+	}
+}
+.count_atrr{
+	font-size:14px;
+	.tt{
+		&:before{
+			.berore-dotted;
+		}
+		display:inline-block;
+		margin:10px 0;
+	}
+}
+	.con{
+		font-size:0;
+		img{
+			width:100px;
+			height:100px;
+		}
+		.tab{
+			display:inline-block;
+			margin:0 10px 10px 0;
+			span{
+				font-size:14px;
+			}
+			input[type='radio']{
+				display:none;
+			}
+		}
+		.noimg.tab{
+			span{
+				padding:4px 10px;
+				color:@color;
+				display:inline-block;
+				border:1px solid #ccc;
+				border-radius:4px;
+			}
+		}
+		.hasimg.tab{
+			span{
+				display:inline-block;
+				width:100px;
+				text-align:center;
+				padding:4px 0;
+			}
+		}
+		.tab-sel{
+			span{
+				background:#b4282d;
+				color:#fff;
+			}
+		}
+		.noimg.tab-sel{
+			span{
+				color:#fff;
+				border-color:#b4282d;
+			}
+		}
+	}
+.u-fornum{
+	padding:16px 4%;
+	.m-selnum{
+		span{
+			font-size:14px;
+			padding-right:4%;
+		}
+		div{
+			display:inline-block;
+			font-size:14px;
+			line-height:28px;
+		}
+		.less,.more{
+			border:1px solid #b8b8b3;
+			padding:0 16px;
+		}
+		.textWrap{
+			border-top:1px solid #b8b8b3;
+			border-bottom:1px solid #b8b8b3;
+			padding:0 16px;
+		}
+	}
+}
+#page-order{
+	width:100%;
+	z-index:11;
+	background:#f2f2f2;
+	form {
+		button[type='submit'] {
+			visibility: hidden;
+		}
+	}
+}
+	

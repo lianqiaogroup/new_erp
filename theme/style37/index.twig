@@ -1,0 +1,317 @@
+{% include '/public/theme/header.twig' %}
+<!-- resource -->
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="{{ THEME }}/style/swiper-3.4.0.min.css" rel="stylesheet" type="text/css">
+<!-- end header resource -->
+<div class="index">
+    <!-- <div id="banner">
+        <div id="list">
+        <ul>
+            {% if video.video_url %}
+                <li>
+                        <video width="100%" poster="{{ video.cover_url }}" id="video" preload="false" src="{{ video.video_url }}" controls="controls"
+                            x5-playsinline="" playsinline="" webkit-playsinline="">
+                </li>
+            {% endif %}
+            {% if photos %}
+                {% for p in photos %}
+                    <li><img src="{{ p.thumb }}"></li>
+                {% endfor %}
+            {% else %}
+                <li><img src="{{ thumb }}"></li>
+            {% endif %}
+        </ul>
+        </div>
+        {% if photos %}
+        <div id="bar_icon">
+            {% for p in photos %}
+                <span class="on"></span>
+            {% endfor %}
+             {% if video.video_url %}
+                <span class="on"></span>
+             {% endif %}
+        </div>
+        {% endif %}
+    </div> -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {% if video.video_url %}
+                <div class="swiper-slide">
+                    <video width="100%" poster="{{ video.cover_url }}" id="video" preload="false" src="{{ video.video_url }}" controls="controls"
+                        x5-playsinline="" playsinline="" webkit-playsinline="">
+                </div>
+                {% endif %} {% if photos %} {% for p in photos %}
+                <div class="swiper-slide">
+                    <img src="{{ p.thumb }}" width="100%">
+                </div>
+                {% endfor %}
+                {% endif %}
+                 {% if video.video_url is empty and photos is empty %}
+                <div class="swiper-slide">
+                    <img src="{{ thumb }}" width="100%">
+                </div>
+                {% endif %}
+            </div>
+            <div class="swiper-pagination">
+                 {% for p in photos %}
+                <span class="on"></span>
+                {% endfor %} {% if video.video_url %}
+                <span class="on"></span>
+                {% endif %}
+            </div>
+        </div>
+    <div class="main">
+        <div class="purchase-tip">
+            <div class="title">
+                {{ title }}
+            </div>
+            <div class="tip-price">
+                <span>{% if currency_prefix == 1 %}{{ currency_code }}{{price}}{% else %}{{price}}{{ currency_code }}{% endif %}</span>
+                <del>原價{% if currency_prefix == 1 %}{{ currency_code }}{{market_price}}{% else %}{{market_price}}{{ currency_code }}{% endif %}</del>
+            </div>
+            <div class="time">
+                <span class="timelimit">{{ lang.time_limit }}</span>
+                <span id="h"></span><span>{{ lang.h }}</span>
+                <span id="m"></span><span>{{ lang.m }}</span>
+                <span id="s"></span><span>{{ lang.s }}</span>
+            </div>
+            <div class="shop-label">
+                <div class="flex">
+                    <div class="item">{{ lang.day_appreciate }}</div>
+                    <div class="item">{{ lang.free_ship }}</div>
+                    <div class="item">{{ lang.cash_on_delivery }}</div>
+                </div>
+            </div>
+            <div class="sintip one">{{ lang.for_sell2 }}</div>
+            <div class="sintip two">{{ lang.for_sell }}</div>
+        </div>
+        <div class="navigation">
+            <div class="flex">
+                <div class="item action"><a href="javascript:void(0)" name="detail">{{ lang.description }}</a></div>
+                <div class="item"><a href="javascript:void(0)" name="comment">{{ lang.new_pinlun }}</a></div>
+                <div class="item" data-cuckootag="check_order" data-value="{{ identity_tag }}"><a href="javascript:;">{{ lang.order_inquiry }}</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="bd">
+        <div class="detail" id="detail">
+            {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+        </div>
+        <div class="comment" id="comment" style="display:none;">
+            <div class="picMarquee-top">
+                <div data-fn="commentScroll" id="mq" style="overflow: hidden">
+                    <ul class="picList" id="mq1">
+                        {% for a in comment %}
+                            <li star_li data-groud="{{ a.comment_id }}" rel="{{ a.star }}" style="margin-bottom: 8px;height: auto;">
+                                <div class="user_info">
+                                    {% if a.is_anonymous==1 %}
+                                        <div class="user_name">匿名用戶</div>
+                                    {% else %}
+                                        <div class="user_name">{{ a.name }}</div>
+                                    {% endif %}
+                                    <span class="stars" rel="{{ a.star }}"></span>
+                                </div>
+                                <div style="border-top:1px dotted #d0d6d6;margin-top: 5px;color: #444;padding:5px 0;font-size: 12px;">{{ a.content }}</div>
+                                <div class="msKeimgBox">
+                                    <ul>{% for b in a.thumb %}
+                                            <li>
+                                                <img src="{{ b.thumb }}" width="75" height="75" data-zoom-img />
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="mskeTogBtn" style="display:none;"></div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <ul id="mq2"></ul>
+                </div>
+            </div>
+            <div class="mskeLayBg"></div>
+            <div class="mskelayBox">
+                <div class="mske_html">
+                </div>
+                <img class="mskeClaose" src="{{ THEME }}/images/close.png" width="27" height="27" />
+            </div>
+            <div style="clear: both"></div>
+            <div class="onlinenot">{{ lang.note_online }}</div>
+        </div>
+    </div>
+    <div class="fooder">
+        <div class="fd-tatle">
+            <div class="cell"><span data-cuckootag="service" data-value="{{ service_contact_id }}" class="cus">{{ lang.kefu_online }}</span></div>
+            <div class="cell"><span class="buy" data-cuckootag="buy_now" data-event="showAttr">{{ lang.buy_now }}</span></div>
+        </div>
+    </div>
+    <form id="big-i" name="form" action="#" method="post">
+        <div class="buyinfo_table">
+            <div class="closeBtn"></div>
+                <div class="zaix">{{ lang.note_online }}</div>
+            <div class="buyinfo_table_box">
+                <table>
+                    <tr>
+                        <td class="table_td"><span class="require"></span>{{ lang.name }}:</td>
+                        <td class="table_cell"><input type="text" required="required" class="mui-input-clear input01" name="name" maxlength="10"></td>
+                    </tr>
+                    <tr>
+                        <td class="table_td"><span class="require"></span>{{ lang.mobile }}:</td>
+                        <td class="table_cell"><input type="text" required="required" class="input01" name="phone" maxlength="20"></td>
+                    </tr>
+                    <tr>
+                        <td class="table_td">滿意度:</td>
+                        <td class="table_cell">
+                            <script type="text/javascript">
+                                function rate(obj,oEvent){
+                                    var imgSrc = '{{ THEME }}/images/emp.png';
+                                    var imgSrc_2 = '{{ THEME }}/images/good.png';
+                                    if(obj.rateFlag) return;
+                                    var e = oEvent || window.event;
+                                    var target = e.target || e.srcElement;
+                                    var imgArray = obj.getElementsByTagName("img");
+                                    for(var i=0;i<imgArray.length;i++){
+                                        imgArray[i]._num = i;
+                                        imgArray[i].onclick=function(){
+                                            if(obj.rateFlag) return;
+                                            //alert(this._num+1);
+                                            var inputid=this.parentNode.previousSibling
+                                            inputid.value=this._num+1;
+                                        }
+                                    }
+                                    if(target.tagName=="IMG"){
+                                        for(var j=0;j<imgArray.length;j++){
+                                            if(j<=target._num){
+                                                imgArray[j].src=imgSrc_2;
+                                            } else {
+                                                imgArray[j].src=imgSrc;
+                                            }
+                                            target.parentNode.onmouseout=function(){
+                                                var imgnum=parseInt(target.parentNode.previousSibling.value);
+                                                for(n=0;n<imgArray.length;n++){
+                                                    imgArray[n].src=imgSrc;
+                                                }
+                                                for(n=0;n<imgnum;n++){
+                                                    imgArray[n].src=imgSrc_2;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            </script>
+                            <input type="hidden" name="star" value="0"><p onmouseover="rate(this,event)" id="img_1">
+                                <img src="{{ THEME }}/images/good.png"><img src="{{ THEME }}/images/good.png"><img src="{{ THEME }}/images/good.png"><img src="{{ THEME }}/images/good.png"><img src="{{ THEME }}/images/good.png">
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_td">{{ lang.note }}:</td>
+                        <td class="table_cell">
+                            <textarea name="content"  class="textarea_style"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td class="table_td" style="padding-top:8px;">{{ lang.upimage }}:</td>
+                        <td class="table_cell" style="padding-top:10px;">
+                            <input id="file" type="file" name="file" class="upimage">
+                            <div class="file_imgs"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="tj">
+                            <input id="btnAppraise" type="submit" name="Submit" class="input_btn01" value="{{ lang.post_pinlun }}" style="color:white">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="attr" style="display:none;" data-error='{{ lang.Th_titleattr }}'>
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+    <div class="header">
+        <a class="back"><img src="{{ THEME }}/images/returnback.png" ></a>
+        <div>{{ lang.choose }}</div>
+    </div>
+    <div class="product">
+        <div>{{ lang.select_set}}</div>
+        {% if combo %}
+            {% for c in combo %}
+            <div class="comob {% if loop.index == 1%}action{% endif %}" rel="{{ c.combo_id }}" single_c="{{c.is_single_combo}}">
+                <i></i>
+                <span>{{ c.title }}</span><span>{% if currency_prefix == 1 %}{{ currency_code }}{{c.price}}{% else %}{{c.price}}{{ currency_code }}{% endif %}</span>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="comob action" rel="0" single_c="0">
+            <i></i>
+            <span>{{ title }}</span><span>{% if currency_prefix == 1 %}{{ currency_code }}{{price}}{% else %}{{price}}{{ currency_code }}{% endif %}</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="proattr">
+        {% if combo %}
+            {% for c in combo %}
+            <div class="coco combo_{{ c.combo_id }}" {% if loop.index != 1%}style="display:none;"{% endif %}>
+                {% for o in  c.goods %}
+                    <div class="goods">
+                        <h3>{{ o.title }}</h3>
+                        {% for a in o.options %}
+                        <div class="size">
+                            <label>{{ a.attr_group_title }}</label>
+                            <ul>
+                                {% for key,attr in a.attr %}
+                                <li class="goodli {% if loop.length == 1%}key{% endif %}" data-combo="{{ c.combo_id }}" data-number="{{ o.combo_goods_id }}-{{ a.attr_group_id }}-{{ attr.product_attr_id }}">{{ attr.name|raw }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <input type="hidden" name="comob" value="">
+        {% else %}
+        <div class="goods attr_0 combo_0">
+            {% for o in options %}
+            <div class="size">
+                <label>{{ o.attr_group_title }}</label>
+                <ul>
+                    {% for key,attr in o.attr %}
+                    <li class="goodli {% if loop.length == 1%}key{% endif %}" data-combo="0" data-number="{{ o.attr_group_id }}-{{ attr.product_attr_id }}">{{ attr.name|raw }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+            <input type="hidden" name="comob" value="0">
+        </div>
+        {% endif %}
+    </div>
+    <div class="qty">
+        <label>{{ lang.num }}</label>
+        <div class="qtybtn">
+            <div class="less" onclick="minnumber()"><img src="{{ THEME }}/images/less.png" alt="-"></div>
+            <div class="input"><input onchange="inputnumber()" type="number" name="num" id="num" value="1"></div>
+            <div class="more" onclick="addnumber()"><img src="{{ THEME }}/images/more.png" alt="+"></div>
+        </div>
+    </div>
+    <div id="confirm" class="btnconfirm" data-cuckootag="confirm_arrtibute" data-event="getattr">{{ lang.confirm }}</div>
+</div>
+
+<!-- footer resource -->
+
+<script src="/public/plugins/touchslide/TouchSlide.1.1.js"></script>
+<script src="{{ THEME }}/js/index.js"></script>
+<script>
+    require(['jquery'], function($){
+        var tags = '{{ tags }}';
+        var tag = tags.split(',');
+        if(tag[0] != ""){
+            $('.one').html(tag[0]);
+            $('.two').html(tag[1]);
+        }
+    })
+</script>
+{% include 'public/theme/footer.twig' %}
+

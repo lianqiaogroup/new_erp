@@ -1,0 +1,185 @@
+{% include '/public/theme/header.twig' %}
+<!-- end header resource -->
+<style type="text/css">
+	#POP800_PANEL_DIV{display: none;}
+</style>
+<link href="{{ THEME }}/style/index.css" rel="stylesheet">
+<link href="/public/plugins/swiper/swiper-3.4.0.min.css" rel="stylesheet">
+<div style="background:#fff;">
+<div class="header">
+    <div class="backdiv"><a href="javascript:history.go(-1)" class="goback"><i></i></a></div>
+	<div class="title"><img src="{{ THEME }}/images/logo.png"></div>
+	<div class="homediv"><a href="/" class="home"><img src="{{ THEME }}/images/home.png"></a></div>
+</div>
+<div class="swiper-container" id="secMainImg">
+    <div class="swiper-wrapper" style="height: 354px;">
+        {% if photos %}
+            {% for p in photos %}
+            <div class="swiper-slide"><img width="100%" src="{{ p.thumb }}"></div>
+            {% endfor %}
+        {% else %}
+            <div class="swiper-slide"><img width="100%" src="{{ thumb }}"></div>
+        {% endif %}
+    </div>
+    <div id="imgNum" class="swiper-pagination swiper-pagination-fraction pageState "></div>
+</div>
+<div class="mesinfo">
+    <h3>{{ title }}</h3>
+    {% if currency_prefix == 1 %}
+    <p>{{ currency_code }}{{ price }}</P>
+    <del>{{ currency_code }}{{ market_price }}</del>
+    {% else %}
+    <p>{{ price }}{{ currency_code }}</P>
+    <del>{{ market_price }}{{ currency_code }}</del>
+    {% endif %}
+</div>
+<div class="tip_small">
+	<div class="tip_left">{{ lang.sold }} {{ sales }} {{ lang.sold_after }}</div>
+	<div class="tip_right">{{ lang.save }} {% if price != 0 and market_price != 0 %}{{ (((market_price-price)/market_price)*100.00)|number_format(0) }} {% endif %} %</div>
+</div>
+<input type="hidden" id="regionCode" value="{{regions.code}}">
+<div id="attr">
+    <form id="form" name="form" method="post" action="order.php">
+        <input type="hidden" name="orderid" id="orderid" value="">
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+        <input type="hidden" name="act" id="act" value="getAttrPrice">
+        <!--  -->
+        <!-- 套餐选择 -->
+        <div class="u-format" id="comb" data-price="">
+            <div class="package {% if combo %}{% else %}hide{% endif %}">
+            {% if combo %}
+                <div class="tt">{{ lang.package }}</div>
+                {% for c in combo %}
+                <label class="tab {%if loop.index == 1%}tab-sel{%endif%}" rel="1" data-price="{{ c.price }}" data-loopIndex="{{ loop.index }}" data-single="{{ c.is_single_combo }}">
+                    <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="{{ c.combo_id }}" {%if loop.index == 1%}checked="chekced"{%endif%} />
+                    <span>{{ c.title|raw }}{% if currency_prefix == 1 %}{{ currency_code }}{{ c.price }}{% else %}{{ c.price }}{{ currency_code }}{% endif %}</span>
+                </label>
+
+                {% endfor %}
+            {% else %}
+                <div class="tab tab-sel" rel="1" data-price="{{ price }}" data-loopIndex="1" data-single="0">
+                    <input type="radio" style="opacity: 0;position: absolute" name="combo_id" value="0" checked="chekced" />
+                </div>
+            {% endif %}
+            </div>
+        </div>
+        <!-- <p class="tips">{{ tips }}</p> -->
+
+        <!-- 套餐－属性选择 -->
+        {% if combo %}
+            <!-- 循环套餐 -->
+            {% for om in combo %}
+                <section data-loopIndex="{{ loop.index }}" productid="{{ om.product_id }}" style="display: none;">
+                {% for ok in om.goods %}
+                    {% if ok.options %}
+                        <div class="title_ac"><h5>{{ ok.title|raw }}</h5></div>
+                        <div class="tc tc{{ ok.combo_id|raw }}">
+                            {% for o in  ok.options %}
+                                <li class="item protoLayer">
+                                    <div class="group_title">{{ o.attr_group_title }}</div>
+                                    <div class="u-format count_atrr" data-group="{{ ok.combo_goods_id }}-{{ o.attr_group_id }}" data-select="0">
+                                        <div class="con">
+                                            <!-- 属性值 -->
+                                            {% for key,attr in o.attr %}
+                                                <div class="tab" data-id="{{ attr.product_attr_id }}" data-name="{{ attr.name }}">
+                                                    {% if attr.thumb %}
+                                                    <img src="{{ attr.thumb }}">
+                                                    {% else %}
+                                                    <span>{{ attr.name|raw }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </section>
+            {% endfor %}
+        {% else %}
+        <!-- 单产品属性选择 -->
+            <section data-loopIndex="1" style="margin-top:10px;">
+            {% for o in  options %}
+                <li class="item protoLayer">
+                    <div class="group_title">{{ o.attr_group_title }}</div>
+                    <div class="u-format count_atrr" data-group="{{ o.attr_group_id }}" data-select="0">
+                        <div class="con">
+                            {% for key,attr in o.attr %}
+                                <div class="tab" data-id="{{ attr.product_attr_id }}" data-name="{{ attr.name }}">
+                                    {% if attr.thumb %}
+                                    <img src="{{ attr.thumb }}">
+                                    {% else %}
+                                    <span>{{ attr.name|raw }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </section>
+        {% endif %}
+        <!--产品的所有属性-->
+        <input type="hidden" name="heavn" class="attr_id" value="">
+        <input type="hidden" name="attrnum" value="2">
+
+        <!-- 套餐选择 end -->
+    </form>
+</div>
+
+<div class="numberbox">
+    <div class="m-selnum">
+        <span class="numtitle">{{ lang.num }}</span>
+        <div onclick="minnumber()" class="less z-dis">-</div>
+        <div class="textWrap">
+            <input type="text" class="text numbertext form-control" value="1" name="num" id="num" onblur="inputnumber();">
+        </div>
+        <div onclick="addnumber()" class="more">+</div>
+    </div>
+</div>
+<p id="time"><span style="font-weight:500;display:block;line-height:30px;font-size:16px;">{{ lang.time_over }}</span>  <span class="h"></span>:<span class="m"></span>:<span class="s"></span></p>
+<div class="btn" data-cuckootag="confirm_arrtibute" data-event="postcheckGuige">
+    <button class="buyone" data-warn='{{ lang.choose_warn }}'>{{ lang.buy }}</button>
+</div>
+<div class="tip">
+	<div class="chip"><img src="{{ THEME }}/images/free_shop.png">{{ lang.free_yun }}</div>
+	<div class="chip"><img src="{{ THEME }}/images/haver_pay.png">{{ lang.cash_on_delivery }}</div>
+    <div class="chip"><img src="{{ THEME }}/images/7day.png">{{ lang.returned_goods }}</div>
+</div>
+<div class="nav">
+	<div class="subnav blue">{{ lang.product_desc }}</div>
+</div>
+<div class="proinfo">
+    <div class="title"><i class="icon"></i>{{ lang.product_desc }}</div>
+    <div id="tab1" class="tab action">
+        {{ content|replace({'<img src=': '<img class="lazyload" src="public/image/product-preview.png" data-img='})|raw }}
+    </div>
+</div>
+<div class="User_notes" style="margin-top: 10px">
+    <h2 class="notes">{{ lang.faq }}</h2>
+    <div class="qut">
+        <div class="note_text">Q. {{ lang.question1 }}</div>
+        <div class="note_title">A. {{ lang.answer1 }}</div>
+    </div>
+    <div class="qut">
+        <div class="note_text">Q. {{ lang.question2 }}</div>
+        <div class="note_title">A. {{ lang.answer2 }} </div>
+    </div>
+    <div class="qut">
+        <div class="note_text">Q. {{ lang.question3 }}</div>
+        <div class="note_title"><div style="float:left">A.</div><div style="padding-left:15px;"> 1. {{ lang.answer3_1 }}<br>2.{{ lang.answer3_2 }} </div></div>
+    </div>
+</div>
+<div class="footer" style="display:none">
+    <div class="times">{{ lang.time_over }}：<span class="h"></span>:<span class="m"></span>:<span class="s"></span></div>
+	<div class="btn"><button class="buyflex" data-cuckootag="confirm_arrtibute" data-event="postcheckGuige">{{ lang.buy }}</button></div>
+</div>
+</div>
+
+<i class="m-goToTop" style="display: none;"></i>
+<!-- footer resource -->
+<script src="{{ THEME }}/js/index.js"></script>
+{% include 'public/theme/footer.twig' %}
+

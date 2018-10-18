@@ -1,0 +1,16 @@
+{
+    "require": {
+        "twig/twig": "^1.31",
+        "catfan/Medoo": "1.2.1",
+        "siriusphp/upload": "^2.1",
+        "phpoffice/phpexcel":"^1.8",
+        "geoip2/geoip2":"2.5.0",
+        "php-amqplib/php-amqplib": "^2.7",
+        "monolog/monolog": "^1.23"
+    } ,
+    "autoload": {
+        "psr-4": {
+            "lib\\": "lib/"
+        }
+    }
+}
